@@ -29,6 +29,13 @@ const Main = () => {
           <CardList cardData='419 Operation' cardType='Library' />
           <CardList cardData='419 Operation' cardType='Library' />
           <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
+          <CardList cardData='419 Operation' cardType='Library' />
         </div>
       </div>
     );
