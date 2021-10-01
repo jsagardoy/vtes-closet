@@ -1,0 +1,11 @@
+.cardList {
+  width: 100%;
+}
+.listItemText {
+  display: flex;
+  justify-content: space-between;
+  color: darkcyan;
+}
+.list{
+    width:100%;
+}

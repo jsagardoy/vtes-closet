@@ -1,7 +1,16 @@
 .sidebar {
-  border: 1px solid grey;
-  border-radius: 1rem;
-  margin-top: 1rem;
-  margin-right: 1rem;
+  display: flex;
+  border-right: 1px solid darkcyan;
+  background-color: black;
   padding: 1rem;
+  color: darkcyan;
+  min-width: 20%;
+  min-height: 100vh;
+}
+.list {
+  width: 100%;
+}
+.list__container{
+  position:sticky;
+  top:150px;
 }

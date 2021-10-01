@@ -1,4 +1,22 @@
 .main {
     display:flex;
+    position:relative;
+    top: 0rem;
+    left: 0rem;
+    width: 73%;
     flex-direction: column;
+    margin-top:0px;
+    margin-left: 0px;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    margin-right: 1rem;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+}
+.navbarList{
+    display: flex;
+     width:100%;
 }
