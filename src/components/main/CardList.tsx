@@ -10,7 +10,7 @@ interface CardListProps {
 const CardList = (props: CardListProps) => {
   const { cardData, cardType } = props;
   return (
-    <div className='cardList'>
+
       <List className='list'>
         {cardType === 'Library' ? (
           <ListItem button divider dense alignItems='flex-start'>
@@ -26,7 +26,7 @@ const CardList = (props: CardListProps) => {
           </ListItem>
         )}
       </List>
-    </div>
+
   );
 };
 

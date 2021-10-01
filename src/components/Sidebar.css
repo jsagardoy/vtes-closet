@@ -10,7 +10,3 @@
 .list {
   width: 100%;
 }
-.list__container{
-  position:sticky;
-  top:150px;
-}
