@@ -3,9 +3,7 @@
   display: flex;
   justify-content: space-between;
   color: darkcyan;
-  
 }
-.list{
-  
-    width:100%;
+.list {
+  width: 100%;
 }

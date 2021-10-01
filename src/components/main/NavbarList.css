@@ -2,8 +2,6 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid darkcyan;
-  position: sticky;
-  top: 6.6rem;
 }
 .navbarList h3{
     color:darkcyan;
