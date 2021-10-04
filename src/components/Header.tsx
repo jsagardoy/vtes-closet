@@ -1,6 +1,7 @@
 import { Avatar} from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import './Header.css';
+import Login from './Login';
 
 const Header = () => {
   return (
@@ -16,7 +17,7 @@ const Header = () => {
         <h3>Vtes Closet</h3>
       </div>
       <div className='header__right'>
-
+        <Login />
         <Avatar variant='circular' alt='avatar'>
           N
         </Avatar>
