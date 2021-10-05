@@ -1,20 +1,21 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import socialMediaAuth from '../service/auth';
-import {facebookProvider,googleProvider } from '../config/authMethods';
+import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import './Login.css';
 
 const Login = () => {
-    const [isHidden, setIsHidden] = React.useState<boolean>(true);
+  const [isHidden, setIsHidden] = React.useState<boolean>(true);
 
   const handleProvider = async (provider: string) => {
-    const newProvider = provider === 'google' ? googleProvider : facebookProvider;
-        const res = await socialMediaAuth(newProvider);
-        console.log(res);
+    //const newProvider = provider === 'google' ? googleProvider : facebookProvider;
+    const res = await socialMediaAuth(googleProvider);
+    console.log(res);
+    setIsHidden(true);
   };
 
-    const handleOnClick = (value: boolean) => {
-        setIsHidden(!value);
+  const handleOnClick = (value: boolean) => {
+    setIsHidden(!value);
   };
   return (
     <div className='login'>
@@ -24,11 +25,11 @@ const Login = () => {
         onClick={() => handleOnClick(isHidden)}
       >
         Login
-          </Button>
+      </Button>
       <Button
         id='logoutId'
         style={{ color: 'darkcyan' }}
-        onClick={() => console.log('adios')}//handle logout
+        onClick={() => console.log('adios')} //handle logout
       >
         Logout
       </Button>
@@ -40,12 +41,12 @@ const Login = () => {
           Google
         </Button>
 
-        <Button
+        {/*  <Button
           style={{ color: 'darkcyan' }}
           onClick={() => handleProvider('facebook')}
         >
           Facebook
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
