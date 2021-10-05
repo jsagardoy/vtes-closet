@@ -1,9 +1,27 @@
-import { Avatar} from '@material-ui/core';
+import React from 'react';
+import { Avatar } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import './Header.css';
 import Login from './Login';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 const Header = () => {
+  const defaultAvatarURL =
+    'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
+  const auth = getAuth();
+  const [photoURL, setPhotoURL] = React.useState<string>(defaultAvatarURL);
+  const [userName, setUserName] = React.useState<string>('');
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setPhotoURL(user.photoURL ? user.photoURL : defaultAvatarURL);
+      setUserName(user.displayName ? user.displayName:'');
+    } else {
+      setPhotoURL(defaultAvatarURL);
+      setUserName('');
+    }
+  });
+
   return (
     <div className='header'>
       <div className='header__left'>
@@ -18,9 +36,10 @@ const Header = () => {
       </div>
       <div className='header__right'>
         <Login />
-        <Avatar variant='circular' alt='avatar'>
-          N
-        </Avatar>
+        <div className='userInfo'>
+          <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
+          <h5>{ userName }</h5>
+        </div>
       </div>
     </div>
   );
