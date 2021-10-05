@@ -1,5 +1,5 @@
 
-import firebaseApp from './firebase.config';
+import app from './firebase.config.js';
 
-export const facebookProvider = new firebaseApp.auth.FacebookProvider();
-export const googleProvider = new firebaseApp.auth.GoogleProvider();
+export const facebookProvider = new app.auth.FacebookProvider();
+export const googleProvider = new app.auth.GoogleProvider();
