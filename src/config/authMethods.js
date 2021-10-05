@@ -1,5 +1,5 @@
+import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 
-import app from './firebase.config.js';
-
-export const facebookProvider = new app.auth.FacebookProvider();
-export const googleProvider = new app.auth.GoogleProvider();
+ //default lenguage
+export const googleProvider = new GoogleAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();

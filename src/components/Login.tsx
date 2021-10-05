@@ -1,14 +1,15 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import socialMediaAuth from '../service/auth';
+import {facebookProvider,googleProvider } from '../config/authMethods';
 import './Login.css';
 
 const Login = () => {
     const [isHidden, setIsHidden] = React.useState<boolean>(true);
 
   const handleProvider = async (provider: string) => {
-   
-        const res = await socialMediaAuth(provider);
+    const newProvider = provider === 'google' ? googleProvider : facebookProvider;
+        const res = await socialMediaAuth(newProvider);
         console.log(res);
   };
 
