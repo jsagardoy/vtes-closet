@@ -24,6 +24,7 @@ const Login = () => {
 
   const handleLogout = async () => {
     await signOut(auth);
+    alert(`You have been logged out successfully`);
     setShowLogout(false);
   };
   return (

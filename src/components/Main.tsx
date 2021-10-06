@@ -1,44 +1,33 @@
-import React from 'react'
+import React from 'react';
 import './Main.css';
-import CardList from './main/CardList';
-import NavbarList from './main/NavbarList';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import PrivateMain from './main/privateMain/PrivateMain';
+import PublicMain from './main/privateMain/PublicMain';
 
 const Main = () => {
-    return (
-      <div className='main'>
-        <div className='navbarList'>
-          <NavbarList cardType='Library' />
-        </div>
-        <div className='content'>
-          <CardList cardData='.44 Magnum' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-          <CardList cardData='419 Operation' cardType='Library' />
-        </div>
-      </div>
-    );
-}
+  const [isAuth, setIsAuth] = React.useState<boolean>(false);
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  });
 
-export default Main
+  return (
+    <div className='main'>
+      <div className='private'>
+        {/*  <div className='navbarList'>
+            <NavbarList cardType='Library' />
+          </div> */}
+        <PrivateMain />
+      </div>
+      <div className='public'>
+        <PublicMain />
+      </div>
+    </div>
+  );
+};
+
+export default Main;

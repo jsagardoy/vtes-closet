@@ -2,6 +2,7 @@
     display:flex;
     width: 73%;
     flex-direction: column;
+    justify-content: space-evenly;
     margin-top:0px;
     margin-left: 0px;
     padding-top: 1rem;
@@ -18,4 +19,16 @@
 .navbarList{
     display: flex;
      width:100%;
+}
+.card {
+    width: 15rem;
+    height: 15rem;
+    margin-right: 3rem;
+    margin-bottom: 2rem;
+}
+.public{
+display: flex;
+}
+.private{
+ display:flex;
 }
