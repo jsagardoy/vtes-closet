@@ -7,9 +7,10 @@ import {
   Button,
 } from '@material-ui/core';
 import React from 'react';
+import './content.css';
 
 const PublicMain: React.FC = () => (
-  <>
+  <div className='main__content'>
     <Card className='card'>
       <CardMedia
         component='img'
@@ -42,7 +43,7 @@ const PublicMain: React.FC = () => (
         <Button size='small'>Show Library</Button>
       </CardActions>
     </Card>
-  </>
+  </div>
 );
 
 export default PublicMain;

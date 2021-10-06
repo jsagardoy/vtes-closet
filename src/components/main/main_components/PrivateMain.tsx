@@ -7,9 +7,10 @@ import {
   Button,
 } from '@material-ui/core';
 import React from 'react';
+import './content.css';
 
 const PrivateMain: React.FC = () => (
-  <>
+  <div className='main__content'>
     <Card className='card'>
       <CardMedia
         component='img'
@@ -23,7 +24,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Crypt</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -39,7 +40,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Library</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -55,7 +56,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Crypt</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -71,7 +72,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Library</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -87,7 +88,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Crypt</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -103,7 +104,7 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Library</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
     <Card className='card'>
@@ -119,10 +120,10 @@ const PrivateMain: React.FC = () => (
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show Decks</Button>
+        <Button size='small'>Show</Button>
       </CardActions>
     </Card>
-  </>
+  </div>
 );
 
 export default PrivateMain;

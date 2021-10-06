@@ -3,7 +3,6 @@ import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
-import './Login.css';
 
 const Login = () => {
   const auth = getAuth();
@@ -14,6 +13,9 @@ const Login = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setShowLogout(true);
+    }
+    else {
+      setShowLogout(false);
     }
   });
 
@@ -44,21 +46,7 @@ const Login = () => {
       >
         Logout
       </Button>
-      {/*      <div id='providers' hidden={isHidden}>
-        <Button
-          style={{ color: 'darkcyan' }}
-          onClick={() => handleProvider('google')}
-        >
-          Google
-        </Button> */}
-
-      {/*  <Button
-          style={{ color: 'darkcyan' }}
-          onClick={() => handleProvider('facebook')}
-        >
-          Facebook
-        </Button> 
-      </div>*/}
+      
     </div>
   );
 };

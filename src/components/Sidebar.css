@@ -4,9 +4,10 @@
   background-color: black;
   padding: 1rem;
   color: darkcyan;
-  min-width: 20%;
+  width: 20%;
+  max-width: 20%;
   min-height: 100vh;
- }
+   }
 .list {
   width: 100%;
 }
