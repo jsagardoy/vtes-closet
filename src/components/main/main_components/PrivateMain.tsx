@@ -11,7 +11,7 @@ import './content.css';
 
 const PrivateMain: React.FC = () => (
   <div className='main__content'>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -19,15 +19,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes crypt back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Crypt
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -35,15 +37,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes library back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Library
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -51,15 +55,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes crypt back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Collection - Crypt
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -67,15 +73,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes library back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Library
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -83,15 +91,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes crypt back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Collection - Crypt
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -99,15 +109,17 @@ const PrivateMain: React.FC = () => (
         alt='vtes library back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Collection - Library
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
-    <Card className='card'>
+    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
       <CardMedia
         component='img'
         height='140'
@@ -115,12 +127,14 @@ const PrivateMain: React.FC = () => (
         alt='vtes library back'
       />
       <CardContent>
-        <Typography variant='h6' component='div'>
+        <Typography className='card__typography' variant='h6' component='div'>
           Decks
         </Typography>
       </CardContent>
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button size='small'>Show</Button>
+        <Button style={{ color: 'darkcyan' }} size='small'>
+          Show
+        </Button>
       </CardActions>
     </Card>
   </div>
