@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import PageNotFound from './PageNotFound';
-
+import PageDeniedAccess from './PageDeniedAccess';
 
 const PrivateRoute = ({ isLogged, component: Component, ...rest }) => {
-    return (<Route {...rest}>{isLogged ? <Component />:<PageNotFound />}</Route>)
-}
+  return (
+    <Route {...rest}>{isLogged ? <Component /> : <PageDeniedAccess />}</Route>
+  );
+};
 
 export default PrivateRoute;
