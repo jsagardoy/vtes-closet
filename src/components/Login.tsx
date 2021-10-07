@@ -3,6 +3,7 @@ import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
   const auth = getAuth();
@@ -22,12 +23,13 @@ const Login = () => {
   const handleProvider = async (provider: string) => {
     const res = await socialMediaAuth(googleProvider);
     res !== null ? setShowLogout(true) : setShowLogout(false);
+    window.location.pathname = '/private';
   };
 
   const handleLogout = async () => {
     await signOut(auth);
-    alert(`You have been logged out successfully`);
     setShowLogout(false);
+    window.location.pathname = '/';
   };
   return (
     <div className='login'>
