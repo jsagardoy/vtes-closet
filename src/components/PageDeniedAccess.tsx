@@ -4,7 +4,8 @@ import './PageDeniedAccess.css';
 function PageDeniedAccess() {
   const imgURL =
       'https://usercontent.one/wp/www.blackchantry.com/wp-content/uploads/2020/04/Erica-Danell-VTES-SchreckNET.jpg';
-    const homeURL = 'http://localhost:3000';
+  const homeURL = 'http://localhost:3000';
+  
   return (
     <div className='page__denied__access'>
       <h1 className='denied__access__title'>Access Denied </h1>
@@ -16,7 +17,7 @@ function PageDeniedAccess() {
       </span>
           <img
               className='denied__access__image'
-        src='https://usercontent.one/wp/www.blackchantry.com/wp-content/uploads/2020/04/Erica-Danell-VTES-SchreckNET.jpg'
+        src= {imgURL}
         alt='schrecknet'
       />
     </div>

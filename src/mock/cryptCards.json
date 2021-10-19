@@ -1,0 +1,42 @@
+[
+  {
+    "id": 200001,
+    "name": "Aabbt Kindred",
+    "type": "Vampire",
+    "clan": "Follower of Set",
+    "Group": 2,
+    "Capacity": 4,
+    "Sect": "Independient",
+    "Discipline": ["for", "pre", "ser"],
+    "card text": "Aabbt Kindred cannot perform directed actions unless /Nefertiti/ is ready. Aabbt Kindred can prevent 1 damage each combat. Non-unique.",
+    "Artist": "Lawrence Snelly",
+    "set": "FN:U2, POD:DTC"
+  },
+  {
+    "id": 200004,
+    "name": "Abd al-Rashid",
+    "type": "Vampire",
+    "clan": "Assamite",
+    "Group": 2,
+    "Capacity": 5,
+    "Sect": "Independient",
+    "Discipline": ["obf", "CEL", "QUI"],
+    "card text": "Blood cursed.",
+    "Artist": "Tom W√§nerstrand",
+    "set": "AH:V3, FN:PA, POD:DTC"
+  },
+  {
+    "id": 200923,
+    "name": "Maria Stone",
+    "type": "Vampire",
+    "clan": "Ahrimane",
+    "Group": 3,
+    "Capacity": 5,
+    "adv": "Advanced",
+    "Sect": "Sabbat",
+    "Discipline": ["cel", "obf", "pre", "pro", "spi", "FOR"],
+    "card text": "-1 strength. Sterile. [MERGED] Maria doesn't suffer -1 strength from her special text, and she has superior Spiritus [SPI].",
+    "Artist": "Josh Timbrook",
+    "set": "AH:V3, FN:PA, POD:DTC"
+  }
+]
