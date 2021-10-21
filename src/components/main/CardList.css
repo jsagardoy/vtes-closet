@@ -1,9 +1,30 @@
 .listItemText {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
   color: darkcyan;
+  
 }
 .list {
   width: 100%;
 }
+
+.list__item {
+  width: 30%;
+  color: darkcyan;
+}
+.list__item__icons {
+  display:flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 30%;
+  color: darkcyan;
+  
+}
+.list__item__icons span{
+  margin-right: 0.2rem;
+  background-color: darkred;
+  text-align: center;
+  width: 1rem;
+  border: 1px black solid;
+  border-radius: 45%;
+  color:white
+ }

@@ -1,4 +1,4 @@
-type groupType = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+//type groupType = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 type capacityType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 type sectType = [
     "",
@@ -11,7 +11,7 @@ type sectType = [
 type advType = ['', 'Advanced'];
 type typeType = ["Vampire", "Imbued"];
 type bannedType = ['', 'Banned'];
-type disciplineType = 
+/* export type disciplineType = 
     [
         "abo",
         "ABO",
@@ -70,22 +70,22 @@ type disciplineType =
         "vis",
         "VIS"
     ];
-
+ */
 export interface CryptType {
     id: number,
     aka?: string,
-    name:string,
-    type: typeType,
-    clan: string,
-    Group: groupType,
-    Capacity: capacityType,
-    Sect: sectType,
-    Discipline: [disciplineType],
+    name: string,
+    url: string,
+    types: typeType,
+    clans: string[],
+    group: string,
+    capacity: capacityType,
+    sect: sectType,
+    disciplines: string[],
     adv?: advType,
-    cardText: string,
-    Artist: string,
-    set: string,
+    card_text: string,
+    artists: string[],
+    sets: {},
     banned?:bannedType
 }
-
 

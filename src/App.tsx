@@ -28,7 +28,7 @@ function App() {
       <Header />
       <div className='mainApp'>
         <Router>
-        <Sidebar />
+          <Sidebar />
           <Switch>
             <Route exact path={'/'} component={PublicMain} />
             <Route exact path={'/crypt'} component={CryptList} />
