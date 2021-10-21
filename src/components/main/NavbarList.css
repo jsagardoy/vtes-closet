@@ -1,6 +1,9 @@
 .navbarList {
   display: flex;
   justify-content: space-between;
+  width: 70rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
   border-bottom: 1px solid darkcyan;
 }
 .navbarList h3{

@@ -1,19 +1,18 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100vh;
+  overflow: auto;
+}
+.navbarList {
+  display: flex;
+  width: 100%;
+}
 
-.content{
-    display: flex;
-    flex-direction: column;
-    width:100%;
-    max-height: 100vh;
-    overflow:auto;
+.public {
+  display: flex;
 }
-.navbarList{
-    display: flex;
-     width:100%;
-}
-
-.public{
-display: flex;
-}
-.private{
- display:flex;
+.private {
+  display: flex;
 }

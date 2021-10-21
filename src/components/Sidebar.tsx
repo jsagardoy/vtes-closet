@@ -1,12 +1,14 @@
-import { List, ListItem } from '@material-ui/core';
-import { ListItemText } from '@mui/material';
+import { List } from '@material-ui/core';
+import { ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import './Sidebar.css';
 const Sidebar = () => {
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
+  const history:any = useHistory();
 
   onAuthStateChanged (auth, (us) => {
     if (us) {
@@ -17,71 +19,74 @@ const Sidebar = () => {
     }
   });
 
+  const handleClick = (cardType: string) => {
+    switch (cardType) {
+      case 'Crypt': history.push('/crypt'); break;
+      default: console.log('por otro lado'); break;
+    }
+  }
+
   return (
     <div className='sidebar'>
       <div className='list__container'>
         <List className='list'>
-          <ListItem
+          <ListItemButton
             alignItems='flex-start'
-            button
             dense
             divider
             style={{ borderBottomColor: 'darkcyan' }}
+            onClick={() => handleClick('Crypt')}
           >
             <ListItemText primary='Crypt' />
-          </ListItem>
-          <ListItem
+          </ListItemButton>
+          <ListItemButton
             alignItems='flex-start'
-            button
             dense
             divider
             style={{ borderBottomColor: 'darkcyan' }}
           >
             <ListItemText primary='Library' />
-          </ListItem>
-          <div className='privateSidebar' hidden={user?false:true}>
-            <ListItem
+          </ListItemButton>
+          <div className='privateSidebar' hidden={user ? false : true}>
+            <ListItemButton
               alignItems='flex-start'
-              button
               dense
               divider
               style={{ borderBottomColor: 'darkcyan' }}
             >
               <ListItemText primary='Decks' />
-          </ListItem>
-          <ListItem
-            className='listItem'
-            alignItems='flex-start'
-            button
-            dense
-            divider
-            style={{ borderBottomColor: 'darkcyan' }}
-          >
-            <ListItemText
-              className={'listItemText'}
-              primary='Collection'
-              secondary='Crypt'
-              secondaryTypographyProps={{
-                color: 'darkcyan',
-              }}
-            />
-          </ListItem>
-          <ListItem
-            alignItems='flex-start'
-            button
-            dense
-            divider
-            style={{ borderBottomColor: 'darkcyan' }}
-          >
-            <ListItemText
-              className={'listItemText'}
-              primary='Collection'
-              secondary='Library'
-              secondaryTypographyProps={{
-                color: 'darkcyan',
-              }}
-            />
-          </ListItem>
+            </ListItemButton>
+            <ListItemButton
+              className='listItem'
+              alignItems='flex-start'
+              dense
+              divider
+              style={{ borderBottomColor: 'darkcyan' }}
+            >
+              <ListItemText
+                className={'listItemText'}
+                primary='Collection'
+                secondary='Crypt'
+                secondaryTypographyProps={{
+                  color: 'darkcyan',
+                }}
+              />
+            </ListItemButton>
+            <ListItemButton
+              alignItems='flex-start'
+              dense
+              divider
+              style={{ borderBottomColor: 'darkcyan' }}
+            >
+              <ListItemText
+                className={'listItemText'}
+                primary='Collection'
+                secondary='Library'
+                secondaryTypographyProps={{
+                  color: 'darkcyan',
+                }}
+              />
+            </ListItemButton>
           </div>
         </List>
       </div>

@@ -7,6 +7,7 @@ import PublicMain from './components/main/main_components/PublicMain';
 import PrivateMain from './components/main/main_components/PrivateMain';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import PrivateRoute from './components/PrivateRoute';
+import CryptList from './components/main/main_components/CryptList';
 
 function App() {
   const auth = getAuth();
@@ -25,11 +26,12 @@ function App() {
     <div className='App'>
       {/*  <Login /> */}
       <Header />
-      <div className='main'>
-        <Sidebar />
+      <div className='mainApp'>
         <Router>
+        <Sidebar />
           <Switch>
             <Route exact path={'/'} component={PublicMain} />
+            <Route exact path={'/crypt'} component={CryptList} />
             <PrivateRoute
               isLogged={isLogged}
               component={PrivateMain}

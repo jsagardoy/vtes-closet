@@ -1,5 +1,5 @@
 .sidebar {
-  display: flex;
+  display: absolute;
   border-right: 1px solid darkcyan;
   background-color: black;
   padding: 1rem;
