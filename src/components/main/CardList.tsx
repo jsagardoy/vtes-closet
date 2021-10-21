@@ -1,8 +1,14 @@
 import React from 'react';
-import { List, ListItem, ListItemAvatar, ListItemText, Avatar} from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+} from '@material-ui/core';
 import './CardList.css';
 import { CryptType } from '../../types/crypt_type';
-
+import { createPrivateKey } from 'crypto';
 
 interface listProps {
   cardType: string; //library/crypt
@@ -13,21 +19,30 @@ const list = (props: listProps) => {
   const baseURL = 'https://static.krcg.org/png_wb/disc/';
 
   const getDiscIcon = (discs: string[]): string[] => {
-    let resp :string[]=[];
+    let resp: string[] = [];
     if (discs) {
-      let a = discs.map((disc) => {
-        if (disc.toUpperCase() === disc)
-           return resp.push(`${baseURL}/sup/${disc.toLowerCase()}.png`);
-        else return resp.push(`${baseURL}/inf/${disc}.png`);
+      discs.map((disc) => {
+        let value = disc.substr(0, 3);
+
+        switch (value) {
+          case 'viz':
+            value = 'vin';
+            break;
+          case 'jud':
+            value = 'jus';
+            break;
+        }
+
+        if (value.toUpperCase() === value)
+          return resp.push(`${baseURL}/sup/${value.toLowerCase()}.png`);
+        else return resp.push(`${baseURL}/inf/${value}.png`);
       });
     }
     return resp;
   };
 
-
   const { list, cardType } = props;
 
-  
   return (
     <List className='list'>
       {cardType === 'Library' ? (
@@ -40,24 +55,34 @@ const list = (props: listProps) => {
         </ListItem>
       ) : (
         list.map((crypt: CryptType) => (
-          <ListItem button divider dense alignItems='flex-start'>
-            <ListItemText
-              className='list__item'
-              primary={crypt.name}
-              //secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
-            />
-           {getDiscIcon(crypt.disciplines).map(dis => {
-              return <ListItemAvatar>
-                <Avatar src={dis} alt={dis} />
-              </ListItemAvatar>}
-              )} 
-            
-            <ListItemText
-              className='list__item__icons'
-              primary={crypt.capacity}
-              //secondary={getDiscIcon(crypt.discipline)}
+          <div key={crypt.id}>
+            <ListItem
+              key={crypt.id}
+              button
+              divider
+              dense
+              alignItems='flex-start'
+            >
+              <ListItemText
+                className='list__item'
+                primary={crypt.name}
+                //secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
               />
-          </ListItem>
+              {getDiscIcon(crypt.disciplines).map((dis) => {
+                return (
+                  <ListItemAvatar key={crypt.id && dis}>
+                    <Avatar src={dis} alt={dis} />
+                  </ListItemAvatar>
+                );
+              })}
+
+              <ListItemText
+                className='list__item__icons'
+                primary={crypt.capacity}
+                //secondary={getDiscIcon(crypt.discipline)}
+              />
+            </ListItem>
+          </div>
         ))
       )}
     </List>
