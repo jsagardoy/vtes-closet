@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import './CardList.css';
 import { CryptType } from '../../types/crypt_type';
-import { createPrivateKey } from 'crypto';
 
 interface listProps {
   cardType: string; //library/crypt
@@ -68,19 +67,23 @@ const list = (props: listProps) => {
                 primary={crypt.name}
                 //secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
               />
-              {getDiscIcon(crypt.disciplines).map((dis) => {
-                return (
-                  <ListItemAvatar key={crypt.id && dis}>
-                    <Avatar src={dis} alt={dis} />
-                  </ListItemAvatar>
-                );
-              })}
-
-              <ListItemText
-                className='list__item__icons'
-                primary={crypt.capacity}
-                //secondary={getDiscIcon(crypt.discipline)}
-              />
+              <div className='list__left'>
+                {getDiscIcon(crypt.disciplines).map((dis) => {
+                  return (
+                    <ListItemAvatar
+                      className='list__avatar__icons'
+                      key={crypt.id && dis}
+                    >
+                      <Avatar src={dis} alt={dis} />
+                    </ListItemAvatar>
+                  );
+                })}
+                <ListItemText
+                  className='list__item__icons'
+                  primary={crypt.capacity}
+                  //secondary={getDiscIcon(crypt.discipline)}
+                />
+              </div>
             </ListItem>
           </div>
         ))

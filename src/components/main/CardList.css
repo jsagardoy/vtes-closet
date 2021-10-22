@@ -1,6 +1,7 @@
 .listItemText {
   width: 100%;
   color: darkcyan;
+  align-items: center;
   
 }
 .list {
@@ -20,11 +21,23 @@
   
 }
 .list__item__icons span{
-  margin-right: 0.2rem;
+  margin-top: 0.2rem;
   background-color: darkred;
   text-align: center;
   width: 1rem;
   border: 1px black solid;
   border-radius: 45%;
-  color:white
+  color:white;
+  margin-left: 0.3rem;
+ }
+
+ .list__avatar__icons {
+   display:flex;
+   margin-right: -1rem;
+ }
+
+ .list__left{
+   display:flex;
+   justify-content: flex-end;
+   align-items: center;
  }
