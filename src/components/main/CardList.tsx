@@ -65,7 +65,7 @@ const list = (props: listProps) => {
               <ListItemText
                 className='list__item'
                 primary={crypt.name}
-                //secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
+                secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
               />
               <div className='list__left'>
                 {getDiscIcon(crypt.disciplines).map((dis) => {
