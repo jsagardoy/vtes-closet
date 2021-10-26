@@ -48,8 +48,10 @@
   align-items: center;
 }
 .modal {
-  width: 70rem;
-  height: 50vh;
+  min-width: 70rem;
+  min-height: 50vh;
+  max-width: 70rem;
+  max-height: 50vh;
   color: darkcyan;
 }
 .modal__content {
@@ -69,6 +71,8 @@
   padding-left: 1rem;
   padding-right: 1rem;
   box-shadow: 0 0 15px #ddd;
+   overflow-y: auto;
+  overflow-x: auto;
 }
 .modal img {
   border: 2px solid #000;
