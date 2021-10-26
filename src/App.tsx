@@ -25,7 +25,10 @@ function App() {
   return (
     <div className='App'>
       {/*  <Login /> */}
+      <div className='main__header'>
+
       <Header />
+      </div>
       <div className='mainApp'>
         <Router>
           <Sidebar />
