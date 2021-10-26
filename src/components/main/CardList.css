@@ -35,7 +35,7 @@
 }
 .disc__content {
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
 }
 
 .avatar__disciplines__icons {
@@ -63,15 +63,26 @@
   right: 20%;
   top: 5rem;
 }
-.modal__right {
+.modal__right{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between ;
   background-color: azure;
+}
+.button__container{
+  display:flex;
+  background-color: lightgrey;
+  justify-content: space-between;
+}
+.modal__right__text {
+
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
   box-shadow: 0 0 15px #ddd;
-   overflow-y: auto;
+  overflow-y: auto;
   overflow-x: auto;
 }
 .modal img {
@@ -79,12 +90,18 @@
   box-shadow: 0 0 15px #ddd;
 }
 
-.clan{
+.clan {
   display: flex;
   align-items: center;
 }
 
 .clan__avatar__icon {
-  display:flex;
+  display: flex;
   margin-left: 0.5rem;
 }
+
+.title {
+  border-bottom: 2px black solid;
+  }
+
+

@@ -15,7 +15,7 @@ const Header = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setPhotoURL(user.photoURL ? user.photoURL : defaultAvatarURL);
-      setUserName(user.displayName ? user.displayName:'');
+      setUserName(user.displayName ? user.displayName : '');
     } else {
       setPhotoURL(defaultAvatarURL);
       setUserName('');
@@ -38,7 +38,7 @@ const Header = () => {
         <Login />
         <div className='userInfo'>
           <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
-          <h5>{ userName }</h5>
+          <h5>{userName}</h5>
         </div>
       </div>
     </div>

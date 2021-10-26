@@ -2,12 +2,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color:darkcyan;
+  color: darkcyan;
   border-bottom: 1px solid darkcyan;
   background-color: black;
   padding: 0.8rem 0;
- width:100%;
- 
+  width: 100%;
 }
 
 .header__left {
@@ -21,25 +20,25 @@
 }
 
 .header__center h3 {
-    display:flex;
-    margin-right: 1rem;
-    align-items: center;
-    color:darkcyan;
+  display: flex;
+  margin-right: 1rem;
+  align-items: center;
+  color: darkcyan;
 }
 
 .header__right {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
-#avatar{
+#avatar {
   margin-left: 1rem;
 }
 .userInfo {
-  display:flex;
+  display: flex;
   direction: column;
   align-items: center;
 }
-.userInfo h5{
+.userInfo h5 {
   margin-left: 1rem;
 }
