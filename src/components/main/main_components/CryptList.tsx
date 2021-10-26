@@ -1,15 +1,15 @@
 import React from 'react'
 import './CryptList.css';
 import NavbarList from '../NavbarList';
-import CardList from '../CardList';
+import CryptCardList from '../CardList';
 import { CryptType } from '../../../types/crypt_type';
 
 const CryptList = () => {
     const crytlist:[CryptType] = require('../../../mock/cryptCards.json');
     return (
       <div className='crypt__list'>
-            <NavbarList cardType='Crypt' />
-            <CardList cardType='Crypt' list={crytlist}/>
+        <NavbarList cardType='Crypt' />
+        <CryptCardList cardType='Crypt' list={crytlist} />
       </div>
     );
 }
