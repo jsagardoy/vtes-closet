@@ -25,9 +25,9 @@ const CryptCardList = (props: listProps) => {
   const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
   const [cryptIndex, setCryptIndex] = React.useState<number>(0);
 
-  const { list, cardType } = props;
+  const { list } = props;
 
-  const handleOpen = (crypt: CryptType, index:number) => {
+  const handleOpen = (crypt: CryptType, index: number) => {
     setOpenedCrypt(crypt);
     setOpen(true);
     setCryptIndex(index);
@@ -38,15 +38,15 @@ const CryptCardList = (props: listProps) => {
   };
 
   const handleNext = () => {
-    const newIndex:number = cryptIndex + 1;
+    const newIndex: number = cryptIndex + 1;
     const crypt: CryptType = list[newIndex];
-    handleOpen(crypt,newIndex);
-  }
+    handleOpen(crypt, newIndex);
+  };
   const handlePrevious = () => {
-       const newIndex: number = cryptIndex - 1;
-       const crypt: CryptType = list[newIndex];
-       handleOpen(crypt, newIndex);
-  }
+    const newIndex: number = cryptIndex - 1;
+    const crypt: CryptType = list[newIndex];
+    handleOpen(crypt, newIndex);
+  };
 
   React.useEffect(() => {}, []);
   return (
@@ -127,50 +127,42 @@ const CryptCardList = (props: listProps) => {
           </Modal>
         </div>
       ) : null}
-      <List className='list'>
-        {cardType === 'Library' ? (
-          <ListItem button divider dense alignItems='flex-start'>
-            <ListItemText className={'listItemText'} />
-          </ListItem>
-        ) : (
-          list.map((crypt: CryptType, index: number) => (
-            <div key={crypt.id}>
-              <ListItem
-                key={crypt.id}
-                button
-                divider
-                dense
-                alignItems='flex-start'
-                onClick={() => handleOpen(crypt, index)}
-              >
+      <List className='crypt__list'>
+        {list.map((crypt: CryptType, index: number) => (
+          <div key={crypt.id}>
+            <ListItem
+              key={crypt.id}
+              button
+              divider
+              dense
+              alignItems='flex-start'
+              onClick={() => handleOpen(crypt, index)}
+            >
+              <ListItemText
+                className='list__item'
+                primary={crypt.name}
+                secondary={`${crypt.clans.map((clan) => clan)}: ${crypt.group}`}
+              />
+              <div className='list__left'>
+                {getDiscIcon(crypt.disciplines).map((dis) => {
+                  return (
+                    <ListItemAvatar
+                      className='list__avatar__icons'
+                      key={crypt.id && dis}
+                    >
+                      <Avatar src={dis} alt={dis} />
+                    </ListItemAvatar>
+                  );
+                })}
                 <ListItemText
-                  className='list__item'
-                  primary={crypt.name}
-                  secondary={`${crypt.clans.map((clan) => clan)}: ${
-                    crypt.group
-                  }`}
+                  className='list__item__icons'
+                  primary={crypt.capacity}
+                  //secondary={getDiscIcon(crypt.discipline)}
                 />
-                <div className='list__left'>
-                  {getDiscIcon(crypt.disciplines).map((dis) => {
-                    return (
-                      <ListItemAvatar
-                        className='list__avatar__icons'
-                        key={crypt.id && dis}
-                      >
-                        <Avatar src={dis} alt={dis} />
-                      </ListItemAvatar>
-                    );
-                  })}
-                  <ListItemText
-                    className='list__item__icons'
-                    primary={crypt.capacity}
-                    //secondary={getDiscIcon(crypt.discipline)}
-                  />
-                </div>
-              </ListItem>
-            </div>
-          ))
-        )}
+              </div>
+            </ListItem>
+          </div>
+        ))}
       </List>
     </>
   );

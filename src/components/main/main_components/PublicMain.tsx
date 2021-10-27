@@ -11,11 +11,14 @@ import './content.css';
 
 const PublicMain: React.FC = () => (
   <div className='main__content'>
-    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
+    <Card
+      className='card'
+      style={{ backgroundColor: 'black', borderRadius: '25px' }}
+    >
       <CardMedia
         component='img'
         height='140'
-        image='https://upload.wikimedia.org/wikipedia/en/thumb/3/38/Vtes_Tanlarge.gif/180px-Vtes_Tanlarge.gif'
+        image='https://static.krcg.org/card/cardbackcrypt.jpg '
         alt='vtes crypt back'
       />
       <CardContent>
@@ -29,11 +32,14 @@ const PublicMain: React.FC = () => (
         </Button>
       </CardActions>
     </Card>
-    <Card className='card' style={{ backgroundColor: 'black', borderRadius:'25px' }}>
+    <Card
+      className='card'
+      style={{ backgroundColor: 'black', borderRadius: '25px' }}
+    >
       <CardMedia
         component='img'
         height='140'
-        image='https://assets.cardgamegeek.com/public/images/card_backs/vtes_back.jpg'
+        image='https://static.krcg.org/card/cardbacklibrary.jpg'
         alt='vtes library back'
       />
       <CardContent>

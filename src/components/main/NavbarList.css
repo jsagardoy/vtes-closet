@@ -1,17 +1,19 @@
 .navbarList {
   display: flex;
   justify-content: space-between;
-  width: 70rem;
+  width: 100%;
   margin-top: 1rem;
-  margin-left: 1rem;
+  margin-bottom: 0.2rem;
   border-bottom: 1px solid darkcyan;
 }
-.navbarList h3{
-    color:darkcyan;
+.navbarList h3 {
+  color: darkcyan;
 }
 .navbarList__left {
   display: flex;
+  margin-left: 1rem;
 }
 .navbarList__right {
   display: flex;
+  margin-right: 1rem;
 }

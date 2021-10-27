@@ -8,23 +8,26 @@ import './Sidebar.css';
 const Sidebar = () => {
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
-  const history:any = useHistory();
+  const history: any = useHistory();
 
-  onAuthStateChanged (auth, (us) => {
+  onAuthStateChanged(auth, (us) => {
     if (us) {
       setUser(us);
-    }
-    else {
+    } else {
       setUser(null);
     }
   });
 
   const handleClick = (cardType: string) => {
     switch (cardType) {
-      case 'Crypt': history.push('/crypt'); break;
-      default: console.log('por otro lado'); break;
+      case 'Crypt':
+        history.push('/crypt');
+        break;
+      default:
+        console.log('por otro lado');
+        break;
     }
-  }
+  };
 
   return (
     <div className='sidebar'>
