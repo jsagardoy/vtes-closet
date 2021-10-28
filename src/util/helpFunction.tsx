@@ -15,6 +15,9 @@ export const getDiscIcon = (discs: string[]): string[] => {
         case 'jud':
           value = 'jus';
           break;
+        case 'fli':
+          value = 'flight'
+          break;
       }
 
       if (value.toUpperCase() === value)

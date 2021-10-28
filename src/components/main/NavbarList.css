@@ -17,3 +17,25 @@
   display: flex;
   margin-right: 1rem;
 }
+
+.navbar__bottom  {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.disc__container{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 38%;
+  border-left: 2px solid darkcyan;
+  border-right: 2px solid darkcyan;
+  border-bottom: 1px solid darkcyan;
+  box-shadow: black 2px 3px;
+  border-radius: 5px;
+}
+.opacity__disc{
+  opacity: 0.3;
+}
+
