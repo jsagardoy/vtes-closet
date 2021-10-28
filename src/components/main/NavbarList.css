@@ -23,6 +23,8 @@
   justify-content: flex-end;
   margin-right: 1rem;
   margin-left: 1rem;
+  border-bottom: 1px grey solid;
+  padding-bottom: 1rem;
 }
 .disc__container{
   display: flex;
