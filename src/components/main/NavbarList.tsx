@@ -2,55 +2,22 @@ import React from 'react';
 import { MoreVert, Search } from '@material-ui/icons';
 import './NavbarList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import { CryptType } from '../../types/crypt_type';
+import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
-import { getDiscIcon } from '../../util';
+import { getDiscIcon, getDiscList } from '../../util';
 import { Avatar } from '@material-ui/core';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
-  searchList: (condition: string) => void;
+  searchList: (name: string, discList: string[]) => void;
 }
 
 const NavbarList = (props: NavbarListProps) => {
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
-  type discType = {
-    name: string[];
-    value: number[];
-  };
-  const disc_inf: string[] = [
-    'abo',
-    'ani',
-    'aus',
-    'cel',
-    'chi',
-    'dai',
-    'dem',
-    'dom',
-    'for',
-    'mel',
-    'myt',
-    'nec',
-    'obe',
-    'obf',
-    'obt',
-    'pot',
-    'pre',
-    'pro',
-    'qui',
-    'san',
-    'ser',
-    'spi',
-    'tem',
-    'thn',
-    'tha',
-    'val',
-    'vic',
-    'vis',
-  ];
-
+  
+  const disc_inf: string[] = disciplines_inf;
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
 
   const values: number[] = disc_inf.map((elem) => 0);
@@ -59,17 +26,24 @@ const NavbarList = (props: NavbarListProps) => {
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
+  const handleFilterDisc = () => {
+    const disc_list: string[] = getDiscList(selected_discList);
+    searchList(inputSearch , disc_list);
+  } 
+  
+  
   const handleSelectDisc = (index: number) => {
     let value: number = selected_discList.value[index];
     let aux: discType = { ...selected_discList };
-
     value === 2 ? (aux.value[index] = 0) : (aux.value[index] = value + 1);
     setSelected_discList(aux);
+    handleFilterDisc();
+
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputSearch(e.target.value);
-    searchList(e.target.value);
+    searchList(e.target.value,getDiscList(selected_discList));
   };
   const handleSearch = () => {
     setShowInput(!showInput);
@@ -100,10 +74,9 @@ const NavbarList = (props: NavbarListProps) => {
           <IconButton size='small' onClick={() => handleSearch()}>
             <Search style={{ fill: 'darkcyan' }} />
           </IconButton>
-          <IconButton size='small'>
+          <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert
               style={{ fill: 'darkcyan' }}
-              onClick={() => handleMore()}
             />
           </IconButton>
         </div>

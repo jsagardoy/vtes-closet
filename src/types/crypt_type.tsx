@@ -11,6 +11,7 @@ type sectType = [
 type advType = ['', 'Advanced'];
 type typeType = ["Vampire", "Imbued"];
 type bannedType = ['', 'Banned'];
+
 /* export type disciplineType = 
     [
         "abo",
@@ -88,4 +89,39 @@ export interface CryptType {
     sets: {},
     banned?:bannedType
 }
+export type discType = {
+  name: string[];
+  value: number[];
+};
+
+export const disciplines_inf:string[]=[
+    'abo',
+    'ani',
+    'aus',
+    'cel',
+    'chi',
+    'dai',
+    'dem',
+    'dom',
+    'for',
+    'mel',
+    'myt',
+    'nec',
+    'obe',
+    'obf',
+    'obt',
+    'pot',
+    'pre',
+    'pro',
+    'qui',
+    'san',
+    'ser',
+    'spi',
+    'tem',
+    'thn',
+    'tha',
+    'val',
+    'vic',
+    'vis',
+  ];
 

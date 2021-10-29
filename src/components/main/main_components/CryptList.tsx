@@ -3,18 +3,34 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType } from '../../../types/crypt_type';
+import { isTemplateTail } from 'typescript';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
   const [list, setList] = React.useState<CryptType[]>(cryptList);
 
-  const handleSearch = (condition: string) => {
+  const handleSearch = (name: string, discList: string[]) => {
+    
     setList(
-      cryptList.filter((item) =>
-        item.name.toLocaleLowerCase().includes(condition)
-      )
+      cryptList.filter((item) => item.name.toLocaleLowerCase().includes(name))
+        .filter((elem) => compareArrays(elem.disciplines, discList))
     );
-  };
+      
+/*     cryptList.map((item) =>
+      compareArrays(item.disciplines, discList)
+    ); */
+  }
+
+  const compareArrays = (disciplines: string[], discList: string[]):boolean => {
+    
+    const res = disciplines.map((elem) =>
+      discList.find((item) => elem === item)
+    );
+    const aux = res.map((elem) => elem !== undefined);
+
+    return aux.filter((item) => item === true).length === discList.length;
+    
+  }
 
   React.useEffect(() => {}, []);
   return (
@@ -22,7 +38,7 @@ const CryptList = () => {
       <NavbarList
         cardType='Crypt'
         list={list}
-        searchList={(condition) => handleSearch(condition)}
+        searchList={(name:string, discList:string[]) => handleSearch(name, discList)}
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>
