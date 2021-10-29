@@ -9,27 +9,24 @@ const CryptList = () => {
   const [list, setList] = React.useState<CryptType[]>(cryptList);
 
   const handleSearch = (name: string, discList: string[]) => {
-    
     setList(
-      cryptList.filter((item) => item.name.toLocaleLowerCase().includes(name))
+      cryptList
+        .filter((item) => item.name.toLocaleLowerCase().includes(name))
         .filter((elem) => compareArrays(elem.disciplines, discList))
     );
-      
-/*     cryptList.map((item) =>
-      compareArrays(item.disciplines, discList)
-    ); */
-  }
+  };
 
-  const compareArrays = (disciplines: string[], discList: string[]):boolean => {
-    
+  const compareArrays = (
+    disciplines: string[],
+    discList: string[]
+  ): boolean => {
     const res = disciplines.map((elem) =>
       discList.find((item) => elem === item)
     );
     const aux = res.map((elem) => elem !== undefined);
 
     return aux.filter((item) => item === true).length === discList.length;
-    
-  }
+  };
 
   React.useEffect(() => {}, []);
   return (
@@ -37,7 +34,9 @@ const CryptList = () => {
       <NavbarList
         cardType='Crypt'
         list={list}
-        searchList={(name:string, discList:string[]) => handleSearch(name, discList)}
+        searchList={(name: string, discList: string[]) =>
+          handleSearch(name, discList)
+        }
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>

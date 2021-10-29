@@ -27,15 +27,19 @@
   padding-bottom: 1rem;
 }
 .disc__container{
+  margin-top: 8.5rem;
+  margin-right: 0.5rem;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 38%;
+  width: 30%;
+  height: 35vh;
   border-left: 2px solid darkcyan;
   border-right: 2px solid darkcyan;
   border-bottom: 1px solid darkcyan;
   box-shadow: black 2px 3px;
   border-radius: 5px;
+  background-color: azure;
 }
 .opacity__disc{
   opacity: 0.3;

@@ -6,6 +6,7 @@ import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import { getDiscIcon, getDiscList } from '../../util';
 import { Avatar } from '@material-ui/core';
+import Modal from '@mui/material/Modal/Modal';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
@@ -81,8 +82,7 @@ const NavbarList = (props: NavbarListProps) => {
           </IconButton>
         </div>
       </div>
-      {showMore ? (
-        <div className='navbar__bottom'>
+      <Modal open={showMore} onClose={()=>handleMore()} className='navbar__bottom'>
           <div className='disc__container'>
             {getDiscIcon(selected_discList.name).map((dis, index) => {
               return (
@@ -105,8 +105,7 @@ const NavbarList = (props: NavbarListProps) => {
               );
             })}
           </div>
-        </div>
-      ) : null}
+        </Modal>
     </>
   );
 };
