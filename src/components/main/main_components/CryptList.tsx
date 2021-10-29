@@ -3,7 +3,6 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType } from '../../../types/crypt_type';
-import { isTemplateTail } from 'typescript';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');

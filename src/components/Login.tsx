@@ -3,7 +3,6 @@ import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
-import { Redirect } from 'react-router-dom';
 
 const Login = () => {
   const auth = getAuth();
