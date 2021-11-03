@@ -29,11 +29,12 @@
 .disc__container{
   margin-top: 8.5rem;
   margin-right: 0.5rem;
-  display: flex;
+  display: inline;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 30%;
-  height: 35vh;
+  width: fit-content;
+  max-width: 23rem;
+  height: fit-content;
   border-left: 2px solid darkcyan;
   border-right: 2px solid darkcyan;
   border-bottom: 1px solid darkcyan;
