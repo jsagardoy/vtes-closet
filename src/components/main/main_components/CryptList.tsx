@@ -3,24 +3,34 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType } from '../../../types/crypt_type';
-import { getClans } from '../../../util';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
   const [list, setList] = React.useState<CryptType[]>(cryptList);
 
-  const handleSearch = (name: string, discList: string[], clan: string) => {
-    
+  const handleSearch = (
+    name: string,
+    discList: string[],
+    clan: string,
+    sect: string
+  ) => {
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
-      .filter(
-        (item) =>
-          clan !== '' ? (item.clans.filter((clanItem) => clanItem === clan).length > 0)
-            :
-          item.clans.map((clanItem)=>clanItem)
-      );
-
+      .filter((item) =>
+        clan !== ''
+          ? item.clans.filter((clanItem) => clanItem === clan).length > 0
+          : item.clans.map((clanItem) => clanItem)
+      )
+      .filter((item) => {
+        if (sect !== '') {
+          if (item.card_text.indexOf(sect) !== -1) {
+            return item;
+          }
+        } else {
+          return item;
+        }
+      });
     setList(resp);
   };
 
@@ -46,9 +56,12 @@ const CryptList = () => {
       <NavbarList
         cardType='Crypt'
         list={list}
-        searchList={(name: string, discList: string[], clan: string) =>
-          handleSearch(name, discList, clan)
-        }
+        searchList={(
+          name: string,
+          discList: string[],
+          clan: string,
+          sect: string
+        ) => handleSearch(name, discList, clan, sect)}
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>

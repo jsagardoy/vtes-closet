@@ -4,7 +4,7 @@ import './NavbarList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
-import { getClans, getDiscIcon, getDiscList } from '../../util';
+import { getClans, getDiscIcon, getDiscList, getSects } from '../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -13,7 +13,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
-  searchList: (name: string, discList: string[], clan:string ) => void;
+  searchList: (name: string, discList: string[], clan:string, sect: string) => void;
 }
 
 const NavbarList = (props: NavbarListProps) => {
@@ -21,7 +21,8 @@ const NavbarList = (props: NavbarListProps) => {
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
-
+  const [selectedSect, setSelectedSect] = React.useState<string>('');
+  
   const disc_inf: string[] = disciplines_inf;
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
 
@@ -33,7 +34,7 @@ const NavbarList = (props: NavbarListProps) => {
 
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
-    searchList(inputSearch, disc_list, selectedClan);
+    searchList(inputSearch, disc_list, selectedClan,selectedSect);
   };
 
   const handleSelectDisc = (index: number) => {
@@ -52,10 +53,10 @@ const NavbarList = (props: NavbarListProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
     if (isEvent(e)) {
       setInputSearch(e.target.value);
-      searchList(e.target.value, getDiscList(selected_discList), selectedClan);
+      searchList(e.target.value, getDiscList(selected_discList), selectedClan,selectedSect);
     } else {
       setInputSearch('');
-      searchList('', getDiscList(selected_discList),selectedClan);
+      searchList('', getDiscList(selected_discList),selectedClan, selectedSect);
     }
   };
   const handleSearch = () => {
@@ -66,7 +67,22 @@ const NavbarList = (props: NavbarListProps) => {
   };
   const handleClan = (event: SelectChangeEvent) => {
     setSelectedClan(event.target.value);
-    searchList(inputSearch, getDiscList(selected_discList), event.target.value);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      event.target.value,
+      selectedSect
+    );
+  };
+
+  const handleSect = (event: SelectChangeEvent) => {
+    setSelectedSect(event.target.value);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      selectedClan,
+      event.target.value
+    );
   };
 
   React.useEffect(() => {}, []);
@@ -140,7 +156,7 @@ const NavbarList = (props: NavbarListProps) => {
             <FormControl variant='standard'>
               <Select
                 id='select__clan__id'
-                labelId='clan__select__standard__label'
+                labelId='select__clan__standard__label'
                 className='select__clan'
                 value={selectedClan}
                 onChange={handleClan}
@@ -152,6 +168,30 @@ const NavbarList = (props: NavbarListProps) => {
                 {getClans().map((clan) => (
                   <MenuItem key={clan} value={clan}>
                     {clan}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <Divider />
+
+          <div className='filter__sect'>
+            <InputLabel>Sect</InputLabel>
+            <FormControl variant='standard'>
+              <Select
+                id='select__sect__id'
+                labelId='select__sect__standard__label'
+                className='select__sect'
+                value={selectedSect}
+                onChange={handleSect}
+                label='Sect'
+              >
+                <MenuItem value=''>
+                  <em>None</em>
+                </MenuItem>
+                {getSects().map((sect) => (
+                  <MenuItem key={sect} value={sect}>
+                    {sect}
                   </MenuItem>
                 ))}
               </Select>

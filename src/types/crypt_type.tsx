@@ -1,13 +1,5 @@
 //type groupType = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 type capacityType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
-type sectType = [
-    "",
-    "Anarch",
-    "Camarilla",
-    "Sabbat",
-    "Laibon",
-    "Independent"
-];
 type advType = ['', 'Advanced'];
 type typeType = ["Vampire", "Imbued"];
 type bannedType = ['', 'Banned'];
@@ -21,7 +13,6 @@ export interface CryptType {
     clans: string[],
     group: string,
     capacity: capacityType,
-    sect: sectType,
     disciplines: string[],
     adv?: advType,
     card_text: string,

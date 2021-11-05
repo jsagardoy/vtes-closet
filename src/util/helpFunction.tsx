@@ -147,3 +147,12 @@ export const getClans = () => [
   'Ventrue Antitribu',
   'Visionary'
 ].sort();
+
+export const getSects = () => [
+  '',
+  'Anarch',
+  'Camarilla',
+  'Sabbat',
+  'Laibon',
+  'Independent',
+];
