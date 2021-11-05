@@ -83,70 +83,74 @@ export const getClanIcon = (clans: string[]): string[] => {
   return resp;
 };
 
-export const getDiscList = (discList: discType): string[] => {
-  let resp: string[] = [];
-  discList.value.map((value, index) => {
-    switch (value) {
-      case 1:
-        resp.push(discList.name[index].toLowerCase());
-        break;
-      case 2:
-        resp.push(discList.name[index].toUpperCase());
-        break;
+export const getDiscList = (discList: discType): string[] =>
+  discList.value.map(
+    (value, index) => {
+      switch (value) {
+        case 1:
+          return discList.name[index].toLowerCase();
+
+        case 2:
+          return discList.name[index].toUpperCase();
+        default:
+          return '';
+      }
     }
-  });
-  return resp;
-};
-export const getClans = () => [
-  'Assamite',
-  'Brujah',
-  'Follower of Set',
-  'Gangrel',
-  'Lasombra',
-  'Malkavian',
-  'Nosferatu',
-  'Ravnos',
-  'Toreador',
-  'Tremere',
-  'Ventrue',
-  'Abominations',
-  'Ahrimanes',
-  'Akunanse',
-  'Avenger',
-  'Baali',
-  'Banuhaqim',
-  'Blood Brother',
-  'Brujah Antitribu',
-  'Caitiff',
-  'Daugters of Cacaphony',
-  'Defender',
-  'Gangrel Antitribu',
-  'Gargoyles',
-  'Giovanni',
-  'Guruji',
-  'Harbingers Of Skulls',
-  'Innocent',
-  'Ishtarri',
-  'Judge',
-  'Kyasid',
-  'Malkavian Antiotribu',
-  'Martyr',
-  'Ministry',
-  'Nagaraja',
-  'Nosferatu Antitribu',
-  'Osebo',
-  'Pander',
-  'Redeemer',
-  'Salubri',
-  'Salubri Antitribu',
-  'Samedi',
-  'Toreador Antitribu',
-  'Tremere Antitribu',
-  'True Brujah',
-  'Tzimisce',
-  'Ventrue Antitribu',
-  'Visionary'
-].sort();
+    //return resp;
+  );
+//return resp;
+
+export const getClans = () =>
+  [
+    'Assamite',
+    'Brujah',
+    'Follower of Set',
+    'Gangrel',
+    'Lasombra',
+    'Malkavian',
+    'Nosferatu',
+    'Ravnos',
+    'Toreador',
+    'Tremere',
+    'Ventrue',
+    'Abominations',
+    'Ahrimanes',
+    'Akunanse',
+    'Avenger',
+    'Baali',
+    'Banuhaqim',
+    'Blood Brother',
+    'Brujah Antitribu',
+    'Caitiff',
+    'Daugters of Cacaphony',
+    'Defender',
+    'Gangrel Antitribu',
+    'Gargoyles',
+    'Giovanni',
+    'Guruji',
+    'Harbingers Of Skulls',
+    'Innocent',
+    'Ishtarri',
+    'Judge',
+    'Kyasid',
+    'Malkavian Antiotribu',
+    'Martyr',
+    'Ministry',
+    'Nagaraja',
+    'Nosferatu Antitribu',
+    'Osebo',
+    'Pander',
+    'Redeemer',
+    'Salubri',
+    'Salubri Antitribu',
+    'Samedi',
+    'Toreador Antitribu',
+    'Tremere Antitribu',
+    'True Brujah',
+    'Tzimisce',
+    'Ventrue Antitribu',
+    'Visionary',
+  ].sort();
 
 export const getSects = () => [
   '',
@@ -171,6 +175,5 @@ export const getTitle = () => [
   'Primogen',
   'Prince',
   'Priscus',
-  'Regent'
-
-]
+  'Regent',
+];
