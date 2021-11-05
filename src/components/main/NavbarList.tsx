@@ -4,7 +4,7 @@ import './NavbarList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
-import { getClans, getDiscIcon, getDiscList, getSects } from '../../util';
+import { getClans, getDiscIcon, getDiscList, getSects, getTitle } from '../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -13,7 +13,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
-  searchList: (name: string, discList: string[], clan:string, sect: string) => void;
+  searchList: (
+    name: string,
+    discList: string[],
+    clan: string,
+    sect: string,
+    title: string
+  ) => void;
 }
 
 const NavbarList = (props: NavbarListProps) => {
@@ -22,7 +28,8 @@ const NavbarList = (props: NavbarListProps) => {
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
-  
+  const [selectedTitle, setSelectedTitle] = React.useState<string>('');
+
   const disc_inf: string[] = disciplines_inf;
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
 
@@ -34,7 +41,7 @@ const NavbarList = (props: NavbarListProps) => {
 
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
-    searchList(inputSearch, disc_list, selectedClan,selectedSect);
+    searchList(inputSearch, disc_list, selectedClan, selectedSect, selectedTitle);
   };
 
   const handleSelectDisc = (index: number) => {
@@ -53,10 +60,22 @@ const NavbarList = (props: NavbarListProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
     if (isEvent(e)) {
       setInputSearch(e.target.value);
-      searchList(e.target.value, getDiscList(selected_discList), selectedClan,selectedSect);
+      searchList(
+        e.target.value,
+        getDiscList(selected_discList),
+        selectedClan,
+        selectedSect,
+        selectedTitle
+      );
     } else {
       setInputSearch('');
-      searchList('', getDiscList(selected_discList),selectedClan, selectedSect);
+      searchList(
+        '',
+        getDiscList(selected_discList),
+        selectedClan,
+        selectedSect,
+        selectedTitle
+      );
     }
   };
   const handleSearch = () => {
@@ -71,7 +90,8 @@ const NavbarList = (props: NavbarListProps) => {
       inputSearch,
       getDiscList(selected_discList),
       event.target.value,
-      selectedSect
+      selectedSect,
+      selectedTitle
     );
   };
 
@@ -81,9 +101,28 @@ const NavbarList = (props: NavbarListProps) => {
       inputSearch,
       getDiscList(selected_discList),
       selectedClan,
+      event.target.value,
+      selectedTitle
+    );
+  };
+  const handleTitle = (event: SelectChangeEvent) => {
+    setSelectedTitle(event.target.value);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      selectedClan,
+      selectedSect,
       event.target.value
     );
   };
+
+  const prepareTitle = (title: string): string => {
+    switch (title) {
+      case '1 vote': return '1 vote (titled)';
+      case '2 votes': return '2 votes (titled)';
+      default: return title;
+      }
+  }
 
   React.useEffect(() => {}, []);
 
@@ -192,6 +231,26 @@ const NavbarList = (props: NavbarListProps) => {
                 {getSects().map((sect) => (
                   <MenuItem key={sect} value={sect}>
                     {sect}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl variant='standard'>
+              <InputLabel>Title</InputLabel>
+              <Select
+                id='select__title__id'
+                labelId='select__title__standard__label'
+                className='select__title'
+                value={selectedTitle}
+                onChange={handleTitle}
+                label='Title'
+              >
+                <MenuItem value=''>
+                  <em>None</em>
+                </MenuItem>
+                {getTitle().map((title) => (
+                  <MenuItem key={title} value={prepareTitle(title)}>
+                    {title}
                   </MenuItem>
                 ))}
               </Select>

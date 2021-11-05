@@ -12,7 +12,8 @@ const CryptList = () => {
     name: string,
     discList: string[],
     clan: string,
-    sect: string
+    sect: string,
+    title: string
   ) => {
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
@@ -22,16 +23,22 @@ const CryptList = () => {
           ? item.clans.filter((clanItem) => clanItem === clan).length > 0
           : item.clans.map((clanItem) => clanItem)
       )
-      .filter((item) => {
-        if (sect !== '') {
-          if (item.card_text.indexOf(sect) !== -1) {
-            return item;
-          }
-        } else {
-          return item;
-        }
-      });
+      .filter((item) => findInText(item, sect))
+      .filter((item) => findInText(item, title));
+    
     setList(resp);
+  };
+
+  const findInText = (crypt: CryptType, text: string) => {
+    let aux = null;
+    if (text !== '') {
+      if (crypt.card_text.indexOf(text) !== -1) {
+        aux=crypt;
+      } 
+    } else {
+      aux=crypt;
+    }
+    return aux;
   };
 
   const compareArrays = (
@@ -60,8 +67,9 @@ const CryptList = () => {
           name: string,
           discList: string[],
           clan: string,
-          sect: string
-        ) => handleSearch(name, discList, clan, sect)}
+          sect: string,
+          title: string
+        ) => handleSearch(name, discList, clan, sect, title)}
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>

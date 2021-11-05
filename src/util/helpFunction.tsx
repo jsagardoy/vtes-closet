@@ -156,3 +156,21 @@ export const getSects = () => [
   'Laibon',
   'Independent',
 ];
+
+export const getTitle = () => [
+  'No Title',
+  '1 vote',
+  '2 votes',
+  'Archbishop',
+  'Baron',
+  'Bishop',
+  'Cardinal',
+  'Inner Circle',
+  'Justicar',
+  'Magaji',
+  'Primogen',
+  'Prince',
+  'Priscus',
+  'Regent'
+
+]
