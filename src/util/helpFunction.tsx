@@ -176,4 +176,5 @@ export const getTitle = () => [
   'Prince',
   'Priscus',
   'Regent',
+  'Titled'
 ];

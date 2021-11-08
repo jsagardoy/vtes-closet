@@ -3,6 +3,7 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType } from '../../../types/crypt_type';
+import { getTitle } from '../../../util';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
@@ -32,10 +33,21 @@ const CryptList = () => {
   const findInText = (crypt: CryptType, text: string) => {
     let aux = null;
     if (text !== '') {
+      if (text === 'No Title') {
+        //in case filter is no title
+        const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
+        aux = temp.every((elem) => elem === -1) ? crypt : null;
+      }
+      if (text === 'Titled') {
+        //in case filter is no title
+        const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
+        aux = temp.some((elem) => elem !== -1) ? crypt : null;
+      }
       if (crypt.card_text.indexOf(text) !== -1) {
         aux = crypt;
       }
     } else {
+      
       aux = crypt;
     }
     return aux;
