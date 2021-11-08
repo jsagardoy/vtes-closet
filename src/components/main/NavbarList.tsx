@@ -4,7 +4,14 @@ import './NavbarList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
-import { getClans, getDiscIcon, getDiscList, getSects, getTitle } from '../../util';
+import {
+  getClans,
+  getClanIcon,
+  getDiscIcon,
+  getDiscList,
+  getSects,
+  getTitle,
+} from '../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -29,19 +36,25 @@ const NavbarList = (props: NavbarListProps) => {
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
-
+  
   const disc_inf: string[] = disciplines_inf;
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
-
+  
   const values: number[] = disc_inf.map((elem) => 0);
   let aux: discType = { name: disc_inf, value: values };
-
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
+
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
-    searchList(inputSearch, disc_list, selectedClan, selectedSect, selectedTitle);
+    searchList(
+      inputSearch,
+      disc_list,
+      selectedClan,
+      selectedSect,
+      selectedTitle
+    );
   };
 
   const handleSelectDisc = (index: number) => {
@@ -118,11 +131,14 @@ const NavbarList = (props: NavbarListProps) => {
 
   const prepareTitle = (title: string): string => {
     switch (title) {
-      case '1 vote': return '1 vote (titled)';
-      case '2 votes': return '2 votes (titled)';
-      default: return title;
-      }
-  }
+      case '1 vote':
+        return '1 vote (titled)';
+      case '2 votes':
+        return '2 votes (titled)';
+      default:
+        return title;
+    }
+  };
 
   React.useEffect(() => {}, []);
 
@@ -194,7 +210,7 @@ const NavbarList = (props: NavbarListProps) => {
             <InputLabel>Clan</InputLabel>
             <FormControl variant='standard'>
               <Select
-                id='select__clan__id'
+                id='clan__select__id'
                 labelId='select__clan__standard__label'
                 className='select__clan'
                 value={selectedClan}
@@ -206,6 +222,12 @@ const NavbarList = (props: NavbarListProps) => {
                 </MenuItem>
                 {getClans().map((clan) => (
                   <MenuItem key={clan} value={clan}>
+                    <Avatar
+                      
+                      className='select__clan__avatar__icon'
+                      src={getClanIcon([clan]).find((c) => c)}
+                      alt={clan}
+                    />
                     {clan}
                   </MenuItem>
                 ))}
@@ -235,8 +257,11 @@ const NavbarList = (props: NavbarListProps) => {
                 ))}
               </Select>
             </FormControl>
+          </div>
+          <Divider />
+          <div className='filter__title'>
+            <InputLabel>Title</InputLabel>
             <FormControl variant='standard'>
-              <InputLabel>Title</InputLabel>
               <Select
                 id='select__title__id'
                 labelId='select__title__standard__label'

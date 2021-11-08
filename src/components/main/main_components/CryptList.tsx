@@ -25,7 +25,7 @@ const CryptList = () => {
       )
       .filter((item) => findInText(item, sect))
       .filter((item) => findInText(item, title));
-    
+
     setList(resp);
   };
 
@@ -33,28 +33,25 @@ const CryptList = () => {
     let aux = null;
     if (text !== '') {
       if (crypt.card_text.indexOf(text) !== -1) {
-        aux=crypt;
-      } 
+        aux = crypt;
+      }
     } else {
-      aux=crypt;
+      aux = crypt;
     }
     return aux;
   };
 
-  const compareArrays = (
-    disciplines: string[],
-    discList: string[]
-  ): boolean => {
-    const res = disciplines.map((elem) =>
-      discList.find((item) =>
-        item.toUpperCase() === item
-          ? item === elem
-          : item === elem || item === elem.toLowerCase()
-      )
-    );
-    const aux = res.map((elem) => elem !== undefined);
-
-    return aux.filter((item) => item === true).length === discList.length;
+  const compareArrays = (vampDisc: string[], selectedDisc: string[]) => {
+    return selectedDisc.every((selected) => selected === '')
+      ? true
+      : selectedDisc
+          .map((selected) =>
+            selected.toLowerCase() === selected
+              ? vampDisc.includes(selected) ||
+                vampDisc.includes(selected.toUpperCase())
+              : vampDisc.includes(selected)
+          )
+          .find((elem: boolean) => elem === true);
   };
 
   React.useEffect(() => {}, []);

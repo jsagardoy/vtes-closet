@@ -51,12 +51,14 @@
   align-items: center;
   min-width: max-content;
   width: 100%;
-  margin: 0.2rem;
 }
 .select__clan {
-  width: 10rem;
+  display: inline-block;
+  width: 14em;
   margin: 0.1rem;
+  height: max-content;
 }
+
 .filter__sect {
   display: flex;
   justify-content: space-around;
@@ -66,6 +68,29 @@
   margin: 0.2rem;
 }
 .select__sect {
-  width: 10rem;
+  width: 14em;
+  height: 2rem;
   margin: 0.1rem;
+}
+.filter__title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: max-content;
+  width: 100%;
+  margin: 0.2rem;
+}
+.select__title {
+  width: 14em;
+  height: 2rem;
+}
+.select__clan__avatar__icon {
+  display: flex;
+  margin-right: 1rem;
+}
+
+#clan__select__id {
+  display: flex;
+  align-items: center;
+  height: 2rem;
 }
