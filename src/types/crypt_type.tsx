@@ -54,5 +54,19 @@ export const disciplines_inf:string[]=[
     'val',
     'vic',
     'vis',
-  ];
+];
+  
+export interface PropType {
+  bleed: boolean;
+  strength: boolean;
+  stealth: boolean;
+  intercept: boolean;
+  aggravated: boolean;
+  enter_combat: boolean;
+  flight: boolean;
+  black_hand: boolean;
+  red_list: boolean;
+  infernal: boolean;
+  slave: boolean;
+};
 

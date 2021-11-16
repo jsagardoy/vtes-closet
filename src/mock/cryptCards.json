@@ -72,7 +72,7 @@
     "clans": ["Assamite"],
     "capacity": 5,
     "disciplines": ["obf", "CEL", "QUI"],
-    "card_text": "Independent: Blood cursed. 1 vote (titled)",
+    "card_text": "Independent: Blood cursed. 1 vote (titled). +2 Stealth",
     "sets": {
       "Ancient Hearts": [
         { "release_date": "1996-05-29", "rarity": "Vampire", "frequency": 3 }
@@ -99,7 +99,7 @@
     "clans": ["Follower of Set"],
     "capacity": 5,
     "disciplines": ["for", "nec", "obf", "pre", "ser"],
-    "card_text": "Independent: Abdelsobek can unlock a vampire or mummy you control as a +1 stealth action.",
+    "card_text": "Independent. Black hand: Abdelsobek can unlock a vampire or mummy you control as a +1 stealth action.",
     "sets": {
       "Lords of the Night": [
         { "release_date": "2007-09-26", "rarity": "Uncommon" }
@@ -122,7 +122,7 @@
     "clans": ["Samedi"],
     "capacity": 4,
     "disciplines": ["nec", "obf", "thn"],
-    "card_text": "Independent.",
+    "card_text": "Independent. +3 bleed",
     "sets": {
       "Legacies of Blood": [
         { "release_date": "2005-11-14", "rarity": "Uncommon" }
@@ -147,7 +147,7 @@
     "clans": ["Assamite"],
     "capacity": 7,
     "disciplines": ["AUS", "CEL", "OBF", "QUI"],
-    "card_text": "Camarilla: Blood cursed.",
+    "card_text": "Camarilla: Blood cursed. Flight. Enter combat with",
     "sets": {
       "The Unaligned": [
         { "release_date": "2014-10-04", "rarity": "Common" },
@@ -169,7 +169,7 @@
     "clans": ["Osebo"],
     "capacity": 6,
     "disciplines": ["cel", "obt", "AUS", "POT"],
-    "card_text": "Laibon: Abiku gets +1 stealth when hunting.",
+    "card_text": "Laibon: Abiku gets +1 stealth when hunting. aggravated hand damage. +2 intercept. Red List. Infernal.",
     "sets": {
       "Ebony Kingdom": [{ "release_date": "2009-05-27", "rarity": "Uncommon" }]
     },

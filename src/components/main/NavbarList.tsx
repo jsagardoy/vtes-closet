@@ -2,7 +2,12 @@ import React from 'react';
 import { HighlightOff, MoreVert, Search } from '@material-ui/icons';
 import './NavbarList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import { CryptType, discType, disciplines_inf } from '../../types/crypt_type';
+import {
+  CryptType,
+  discType,
+  disciplines_inf,
+  PropType,
+} from '../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
   getClans,
@@ -15,7 +20,7 @@ import {
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Divider, FormControl } from '@mui/material';
+import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 interface NavbarListProps {
   cardType: string;
@@ -25,7 +30,8 @@ interface NavbarListProps {
     discList: string[],
     clan: string,
     sect: string,
-    title: string
+    title: string,
+    props: PropType
   ) => void;
 }
 
@@ -36,15 +42,27 @@ const NavbarList = (props: NavbarListProps) => {
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
-  
+  const [checked, setChecked] = React.useState<PropType>({
+    bleed: false,
+    strength: false,
+    stealth: false,
+    intercept: false,
+    aggravated: false,
+    enter_combat: false,
+    flight: false,
+    black_hand: false,
+    red_list: false,
+    infernal: false,
+    slave: false,
+  });
+
   const disc_inf: string[] = disciplines_inf;
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
-  
+
   const values: number[] = disc_inf.map((elem) => 0);
   let aux: discType = { name: disc_inf, value: values };
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
-
 
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
@@ -53,7 +71,8 @@ const NavbarList = (props: NavbarListProps) => {
       disc_list,
       selectedClan,
       selectedSect,
-      selectedTitle
+      selectedTitle,
+      checked
     );
   };
 
@@ -78,7 +97,8 @@ const NavbarList = (props: NavbarListProps) => {
         getDiscList(selected_discList),
         selectedClan,
         selectedSect,
-        selectedTitle
+        selectedTitle,
+        checked
       );
     } else {
       setInputSearch('');
@@ -87,7 +107,8 @@ const NavbarList = (props: NavbarListProps) => {
         getDiscList(selected_discList),
         selectedClan,
         selectedSect,
-        selectedTitle
+        selectedTitle,
+        checked
       );
     }
   };
@@ -104,7 +125,8 @@ const NavbarList = (props: NavbarListProps) => {
       getDiscList(selected_discList),
       event.target.value,
       selectedSect,
-      selectedTitle
+      selectedTitle,
+      checked
     );
   };
 
@@ -115,7 +137,8 @@ const NavbarList = (props: NavbarListProps) => {
       getDiscList(selected_discList),
       selectedClan,
       event.target.value,
-      selectedTitle
+      selectedTitle,
+      checked
     );
   };
   const handleTitle = (event: SelectChangeEvent) => {
@@ -125,7 +148,8 @@ const NavbarList = (props: NavbarListProps) => {
       getDiscList(selected_discList),
       selectedClan,
       selectedSect,
-      event.target.value
+      event.target.value,
+      checked
     );
   };
 
@@ -140,7 +164,27 @@ const NavbarList = (props: NavbarListProps) => {
     }
   };
 
-  React.useEffect(() => {}, []);
+  const handleCheck = (
+    prop: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+
+    const newProps = {
+      ...checked,
+      [prop]: event.target.checked,
+    };
+    setChecked(newProps);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      selectedClan,
+      selectedSect,
+      selectedTitle,
+      newProps
+    );
+  };
+
+  React.useEffect(() => {}, [checked]);
 
   const { cardType, searchList } = props;
   return (
@@ -188,7 +232,7 @@ const NavbarList = (props: NavbarListProps) => {
               return (
                 <IconButton
                   key={dis}
-                  className='disc__icon'
+                  size='small'
                   onClick={() => handleSelectDisc(index)}
                 >
                   {selected_discList.value[index] === 0 ? (
@@ -223,7 +267,6 @@ const NavbarList = (props: NavbarListProps) => {
                 {getClans().map((clan) => (
                   <MenuItem key={clan} value={clan}>
                     <Avatar
-                      
                       className='select__clan__avatar__icon'
                       src={getClanIcon([clan]).find((c) => c)}
                       alt={clan}
@@ -280,6 +323,124 @@ const NavbarList = (props: NavbarListProps) => {
                 ))}
               </Select>
             </FormControl>
+          </div>
+          <Divider />
+          <div className='filter__props'>
+            <div className='prop__column'>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.bleed}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('bleed', e)
+                  }
+                />
+                <InputLabel>+ Bleed</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.strength}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('strength', e)
+                  }
+                />
+                <InputLabel>+ Strength</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.stealth}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('stealth', e)
+                  }
+                />
+                <InputLabel>+ Stealth</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.intercept}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('intercept', e)
+                  }
+                />
+                <InputLabel>+ Intercept</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.aggravated}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('aggravated', e)
+                  }
+                />
+                <InputLabel>Aggravated</InputLabel>
+              </div>
+
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.enter_combat}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('enter_combat', e)
+                  }
+                />
+                <InputLabel>Enter combat</InputLabel>
+              </div>
+            </div>
+            <div className='prop__column'>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.flight}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('flight', e)
+                  }
+                />
+                <InputLabel>Flight</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.black_hand}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('black_hand', e)
+                  }
+                />
+                <InputLabel>Black Hand</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.red_list}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('red_list', e)
+                  }
+                />
+                <InputLabel>Red List</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.infernal}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('infernal', e)
+                  }
+                />
+                <InputLabel>Infernal</InputLabel>
+              </div>
+              <div className='prop__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checked.slave}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleCheck('slave', e)
+                  }
+                />
+                <InputLabel>Slave</InputLabel>
+              </div>
+            </div>
           </div>
         </div>
       </Modal>

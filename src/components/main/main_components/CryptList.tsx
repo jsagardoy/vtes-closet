@@ -2,7 +2,7 @@ import React from 'react';
 import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
-import { CryptType } from '../../../types/crypt_type';
+import { CryptType, PropType } from '../../../types/crypt_type';
 import { getTitle } from '../../../util';
 
 const CryptList = () => {
@@ -14,8 +14,10 @@ const CryptList = () => {
     discList: string[],
     clan: string,
     sect: string,
-    title: string
+    title: string,
+    props: PropType
   ) => {
+
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
@@ -25,14 +27,28 @@ const CryptList = () => {
           : item.clans.map((clanItem) => clanItem)
       )
       .filter((item) => findInText(item, sect))
-      .filter((item) => findInText(item, title));
+      .filter((item) => findInText(item, title))
+      .filter((item) => filterProps(item, props))
+      ;
 
     setList(resp);
   };
 
+  const filterProps = (crypt: CryptType, props: any) => {
+    const elements: string[] = Object.keys(props).filter((elem: string) =>
+      props[elem] === true 
+    );
+    return (elements.every((elem) => findInText(crypt, elem)));
+  };
+
   const findInText = (crypt: CryptType, text: string) => {
     let aux = null;
+    let textFixed = text;
     if (text !== '') {
+      
+      if (text === 'red_list' || 'enter_combat' || 'black_hand') {
+        textFixed = text.replace('_', ' ');
+      }
       if (text === 'No Title') {
         //in case filter is no title
         const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
@@ -43,11 +59,12 @@ const CryptList = () => {
         const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
         aux = temp.some((elem) => elem !== -1) ? crypt : null;
       }
-      if (crypt.card_text.indexOf(text) !== -1) {
+      
+      console.log(textFixed);
+      if (crypt.card_text.toLowerCase().includes(textFixed)) {
         aux = crypt;
       }
     } else {
-      
       aux = crypt;
     }
     return aux;
@@ -77,8 +94,9 @@ const CryptList = () => {
           discList: string[],
           clan: string,
           sect: string,
-          title: string
-        ) => handleSearch(name, discList, clan, sect, title)}
+          title: string,
+          props: PropType
+        ) => handleSearch(name, discList, clan, sect, title, props)}
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>
