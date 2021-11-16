@@ -17,7 +17,6 @@ const CryptList = () => {
     title: string,
     props: PropType
   ) => {
-
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
@@ -28,24 +27,21 @@ const CryptList = () => {
       )
       .filter((item) => findInText(item, sect))
       .filter((item) => findInText(item, title))
-      .filter((item) => filterProps(item, props))
-      ;
-
+      .filter((item) => filterProps(item, props));
     setList(resp);
   };
 
   const filterProps = (crypt: CryptType, props: any) => {
-    const elements: string[] = Object.keys(props).filter((elem: string) =>
-      props[elem] === true 
+    const elements: string[] = Object.keys(props).filter(
+      (elem: string) => props[elem] === true
     );
-    return (elements.every((elem) => findInText(crypt, elem)));
+    return elements.every((elem) => findInText(crypt, elem));
   };
 
   const findInText = (crypt: CryptType, text: string) => {
     let aux = null;
     let textFixed = text;
     if (text !== '') {
-      
       if (text === 'red_list' || 'enter_combat' || 'black_hand') {
         textFixed = text.replace('_', ' ');
       }
@@ -59,8 +55,7 @@ const CryptList = () => {
         const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
         aux = temp.some((elem) => elem !== -1) ? crypt : null;
       }
-      
-      console.log(textFixed);
+
       if (crypt.card_text.toLowerCase().includes(textFixed)) {
         aux = crypt;
       }
