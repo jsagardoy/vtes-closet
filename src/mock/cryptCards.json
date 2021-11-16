@@ -147,7 +147,7 @@
     "clans": ["Assamite"],
     "capacity": 7,
     "disciplines": ["AUS", "CEL", "OBF", "QUI"],
-    "card_text": "Camarilla: Blood cursed. Flight. Enter combat with",
+    "card_text": "Camarilla: Blood cursed. Flight. Enter combat with. +2 Strength",
     "sets": {
       "The Unaligned": [
         { "release_date": "2014-10-04", "rarity": "Common" },
