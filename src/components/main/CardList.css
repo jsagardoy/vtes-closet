@@ -75,7 +75,10 @@
   justify-content: space-between;
 }
 .modal__right__text {
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 1rem;
@@ -103,5 +106,15 @@
 .title {
   border-bottom: 2px black solid;
   }
+
+.modal__right__bottom{
+display:flex;
+flex-direction: column;
+}
+
+.modal__right__top{
+display:flex;
+flex-direction: column;
+}
 
 

@@ -58,57 +58,62 @@ const CryptCardList = (props: listProps) => {
               <img src={openedCrypt.url} alt='card' />
               <div className='modal__right'>
                 <div className='modal__right__text'>
-                  <Typography variant='h6' className='title'>
-                    {openedCrypt.name} {openedCrypt.aka}
-                  </Typography>
-                  <div className='clan'>
-                    <Typography variant='subtitle1'>
-                      {openedCrypt.clans.map((clan) => clan)}
+                  <div className='modal__right__top'>
+                    <Typography variant='h6' className='title'>
+                      {openedCrypt.name} {openedCrypt.aka}
                     </Typography>
-                    {getClanIcon(openedCrypt.clans).map((clan) => (
-                      <Avatar
-                        className='clan__avatar__icon'
-                        key={clan && openedCrypt.id}
-                        src={clan}
-                        alt={clan}
-                      />
-                    ))}
+                    <div className='clan'>
+                      <Typography variant='subtitle1'>
+                        {openedCrypt.clans.map((clan) => clan)}
+                      </Typography>
+                      {getClanIcon(openedCrypt.clans).map((clan) => (
+                        <Avatar
+                          className='clan__avatar__icon'
+                          key={clan && openedCrypt.id}
+                          src={clan}
+                          alt={clan}
+                        />
+                      ))}
+                    </div>
+                    <Typography variant='subtitle2'>
+                      Group: {openedCrypt.group}
+                    </Typography>
+                    <Typography variant='subtitle2'>
+                      Capacity: {openedCrypt.capacity}
+                    </Typography>
+                    <Divider />
+                    <Typography variant='subtitle2'>Disciplines:</Typography>
+                    <div className='disc__content'>
+                      {getDiscIcon(openedCrypt.disciplines).map((disc) => (
+                        <Avatar
+                          key={openedCrypt.id && disc}
+                          className='avatar__disciplines__icons'
+                          src={disc}
+                          alt={disc}
+                        />
+                      ))}
+                    </div>
+                    <Divider />
+                    <Typography variant='body2'>
+                      {openedCrypt.card_text}
+                    </Typography>
+                    
                   </div>
-                  <Typography variant='subtitle2'>
-                    Group: {openedCrypt.group}
-                  </Typography>
-                  <Typography variant='subtitle2'>
-                    Capacity: {openedCrypt.capacity}
-                  </Typography>
-                  <Divider />
-                  <Typography variant='subtitle2'>Disciplines:</Typography>
-                  <div className='disc__content'>
-                    {getDiscIcon(openedCrypt.disciplines).map((disc) => (
-                      <Avatar
-                        key={openedCrypt.id && disc}
-                        className='avatar__disciplines__icons'
-                        src={disc}
-                        alt={disc}
-                      />
-                    ))}
+                  <div className='modal__right__bottom'>
+                    <Divider />
+                    <Typography variant='caption'>
+                      Sets:{' '}
+                      {Object.keys(openedCrypt.sets).map((set, index) =>
+                        index !== Object.keys(openedCrypt.sets).length - 1
+                          ? `${set}, `
+                          : `${set}.`
+                      )}
+                    </Typography>
+                    <Divider />
+                    <Typography variant='caption'>
+                      Artists: {openedCrypt.artists}
+                    </Typography>
                   </div>
-                  <Divider />
-                  <Typography variant='body2'>
-                    {openedCrypt.card_text}
-                  </Typography>
-                  <Divider />
-                  <Typography variant='caption'>
-                    Sets:{' '}
-                    {Object.keys(openedCrypt.sets).map((set, index) =>
-                      index !== Object.keys(openedCrypt.sets).length - 1
-                        ? `${set}, `
-                        : `${set}.`
-                    )}
-                  </Typography>
-                  <Divider />
-                  <Typography variant='caption'>
-                    Artists: {openedCrypt.artists}
-                  </Typography>
                 </div>
 
                 <div className='button__container'>
