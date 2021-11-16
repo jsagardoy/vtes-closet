@@ -78,6 +78,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width:28em;
   height: 100%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -112,9 +113,6 @@ display:flex;
 flex-direction: column;
 }
 
-.modal__right__top{
-display:flex;
-flex-direction: column;
-}
+
 
 
