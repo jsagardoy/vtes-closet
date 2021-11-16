@@ -98,7 +98,12 @@ const CryptCardList = (props: listProps) => {
                   </Typography>
                   <Divider />
                   <Typography variant='caption'>
-                    Sets: {JSON.stringify(openedCrypt.sets, null, 2)}
+                    Sets:{' '}
+                    {Object.keys(openedCrypt.sets).map((set, index) =>
+                      index !== Object.keys(openedCrypt.sets).length - 1
+                        ? `${set}, `
+                        : `${set}.`
+                    )}
                   </Typography>
                   <Divider />
                   <Typography variant='caption'>
