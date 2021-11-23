@@ -112,3 +112,7 @@
   align-items: center;
   margin-left: 2em;
 }
+.filter__slider__group{
+  display: flex;
+  justify-content: space-between;
+}

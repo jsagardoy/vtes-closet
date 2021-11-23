@@ -22,6 +22,7 @@ import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SlidersComponent } from './main_components/SlidersComponent';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
@@ -35,7 +36,7 @@ interface NavbarListProps {
   ) => void;
 }
 
-const NavbarList = (props: NavbarListProps) => {
+const NavbarList = (navbarListProps:NavbarListProps) => {
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -184,9 +185,13 @@ const NavbarList = (props: NavbarListProps) => {
     );
   };
 
+  const handleSliders = () => {
+    
+  }
+
   React.useEffect(() => {}, [checked]);
 
-  const { cardType, searchList } = props;
+  const { cardType, searchList } = navbarListProps;
   return (
     <>
       <div className='navbarList'>
@@ -323,6 +328,10 @@ const NavbarList = (props: NavbarListProps) => {
                 ))}
               </Select>
             </FormControl>
+          </div>
+            <Divider />
+          <div className='filter__slider__group'>
+            <SlidersComponent filterSliders={handleSliders} />
           </div>
           <Divider />
           <div className='filter__props'>
