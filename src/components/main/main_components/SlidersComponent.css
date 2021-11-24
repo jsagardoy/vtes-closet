@@ -1,13 +1,13 @@
-.slider{
-    display:flex;
-    width:50%;
-    justify-content: space-around;
-    align-items: center;
-    margin: 1em;
+.slider {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1em;
 }
 
-.slide__label{
-    display:flex;
-   align-items: center;
-   margin: 1em;
+.slide__label {
+  display: flex;
+  align-items: center;
+  margin: 1em;
 }
