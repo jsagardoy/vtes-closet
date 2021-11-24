@@ -1,27 +1,18 @@
 import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
 import { Slider } from '@mui/material';
 import React from 'react';
 import { getGroups, groupType } from '../../../util';
 import './SlidersComponent.css';
 
 interface SliderProps {
+  group: groupType;
   filterSliders: (group: groupType) => void;
 }
 
 export const SlidersComponent = (sliderProps: SliderProps) => {
-  const { filterSliders } = sliderProps;
+  const { filterSliders, group } = sliderProps;
   const groups: groupType[] = getGroups();
-  const [selectedGroup, setSelectedGroup] = React.useState<groupType>();
-
-  const getGroupLabels = (group: number): string => {
-    const selectedGroup = groups.find((g: groupType) => g.value === group);
-    if (selectedGroup !== undefined) {
-      return selectedGroup.label;
-    } else {
-      return 'Any';
-    }
-  };
+  const [selectedGroup, setSelectedGroup] = React.useState<groupType>(group);
 
   const handleSlider = (
     event: Event,
@@ -46,9 +37,7 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
       </div>
       <div className='slider'>
         <Slider
-          getAriaValueText={getGroupLabels}
-          defaultValue={0}
-          //valueLabelDisplay='auto'
+          defaultValue={group.value}
           step={0.5}
           size='small'
           min={0.5}

@@ -189,7 +189,7 @@ export interface capacityType {
   label: string;
 }
 
-const groups:groupType[] = [
+const groups: groupType[] = [
   { value: 0.5, label: 'Any' },
   { value: 1, label: '1' },
   { value: 1.5, label: '1-2' },
@@ -203,24 +203,22 @@ const groups:groupType[] = [
   { value: 5.5, label: '5-6' },
   { value: 6, label: '6' },
   { value: 6.5, label: '6-7' },
-  { value: 7, label: '7' }
+  { value: 7, label: '7' },
 ];
 export const getGroups = (): groupType[] => groups;
 
 const capacities: capacityType[] = [
-  {value:1, label:'1'},
-  {value:2, label:'2'},
-  {value:3, label:'3'},
-  {value:4, label:'4'},
-  {value:5, label:'5'},
-  {value:6, label:'6'},
-  {value:7, label:'7'},
-  {value:8, label:'8'},
-  {value:9, label:'9'},
-  {value:10, label:'10'},
-  {value:11, label:'11'},
-]
-
-
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+  { value: 10, label: '10' },
+  { value: 11, label: '11' },
+];
 
 export const getCapacities = (): capacityType[] => capacities;

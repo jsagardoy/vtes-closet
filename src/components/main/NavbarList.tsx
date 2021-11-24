@@ -23,6 +23,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './main_components/SlidersComponent';
+import { groupType } from '../../util';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
@@ -32,17 +33,22 @@ interface NavbarListProps {
     clan: string,
     sect: string,
     title: string,
-    props: PropType
+    props: PropType,
+    group: groupType
   ) => void;
 }
 
-const NavbarList = (navbarListProps:NavbarListProps) => {
+const NavbarList = (navbarListProps: NavbarListProps) => {
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
+  const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
+    value: 0.5,
+    label: 'Any',
+  });
   const [checked, setChecked] = React.useState<PropType>({
     bleed: false,
     strength: false,
@@ -73,7 +79,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
       selectedClan,
       selectedSect,
       selectedTitle,
-      checked
+      checked,
+      selectedGroup
     );
   };
 
@@ -99,7 +106,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
         selectedClan,
         selectedSect,
         selectedTitle,
-        checked
+        checked,
+        selectedGroup
       );
     } else {
       setInputSearch('');
@@ -109,7 +117,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
         selectedClan,
         selectedSect,
         selectedTitle,
-        checked
+        checked,
+        selectedGroup
       );
     }
   };
@@ -127,7 +136,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
       event.target.value,
       selectedSect,
       selectedTitle,
-      checked
+      checked,
+      selectedGroup
     );
   };
 
@@ -139,7 +149,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
       selectedClan,
       event.target.value,
       selectedTitle,
-      checked
+      checked,
+      selectedGroup
     );
   };
   const handleTitle = (event: SelectChangeEvent) => {
@@ -150,7 +161,8 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
       selectedClan,
       selectedSect,
       event.target.value,
-      checked
+      checked,
+      selectedGroup
     );
   };
 
@@ -169,7 +181,6 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
     prop: string,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-
     const newProps = {
       ...checked,
       [prop]: event.target.checked,
@@ -181,13 +192,23 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
       selectedClan,
       selectedSect,
       selectedTitle,
-      newProps
+      newProps,
+      selectedGroup
     );
   };
 
-  const handleSliders = () => {
-    
-  }
+  const handleSliders = (group: groupType) => {
+    setSelectedGroup(group);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      selectedClan,
+      selectedSect,
+      selectedTitle,
+      checked,
+      group
+    );
+  };
 
   React.useEffect(() => {}, [checked]);
 
@@ -329,9 +350,12 @@ const NavbarList = (navbarListProps:NavbarListProps) => {
               </Select>
             </FormControl>
           </div>
-            <Divider />
+          <Divider />
           <div className='filter__slider__group'>
-            <SlidersComponent filterSliders={handleSliders} />
+            <SlidersComponent
+              filterSliders={handleSliders}
+              group={selectedGroup}
+            />
           </div>
           <Divider />
           <div className='filter__props'>

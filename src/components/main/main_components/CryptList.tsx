@@ -3,7 +3,7 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { getTitle } from '../../../util';
+import { getTitle, groupType as GroupType } from '../../../util';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
@@ -15,7 +15,8 @@ const CryptList = () => {
     clan: string,
     sect: string,
     title: string,
-    props: PropType
+    props: PropType,
+    group: GroupType
   ) => {
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
@@ -27,8 +28,20 @@ const CryptList = () => {
       )
       .filter((item) => findInText(item, sect))
       .filter((item) => findInText(item, title))
-      .filter((item) => filterProps(item, props));
+      .filter((item) => filterProps(item, props))
+      .filter((item) => filterGroup(item, group));
     setList(resp);
+  };
+
+  const filterGroup = (item: CryptType, group: GroupType) => {
+    if (group.value % 1 === 0) {
+      return item.group === group.value.toString();
+    } else {
+      return group?.label === 'Any'
+        ? item
+        : item.group === Math.floor(group.value).toString() ||
+            item.group === Math.ceil(group.value).toString();
+    }
   };
 
   const filterProps = (crypt: CryptType, props: any) => {
@@ -90,8 +103,9 @@ const CryptList = () => {
           clan: string,
           sect: string,
           title: string,
-          props: PropType
-        ) => handleSearch(name, discList, clan, sect, title, props)}
+          props: PropType,
+          group: GroupType
+        ) => handleSearch(name, discList, clan, sect, title, props, group)}
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>
