@@ -109,7 +109,7 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
       </div>
       <div className='slider__group'>
         <div className='slider__label'>
-          <InputLabel>Min capacity: {selectedMinCap.label}</InputLabel>
+          <InputLabel>Min capacity: {selectedMinCap?.label}</InputLabel>
         </div>
         <div className='slider'>
           <Slider
