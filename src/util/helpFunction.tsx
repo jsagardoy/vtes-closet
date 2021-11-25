@@ -208,6 +208,7 @@ const groups: groupType[] = [
 export const getGroups = (): groupType[] => groups;
 
 const capacities: capacityType[] = [
+  { value: 0, label: 'All' },
   { value: 1, label: '1' },
   { value: 2, label: '2' },
   { value: 3, label: '3' },

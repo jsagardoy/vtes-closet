@@ -16,6 +16,7 @@ import {
   getDiscList,
   getSects,
   getTitle,
+  capacityType,
 } from '../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
@@ -34,7 +35,9 @@ interface NavbarListProps {
     sect: string,
     title: string,
     props: PropType,
-    group: groupType
+    group: groupType,
+    maxCap: capacityType,
+    minCap: capacityType
   ) => void;
 }
 
@@ -47,6 +50,14 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
     value: 0.5,
+    label: 'Any',
+  });
+  const [selectedMaxCap, setSelectedMaxCap] = React.useState<capacityType>({
+    value: 0,
+    label: 'Any',
+  });
+  const [selectedMinCap, setSelectedMinCap] = React.useState<capacityType>({
+    value: 0,
     label: 'Any',
   });
   const [checked, setChecked] = React.useState<PropType>({
@@ -68,6 +79,7 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
 
   const values: number[] = disc_inf.map((elem) => 0);
   let aux: discType = { name: disc_inf, value: values };
+  
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
@@ -80,7 +92,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       selectedSect,
       selectedTitle,
       checked,
-      selectedGroup
+      selectedGroup,
+      selectedMaxCap,
+      selectedMinCap
     );
   };
 
@@ -107,7 +121,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
         selectedSect,
         selectedTitle,
         checked,
-        selectedGroup
+        selectedGroup,
+        selectedMaxCap,
+        selectedMinCap
       );
     } else {
       setInputSearch('');
@@ -118,7 +134,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
         selectedSect,
         selectedTitle,
         checked,
-        selectedGroup
+        selectedGroup,
+        selectedMaxCap,
+        selectedMinCap
       );
     }
   };
@@ -137,7 +155,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       selectedSect,
       selectedTitle,
       checked,
-      selectedGroup
+      selectedGroup,
+      selectedMaxCap,
+      selectedMinCap
     );
   };
 
@@ -150,7 +170,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       event.target.value,
       selectedTitle,
       checked,
-      selectedGroup
+      selectedGroup,
+      selectedMaxCap,
+      selectedMinCap
     );
   };
   const handleTitle = (event: SelectChangeEvent) => {
@@ -162,7 +184,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       selectedSect,
       event.target.value,
       checked,
-      selectedGroup
+      selectedGroup,
+      selectedMaxCap,
+      selectedMinCap
     );
   };
 
@@ -193,12 +217,17 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       selectedSect,
       selectedTitle,
       newProps,
-      selectedGroup
+      selectedGroup,
+      selectedMaxCap,
+      selectedMinCap
     );
   };
 
-  const handleSliders = (group: groupType) => {
+  const handleSliders = (group: groupType, maxCap:capacityType, minCap:capacityType) => {
     setSelectedGroup(group);
+    setSelectedMaxCap(maxCap);
+    setSelectedMinCap(minCap);
+
     searchList(
       inputSearch,
       getDiscList(selected_discList),
@@ -206,7 +235,9 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
       selectedSect,
       selectedTitle,
       checked,
-      group
+      group,
+      maxCap,
+      minCap
     );
   };
 
@@ -355,6 +386,8 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
             <SlidersComponent
               filterSliders={handleSliders}
               group={selectedGroup}
+              maxCapacity={selectedMaxCap}
+              minCapacity={selectedMinCap }
             />
           </div>
           <Divider />

@@ -1,14 +1,22 @@
 .slider {
   display: flex;
-  width: 50%;
-  justify-content: space-around;
   align-items: center;
   margin: 1em;
   margin-right: 2em;
+  width: 9em;
 }
 
-.slide__label {
+.slider__label {
   display: flex;
   align-items: center;
   margin: 1em;
+}
+.slider__container{
+  display:flex;
+  flex-direction: column;
+}
+
+.slider__group{
+  display:flex;
+  justify-content: space-between;
 }

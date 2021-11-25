@@ -3,7 +3,7 @@ import './CryptList.css';
 import NavbarList from '../NavbarList';
 import CryptCardList from '../CardList';
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { getTitle, groupType as GroupType } from '../../../util';
+import { capacityType, getTitle, groupType as GroupType } from '../../../util';
 
 const CryptList = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
@@ -16,7 +16,9 @@ const CryptList = () => {
     sect: string,
     title: string,
     props: PropType,
-    group: GroupType
+    group: GroupType,
+    maxCap: capacityType,
+    minCap: capacityType
   ) => {
     const resp = cryptList
       .filter((item) => item.name.toLowerCase().includes(name))
@@ -29,9 +31,28 @@ const CryptList = () => {
       .filter((item) => findInText(item, sect))
       .filter((item) => findInText(item, title))
       .filter((item) => filterProps(item, props))
-      .filter((item) => filterGroup(item, group));
+      .filter((item) => filterGroup(item, group))
+      .filter((item) => filterMaxCapacity(item, maxCap))
+      .filter((item) => filterMinCapacity(item, minCap))
+      ;
     setList(resp);
   };
+
+  const filterMaxCapacity = (
+    item: CryptType,
+    maxCap: capacityType
+  ) =>
+    maxCap.value === 0
+      ? item
+      : item.capacity <= maxCap.value;
+  
+  const filterMinCapacity = (
+    item: CryptType,
+    minCap: capacityType
+  ) =>
+    minCap.value === 0
+      ? item
+      : item.capacity >= minCap.value;
 
   const filterGroup = (item: CryptType, group: GroupType) => {
     if (group.value % 1 === 0) {
@@ -104,8 +125,22 @@ const CryptList = () => {
           sect: string,
           title: string,
           props: PropType,
-          group: GroupType
-        ) => handleSearch(name, discList, clan, sect, title, props, group)}
+          group: GroupType,
+          maxCap: capacityType,
+          minCap: capacityType
+        ) =>
+          handleSearch(
+            name,
+            discList,
+            clan,
+            sect,
+            title,
+            props,
+            group,
+            maxCap,
+            minCap
+          )
+        }
       />
       <CryptCardList cardType='Crypt' list={list} />
     </div>
