@@ -3,12 +3,13 @@ import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PublicMain from './components/main/components/PublicMain';
-import PrivateMain from './components/main/components/PrivateMain';
+
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import PrivateRoute from './components/PrivateRoute';
 import CryptContainer from './components/main/containers/CryptContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
+import PublicMain from './components/main/components/main/PublicMain';
+import PrivateMain from './components/main/components/main/PrivateMain';
 
 function App() {
   const auth = getAuth();

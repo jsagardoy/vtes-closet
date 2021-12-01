@@ -1,7 +1,7 @@
 import { Modal, Typography } from '@material-ui/core';
 import { Box } from '@mui/system';
 import React from 'react';
-import { CryptType } from '../../../types/crypt_type';
+import { CryptType } from '../../../../types/crypt_type';
 import './ModalCrypt';
 
 interface CryptProp {

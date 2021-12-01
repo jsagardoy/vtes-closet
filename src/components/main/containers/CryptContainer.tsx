@@ -1,10 +1,10 @@
 import React from 'react';
 import './CryptContainer.css';
-import NavbarCryptList from '../components/NavbarCryptList';
+import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
 import { CryptType, PropType } from '../../../types/crypt_type';
 import { capacityType, getTitle, groupType as GroupType } from '../../../util';
-import CryptList from '../components/CryptList';
+import CryptList from '../components/crypt/CryptList';
 
 
 const CryptContainer = () => {

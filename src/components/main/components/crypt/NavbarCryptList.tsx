@@ -7,7 +7,7 @@ import {
   discType,
   disciplines_inf,
   PropType,
-} from '../../../types/crypt_type';
+} from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
   getClans,
@@ -17,14 +17,14 @@ import {
   getSects,
   getTitle,
   capacityType,
-} from '../../../util';
+} from '../../../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
-import { groupType } from '../../../util';
+import { groupType } from '../../../../util';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];

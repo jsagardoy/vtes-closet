@@ -9,8 +9,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import './CryptList.css';
-import { CryptType } from '../../../types/crypt_type';
-import { getDiscIcon, getClanIcon } from '../../../util';
+import { CryptType } from '../../../../types/crypt_type';
+import { getDiscIcon, getClanIcon } from '../../../../util';
 import Divider from '@mui/material/Divider/Divider';
 import IconButton from '@mui/material/IconButton/IconButton';
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';

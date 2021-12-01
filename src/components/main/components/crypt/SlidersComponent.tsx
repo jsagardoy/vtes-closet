@@ -6,7 +6,7 @@ import {
   getCapacities,
   getGroups,
   groupType,
-} from '../../../util';
+} from '../../../../util';
 import './SlidersComponent.css';
 
 interface SliderProps {
