@@ -1,13 +1,13 @@
 import React from 'react';
 import { HighlightOff, MoreVert, Search } from '@material-ui/icons';
-import './NavbarList.css';
+import './NavbarCryptList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import {
   CryptType,
   discType,
   disciplines_inf,
   PropType,
-} from '../../types/crypt_type';
+} from '../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
   getClans,
@@ -17,14 +17,14 @@ import {
   getSects,
   getTitle,
   capacityType,
-} from '../../util';
+} from '../../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { SlidersComponent } from './main_components/SlidersComponent';
-import { groupType } from '../../util';
+import { SlidersComponent } from './SlidersComponent';
+import { groupType } from '../../../util';
 interface NavbarListProps {
   cardType: string;
   list: CryptType[];
@@ -41,7 +41,7 @@ interface NavbarListProps {
   ) => void;
 }
 
-const NavbarList = (navbarListProps: NavbarListProps) => {
+const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -514,4 +514,4 @@ const NavbarList = (navbarListProps: NavbarListProps) => {
   );
 };
 
-export default NavbarList;
+export default NavbarCryptList;

@@ -23,6 +23,9 @@ const Sidebar = () => {
       case 'Crypt':
         history.push('/crypt');
         break;
+      case 'Library':
+        history.push('/library');
+        break;
       default:
         console.log('por otro lado');
         break;
@@ -47,6 +50,7 @@ const Sidebar = () => {
             dense
             divider
             style={{ borderBottomColor: 'darkcyan' }}
+            onClick={() => handleClick('Library')}
           >
             <ListItemText primary='Library' />
           </ListItemButton>

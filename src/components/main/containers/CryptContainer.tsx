@@ -1,11 +1,13 @@
 import React from 'react';
-import './CryptList.css';
-import NavbarList from '../NavbarList';
-import CryptCardList from '../CardList';
+import './CryptContainer.css';
+import NavbarCryptList from '../components/NavbarCryptList';
+
 import { CryptType, PropType } from '../../../types/crypt_type';
 import { capacityType, getTitle, groupType as GroupType } from '../../../util';
+import CryptList from '../components/CryptList';
 
-const CryptList = () => {
+
+const CryptContainer = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
   const [list, setList] = React.useState<CryptType[]>(cryptList);
 
@@ -33,26 +35,15 @@ const CryptList = () => {
       .filter((item) => filterProps(item, props))
       .filter((item) => filterGroup(item, group))
       .filter((item) => filterMaxCapacity(item, maxCap))
-      .filter((item) => filterMinCapacity(item, minCap))
-      ;
+      .filter((item) => filterMinCapacity(item, minCap));
     setList(resp);
   };
 
-  const filterMaxCapacity = (
-    item: CryptType,
-    maxCap: capacityType
-  ) =>
-    maxCap.value === 0
-      ? item
-      : item.capacity <= maxCap.value;
-  
-  const filterMinCapacity = (
-    item: CryptType,
-    minCap: capacityType
-  ) =>
-    minCap.value === 0
-      ? item
-      : item.capacity >= minCap.value;
+  const filterMaxCapacity = (item: CryptType, maxCap: capacityType) =>
+    maxCap.value === 0 ? item : item.capacity <= maxCap.value;
+
+  const filterMinCapacity = (item: CryptType, minCap: capacityType) =>
+    minCap.value === 0 ? item : item.capacity >= minCap.value;
 
   const filterGroup = (item: CryptType, group: GroupType) => {
     if (group.value % 1 === 0) {
@@ -115,7 +106,7 @@ const CryptList = () => {
   React.useEffect(() => {}, []);
   return (
     <div className='crypt__list'>
-      <NavbarList
+      <NavbarCryptList
         cardType='Crypt'
         list={list}
         searchList={(
@@ -142,9 +133,9 @@ const CryptList = () => {
           )
         }
       />
-      <CryptCardList cardType='Crypt' list={list} />
+      <CryptList list={list} />
     </div>
   );
 };
 
-export default CryptList;
+export default CryptContainer;

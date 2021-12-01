@@ -8,19 +8,18 @@ import {
   Modal,
   Typography,
 } from '@material-ui/core';
-import './CardList.css';
-import { CryptType } from '../../types/crypt_type';
-import { getDiscIcon, getClanIcon } from '../../util';
+import './CryptList.css';
+import { CryptType } from '../../../types/crypt_type';
+import { getDiscIcon, getClanIcon } from '../../../util';
 import Divider from '@mui/material/Divider/Divider';
 import IconButton from '@mui/material/IconButton/IconButton';
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';
 
 interface listProps {
-  cardType: string; //library/crypt
   list: CryptType[]; //habrá que hacer también la opción para las cartas de librería
 }
 
-const CryptCardList = (props: listProps) => {
+const CryptList = (props: listProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
   const [cryptIndex, setCryptIndex] = React.useState<number>(0);
@@ -185,4 +184,4 @@ const CryptCardList = (props: listProps) => {
   );
 };
 
-export default CryptCardList;
+export default CryptList;
