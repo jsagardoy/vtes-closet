@@ -3,6 +3,7 @@ import { discType } from '../types/crypt_type';
 const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
 const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
+const typeURLBase = 'https://static.krcg.org/png/icon/';
 
 export const getDiscIcon = (discs: string[]): string[] => {
   let resp: string[] = [];
@@ -99,6 +100,8 @@ export const getDiscList = (discList: discType): string[] =>
     //return resp;
   );
 //return resp;
+export const getCardTypes = (types: string[]): string[] =>
+  types.map(type=>`${typeURLBase}${type.toLowerCase()}.png`);
 
 export const getClans = () =>
   [

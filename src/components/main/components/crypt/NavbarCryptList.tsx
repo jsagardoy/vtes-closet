@@ -26,7 +26,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
 import { groupType } from '../../../../util';
 interface NavbarListProps {
-  cardType: string;
   list: CryptType[];
   searchList: (
     name: string,
@@ -243,12 +242,12 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
 
   React.useEffect(() => {}, [checked]);
 
-  const { cardType, searchList } = navbarListProps;
+  const { searchList } = navbarListProps;
   return (
     <>
       <div className='navbarList'>
         <div className='navbarList__left'>
-          <h3>{cardType}</h3>
+          <h3>Crypt</h3>
         </div>
         <div className='navbarList__right'>
           {showInput ? (

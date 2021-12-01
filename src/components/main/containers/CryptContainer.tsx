@@ -107,7 +107,6 @@ const CryptContainer = () => {
   return (
     <div className='crypt__list'>
       <NavbarCryptList
-        cardType='Crypt'
         list={list}
         searchList={(
           name: string,

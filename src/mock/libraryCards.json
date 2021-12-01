@@ -345,5 +345,52 @@
       }
     },
     "name": "Absimiliard's Army"
+  },
+  {
+    "id": 101143,
+    "_name": "Magic of the Smith",
+    "url": "https://static.krcg.org/card/magicofthesmith.jpg",
+    "types": ["Action"],
+    "disciplines": ["tha"],
+    "card_text": "+1 stealth action.\n[tha] Search your library for an equipment card and equip this vampire with it (requirements and cost apply as normal; shuffle afterward).\n[THA] As above, but this is a +3 stealth action.",
+    "sets": {
+      "Jyhad": [{ "release_date": "1994-08-16", "rarity": "Rare" }],
+      "Vampire: The Eternal Struggle": [
+        { "release_date": "1995-09-15", "rarity": "Rare" }
+      ],
+      "Camarilla Edition": [
+        { "release_date": "2002-08-19", "precon": "Tremere", "copies": 1 }
+      ],
+      "Third Edition": [{ "release_date": "2006-09-04", "rarity": "Rare" }],
+      "Keepers of Tradition": [
+        { "release_date": "2008-11-19", "rarity": "Rare" }
+      ],
+      "Fifth Edition": [
+        { "release_date": "2020-11-30", "precon": "Tremere", "copies": 2 }
+      ]
+    },
+    "scans": {
+      "Jyhad": "https://static.krcg.org/card/set/jyhad/magicofthesmith.jpg",
+      "Vampire: The Eternal Struggle": "https://static.krcg.org/card/set/vampire-the-eternal-struggle/magicofthesmith.jpg",
+      "Camarilla Edition": "https://static.krcg.org/card/set/camarilla-edition/magicofthesmith.jpg",
+      "Third Edition": "https://static.krcg.org/card/set/third-edition/magicofthesmith.jpg",
+      "Keepers of Tradition": "https://static.krcg.org/card/set/keepers-of-tradition/magicofthesmith.jpg",
+      "Fifth Edition": "https://static.krcg.org/card/set/fifth-edition/magicofthesmith.jpg"
+    },
+    "artists": ["Andrew Trabbold", "Jeff Menges"],
+    "blood_cost": "1",
+    "rulings": {
+      "text": [
+        "This is an equip action. [TOM 19960130]",
+        "You do not search your library until the action is successful. [TOM 19951107]",
+        "The equipment need not be declared, it is chosen upon resolution. [PIB 20150315]"
+      ],
+      "links": {
+        "[TOM 19960130]": "https://groups.google.com/d/msg/rec.games.trading-cards.jyhad/wF82VdVPlm0/MmFo2E7lrY8J",
+        "[TOM 19951107]": "https://groups.google.com/d/msg/rec.games.trading-cards.jyhad/lb3GhBTmgpM/x6qb8MwfFnAJ",
+        "[PIB 20150315]": "http://www.vekn.net/forum/rules-questions/69865-action-declaration-on-magic-of-the-smith#69869"
+      }
+    },
+    "name": "Magic of the Smith"
   }
 ]
