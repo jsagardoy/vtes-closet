@@ -62,6 +62,7 @@
     "url": "https://static.krcg.org/card/419operation.jpg",
     "types": ["Action"],
     "clans": ["Osebo"],
+    "burn_option":true,
     "card_text": "+1 stealth action.\nPut this card in play. During your unlock phase, you may move 1 pool from your prey's pool to this card or move the pool on this card to your pool. Your prey can burn the Edge to move the counters on this card to his or her pool and burn this card.",
     "sets": {
       "Ebony Kingdom": [{ "release_date": "2009-05-27", "rarity": "Common" }]
