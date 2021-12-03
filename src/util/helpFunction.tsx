@@ -4,6 +4,7 @@ const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
 const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const typeURLBase = 'https://static.krcg.org/png/icon/';
+const URLBase = 'https://static.krcg.org/png/icon/';
 
 export const getDiscIcon = (discs: string[]): string[] => {
   let resp: string[] = [];
@@ -101,7 +102,12 @@ export const getDiscList = (discList: discType): string[] =>
   );
 //return resp;
 export const getCardTypes = (types: string[]): string[] =>
-  types.map(type=>`${typeURLBase}${type.toLowerCase()}.png`);
+  types.map(type => `${typeURLBase}${type.toLowerCase()}.png`);
+  
+export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
+  type==='blood' ? `${URLBase}blood${cost}.png`:`${URLBase}pool${cost}.png`;
+  
+export const getBurnOption = (): string => `${URLBase}burn.png`;
 
 export const getClans = () =>
   [

@@ -1,4 +1,4 @@
-import { Modal, Typography } from '@material-ui/core';
+ import { Modal, Typography } from '@material-ui/core';
 import { Box } from '@mui/system';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
@@ -10,7 +10,8 @@ interface CryptProp {
 }
 
 const ModalCryp = (prop: CryptProp) => {
-  React.useEffect(() => {}, []);
+/*
+  React.useEffect(() => { }, []);
   const { crypt, show } = prop;
   const [open, setOpen] = React.useState(show);
   const handleClose = () => setOpen(false);
@@ -29,7 +30,8 @@ const ModalCryp = (prop: CryptProp) => {
         <Typography variant='h6'>{JSON.stringify(crypt.sets)}</Typography>
       </Box>
     </Modal>
-  );
+  );*/
 };
 
 export default ModalCryp;
+ 

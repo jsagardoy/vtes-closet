@@ -4,7 +4,7 @@ export interface LibraryType {
   url: string;
   types: string[];
   card_text: string;
-  clans: string[];
+  clans?: string[];
   disciplines?: string[];
   capacity_change?: string;
   sets: {

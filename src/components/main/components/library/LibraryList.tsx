@@ -4,21 +4,37 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import Table from '@mui/material/Table';
 import { LibraryType } from '../../../../types/library_type';
-import { getCardTypes, getClanIcon, getDiscIcon } from '../../../../util';
+import { getBurnOption, getCardCost, getCardTypes, getClanIcon, getDiscIcon } from '../../../../util';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
+import LibraryModal from './LibraryModal';
 
 interface LibraryListProps {
   list: LibraryType[];
 }
 
 const LibraryList = (props: LibraryListProps) => {
-  const URLBase = 'https://static.krcg.org/png/icon/';
   const { list } = props;
+  const [selectedItem, setSelectedItem] = React.useState<LibraryType>();
+  const [openModal, setOpenModal] = React.useState<boolean>(false);
+
+  const handleItemToOpen = (library:LibraryType) => {
+    setSelectedItem(library);
+    setOpenModal(true);
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  } 
 
   return (
     <div>
+      {selectedItem ?
+        <LibraryModal library={selectedItem} show={openModal} handleCloseModal={handleCloseModal}/>
+        :
+        <></>
+      }
       <List className='crypt__list'>
         {list.length === 0 ? (
           <div className='span__no__result'>
@@ -32,6 +48,7 @@ const LibraryList = (props: LibraryListProps) => {
               divider
               dense
               alignItems='flex-start'
+              onClick={()=>handleItemToOpen(library)}
             >
               <Table id='table__library'>
                 <TableBody id='table__body'>
@@ -65,7 +82,7 @@ const LibraryList = (props: LibraryListProps) => {
                       id='table__cell'
                     >
                       {library.burn_option ? (
-                        <Avatar src={`${URLBase}burn.png`} alt='Burn option' />
+                        <Avatar src={getBurnOption()} alt='Burn option' />
                       ) : (
                         <></>
                       )}
@@ -154,12 +171,12 @@ const LibraryList = (props: LibraryListProps) => {
                     >
                       {library.blood_cost ? (
                         <Avatar
-                          src={`${URLBase}blood${library.blood_cost}.png`}
+                          src={getCardCost(library.blood_cost,'blood')}
                           alt='Blood cost'
                         />
                       ) : library.pool_cost ? (
                         <Avatar
-                          src={`${URLBase}pool${library.pool_cost}.png`}
+                          src={getCardCost(library.pool_cost,'pool')}
                           alt='Blood cost'
                         />
                       ) : (
