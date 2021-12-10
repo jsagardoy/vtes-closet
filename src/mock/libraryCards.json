@@ -149,7 +149,7 @@
     "_name": "Abandoning the Flesh",
     "url": "https://static.krcg.org/card/abandoningtheflesh.jpg",
     "types": ["Reaction", "Combat"],
-    "disciplines": ["dem"],
+    "disciplines": ["dem", "aus","for"],
     "card_text": "Only usable by a vampire being burned. Usable by a vampire in torpor.\n[dem] Remove this vampire from the game instead (diablerie, if any, is still successful), and put this card into play. You may not play this card if you already have an Abandoning the Flesh in play. Lock during a bleed action to give an acting vampire with Dementation [dem] +1 bleed.",
     "sets": {
       "Camarilla Edition": [{ "release_date": "2002-08-19", "rarity": "Rare" }],

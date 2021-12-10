@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import Table from '@mui/material/Table';
 import { LibraryType } from '../../../../types/library_type';
-import { getBurnOption, getCardCost, getCardTypes, getClanIcon, getDiscIcon } from '../../../../util';
+import { getBurnOption, getCardCost, getCardTypesIcon, getClanIcon, getDiscIcon } from '../../../../util';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
@@ -148,7 +148,7 @@ const LibraryList = (props: LibraryListProps) => {
                       size='small'
                       id='table__cell'
                     >
-                      {getCardTypes(library.types).map(
+                      {getCardTypesIcon(library.types).map(
                         (type: string, index: number) => (
                           <Avatar
                             key={type && library.id && index}

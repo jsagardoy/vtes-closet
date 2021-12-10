@@ -1,15 +1,12 @@
-.cost{
-  display:flex;
+.cost {
+  display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .modal {
-  min-width: 70rem;
-  min-height: 50vh;
-  max-width: 70rem;
-  max-height: 50vh;
   color: darkcyan;
+  overflow-y: scroll;
 }
 .modal__content {
   position: fixed;
@@ -20,14 +17,14 @@
   right: 20%;
   top: 5rem;
 }
-.modal__right{
-  display:flex;
+.modal__right {
+  display: flex;
   flex-direction: column;
-  justify-content: space-between ;
+  justify-content: space-between;
   background-color: azure;
 }
-.button__container{
-  display:flex;
+.button__container {
+  display: flex;
   background-color: lightgrey;
   justify-content: space-between;
 }
@@ -35,7 +32,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width:28em;
+  width: 28em;
   height: 100%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -49,4 +46,34 @@
 .modal img {
   border: 2px solid #000;
   box-shadow: 0 0 15px #ddd;
+}
+.disc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card__type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.artist {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ruling {
+  display: flex;
+  flex-direction: column;
+}
+.clan__data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card__data {
+  display: flex;
+  flex-direction: column;
+  
+  justify-content: flex-start;
 }
