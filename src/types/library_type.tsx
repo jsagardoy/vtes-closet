@@ -24,7 +24,7 @@ export interface LibraryType {
   burn_option?: boolean;
   rulings?: {
     text: string[];
-    links: {};
+    links: Object;
   };
 }
 
