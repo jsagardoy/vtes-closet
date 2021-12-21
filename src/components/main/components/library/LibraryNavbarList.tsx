@@ -2,41 +2,57 @@ import { TextField } from '@material-ui/core';
 import { HighlightOff, MoreVert, Search } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
-import React from 'react'
-import {LibraryType } from '../../../../types/library_type';
+import React from 'react';
+import { LibraryType } from '../../../../types/library_type';
 import './LibraryNavbarList.css';
-    
+
 interface NavbarLibraryProps {
-    list: LibraryType[] 
+  searchList: (name: string) => void;
 }
 const NavbarLibrary = (props: NavbarLibraryProps): any => {
-    const { list } = props;
-    const [showInput, setShowInput] = React.useState<boolean>(false);
+  const {searchList } = props;
+  const [showInput, setShowInput] = React.useState<boolean>(false);
+  const [inputSearch, setInputSearch] = React.useState<string>('');
 
-    const handleSearch = () => {
-      setShowInput(!showInput);
-    };
+  const isEvent = (
+    e: React.ChangeEvent<HTMLInputElement> | string
+  ): e is React.ChangeEvent<HTMLInputElement> =>
+    (e as React.ChangeEvent<HTMLInputElement>).target !== undefined;
 
-    React.useEffect(() => {}, []);
-    return (
-         <>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
+    if (isEvent(e)) {
+      setInputSearch(e.target.value);
+      searchList(e.target.value);
+    } else {
+      setInputSearch('');
+      searchList('');
+    }
+  };
+
+  const handleSearch = () => {
+    setShowInput(!showInput);
+  };
+
+  React.useEffect(() => {}, []);
+  return (
+    <>
       <div className='navbarList'>
         <div className='navbarList__left'>
           <h3>Library</h3>
         </div>
         <div className='navbarList__right'>
-          { showInput ? (
+          {showInput ? (
             <TextField
               autoFocus
               variant='standard'
-              value={0/* inputSearch */}
-              /* onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e) 
-              }*/
+              value={inputSearch}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange(e)
+              }
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
-                    <IconButton size='small' /* onClick={(e) => handleChange('')} */>
+                    <IconButton size='small' onClick={(e) => handleChange('')}>
                       <HighlightOff />
                     </IconButton>
                   </InputAdornment>
@@ -51,9 +67,9 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
             <MoreVert style={{ fill: 'darkcyan' }} />
           </IconButton>
         </div>
-      </div>  
-        </>
-    )
-}
+      </div>
+    </>
+  );
+};
 
 export default NavbarLibrary;
