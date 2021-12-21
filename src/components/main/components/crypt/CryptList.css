@@ -48,10 +48,7 @@
   align-items: center;
 }
 .modal {
-  min-width: 70rem;
-  min-height: 50vh;
-  max-width: 70rem;
-  max-height: 50vh;
+ 
   color: darkcyan;
 }
 .modal__content {
