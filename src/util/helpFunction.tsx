@@ -1,4 +1,4 @@
-import { discType } from '../types/crypt_type';
+import { disciplines_inf, discType } from '../types/crypt_type';
 
 const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
@@ -106,6 +106,8 @@ export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
   type==='blood' ? `${URLBase}blood${cost}.png`:`${URLBase}pool${cost}.png`;
   
 export const getBurnOption = (): string => `${URLBase}burn.png`;
+
+export const getDiscInf = (): string[] => disciplines_inf;
 
 export const getClans = () =>
   [
@@ -230,3 +232,18 @@ const capacities: capacityType[] = [
 ];
 
 export const getCapacities = (): capacityType[] => capacities;
+
+export const getLibraryCardTypes = () => [
+  '',
+  'Action',
+  'Action modifier',
+  'Political action',
+  'Conviction',
+  'Power',
+  'Combat',
+  'Ally',
+  'Reaction',
+  'Event',
+  'Token'
+];
+

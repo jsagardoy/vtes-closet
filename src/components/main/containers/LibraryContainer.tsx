@@ -15,7 +15,7 @@ const LibraryContainer = () => {
   };
   return (
     <div className='library__container'>
-      <LibraryNavbarList searchList={(name: string) => handleSearch(name)} />
+      <LibraryNavbarList list={list} searchList={(name: string) => handleSearch(name)} />
       <LibraryList list={list} />
     </div>
   );

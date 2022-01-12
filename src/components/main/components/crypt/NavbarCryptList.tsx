@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton/IconButton';
 import {
   CryptType,
   discType,
-  disciplines_inf,
   PropType,
 } from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
@@ -17,6 +16,7 @@ import {
   getSects,
   getTitle,
   capacityType,
+  getDiscInf,
 } from '../../../../util';
 import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
@@ -73,7 +73,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     slave: false,
   });
 
-  const disc_inf: string[] = disciplines_inf;
+  const disc_inf: string[] = getDiscInf();
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
 
   const values: number[] = disc_inf.map((elem) => 0);

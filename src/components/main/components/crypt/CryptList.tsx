@@ -14,6 +14,7 @@ import { getDiscIcon, getClanIcon } from '../../../../util';
 import Divider from '@mui/material/Divider/Divider';
 import IconButton from '@mui/material/IconButton/IconButton';
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';
+import CardButtons from '../global/CardButtons';
 
 interface listProps {
   list: CryptType[]; //habrá que hacer también la opción para las cartas de librería
@@ -113,23 +114,7 @@ const CryptList = (props: listProps) => {
                     </Typography>
                   </div>
                 </div>
-
-                <div className='button__container'>
-                  <IconButton
-                    disabled={cryptIndex === 0}
-                    size='small'
-                    onClick={() => handlePrevious()}
-                  >
-                    <NavigateBefore className='icon__button' />
-                  </IconButton>
-                  <IconButton
-                    disabled={cryptIndex === list.length - 1}
-                    size='small'
-                    onClick={() => handleNext()}
-                  >
-                    <NavigateNext className='icon__button' />
-                  </IconButton>
-                </div>
+                <CardButtons handleNext={()=>handleNext()} handlePrevious={()=>handlePrevious()} list={list} index={cryptIndex}/>          
               </div>
             </div>
           </Modal>
