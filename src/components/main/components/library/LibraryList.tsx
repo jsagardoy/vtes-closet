@@ -1,15 +1,8 @@
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import React from 'react';
-import Table from '@mui/material/Table';
 import { LibraryType } from '../../../../types/library_type';
-import { getBurnOption, getCardCost, getCardTypesIcon, getClanIcon, getDiscIcon } from '../../../../util';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import TableBody from '@mui/material/TableBody';
 import LibraryModal from './LibraryModal';
-
+import LibraryListComponent from './LibraryListComponent';
+import './LibraryList.css';
 interface LibraryListProps {
   list: LibraryType[];
 }
@@ -18,179 +11,51 @@ const LibraryList = (props: LibraryListProps) => {
   const { list } = props;
   const [selectedItem, setSelectedItem] = React.useState<LibraryType>();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
+  const [index, setIndex] = React.useState<number>(0);
 
-  const handleItemToOpen = (library:LibraryType) => {
+  const handleItemToOpen = (library: LibraryType, i: number) => {
     setSelectedItem(library);
     setOpenModal(true);
-  }
+    setIndex(i);
+  };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-  } 
+    setSelectedItem(undefined);
+  };
 
+  const handleNext = () => {
+    const newIndex: number = index + 1;
+    const library: LibraryType = list[newIndex];
+    handleItemToOpen(library, newIndex);
+  };
+  const handlePrevious = () => {
+    const newIndex: number = index - 1;
+    const library: LibraryType = list[newIndex];
+    handleItemToOpen(library, newIndex);
+  };
   return (
-    <div>
-      {selectedItem ?
-        <LibraryModal library={selectedItem} show={openModal} handleCloseModal={handleCloseModal}/>
-        :
-        <></>
+    <>
+      {selectedItem && openModal ? (
+        <LibraryModal
+          open={openModal}
+          library={selectedItem}
+          list={list}
+          index={index}
+          handleCloseModal={() => handleCloseModal()}
+          handleNext={() => handleNext()}
+          handlePrevious={() => handlePrevious()}
+        />
+      ) : 
+        null
       }
-      <List className='crypt__list'>
-        {list.length === 0 ? (
-          <div className='span__no__result'>
-            <span>No results</span>
-          </div>
-        ) : (
-          list.map((library: LibraryType) => (
-            <ListItem
-              key={library.id}
-              button
-              divider
-              dense
-              alignItems='flex-start'
-              onClick={()=>handleItemToOpen(library)}
-            >
-              <Table id='table__library'>
-                <TableBody id='table__body'>
-                  <TableRow
-                    id='table__row'
-                    sx={{
-                      display: 'flex',
-                    }}
-                  >
-                    <TableCell
-                      align='left'
-                      size='small'
-                      id='table__cell'
-                      sx={{
-                        border: 0,
-                        width: '50%',
-                        color: 'darkcyan',
-                      }}
-                    >
-                      {library.name}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.burn_option ? (
-                        <Avatar src={getBurnOption()} alt='Burn option' />
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.clans ? (
-                        getClanIcon(library.clans).map(
-                          (clan: string, index: number) => (
-                            <Avatar
-                              key={clan && library.id && index}
-                              src={clan}
-                              alt={clan}
-                            />
-                          )
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '17.5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.disciplines ? (
-                        getDiscIcon(library.disciplines).map(
-                          (disc: string, index: number) => (
-                            <Avatar
-                              key={disc && library.id && index}
-                              src={disc}
-                              alt={disc}
-                            />
-                          )
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '17.5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {getCardTypesIcon(library.types).map(
-                        (type: string, index: number) => (
-                          <Avatar
-                            key={type && library.id && index}
-                            src={type}
-                            alt={type}
-                          />
-                        )
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.blood_cost ? (
-                        <Avatar
-                          src={getCardCost(library.blood_cost,'blood')}
-                          alt='Blood cost'
-                        />
-                      ) : library.pool_cost ? (
-                        <Avatar
-                          src={getCardCost(library.pool_cost,'pool')}
-                          alt='Blood cost'
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </ListItem>
-          ))
-        )}
-      </List>
-    </div>
+      <LibraryListComponent
+        list={list}
+        handleItemToOpen={(library: LibraryType) =>
+          handleItemToOpen(library, index)
+        }
+      />
+    </>
   );
 };
 

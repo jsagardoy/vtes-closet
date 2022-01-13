@@ -1,4 +1,4 @@
-.cost {
+/* .cost {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -78,3 +78,8 @@
   
   justify-content: flex-start;
 }
+.modal__right__bottom{
+display:flex;
+flex-direction: column;
+}
+ */

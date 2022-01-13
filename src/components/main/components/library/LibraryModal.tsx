@@ -1,8 +1,9 @@
+import { Modal } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
-import Modal from '@mui/material/Modal';
+
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { LibraryType } from '../../../../types/library_type';
@@ -13,17 +14,29 @@ import {
   getClanIcon,
   getDiscIcon,
 } from '../../../../util';
+import CardButtons from '../global/CardButtons';
 import './LibraryModal.css';
 
 interface LibraryModalProps {
-  show: boolean;
+  open: boolean;
   library: LibraryType;
+  list: LibraryType[];
+  index: number;
+  handleNext: () => void;
+  handlePrevious: () => void;
   handleCloseModal: () => void;
 }
 
 const LibraryModal = (props: LibraryModalProps) => {
-  const { library, show, handleCloseModal } = props;
-  //const [open, setOpen] = React.useState<boolean>(show);
+  const {
+    library,
+    open,
+    list,
+    index,
+    handleCloseModal,
+    handleNext,
+    handlePrevious,
+  } = props;
 
   const composeLink = (t: string, links: any): string => {
     const ref = getLinkText(t);
@@ -35,8 +48,8 @@ const LibraryModal = (props: LibraryModalProps) => {
     return t.substring(0, t.indexOf('['));
   };
 
-  return show ? (
-    <Modal className='modal' open onClose={handleCloseModal}>
+  return (
+    <Modal className='modal' open={open} onClose={handleCloseModal}>
       <Box className='modal__content'>
         <img src={library.url} alt={library.name} />
         <div className='modal__right'>
@@ -70,19 +83,14 @@ const LibraryModal = (props: LibraryModalProps) => {
               )}
               {library.clans ? (
                 <div className='clan__data'>
-                  <Typography variant='subtitle2'>
-                    Clan:</Typography>
-                    {getClanIcon(library.clans).map((clan, index) => (
-                      <Avatar
-                        key={clan.concat(
-                          library.id.toString(),
-                          index.toString()
-                        )}
-                        src={clan}
-                        alt={clan}
-                      />
-                    ))}
-                  
+                  <Typography variant='subtitle2'>Clan:</Typography>
+                  {getClanIcon(library.clans).map((clan, index) => (
+                    <Avatar
+                      key={clan.concat(library.id.toString(), index.toString())}
+                      src={clan}
+                      alt={clan}
+                    />
+                  ))}
                 </div>
               ) : (
                 <></>
@@ -133,7 +141,7 @@ const LibraryModal = (props: LibraryModalProps) => {
                 )}
               </div>
             </div>
-            <Divider sx={{margin:'1px'}}/>
+            <Divider sx={{ margin: '1px' }} />
             <Typography variant='subtitle2'>{library.card_text}</Typography>
             <Divider />
             <div className='artist'>
@@ -166,11 +174,15 @@ const LibraryModal = (props: LibraryModalProps) => {
               <></>
             )}
           </div>
+          <CardButtons
+            handleNext={() => handleNext()}
+            handlePrevious={() => handlePrevious()}
+            list={list}
+            index={index}
+          />
         </div>
       </Box>
     </Modal>
-  ) : (
-    <></>
   );
 };
 

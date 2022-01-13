@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import React, { useEffect } from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
-
+import './CardButton.css';
 interface Props {
   handleNext: () => void;
   handlePrevious: () => void;
