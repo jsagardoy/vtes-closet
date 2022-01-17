@@ -1,27 +1,14 @@
 import { TextField } from '@material-ui/core';
 import { HighlightOff, MoreVert, Search } from '@mui/icons-material';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal/Modal';
-import Select, { SelectChangeEvent } from '@mui/material/Select/Select';
+import { SelectChangeEvent } from '@mui/material/Select/Select';
 import React from 'react';
 import { discType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
-import {
-  getClanIcon,
-  getClans,
-  getDiscIcon,
-  getDiscInf,
-  getDiscList,
-  getLibraryCardTypes,
-  getSects,
-} from '../../../../util';
+import { getDiscInf, getDiscList } from '../../../../util';
 import './LibraryNavbarList.css';
+import LibraryNavbarModal from './LibraryNavbarModal';
 
 interface NavbarLibraryProps {
   list: LibraryType[];
@@ -42,12 +29,11 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showMore, setShowMore] = React.useState<boolean>(false);
-  const [showMoreDisc, setShowMoreDisc] = React.useState<boolean>(false);
   const [selectedLibraryCardType, setSelectedLibraryCardType] =
-    React.useState<string>('any');
+    React.useState<string>('Any');
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
-  
+
   const [selectedDisc, setSelectedDisc] = React.useState<string[]>([]);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
@@ -115,7 +101,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const handleSelectDisc = (index: number) => {
     let value: number = selected_discList.value[index];
     let aux: discType = { ...selected_discList };
-    value === 2 ? (aux.value[index] = 0) : (aux.value[index] = value + 1);
+    value === 1 ? (aux.value[index] = 0) : (aux.value[index] = value + 1);
     setSelected_discList(aux);
     handleFilterDisc();
   };
@@ -134,20 +120,15 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     );
   };
 
-  const handleShowMoreDisc = (): void => {
-    setShowMoreDisc(!showMoreDisc);
-  };
-
-
-  const handleSelectDisc2 = (event: SelectChangeEvent<typeof selectedDisc>) => {
-    const {
+  
+/*   const handleSelectDisc2 = (event: SelectChangeEvent<typeof selectedDisc>) => {
+   const {
       target: { value },
     } = event;
     setSelectedDisc(typeof value === 'string' ? value.split(',') : value);
-  };
+  }; */ 
 
-  React.useEffect(() => { }, []);
-  
+  React.useEffect(() => {}, []);
 
   return (
     <>
@@ -182,107 +163,20 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
             <MoreVert style={{ fill: 'darkcyan' }} />
           </IconButton>
         </div>
-      </div>
-      <Modal
+      <LibraryNavbarModal
         open={showMore}
-        onClose={() => handleMore()}
-        className='navbar__bottom'
-      >
-        <div className='filter__container'>
-          <Select
-            variant='standard'
-            label='Disciplines'
-            multiple
-            onChange={handleSelectDisc2}
-          >
-            <MenuItem>
-              {getDiscIcon(selected_discList.name).map((dis, index) => (
-                <IconButton
-                  key={index}
-                  size='small'
-                  onClick={() => handleSelectDisc(index)}
-                >
-                  {selected_discList.value[index] === 0 ? (
-                    <Avatar className='opacity__disc' src={dis} alt={dis} />
-                  ) : (
-                    <Avatar src={dis} alt={dis} />
-                  )}
-                </IconButton>
-              ))}
-              </MenuItem>
-          </Select>
+        selectedSect={selectedSect}
+        selectedClan={selectedClan}
+        selectedLibraryCardType={selectedLibraryCardType}
+        selected_discList={selected_discList}
+        handleClan={handleClan}
+        handleMore={handleMore}
+        handleSect={handleSect}
+        handleSelectDisc={handleSelectDisc}
+        handleChangeLibraryCardType={handleChangeLibraryCardType}
+      />
+      </div>
 
-          <Divider />
-          <div className='filter__clan'>
-            <InputLabel id='library_card_type_id'>Card Type</InputLabel>
-            <FormControl variant='standard'>
-              <Select
-                labelId='library_card_type_id'
-                id='library_card_type_id'
-                value={selectedLibraryCardType}
-                label='Card Type'
-                className='select__clan'
-                onChange={handleChangeLibraryCardType}
-              >
-                {getLibraryCardTypes().map((t) => (
-                  <MenuItem value={t}>{t}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <Divider />
-          <div className='filter__clan'>
-            <InputLabel>Clan</InputLabel>
-            <FormControl variant='standard'>
-              <Select
-                id='clan__select__id'
-                labelId='select__clan__standard__label'
-                className='select__clan'
-                value={selectedClan}
-                onChange={handleClan}
-                label='Clan'
-              >
-                <MenuItem value=''>
-                  <em>None</em>
-                </MenuItem>
-                {getClans().map((clan) => (
-                  <MenuItem key={clan} value={clan}>
-                    <Avatar
-                      className='select__clan__avatar__icon'
-                      src={getClanIcon([clan]).find((c) => c)}
-                      alt={clan}
-                    />
-                    {clan}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-          <Divider />
-          <div className='filter__sect'>
-            <InputLabel>Sect</InputLabel>
-            <FormControl variant='standard'>
-              <Select
-                id='select__sect__id'
-                labelId='select__sect__standard__label'
-                className='select__sect'
-                value={selectedSect}
-                onChange={handleSect}
-                label='Sect'
-              >
-                <MenuItem value=''>
-                  <em>None</em>
-                </MenuItem>
-                {getSects().map((sect) => (
-                  <MenuItem key={sect} value={sect}>
-                    {sect}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-      </Modal>
     </>
   );
 };

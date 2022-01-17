@@ -112,3 +112,12 @@
   align-items: center;
   margin-left: 2em;
 }
+.disc__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar__disciplines__icons {
+  display: flex;
+  flex-direction: column;
+}

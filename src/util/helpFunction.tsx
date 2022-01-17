@@ -235,6 +235,7 @@ export const getCapacities = (): capacityType[] => capacities;
 
 export const getLibraryCardTypes = () => [
   '',
+  'Any',
   'Action',
   'Action modifier',
   'Political action',
