@@ -19,9 +19,11 @@ const LibraryContainer = () => {
   ) => {
     //TODO: add the remaining filters
     const resp = libraryList
-      .filter((item) => item.name.toLowerCase().includes(name))
+      .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
+      .filter((item: LibraryType) => libraryCardType==='Any'?item : item.types.includes(libraryCardType))
       ;
+    
     setList(resp);        
   };
   return (
