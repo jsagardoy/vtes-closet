@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import { SelectChangeEvent } from '@mui/material/Select/Select';
 import React from 'react';
-import { discType } from '../../../../types/crypt_type';
+import { discType, LibraryPropType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
 import { getDiscInf, getDiscList } from '../../../../util';
 import './LibraryNavbarList.css';
@@ -17,7 +17,8 @@ interface NavbarLibraryProps {
     discList: string[],
     libraryCardType: string,
     clan: string,
-    sect: string
+    sect: string,
+    props: LibraryPropType
   ) => void;
 }
 
@@ -34,7 +35,25 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
-  const [selectedDisc, setSelectedDisc] = React.useState<string[]>([]);
+  const [checked, setChecked] = React.useState<LibraryPropType>({
+    bleed: false,
+    strength: false,
+    stealth: false,
+    intercept: false,
+    aggravated: false,
+    enter_combat: false,
+    flight: false,
+    black_hand: false,
+    red_list: false,
+    infernal: false,
+    slave: false,
+    banned: false,
+    clanless: false,
+    titled: false,
+    anarch: false,
+    combo: false,
+    burnable: false
+  });
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const handleMore = (): void => {
@@ -47,10 +66,29 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       disc_list,
       selectedLibraryCardType,
       selectedClan,
-      selectedSect
+      selectedSect,
+      checked
     );
   };
 
+  const handleCheck = (
+    prop: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newProps = {
+      ...checked,
+      [prop]: event.target.checked,
+    };
+    setChecked(newProps);
+    searchList(
+      inputSearch,
+      getDiscList(selected_discList),
+      selectedLibraryCardType,
+      selectedClan,
+      selectedSect,
+      newProps
+    );
+  };
   const handleClan = (event: SelectChangeEvent) => {
     setSelectedClan(event.target.value);
     searchList(
@@ -58,7 +96,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       getDiscList(selected_discList),
       selectedLibraryCardType,
       event.target.value,
-      selectedSect
+      selectedSect,
+      checked
     );
   };
 
@@ -69,7 +108,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       getDiscList(selected_discList),
       selectedLibraryCardType,
       selectedClan,
-      event.target.value
+      event.target.value,
+      checked
     );
   };
   const isEvent = (
@@ -85,7 +125,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
         getDiscList(selected_discList),
         selectedLibraryCardType,
         selectedClan,
-        selectedSect
+        selectedSect,
+        checked
       );
     } else {
       setInputSearch('');
@@ -94,7 +135,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
         getDiscList(selected_discList),
         selectedLibraryCardType,
         selectedClan,
-        selectedSect
+        selectedSect,
+        checked
       );
     }
   };
@@ -116,17 +158,12 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       getDiscList(selected_discList),
       event.target.value,
       selectedClan,
-      selectedSect
+      selectedSect,
+      checked
     );
   };
 
-  
-/*   const handleSelectDisc2 = (event: SelectChangeEvent<typeof selectedDisc>) => {
-   const {
-      target: { value },
-    } = event;
-    setSelectedDisc(typeof value === 'string' ? value.split(',') : value);
-  }; */ 
+
 
   React.useEffect(() => {}, []);
 
@@ -163,20 +200,21 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
             <MoreVert style={{ fill: 'darkcyan' }} />
           </IconButton>
         </div>
-      <LibraryNavbarModal
-        open={showMore}
-        selectedSect={selectedSect}
-        selectedClan={selectedClan}
-        selectedLibraryCardType={selectedLibraryCardType}
-        selected_discList={selected_discList}
-        handleClan={handleClan}
-        handleMore={handleMore}
-        handleSect={handleSect}
-        handleSelectDisc={handleSelectDisc}
-        handleChangeLibraryCardType={handleChangeLibraryCardType}
-      />
+        <LibraryNavbarModal
+          open={showMore}
+          selectedSect={selectedSect}
+          selectedClan={selectedClan}
+          checked={checked}
+          selectedLibraryCardType={selectedLibraryCardType}
+          selected_discList={selected_discList}
+          handleClan={handleClan}
+          handleMore={handleMore}
+          handleSect={handleSect}
+          handleSelectDisc={handleSelectDisc}
+          handleChangeLibraryCardType={handleChangeLibraryCardType}
+          handleCheck={handleCheck}
+        />
       </div>
-
     </>
   );
 };

@@ -100,11 +100,11 @@ export const getDiscList = (discList: discType): string[] =>
     //return resp;
   );
 export const getCardTypesIcon = (types: string[]): string[] =>
-  types.map(type => `${URLBase}${type.toLowerCase()}.png`);
-  
+  types.map((type) => `${URLBase}${type.toLowerCase()}.png`);
+
 export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
-  type==='blood' ? `${URLBase}blood${cost}.png`:`${URLBase}pool${cost}.png`;
-  
+  type === 'blood' ? `${URLBase}blood${cost}.png` : `${URLBase}pool${cost}.png`;
+
 export const getBurnOption = (): string => `${URLBase}burn.png`;
 
 export const getDiscInf = (): string[] => disciplines_inf;
@@ -245,6 +245,21 @@ export const getLibraryCardTypes = () => [
   'Ally',
   'Reaction',
   'Event',
-  'Token'
+  'Token',
 ];
 
+export const compareArrays = (
+  vampDisc: string[] | undefined,
+  selectedDisc: string[]
+) => {
+  const cleanedSelected: string[] = selectedDisc.filter((elem) => elem !== '');
+  if (vampDisc) {
+    return cleanedSelected.every((elem) =>
+      elem === elem.toLowerCase()
+        ? vampDisc.includes(elem.toLocaleUpperCase()) || vampDisc.includes(elem.toLocaleLowerCase())
+        : vampDisc.includes(elem.toUpperCase())
+    );
+
+    
+  } else return cleanedSelected.length > 0 ? false : true;
+};

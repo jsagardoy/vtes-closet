@@ -3,7 +3,7 @@ import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { capacityType, getTitle, groupType as GroupType } from '../../../util';
+import { capacityType, compareArrays, getTitle, groupType as GroupType } from '../../../util';
 import CryptList from '../components/crypt/CryptList';
 
 
@@ -90,18 +90,7 @@ const CryptContainer = () => {
     return aux;
   };
 
-  const compareArrays = (vampDisc: string[], selectedDisc: string[]) => {
-    return selectedDisc.every((selected) => selected === '')
-      ? true
-      : selectedDisc
-          .map((selected) =>
-            selected.toLowerCase() === selected
-              ? vampDisc.includes(selected) ||
-                vampDisc.includes(selected.toUpperCase())
-              : vampDisc.includes(selected)
-          )
-          .find((elem: boolean) => elem === true);
-  };
+  
 
   React.useEffect(() => {}, []);
   return (

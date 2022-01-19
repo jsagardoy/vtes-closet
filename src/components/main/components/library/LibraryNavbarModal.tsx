@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Checkbox,
   Divider,
   FormControl,
   IconButton,
@@ -10,7 +11,8 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
-import { discType } from '../../../../types/crypt_type';
+import { discType, LibraryPropType } from '../../../../types/crypt_type';
+
 import {
   getClanIcon,
   getClans,
@@ -24,11 +26,16 @@ interface Props {
   selectedLibraryCardType: string;
   selectedSect: string;
   selectedClan: string;
+  checked: LibraryPropType;
   handleMore: () => void;
   handleSelectDisc: (index: number) => void;
   handleChangeLibraryCardType: (event: SelectChangeEvent) => void;
   handleSect: (event: SelectChangeEvent) => void;
   handleClan: (event: SelectChangeEvent) => void;
+  handleCheck: (
+    prop: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
 }
 const LibraryNavbarModal = (props: Props) => {
   const {
@@ -37,11 +44,13 @@ const LibraryNavbarModal = (props: Props) => {
     selectedClan,
     selectedLibraryCardType,
     selected_discList,
+    checked,
     handleClan,
     handleMore,
     handleSect,
     handleSelectDisc,
     handleChangeLibraryCardType,
+    handleCheck,
   } = props;
 
   return (
@@ -136,6 +145,124 @@ const LibraryNavbarModal = (props: Props) => {
               ))}
             </Select>
           </FormControl>
+        </div>
+        <Divider />
+        <div className='filter__props'>
+          <div className='prop__column'>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.bleed}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('bleed', e)
+                }
+              />
+              <InputLabel>+ Bleed</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.strength}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('strength', e)
+                }
+              />
+              <InputLabel>+ Strength</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.stealth}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('stealth', e)
+                }
+              />
+              <InputLabel>+ Stealth</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.intercept}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('intercept', e)
+                }
+              />
+              <InputLabel>+ Intercept</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.aggravated}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('aggravated', e)
+                }
+              />
+              <InputLabel>Aggravated</InputLabel>
+            </div>
+
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.enter_combat}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('enter_combat', e)
+                }
+              />
+              <InputLabel>Enter combat</InputLabel>
+            </div>
+          </div>
+          <div className='prop__column'>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.flight}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('flight', e)
+                }
+              />
+              <InputLabel>Flight</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.black_hand}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('black_hand', e)
+                }
+              />
+              <InputLabel>Black Hand</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.red_list}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('red_list', e)
+                }
+              />
+              <InputLabel>Red List</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.infernal}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('infernal', e)
+                }
+              />
+              <InputLabel>Infernal</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.slave}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('slave', e)
+                }
+              />
+              <InputLabel>Slave</InputLabel>
+            </div>
+          </div>
         </div>
       </div>
     </Modal>

@@ -1,24 +1,41 @@
 import React from 'react';
-import { getLibrary, LibraryType } from '../../../types/library_type';
+import { LibraryPropType } from '../../../types/crypt_type';
+import { LibraryType } from '../../../types/library_type';
+import { compareArrays } from '../../../util/helpFunction';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
 
 const LibraryContainer = () => {
-  const libratyList: LibraryType[] = getLibrary();
-  const [list, setList] = React.useState<LibraryType[]>(libratyList);
-  const handleSearch = (name: string) => {
-//TODO: add the remaining filters
-    const resp = libratyList.filter((item) =>
-      item.name.toLowerCase().includes(name)
-    );
-    setList(resp);
+  const libraryList: LibraryType[] = require('../../../mock/libraryCards.json');
+  const [list, setList] = React.useState<LibraryType[]>(libraryList);
+  const handleSearch = (
+    name: string,
+    discList: string[],
+    libraryCardType: string,
+    clan: string,
+    sect: string,
+    props: LibraryPropType
+  ) => {
+    //TODO: add the remaining filters
+    const resp = libraryList
+      .filter((item) => item.name.toLowerCase().includes(name))
+      .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
+      ;
+    setList(resp);        
   };
   return (
     <div className='library__container'>
       <LibraryNavbarList
         list={list}
-        searchList={(name: string) => handleSearch(name)}
+        searchList={(
+          name: string,
+          discList: string[],
+          libraryCardType: string,
+          clan: string,
+          sect: string,
+          props: LibraryPropType
+        ) => handleSearch(name, discList, libraryCardType, clan, sect, props)}
       />
       <LibraryList list={list} />
     </div>
