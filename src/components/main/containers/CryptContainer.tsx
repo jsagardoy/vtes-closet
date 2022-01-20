@@ -3,7 +3,7 @@ import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { capacityType, compareArrays, getTitle, groupType as GroupType } from '../../../util';
+import { capacityType, compareArrays, findInText, groupType as GroupType } from '../../../util';
 import CryptList from '../components/crypt/CryptList';
 
 
@@ -62,35 +62,6 @@ const CryptContainer = () => {
     );
     return elements.every((elem) => findInText(crypt, elem));
   };
-
-  const findInText = (crypt: CryptType, text: string) => {
-    let aux = null;
-    let textFixed = text;
-    if (text !== '') {
-      if (text === 'red_list' || 'enter_combat' || 'black_hand') {
-        textFixed = text.replace('_', ' ');
-      }
-      if (text === 'No Title') {
-        //in case filter is no title
-        const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
-        aux = temp.every((elem) => elem === -1) ? crypt : null;
-      }
-      if (text === 'Titled') {
-        //in case filter is no title
-        const temp = getTitle().map((title) => crypt.card_text.indexOf(title));
-        aux = temp.some((elem) => elem !== -1) ? crypt : null;
-      }
-
-      if (crypt.card_text.toLowerCase().includes(textFixed)) {
-        aux = crypt;
-      }
-    } else {
-      aux = crypt;
-    }
-    return aux;
-  };
-
-  
 
   React.useEffect(() => {}, []);
   return (

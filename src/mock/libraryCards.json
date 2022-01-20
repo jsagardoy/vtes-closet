@@ -43,6 +43,7 @@
     },
     "artists": ["Greg Simanson", "Né Né Thomas"],
     "pool_cost": "2",
+    "clans": ["Osebo"],
     "rulings": {
       "text": [
         "Provides only ony maneuver each combat, even if the bearer changes. [LSJ 19980302-2]",
@@ -261,6 +262,7 @@
     "url": "https://static.krcg.org/card/abombwe.jpg",
     "types": ["Master"],
     "capacity_change": "+1",
+    "clans": ["Osebo"],
     "card_text": "Master: Discipline. Trifle.\nPut this card on a Laibon or on a vampire with Protean [pro]. This vampire gains one level of Abombwe [abo]. Capacity increases by 1: the vampire is one generation older. Cannot be placed on a vampire with superior Abombwe [ABO].",
     "sets": {
       "Legacies of Blood": [
@@ -288,7 +290,7 @@
     "url": "https://static.krcg.org/card/abomination.jpg",
     "types": ["Action"],
     "capacity": 4,
-    "card_text": "+1 stealth action. Requires a ready non-sterile vampire.\nBurn a ready unlocked werewolf ally you control to put this card in play. It becomes a unique Independent Abomination with 4 capacity, superior Protean [PRO] and +1 strength. Move up to 4 blood from the acting vampire to this vampire. This vampire gets an additional strike (limited) each round and an optional maneuver each combat. He may enter combat with a ready minion as a Ⓓ action.",
+    "card_text": "Camarilla. +1 stealth action. Requires a ready non-sterile vampire.\nBurn a ready unlocked werewolf ally you control to put this card in play. It becomes a unique Independent Abomination with 4 capacity, superior Protean [PRO] and +1 strength. Move up to 4 blood from the acting vampire to this vampire. This vampire gets an additional strike (limited) each round and an optional maneuver each combat. He may enter combat with a ready minion as a Ⓓ action.",
     "sets": {
       "Final Nights": [{ "release_date": "2001-06-11", "rarity": "Rare" }],
       "Keepers of Tradition": [
@@ -320,7 +322,7 @@
     "_name": "Absimiliard's Army",
     "url": "https://static.krcg.org/card/absimiliardsarmy.jpg",
     "types": ["Event"],
-    "card_text": "Gehenna. Do not replace until a Methuselah is ousted.\nRequires at least one other Gehenna card in play. During each Methuselah's unlock phase, he or she may put the top card of his or her library in play. That card represents a nameless, textless ghoul ally with 2 life, 2 strength and 1 bleed. If the ally is burned, it is removed from the game. When a Methuselah is ousted, burn this card. Remove all such allies from the game when this card leaves play.",
+    "card_text": "Anarch.Gehenna. Do not replace until a Methuselah is ousted.\nRequires at least one other Gehenna card in play. During each Methuselah's unlock phase, he or she may put the top card of his or her library in play. That card represents a nameless, textless ghoul ally with 2 life, 2 strength and 1 bleed. If the ally is burned, it is removed from the game. When a Methuselah is ousted, burn this card. Remove all such allies from the game when this card leaves play.",
     "sets": { "Gehenna": [{ "release_date": "2004-05-17", "rarity": "Rare" }] },
     "scans": {
       "Gehenna": "https://static.krcg.org/card/set/gehenna/absimiliardsarmy.jpg"

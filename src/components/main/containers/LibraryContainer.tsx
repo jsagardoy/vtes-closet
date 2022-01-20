@@ -1,7 +1,7 @@
 import React from 'react';
 import { LibraryPropType } from '../../../types/crypt_type';
 import { LibraryType } from '../../../types/library_type';
-import { compareArrays } from '../../../util/helpFunction';
+import { compareArrays, findInText } from '../../../util/helpFunction';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
@@ -21,10 +21,16 @@ const LibraryContainer = () => {
     const resp = libraryList
       .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
-      .filter((item: LibraryType) => libraryCardType==='Any'?item : item.types.includes(libraryCardType))
-      ;
-    
-    setList(resp);        
+      .filter((item: LibraryType) =>
+        libraryCardType === 'Any' ? item : item.types.includes(libraryCardType)
+      )
+      .filter((item: LibraryType) =>
+        clan.length === 0
+          ? item
+          : item.clans && item.clans.find((elem) => elem === clan)
+      )
+      .filter((item) => findInText(item, sect));
+    setList(resp);
   };
   return (
     <div className='library__container'>

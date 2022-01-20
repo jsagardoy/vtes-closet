@@ -1,4 +1,5 @@
-import { disciplines_inf, discType } from '../types/crypt_type';
+import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
+import { LibraryType } from '../types/library_type';
 
 const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
@@ -257,10 +258,36 @@ export const compareArrays = (
   if (vampDisc) {
     return cleanedSelected.every((elem) =>
       elem === elem.toLowerCase()
-        ? vampDisc.includes(elem.toLocaleUpperCase()) || vampDisc.includes(elem.toLocaleLowerCase())
+        ? vampDisc.includes(elem.toLocaleUpperCase()) ||
+          vampDisc.includes(elem.toLocaleLowerCase())
         : vampDisc.includes(elem.toUpperCase())
     );
-
-    
   } else return cleanedSelected.length > 0 ? false : true;
+};
+
+export const findInText = (card: CryptType | LibraryType, text: string) => {
+  let aux = null;
+  let textFixed = text;
+  if (text !== '') {
+    if (text === 'red_list' || 'enter_combat' || 'black_hand') {
+      textFixed = text.replace('_', ' ');
+    }
+    if (text === 'No Title') {
+      //in case filter is no title
+      const temp = getTitle().map((title) => card.card_text.indexOf(title));
+      aux = temp.every((elem) => elem === -1) ? card : null;
+    }
+    if (text === 'Titled') {
+      //in case filter is no title
+      const temp = getTitle().map((title) => card.card_text.indexOf(title));
+      aux = temp.some((elem) => elem !== -1) ? card : null;
+    }
+
+    if (card.card_text.toLowerCase().includes(textFixed.toLowerCase())) {
+      aux = card;
+    }
+  } else {
+    aux = card;
+  }
+  return aux;
 };
