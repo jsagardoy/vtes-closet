@@ -36,6 +36,7 @@ interface Props {
     prop: string,
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
+
 }
 const LibraryNavbarModal = (props: Props) => {
   const {
@@ -261,6 +262,26 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Slave</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.blood_cost}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('blood_cost', e)
+                }
+              />
+              <InputLabel>Blood Cost</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.pool_cost}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('pool_cost', e)
+                }
+              />
+              <InputLabel>Pool Cost</InputLabel>
             </div>
           </div>
         </div>

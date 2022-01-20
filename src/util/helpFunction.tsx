@@ -1,3 +1,4 @@
+import { cardMediaClasses } from '@mui/material';
 import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
 import { LibraryType } from '../types/library_type';
 
@@ -292,9 +293,13 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
   return aux;
 };
 
-  export const filterProps = (card: CryptType|LibraryType, props: any) => {
-    const elements: string[] = Object.keys(props).filter(
-      (elem: string) => props[elem] === true
-    );
-    return elements.every((elem) => findInText(card, elem));
-  };
+export const filterProps = (card: CryptType | LibraryType, props: any) => {
+  const elements: string[] = Object.keys(props).filter(
+    (elem: string) => props[elem] === true
+  );
+  return 'blood_cost' in card && elements.find((elem) => elem === 'blood_cost')
+    ? card
+    : 'pool_cost' in card && elements.find((elem) => elem === 'pool_cost')
+    ? card
+    : elements.every((elem) => findInText(card, elem));
+};

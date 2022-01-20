@@ -52,7 +52,9 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     titled: false,
     anarch: false,
     combo: false,
-    burnable: false
+    burnable: false,
+    blood_cost: false,
+    pool_cost:false
   });
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');

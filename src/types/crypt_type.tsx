@@ -68,6 +68,7 @@ export interface PropType {
   red_list: boolean;
   infernal: boolean;
   slave: boolean;
+
 }
 export interface LibraryPropType extends PropType {
   banned: boolean;
@@ -75,5 +76,7 @@ export interface LibraryPropType extends PropType {
   titled: boolean;
   anarch: boolean;
   combo: boolean;
-  burnable:boolean;
+  burnable: boolean;
+  blood_cost: boolean;
+  pool_cost: boolean;
 }
