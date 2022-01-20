@@ -1,4 +1,3 @@
-import { cardMediaClasses } from '@mui/material';
 import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
 import { LibraryType } from '../types/library_type';
 
