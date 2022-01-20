@@ -3,7 +3,7 @@ import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { capacityType, compareArrays, findInText, groupType as GroupType } from '../../../util';
+import { capacityType, compareArrays, filterProps, findInText, groupType as GroupType } from '../../../util';
 import CryptList from '../components/crypt/CryptList';
 
 
@@ -54,13 +54,6 @@ const CryptContainer = () => {
         : item.group === Math.floor(group.value).toString() ||
             item.group === Math.ceil(group.value).toString();
     }
-  };
-
-  const filterProps = (crypt: CryptType, props: any) => {
-    const elements: string[] = Object.keys(props).filter(
-      (elem: string) => props[elem] === true
-    );
-    return elements.every((elem) => findInText(crypt, elem));
   };
 
   React.useEffect(() => {}, []);

@@ -330,7 +330,7 @@
     "artists": ["Richard Thomas"],
     "rulings": {
       "text": [
-        "Putting the top card of your library in play as a ghoul does not count as playing the card. [LSJ 20040531]",
+        "+1 bleed. Putting the top card of your library in play as a ghoul does not count as playing the card. [LSJ 20040531]",
         "The card used to represent the ally is face up, but the name on that card is ignored if something goes looking for a card by name. They do not contest. [LSJ 20040623] [LSJ 20071003]",
         "A burned ghoul is removed from the game but is still burned first, triggering cards such as {Tension in the Ranks}. [LSJ 20090920]",
         "The Ghouls are not mortal, they are monsters. [ANK 20200203-2]",

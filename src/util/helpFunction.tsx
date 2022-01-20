@@ -291,3 +291,10 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
   }
   return aux;
 };
+
+  export const filterProps = (card: CryptType|LibraryType, props: any) => {
+    const elements: string[] = Object.keys(props).filter(
+      (elem: string) => props[elem] === true
+    );
+    return elements.every((elem) => findInText(card, elem));
+  };
