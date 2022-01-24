@@ -4,8 +4,8 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import { SelectChangeEvent } from '@mui/material/Select/Select';
 import React from 'react';
-import { discType, LibraryPropType } from '../../../../types/crypt_type';
-import { LibraryType } from '../../../../types/library_type';
+import { discType } from '../../../../types/crypt_type';
+import { LibraryPropType, LibraryType } from '../../../../types/library_type';
 import { getDiscInf, getDiscList } from '../../../../util';
 import './LibraryNavbarList.css';
 import LibraryNavbarModal from './LibraryNavbarModal';
@@ -54,7 +54,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     combo: false,
     burnable: false,
     blood_cost: false,
-    pool_cost:false
+    pool_cost: false,
+    disciplineless: false,
   });
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');

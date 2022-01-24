@@ -1,3 +1,5 @@
+import { PropType } from './crypt_type';
+
 export interface LibraryType {
   id: number;
   name: string;
@@ -32,3 +34,14 @@ export const getLibrary = (): LibraryType[] => {
     return require('../mock/libraryCards.json');
 }
 
+export interface LibraryPropType extends PropType {
+  banned: boolean;
+  clanless: boolean;
+  disciplineless: boolean;
+  titled: boolean;
+  anarch: boolean;
+  combo: boolean;
+  burnable: boolean;
+  blood_cost: boolean;
+  pool_cost: boolean;
+}

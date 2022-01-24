@@ -1,6 +1,6 @@
 import React from 'react';
-import { LibraryPropType } from '../../../types/crypt_type';
-import { LibraryType } from '../../../types/library_type';
+
+import { LibraryPropType, LibraryType } from '../../../types/library_type';
 import { compareArrays, filterProps, findInText } from '../../../util/helpFunction';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';

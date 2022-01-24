@@ -11,7 +11,8 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
-import { discType, LibraryPropType } from '../../../../types/crypt_type';
+import { discType} from '../../../../types/crypt_type';
+import { LibraryPropType } from '../../../../types/library_type';
 
 import {
   getClanIcon,
@@ -211,8 +212,48 @@ const LibraryNavbarModal = (props: Props) => {
               />
               <InputLabel>Enter combat</InputLabel>
             </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.titled}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('titled', e)
+                }
+              />
+              <InputLabel>Titled</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.disciplineless}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('disciplineless', e)
+                }
+              />
+              <InputLabel>Discipliness</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.combo}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('combo', e)
+                }
+              />
+              <InputLabel>Combo</InputLabel>
+            </div>
           </div>
           <div className='prop__column'>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.clanless}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('clanless', e)
+                }
+              />
+              <InputLabel>Clanless</InputLabel>
+            </div>
             <div className='prop__pair'>
               <Checkbox
                 size='small'
@@ -222,6 +263,16 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Flight</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.burnable}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('burnable', e)
+                }
+              />
+              <InputLabel>Burnable</InputLabel>
             </div>
             <div className='prop__pair'>
               <Checkbox

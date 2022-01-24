@@ -70,13 +70,4 @@ export interface PropType {
   slave: boolean;
 
 }
-export interface LibraryPropType extends PropType {
-  banned: boolean;
-  clanless: boolean;
-  titled: boolean;
-  anarch: boolean;
-  combo: boolean;
-  burnable: boolean;
-  blood_cost: boolean;
-  pool_cost: boolean;
-}
+

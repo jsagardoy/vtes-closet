@@ -296,9 +296,17 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
   const elements: string[] = Object.keys(props).filter(
     (elem: string) => props[elem] === true
   );
-  return 'blood_cost' in card && elements.find((elem) => elem === 'blood_cost')
-    ? card
-    : 'pool_cost' in card && elements.find((elem) => elem === 'pool_cost')
-    ? card
-    : elements.every((elem) => findInText(card, elem));
+
+  // hay q usar un every con el elem
+  const result = elements.map(
+    (elem) =>
+      (elem === 'pool_cost' && 'pool_cost' in card) ||
+      (elem === 'blood_cost' && 'blood_cost' in card) ||
+      (elem === 'clanless' && card.clans === undefined) ||
+      (elem === 'disciplineless' && card.disciplines === undefined) ||
+      findInText(card, elem) !== null
+  );
+
+  return result.every((elem) => elem === true);
+ 
 };
