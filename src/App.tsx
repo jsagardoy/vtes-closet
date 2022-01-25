@@ -36,6 +36,7 @@ function App() {
           <Sidebar />
           <Switch>
             <Route exact path={'/'} component={PublicMain} />
+            <Route exact path={'/home'} component={PublicMain} />
             <Route exact path={'/crypt'} component={CryptContainer} />
             <Route exact path={'/library'} component={LibraryContainer} />
             <PrivateRoute

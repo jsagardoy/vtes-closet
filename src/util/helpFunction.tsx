@@ -5,7 +5,10 @@ const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
 const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const URLBase = 'https://static.krcg.org/png/icon/';
+const defaultAvatarURL =
+  'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
 
+export const getLogo = () => defaultAvatarURL;
 export const getDiscIcon = (discs: string[]): string[] => {
   let resp: string[] = [];
   if (discs) {

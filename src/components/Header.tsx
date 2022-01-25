@@ -4,10 +4,11 @@ import { Menu } from '@material-ui/icons';
 import './Header.css';
 import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { getLogo } from '../util/helpFunction';
+
 
 const Header = () => {
-  const defaultAvatarURL =
-    'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
+  const defaultAvatarURL = getLogo();
   const auth = getAuth();
   const [photoURL, setPhotoURL] = React.useState<string>(defaultAvatarURL);
   const [userName, setUserName] = React.useState<string>('');
