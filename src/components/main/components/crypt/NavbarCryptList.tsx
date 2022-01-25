@@ -1,9 +1,8 @@
 import React from 'react';
-import { HighlightOff, MoreVert, Search } from '@material-ui/icons';
+import { HighlightOff, MoreVert, Search, SortByAlpha } from '@material-ui/icons';
 import './NavbarCryptList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import {
-  CryptType,
   discType,
   PropType,
 } from '../../../../types/crypt_type';
@@ -25,8 +24,8 @@ import { Checkbox, Divider, FormControl } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
 import { groupType } from '../../../../util';
+import { Sort } from '@mui/icons-material';
 interface NavbarListProps {
-  list: CryptType[];
   searchList: (
     name: string,
     discList: string[],
@@ -38,17 +37,24 @@ interface NavbarListProps {
     maxCap: capacityType,
     minCap: capacityType
   ) => void;
+  handleSort: () => void;
+  handleSortAZ: () => void;
 }
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
+  const { handleSort, handleSortAZ} = navbarListProps;
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
+  const [rotate, setRotate] = React.useState<boolean>(false);
+  const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
+  
+
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
-    value: 0.5,
+  value: 0.5,
     label: 'Any',
   });
   const [selectedMaxCap, setSelectedMaxCap] = React.useState<capacityType>({
@@ -240,7 +246,15 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     );
   };
 
-  React.useEffect(() => {}, [checked]);
+   const handleRotate = () => {
+     setRotate(!rotate);
+   };
+  
+    const handleRotateAZ = () => {
+      setRotateAZ(!rotateAZ);
+    };
+  
+  React.useEffect(() => {}, []);
 
   const { searchList } = navbarListProps;
   return (
@@ -271,6 +285,26 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
           ) : null}
           <IconButton size='small' onClick={() => handleSearch()}>
             <Search style={{ fill: 'darkcyan' }} />
+          </IconButton>
+          <IconButton
+            className={rotateAZ ? 'button__rotation' : ''}
+            size='small'
+            onClick={() => {
+              handleRotateAZ();
+              handleSortAZ();
+            }}
+          >
+            <SortByAlpha style={{ fill: 'darkcyan' }} />
+          </IconButton>
+          <IconButton
+            className={rotate ? 'button__rotation' : ''}
+            size='small'
+            onClick={() => {
+              handleRotate();
+              handleSort();
+            }}
+          >
+            <Sort style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert style={{ fill: 'darkcyan' }} />
@@ -386,7 +420,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               filterSliders={handleSliders}
               group={selectedGroup}
               maxCapacity={selectedMaxCap}
-              minCapacity={selectedMinCap }
+              minCapacity={selectedMinCap}
             />
           </div>
           <Divider />

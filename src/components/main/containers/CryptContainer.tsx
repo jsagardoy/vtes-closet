@@ -3,13 +3,20 @@ import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
 import { CryptType, PropType } from '../../../types/crypt_type';
-import { capacityType, compareArrays, filterProps, findInText, groupType as GroupType } from '../../../util';
+import {
+  capacityType,
+  compareArrays,
+  filterProps,
+  findInText,
+  groupType as GroupType,
+} from '../../../util';
 import CryptList from '../components/crypt/CryptList';
-
 
 const CryptContainer = () => {
   const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
   const [list, setList] = React.useState<CryptType[]>(cryptList);
+  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
+  const [sort, setSort] = React.useState<boolean>(false);
 
   const handleSearch = (
     name: string,
@@ -56,11 +63,29 @@ const CryptContainer = () => {
     }
   };
 
-  React.useEffect(() => {}, []);
+  const handleSortAZ = (): void => {
+    sortAZ
+      ? list.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+      : list.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
+    setSortAZ(!sortAZ);
+  };
+
+  const handleSort = (): void => {
+    sort
+      ? list.sort((a, b) =>
+          a.capacity < b.capacity ? -1 : a.capacity > b.capacity ? 1 : 0
+        )
+      : list.sort((a, b) =>
+          a.capacity < b.capacity ? 1 : a.capacity > b.capacity ? -1 : 0
+        );
+    setSort(!sort);
+  };
+
+  React.useEffect(() => { }, []);
+  
   return (
     <div className='crypt__list'>
       <NavbarCryptList
-        list={list}
         searchList={(
           name: string,
           discList: string[],
@@ -84,6 +109,8 @@ const CryptContainer = () => {
             minCap
           )
         }
+        handleSort={() => handleSort()}
+        handleSortAZ={() => handleSortAZ()}
       />
       <CryptList list={list} />
     </div>

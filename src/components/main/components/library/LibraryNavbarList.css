@@ -122,5 +122,5 @@
   flex-direction: column;
 }
 .button__rotation{
-  transform: rotate(180deg)
+   transform: rotate(180deg);
 }
