@@ -1,17 +1,17 @@
 import { TextField } from '@material-ui/core';
-import { HighlightOff, MoreVert, Search } from '@mui/icons-material';
+import { HighlightOff, MoreVert, Search, Sort } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import { SelectChangeEvent } from '@mui/material/Select/Select';
 import React from 'react';
 import { discType } from '../../../../types/crypt_type';
-import { LibraryPropType, LibraryType } from '../../../../types/library_type';
+import { LibraryPropType } from '../../../../types/library_type';
 import { getDiscInf, getDiscList } from '../../../../util';
 import './LibraryNavbarList.css';
 import LibraryNavbarModal from './LibraryNavbarModal';
 
 interface NavbarLibraryProps {
-  list: LibraryType[];
+
   searchList: (
     name: string,
     discList: string[],
@@ -20,16 +20,19 @@ interface NavbarLibraryProps {
     sect: string,
     props: LibraryPropType
   ) => void;
+  handleSort: () => void;
 }
 
 const values: number[] = getDiscInf().map(() => 0);
 let aux: discType = { name: getDiscInf(), value: values };
 
 const NavbarLibrary = (props: NavbarLibraryProps): any => {
-  const { searchList } = props;
+  const { searchList, handleSort } = props;
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showMore, setShowMore] = React.useState<boolean>(false);
+  const [rotate, setRotate] = React.useState<boolean>(false);
+
   const [selectedLibraryCardType, setSelectedLibraryCardType] =
     React.useState<string>('Any');
   const [selected_discList, setSelected_discList] =
@@ -62,6 +65,8 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const handleMore = (): void => {
     setShowMore(!showMore);
   };
+
+  
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
     searchList(
@@ -165,8 +170,11 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       checked
     );
   };
+  
 
-
+  const handleRotate = () => {
+    setRotate(!rotate);
+}
 
   React.useEffect(() => {}, []);
 
@@ -198,6 +206,16 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           ) : null}
           <IconButton size='small' onClick={() => handleSearch()}>
             <Search style={{ fill: 'darkcyan' }} />
+          </IconButton>
+          <IconButton
+            className = {rotate ? 'button__rotation' : ''}
+            size='small'
+            onClick={() => {
+              handleRotate();
+              handleSort();
+            }}
+          >
+            <Sort style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert style={{ fill: 'darkcyan' }} />
