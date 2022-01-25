@@ -112,4 +112,10 @@
   align-items: center;
   margin-left: 2em;
 }
+.button__rotation{
+   transform: rotate(180deg);
+}
 
+.button__activated__AZ{
+  background-color: lightgrey;
+}

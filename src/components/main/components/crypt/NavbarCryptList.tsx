@@ -287,14 +287,16 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             <Search style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton
-            className={rotateAZ ? 'button__rotation' : ''}
             size='small'
             onClick={() => {
               handleRotateAZ();
               handleSortAZ();
             }}
           >
-            <SortByAlpha style={{ fill: 'darkcyan' }} />
+            <SortByAlpha
+              className={rotateAZ ? 'button__activated__AZ' : ''}
+              style={{ fill: 'darkcyan' }}
+            />
           </IconButton>
           <IconButton
             className={rotate ? 'button__rotation' : ''}
