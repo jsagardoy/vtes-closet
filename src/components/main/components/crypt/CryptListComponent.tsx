@@ -1,16 +1,114 @@
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
-import React from 'react'
+import {
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+} from '@mui/material';
+import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { getDiscIcon } from '../../../../util/helpFunction';
-
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Spinner } from '../global/Spinner';
 interface Props {
-    list: CryptType[];
-    handleOpen: (crypt: CryptType, index:number) => void;
+  list: CryptType[];
+  handleOpen: (crypt: CryptType, index: number) => void;
 }
 
 const CryptListComponent = (props: Props) => {
-    const { list, handleOpen } = props;
-    return (
+  const { list, handleOpen } = props;
+  const [items, setItems] = React.useState<CryptType[]>([]);
+  
+  if (list.length > 0 && items.length === 0) {
+    const initialValue = list.slice(0, 20);
+    setItems(initialValue);
+  }
+
+  const isElement = (elem: CryptType, index: number): number => {
+    return elem && items.length > 0 && elem.id === items[items.length - 1].id
+      ? index
+      : -1;
+  };
+  const fetchMoreData = () => {
+    if (list) {
+      const initItem: number | undefined = list
+        .map((elem, index) => isElement(elem, index))
+        .find((elem) => elem !== -1);
+      setItems(
+        items.concat([
+          ...list.slice(initItem, initItem ? initItem + 20 : 0 + 20),
+        ])
+      );
+    }
+  };
+
+  React.useEffect(() => {}, []);
+
+  return (
+    <InfiniteScroll
+      dataLength={items.length}
+      next={fetchMoreData}
+      hasMore={items.length !== list.length}
+      loader={<Spinner />}
+      endMessage={
+        <p style={{ textAlign: 'center' }}>
+          <b>Yay! You have seen it all</b>
+        </p>
+      }
+      style={{ overflow: 'hidden' }}
+    >
+      <List className='crypt__list'>
+        {items.length === 0 ? (
+          <div className='span__no__result'>
+            <span>No results</span>
+          </div>
+        ) : (
+          items.map((crypt: CryptType, index: number) => (
+            <div key={crypt.id && crypt.name && Math.random()}>
+              <ListItem
+                key={crypt.id && crypt.name && Math.random()}
+                button
+                divider
+                dense
+                alignItems='flex-start'
+                onClick={() => handleOpen(crypt, index)}
+              >
+                <ListItemText
+                  className='list__item'
+                  primary={crypt.name}
+                  secondary={`${crypt.clans.map((clan) => clan)}: ${
+                    crypt.group
+                  }`}
+                />
+                <div className='list__left'>
+                  {getDiscIcon(crypt.disciplines).map((dis) => {
+                    return (
+                      <ListItemAvatar
+                        className='list__avatar__icons'
+                        key={crypt.id && dis}
+                      >
+                        <Avatar src={dis} alt={dis} />
+                      </ListItemAvatar>
+                    );
+                  })}
+                  <ListItemText
+                    className='list__item__icons'
+                    primary={crypt.capacity}
+                    //secondary={getDiscIcon(crypt.discipline)}
+                  />
+                </div>
+              </ListItem>
+            </div>
+          ))
+        )}
+      </List>
+    </InfiniteScroll>
+  );
+
+  /*  const columns: GridColDef[] = [{ field: "name", editable: false, width:120}]
+
+  return <DataGrid rows={list} columns={columns}/> */
+  /*      return (
       <List className='crypt__list'>
         {list.length === 0 ? (
           <div className='span__no__result'>
@@ -56,7 +154,7 @@ const CryptListComponent = (props: Props) => {
           ))
         )}
       </List>
-    );
-}
+    );   */
+};
 
-export default CryptListComponent
+export default CryptListComponent;

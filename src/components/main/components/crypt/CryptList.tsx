@@ -36,7 +36,7 @@ const CryptList = (props: listProps) => {
     handleOpen(crypt, newIndex);
   };
 
-  React.useEffect(() => {}, []);
+  /* React.useEffect(() => {}, []); */
   return (
     <>
       {open && openedCrypt ? (

@@ -1,8 +1,8 @@
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import {initializeApp } from 'firebase/app';
-//import { getAnalytics } from 'firebase/analytics';
 
-const firebaseConfig = {
+
+export const firebaseConfig = {
   apiKey: 'AIzaSyCWJ0PHARm4HTGJJ_Ijav8X3Y8iHlyby0c',
   authDomain: 'vtes-closet-backend.firebaseapp.com',
   projectId: 'vtes-closet-backend',
@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 
 //initialize firabase
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth();
 auth.useDeviceLanguage();
 

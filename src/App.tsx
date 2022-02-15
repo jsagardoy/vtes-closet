@@ -10,6 +10,9 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
+import { getCrypt } from './util/helpFunction';
+import { CryptType } from './types/crypt_type';
+
 
 function App() {
   const auth = getAuth();
@@ -22,14 +25,15 @@ function App() {
     }
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+     getCrypt().then((elem: CryptType[]) => localStorage.setItem("cryptList",JSON.stringify(elem)));
+  }, []);
 
   return (
     <div className='App'>
       {/*  <Login /> */}
       <div className='main__header'>
-
-      <Header />
+        <Header />
       </div>
       <div className='mainApp'>
         <Router>

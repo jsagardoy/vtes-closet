@@ -10,11 +10,12 @@ import {
   findInText,
   groupType as GroupType,
 } from '../../../util';
+
 import CryptList from '../components/crypt/CryptList';
 
 const CryptContainer = () => {
-  const cryptList: CryptType[] = require('../../../mock/cryptCards.json');
-  const [list, setList] = React.useState<CryptType[]>(cryptList);
+  const [list, setList] = React.useState<CryptType[]>([]);
+
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
 
@@ -29,7 +30,7 @@ const CryptContainer = () => {
     maxCap: capacityType,
     minCap: capacityType
   ) => {
-    const resp = cryptList
+    const resp = list
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -81,8 +82,14 @@ const CryptContainer = () => {
     setSort(!sort);
   };
 
-  React.useEffect(() => { }, []);
-  
+  React.useEffect(() => {
+    const aux = localStorage.getItem('cryptList');
+    if (aux) {
+      const cryptList = JSON.parse(aux);
+      setList(cryptList);
+    }
+  }, []);
+
   return (
     <div className='crypt__list'>
       <NavbarCryptList

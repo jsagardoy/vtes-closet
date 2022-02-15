@@ -254,7 +254,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       setRotateAZ(!rotateAZ);
     };
   
-  React.useEffect(() => {}, []);
+ /*  React.useEffect(() => {}, []); */
 
   const { searchList } = navbarListProps;
   return (

@@ -176,7 +176,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     setRotate(!rotate);
 }
 
-  React.useEffect(() => {}, []);
+  /* React.useEffect(() => {}, []); */
 
   return (
     <>

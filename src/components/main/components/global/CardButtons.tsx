@@ -1,6 +1,6 @@
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
 import './CardButton.css';
@@ -11,9 +11,6 @@ interface Props {
   index: number;
 }
 const CardButtons: React.FC<Props> = (props: Props) => {
-  useEffect(() => {
-
-  }, [])
   const { list, index, handleNext, handlePrevious } = props;
 
   return (

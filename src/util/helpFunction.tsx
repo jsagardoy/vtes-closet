@@ -1,3 +1,5 @@
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../database/config';
 import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
 import { LibraryType } from '../types/library_type';
 
@@ -311,5 +313,11 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
   );
 
   return result.every((elem) => elem === true);
- 
+};
+
+export const getCrypt = async () => {
+  const data = await getDocs(collection(db, 'crypt'));
+
+  const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
+  return result;
 };
