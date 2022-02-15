@@ -321,3 +321,13 @@ export const getCrypt = async () => {
   const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
   return result;
 };
+
+export const getLocalStorageCrypt = (): CryptType[] => {
+  const aux = localStorage.getItem('cryptList');
+  if (aux) {
+    const cryptList = JSON.parse(aux);
+    return cryptList;
+  }
+  else
+    return [];
+}

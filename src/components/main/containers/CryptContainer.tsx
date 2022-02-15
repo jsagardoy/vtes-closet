@@ -8,13 +8,14 @@ import {
   compareArrays,
   filterProps,
   findInText,
+  getLocalStorageCrypt,
   groupType as GroupType,
 } from '../../../util';
 
 import CryptList from '../components/crypt/CryptList';
 
 const CryptContainer = () => {
-  const [list, setList] = React.useState<CryptType[]>([]);
+  const [list, setList] = React.useState<CryptType[]>(getLocalStorageCrypt());
 
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
@@ -30,7 +31,7 @@ const CryptContainer = () => {
     maxCap: capacityType,
     minCap: capacityType
   ) => {
-    const resp = list
+    const resp = getLocalStorageCrypt()
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -83,11 +84,7 @@ const CryptContainer = () => {
   };
 
   React.useEffect(() => {
-    const aux = localStorage.getItem('cryptList');
-    if (aux) {
-      const cryptList = JSON.parse(aux);
-      setList(cryptList);
-    }
+    setList(getLocalStorageCrypt());
   }, []);
 
   return (

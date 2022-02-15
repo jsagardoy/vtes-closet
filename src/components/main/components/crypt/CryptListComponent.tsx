@@ -12,17 +12,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
 interface Props {
   list: CryptType[];
+  initialValue: CryptType[];
   handleOpen: (crypt: CryptType, index: number) => void;
 }
 
 const CryptListComponent = (props: Props) => {
-  const { list, handleOpen } = props;
+  const { list, handleOpen, initialValue } = props;
+  //const initialValue = list.slice(0, 20);
   const [items, setItems] = React.useState<CryptType[]>([]);
-  
-  if (list.length > 0 && items.length === 0) {
-    const initialValue = list.slice(0, 20);
-    setItems(initialValue);
-  }
 
   const isElement = (elem: CryptType, index: number): number => {
     return elem && items.length > 0 && elem.id === items[items.length - 1].id
@@ -34,6 +31,7 @@ const CryptListComponent = (props: Props) => {
       const initItem: number | undefined = list
         .map((elem, index) => isElement(elem, index))
         .find((elem) => elem !== -1);
+
       setItems(
         items.concat([
           ...list.slice(initItem, initItem ? initItem + 20 : 0 + 20),
@@ -42,7 +40,9 @@ const CryptListComponent = (props: Props) => {
     }
   };
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    setItems(initialValue);
+  }, [initialValue, list]);
 
   return (
     <InfiniteScroll
@@ -50,12 +50,13 @@ const CryptListComponent = (props: Props) => {
       next={fetchMoreData}
       hasMore={items.length !== list.length}
       loader={<Spinner />}
+      style={{ overflow: 'hidden' }}
       endMessage={
-        <p style={{ textAlign: 'center' }}>
-          <b>Yay! You have seen it all</b>
+        <p style={{
+          textAlign: 'center', color: 'Darkcyan', marginBottom:'1em'}}>
+          No more content
         </p>
       }
-      style={{ overflow: 'hidden' }}
     >
       <List className='crypt__list'>
         {items.length === 0 ? (
@@ -104,57 +105,6 @@ const CryptListComponent = (props: Props) => {
       </List>
     </InfiniteScroll>
   );
-
-  /*  const columns: GridColDef[] = [{ field: "name", editable: false, width:120}]
-
-  return <DataGrid rows={list} columns={columns}/> */
-  /*      return (
-      <List className='crypt__list'>
-        {list.length === 0 ? (
-          <div className='span__no__result'>
-            <span>No results</span>
-          </div>
-        ) : (
-          list.map((crypt: CryptType, index: number) => (
-            <div key={crypt.id}>
-              <ListItem
-                key={crypt.id}
-                button
-                divider
-                dense
-                alignItems='flex-start'
-                onClick={() => handleOpen(crypt, index)}
-              >
-                <ListItemText
-                  className='list__item'
-                  primary={crypt.name}
-                  secondary={`${crypt.clans.map((clan) => clan)}: ${
-                    crypt.group
-                  }`}
-                />
-                <div className='list__left'>
-                  {getDiscIcon(crypt.disciplines).map((dis) => {
-                    return (
-                      <ListItemAvatar
-                        className='list__avatar__icons'
-                        key={crypt.id && dis}
-                      >
-                        <Avatar src={dis} alt={dis} />
-                      </ListItemAvatar>
-                    );
-                  })}
-                  <ListItemText
-                    className='list__item__icons'
-                    primary={crypt.capacity}
-                    //secondary={getDiscIcon(crypt.discipline)}
-                  />
-                </div>
-              </ListItem>
-            </div>
-          ))
-        )}
-      </List>
-    );   */
 };
 
 export default CryptListComponent;
