@@ -13,7 +13,6 @@ import PrivateMain from './components/main/components/main/PrivateMain';
 import { getCrypt } from './util/helpFunction';
 import { CryptType } from './types/crypt_type';
 
-
 function App() {
   const auth = getAuth();
   const [isLogged, setIsLogged] = React.useState(false);
@@ -26,7 +25,16 @@ function App() {
   });
 
   useEffect(() => {
-     getCrypt().then((elem: CryptType[]) => localStorage.setItem("cryptList",JSON.stringify(elem)));
+    if (
+      localStorage.getItem('cryptList') === null ||
+      localStorage.getItem('cryptList')?.length === 0
+    ) {
+      localStorage.clear();
+      getCrypt().then((elem: CryptType[]) =>
+        localStorage.setItem('cryptList', JSON.stringify(elem))
+        
+      );
+    }
   }, []);
 
   return (

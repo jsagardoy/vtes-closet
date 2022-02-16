@@ -8,6 +8,7 @@ import {
   compareArrays,
   filterProps,
   findInText,
+  getCrypt,
   getLocalStorageCrypt,
   groupType as GroupType,
 } from '../../../util';
@@ -84,6 +85,15 @@ const CryptContainer = () => {
   };
 
   React.useEffect(() => {
+    if (
+      localStorage.getItem('cryptList') === null ||
+      localStorage.getItem('cryptList')?.length === 0
+    ) {
+      localStorage.clear();
+      getCrypt().then((elem: CryptType[]) =>
+        localStorage.setItem('cryptList', JSON.stringify(elem))
+      );
+    }
     setList(getLocalStorageCrypt());
   }, []);
 
