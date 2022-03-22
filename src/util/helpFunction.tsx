@@ -106,7 +106,15 @@ export const getDiscList = (discList: discType): string[] =>
     //return resp;
   );
 export const getCardTypesIcon = (types: string[]): string[] =>
-  types.map((type) => `${URLBase}${type.toLowerCase()}.png`);
+  types.map((type) => {
+    if (type === 'Political Action') {
+      return `${URLBase}political.png`;
+    }
+    if (type === 'Action Modifier') {
+      return `${URLBase}modifier.png`;
+    }
+    return `${URLBase}${type.toLowerCase()}.png`;
+  });
 
 export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
   type === 'blood' ? `${URLBase}blood${cost}.png` : `${URLBase}pool${cost}.png`;
@@ -325,7 +333,9 @@ export const getCrypt = async () => {
 export const getLibrary = async () => {
   const data = await getDocs(collection(db, 'library'));
 
-  const result: LibraryType[] = data.docs.map((doc) => doc.data() as LibraryType);
+  const result: LibraryType[] = data.docs.map(
+    (doc) => doc.data() as LibraryType
+  );
   return result;
 };
 
@@ -334,10 +344,8 @@ export const getLocalStorageCrypt = (): CryptType[] => {
   if (aux) {
     const cryptList = JSON.parse(aux);
     return cryptList;
-  }
-  else
-    return [];
-}
+  } else return [];
+};
 
 export const getLocalStorageLibrary = (): LibraryType[] => {
   const aux = localStorage.getItem('libraryList');
