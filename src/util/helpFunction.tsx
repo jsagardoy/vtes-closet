@@ -322,6 +322,13 @@ export const getCrypt = async () => {
   return result;
 };
 
+export const getLibrary = async () => {
+  const data = await getDocs(collection(db, 'library'));
+
+  const result: LibraryType[] = data.docs.map((doc) => doc.data() as LibraryType);
+  return result;
+};
+
 export const getLocalStorageCrypt = (): CryptType[] => {
   const aux = localStorage.getItem('cryptList');
   if (aux) {
@@ -331,3 +338,11 @@ export const getLocalStorageCrypt = (): CryptType[] => {
   else
     return [];
 }
+
+export const getLocalStorageLibrary = (): LibraryType[] => {
+  const aux = localStorage.getItem('libraryList');
+  if (aux) {
+    const libraryList = JSON.parse(aux);
+    return libraryList;
+  } else return [];
+};

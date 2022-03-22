@@ -5,14 +5,17 @@ import {
   compareArrays,
   filterProps,
   findInText,
+  getLibrary,
+  getLocalStorageLibrary,
 } from '../../../util/helpFunction';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
 
 const LibraryContainer = () => {
-  const libraryList: LibraryType[] = require('../../../mock/libraryCards.json');
-  const [list, setList] = React.useState<LibraryType[]>(libraryList);
+  const [list, setList] = React.useState<LibraryType[]>(
+    getLocalStorageLibrary()
+  );
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
 
   const handleSearch = (
@@ -23,7 +26,7 @@ const LibraryContainer = () => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = libraryList
+    const resp = getLocalStorageLibrary()
       .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
@@ -39,8 +42,6 @@ const LibraryContainer = () => {
     setList(resp);
   };
 
-  
-
   const handleSort = (): void => {
     sort
       ? list.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
@@ -48,6 +49,18 @@ const LibraryContainer = () => {
     setSort(!sort);
   };
 
+  React.useEffect(() => {
+    if (
+      localStorage.getItem('libraryList') === null ||
+      localStorage.getItem('libraryList')?.length === 0
+    ) {
+      localStorage.clear();
+      getLibrary().then((elem: LibraryType[]) =>
+        localStorage.setItem('libraryList', JSON.stringify(elem))
+      );
+    }
+    setList(getLocalStorageLibrary());
+  }, []);
   return (
     <div className='library__container'>
       <LibraryNavbarList

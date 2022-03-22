@@ -30,10 +30,6 @@ export interface LibraryType {
   };
 }
 
-export const getLibrary = (): LibraryType[] => {
-    return require('../mock/libraryCards.json');
-}
-
 export interface LibraryPropType extends PropType {
   banned: boolean;
   clanless: boolean;
