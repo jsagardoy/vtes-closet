@@ -1,10 +1,12 @@
 .navbarList {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 1rem;
-  margin-bottom: 0.2rem;
-  border-bottom: 1px solid darkcyan;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 1rem;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border-bottom: 1px solid darkcyan;
+    background-color: #ECDBBA;
 }
 .navbarList h3 {
   color: darkcyan;

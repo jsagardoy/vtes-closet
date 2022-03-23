@@ -58,7 +58,7 @@ const CryptListComponent = (props: Props) => {
         </p>
       }
     >
-      <List className='crypt__list'>
+      <List className='crypt__list' >
         {items.length === 0 ? (
           <div className='span__no__result'>
             <span>No results</span>

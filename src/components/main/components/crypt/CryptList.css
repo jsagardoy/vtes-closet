@@ -5,6 +5,7 @@
 }
 .crypt__list {
   width: 100%;
+  background-color: white;
 }
 
 .list__item {
