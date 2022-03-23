@@ -34,6 +34,7 @@ const LibraryList = (props: LibraryListProps) => {
     const library: LibraryType = list[newIndex];
     handleItemToOpen(library, newIndex);
   };
+    React.useEffect(() => {}, []); 
   return (
     <>
       {selectedItem && openModal ? (
@@ -46,11 +47,10 @@ const LibraryList = (props: LibraryListProps) => {
           handleNext={() => handleNext()}
           handlePrevious={() => handlePrevious()}
         />
-      ) : 
-        null
-      }
+      ) : null}
       <LibraryListComponent
         list={list}
+        initialValue={list.slice(0, 20)}
         handleItemToOpen={(library: LibraryType) =>
           handleItemToOpen(library, index)
         }

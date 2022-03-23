@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@mui/material';
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { LibraryType } from '../../../../types/library_type';
 import {
   getBurnOption,
@@ -16,22 +17,64 @@ import {
   getCardTypesIcon,
   getCardCost,
 } from '../../../../util';
+import { Spinner } from '../global/Spinner';
 
 interface Props {
   handleItemToOpen: (library: LibraryType) => void;
+  initialValue: LibraryType[];
   list: LibraryType[];
 }
 
 const LibraryListComponent = (props: Props) => {
-  const { list, handleItemToOpen } = props;
+  const { list, handleItemToOpen, initialValue } = props;
+
+  const [items, setItems] = React.useState<LibraryType[]>([]);
+
+  const isElement = (elem: LibraryType, index: number): number => {
+    return elem && items.length > 0 && elem.id === items[items.length - 1].id
+      ? index
+      : -1;
+  };
+
+  const fetchMoreData = () => {
+    if (list) {
+      const initItem: number | undefined = list
+        .map((elem, index) => isElement(elem, index))
+        .find((elem) => elem !== -1);
+
+      setItems(
+        items.concat([
+          ...list.slice(initItem, initItem ? initItem + 20 : 0 + 20),
+        ])
+      );
+    }
+  };
+
+  React.useEffect(() => {
+    setItems(initialValue);
+  }, [initialValue, list]);
+
   return (
+    <InfiniteScroll
+      dataLength={items.length}
+      next={fetchMoreData}
+      hasMore={items.length !== list.length}
+      loader={<Spinner />}
+      style={{ overflow: 'hidden' }}
+      endMessage={
+        <p style={{
+          textAlign: 'center', color: 'Darkcyan', marginBottom:'1em'}}>
+          No more content
+        </p>
+      }
+    >
     <List className='crypt__list'>
-      {list.length === 0 ? (
+      {items.length === 0 ? (
         <div className='span__no__result'>
           <span>No results</span>
         </div>
       ) : (
-        list.map((library: LibraryType) => (
+        items.map((library: LibraryType) => (
           <ListItem
             key={library.id}
             button
@@ -179,7 +222,8 @@ const LibraryListComponent = (props: Props) => {
           </ListItem>
         ))
       )}
-    </List>
+      </List>
+    </InfiniteScroll>
   );
 };
 
