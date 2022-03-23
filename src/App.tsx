@@ -15,7 +15,8 @@ import { CryptType } from './types/crypt_type';
 
 function App() {
   const auth = getAuth();
-  const [isLogged, setIsLogged] = React.useState(false);
+  const [isLogged, setIsLogged] = React.useState<boolean>(false);
+  const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(true);
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
@@ -23,6 +24,8 @@ function App() {
       setIsLogged(false);
     }
   });
+
+  const handleClickLogo = () => setToogleSidebar(!toogleSidebar);
 
   useEffect(() => {
     if (
@@ -32,20 +35,20 @@ function App() {
       localStorage.clear();
       getCrypt().then((elem: CryptType[]) =>
         localStorage.setItem('cryptList', JSON.stringify(elem))
-        
       );
     }
   }, []);
+
 
   return (
     <div className='App'>
       {/*  <Login /> */}
       <div className='main__header'>
-        <Header />
+        <Header handleClickLogo={handleClickLogo} />
       </div>
       <div className='mainApp'>
         <Router>
-          <Sidebar />
+          <Sidebar toogle={toogleSidebar}/>
           <Switch>
             <Route exact path={'/'} component={PublicMain} />
             <Route exact path={'/home'} component={PublicMain} />

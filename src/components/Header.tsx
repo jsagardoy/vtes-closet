@@ -6,8 +6,12 @@ import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getLogo } from '../util/helpFunction';
 
+interface Props {
+  handleClickLogo:() => void;
+}
+const Header = (props: Props) => {
+  const { handleClickLogo } = props;
 
-const Header = () => {
   const defaultAvatarURL = getLogo();
   const auth = getAuth();
   const [photoURL, setPhotoURL] = React.useState<string>(defaultAvatarURL);
@@ -26,7 +30,11 @@ const Header = () => {
   return (
     <div className='header'>
       <div className='header__left'>
-        <Menu fontSize='large' style={{ fill: 'darkcyan' }} />
+        <Menu
+          fontSize='large'
+          style={{ fill: 'darkcyan' }}
+          onClick={() => handleClickLogo()}
+        />
         <img
           src='https://sites.google.com/site/ausnzvteschampionship/_/rsrc/1361307183822/home/2013/Casino-Playing-Cards-icon%20VTESlogo.jpg?height=320&width=320'
           alt='logo'

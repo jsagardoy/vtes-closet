@@ -5,7 +5,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import './Sidebar.css';
-const Sidebar = () => {
+
+interface Props {
+  toogle: boolean;
+}
+
+const Sidebar = (props: Props) => {
+  const { toogle } = props;
+  const [animation, setAnimation] = React.useState<string>(toogle?"open":"close");
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
   const history: any = useHistory();
@@ -33,72 +40,75 @@ const Sidebar = () => {
   };
 
   return (
-    <div className='sidebar'>
-      <div className='list__container'>
-        <List className='list'>
-          <ListItemButton
-            alignItems='flex-start'
-            dense
-            divider
-            style={{ borderBottomColor: 'darkcyan' }}
-            onClick={() => handleClick('Crypt')}
-          >
-            <ListItemText primary='Crypt' />
-          </ListItemButton>
-          <ListItemButton
-            alignItems='flex-start'
-            dense
-            divider
-            style={{ borderBottomColor: 'darkcyan' }}
-            onClick={() => handleClick('Library')}
-          >
-            <ListItemText primary='Library' />
-          </ListItemButton>
-          <div className='privateSidebar' hidden={user ? false : true}>
-            <ListItemButton
-              alignItems='flex-start'
-              dense
-              divider
-              style={{ borderBottomColor: 'darkcyan' }}
-            >
-              <ListItemText primary='Decks' />
-            </ListItemButton>
-            <ListItemButton
-              className='listItem'
-              alignItems='flex-start'
-              dense
-              divider
-              style={{ borderBottomColor: 'darkcyan' }}
-            >
-              <ListItemText
-                className={'listItemText'}
-                primary='Collection'
-                secondary='Crypt'
-                secondaryTypographyProps={{
-                  color: 'darkcyan',
-                }}
-              />
-            </ListItemButton>
-            <ListItemButton
-              alignItems='flex-start'
-              dense
-              divider
-              style={{ borderBottomColor: 'darkcyan' }}
-            >
-              <ListItemText
-                className={'listItemText'}
-                primary='Collection'
-                secondary='Library'
-                secondaryTypographyProps={{
-                  color: 'darkcyan',
-                }}
-              />
-            </ListItemButton>
-          </div>
-        </List>
-      </div>
-    </div>
-  );
-};
-
-export default Sidebar;
+   <div
+      className={toogle ? "sidebar" : "hidden"}>
+     <div className='list__container'>
+       <List className='list'>
+         <ListItemButton
+           alignItems='flex-start'
+           dense
+           divider
+           style={{ borderBottomColor: 'darkcyan' }}
+           onClick={() => handleClick('Crypt')}
+         >
+           <ListItemText primary='Crypt' />
+         </ListItemButton>
+         <ListItemButton
+           alignItems='flex-start'
+           dense
+           divider
+           style={{ borderBottomColor: 'darkcyan' }}
+           onClick={() => handleClick('Library')}
+         >
+           <ListItemText primary='Library' />
+         </ListItemButton>
+         {user ? (
+           <div className='privateSidebar'>
+             <ListItemButton
+               alignItems='flex-start'
+               dense
+               divider
+               style={{ borderBottomColor: 'darkcyan' }}
+             >
+               <ListItemText primary='Decks' />
+             </ListItemButton>
+             <ListItemButton
+               className='listItem'
+               alignItems='flex-start'
+               dense
+               divider
+               style={{ borderBottomColor: 'darkcyan' }}
+             >
+               <ListItemText
+                 className={'listItemText'}
+                 primary='Crypt Collection'
+                 secondaryTypographyProps={{
+                   color: 'darkcyan',
+                 }}
+               />
+             </ListItemButton>
+             <ListItemButton
+               alignItems='flex-start'
+               dense
+               divider
+               style={{ borderBottomColor: 'darkcyan' }}
+             >
+               <ListItemText
+                 className={'listItemText'}
+                 primary='Library Collection'
+                 secondaryTypographyProps={{
+                   color: 'darkcyan',
+                 }}
+               />
+             </ListItemButton>
+           </div>
+         ) : (
+           <></>
+         )}
+       </List>
+     </div>
+   </div>
+ );
+ 
+}
+   export default Sidebar;
