@@ -1,11 +1,13 @@
 import React from 'react';
-import { HighlightOff, MoreVert, Search, SortByAlpha } from '@material-ui/icons';
+import {
+  HighlightOff,
+  MoreVert,
+  Search,
+  SortByAlpha,
+} from '@material-ui/icons';
 import './NavbarCryptList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import {
-  discType,
-  PropType,
-} from '../../../../types/crypt_type';
+import { discType, PropType } from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
   getClans,
@@ -17,7 +19,7 @@ import {
   capacityType,
   getDiscInf,
 } from '../../../../util';
-import { Avatar, InputLabel, MenuItem } from '@material-ui/core';
+import { Avatar, Button, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Checkbox, Divider, FormControl } from '@mui/material';
@@ -25,6 +27,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
 import { groupType } from '../../../../util';
 import { Sort } from '@mui/icons-material';
+
 interface NavbarListProps {
   searchList: (
     name: string,
@@ -39,10 +42,11 @@ interface NavbarListProps {
   ) => void;
   handleSort: () => void;
   handleSortAZ: () => void;
+  handleReset: () => void;
 }
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
-  const { handleSort, handleSortAZ} = navbarListProps;
+  const { handleSort, handleSortAZ, handleReset } = navbarListProps;
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -51,10 +55,9 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
   const [rotate, setRotate] = React.useState<boolean>(false);
   const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
-  
 
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
-  value: 0.5,
+    value: 0.5,
     label: 'Any',
   });
   const [selectedMaxCap, setSelectedMaxCap] = React.useState<capacityType>({
@@ -83,11 +86,44 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
 
   const values: number[] = disc_inf.map((elem) => 0);
-  let aux: discType = { name: disc_inf, value: values };
-  
+  const aux: discType = { name: disc_inf, value: values };
+
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
+  const handleResetButton = () => {
+    setInputSearch('');
+    setSelectedClan('');
+    setSelectedGroup({
+      value: 0.5,
+      label: 'Any',
+    });
+    setSelectedMaxCap({
+      value: 0,
+      label: 'Any',
+    });
+    setSelectedMinCap({
+      value: 0,
+      label: 'Any',
+    });
+    setSelectedSect('');
+    setSelectedTitle('');
+    setSelected_discList(aux);
+    setChecked({
+      bleed: false,
+      strength: false,
+      stealth: false,
+      intercept: false,
+      aggravated: false,
+      enter_combat: false,
+      flight: false,
+      black_hand: false,
+      red_list: false,
+      infernal: false,
+      slave: false,
+    });
+    handleReset();
+  }
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
     searchList(
@@ -228,7 +264,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     );
   };
 
-  const handleSliders = (group: groupType, maxCap:capacityType, minCap:capacityType) => {
+  const handleSliders = (
+    group: groupType,
+    maxCap: capacityType,
+    minCap: capacityType
+  ) => {
     setSelectedGroup(group);
     setSelectedMaxCap(maxCap);
     setSelectedMinCap(minCap);
@@ -246,15 +286,15 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     );
   };
 
-   const handleRotate = () => {
-     setRotate(!rotate);
-   };
-  
-    const handleRotateAZ = () => {
-      setRotateAZ(!rotateAZ);
-    };
-  
- /*  React.useEffect(() => {}, []); */
+  const handleRotate = () => {
+    setRotate(!rotate);
+  };
+
+  const handleRotateAZ = () => {
+    setRotateAZ(!rotateAZ);
+  };
+
+  React.useEffect(() => {}, []);
 
   const { searchList } = navbarListProps;
   return (
@@ -542,6 +582,24 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                 <InputLabel>Slave</InputLabel>
               </div>
             </div>
+          </div>
+          <Divider />
+          <div className='clear__button'>
+            <Button
+              style={{
+                color: 'darkcyan',
+                textTransform: 'capitalize',
+                backgroundColor: '#ECDBBA',
+                border: '1px solid darkcyan',
+                borderRadius: '2px',
+                marginTop: '1rem',
+                marginBottom: '1rem',
+              }}
+              size='small'
+              onClick={()=>handleResetButton()}
+            >
+              Reset Filters
+            </Button>
           </div>
         </div>
       </Modal>

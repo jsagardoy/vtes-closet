@@ -1,11 +1,15 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { CryptType } from '../../../../types/crypt_type';
-import { getClanIcon, getDiscIcon } from '../../../../util/helpFunction';
+import {
+  getClanIcon,
+  getDiscIcon,
+} from '../../../../util/helpFunction';
 import CardButtons from '../global/CardButtons';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface CryptProp {
   openedCrypt: CryptType;
@@ -33,6 +37,17 @@ const ModalCryp = (props: CryptProp) => {
       <Box className='modal__content'>
         <img src={openedCrypt.url} alt='card' />
         <div className='modal__right'>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '100%',
+            }}
+          >
+            <Button onClick={() => handleClose()}>
+              <CloseIcon style={{ color: 'darkcyan' }} />
+            </Button>
+          </div>
           <div className='modal__right__text'>
             <div className='modal__right__top'>
               <Typography variant='h6' className='title'>

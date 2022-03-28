@@ -6,7 +6,6 @@
   height: 100%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
   box-shadow: 0 0 15px #ddd;
@@ -48,21 +47,7 @@
   background-color: lightgrey;
   justify-content: space-between;
 }
-.modal__right__text {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 28em;
-  height: 100%;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  box-shadow: 0 0 15px #ddd;
-  overflow-y: auto;
-  overflow-x: auto;
-}
+
 .modal img {
   border: 2px solid #000;
   box-shadow: 0 0 15px #ddd;

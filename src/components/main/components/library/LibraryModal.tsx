@@ -1,9 +1,9 @@
-import { Modal } from '@mui/material';
+import { Button, Modal } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
-
+import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { LibraryType } from '../../../../types/library_type';
@@ -53,6 +53,17 @@ const LibraryModal = (props: LibraryModalProps) => {
       <Box className='modal__content'>
         <img src={library.url} alt={library.name} />
         <div className='modal__right'>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '100%',
+            }}
+          >
+            <Button onClick={() => handleCloseModal()}>
+              <CloseIcon style={{ color: 'darkcyan' }} />
+            </Button>
+          </div>
           <div className='modal__right__text'>
             <div className='modal__right__top'>
               <Typography variant='h6' className='title'>

@@ -10,6 +10,8 @@ const URLBase = 'https://static.krcg.org/png/icon/';
 const defaultAvatarURL =
   'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
 
+export const COLOR_AMARILLO = '#ECDBBA';
+
 export const getLogo = () => defaultAvatarURL;
 export const getDiscIcon = (discs: string[]): string[] => {
   let resp: string[] = [];

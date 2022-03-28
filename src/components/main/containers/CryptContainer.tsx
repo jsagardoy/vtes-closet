@@ -84,6 +84,8 @@ const CryptContainer = () => {
     setSort(!sort);
   };
 
+  const handleReset = (): void => setList(getLocalStorageCrypt());
+
   React.useEffect(() => {
     if (
       localStorage.getItem('cryptList') === null ||
@@ -125,6 +127,7 @@ const CryptContainer = () => {
         }
         handleSort={() => handleSort()}
         handleSortAZ={() => handleSortAZ()}
+        handleReset={() => handleReset()}
       />
       <CryptList list={list} />
     </div>

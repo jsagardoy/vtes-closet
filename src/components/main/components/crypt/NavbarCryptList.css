@@ -63,7 +63,11 @@
   margin: 0.1rem;
   height: max-content;
 }
-
+.clear__button{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 .filter__sect {
   display: flex;
   justify-content: space-around;
