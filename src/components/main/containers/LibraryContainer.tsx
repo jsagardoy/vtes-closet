@@ -8,6 +8,7 @@ import {
   getLibrary,
   getLocalStorageLibrary,
 } from '../../../util/helpFunction';
+import { Spinner } from '../components/global/Spinner';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
@@ -17,6 +18,7 @@ const LibraryContainer = () => {
     getLocalStorageLibrary()
   );
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
+  const [loader, setLoader] = React.useState<boolean>(false);
 
   const handleSearch = (
     name: string,
@@ -55,9 +57,11 @@ const LibraryContainer = () => {
       localStorage.getItem('libraryList')?.length === 0
     ) {
       localStorage.clear();
-      getLibrary().then((elem: LibraryType[]) =>
-        localStorage.setItem('libraryList', JSON.stringify(elem))
-      );
+      setLoader(true);
+      getLibrary().then((elem: LibraryType[]) => {
+        localStorage.setItem('libraryList', JSON.stringify(elem));
+        setLoader(false);
+      });
     }
     setList(getLocalStorageLibrary());
   }, []);
@@ -74,6 +78,7 @@ const LibraryContainer = () => {
         ) => handleSearch(name, discList, libraryCardType, clan, sect, props)}
         handleSort={() => handleSort()}
       />
+      {loader && <Spinner />}
       <LibraryList list={list} />
     </div>
   );

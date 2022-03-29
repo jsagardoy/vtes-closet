@@ -14,10 +14,11 @@ import {
 } from '../../../util';
 
 import CryptList from '../components/crypt/CryptList';
+import { Spinner } from '../components/global/Spinner';
 
 const CryptContainer = () => {
   const [list, setList] = React.useState<CryptType[]>(getLocalStorageCrypt());
-
+  const [loader, setLoader] = React.useState<boolean>(false);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
 
@@ -92,9 +93,11 @@ const CryptContainer = () => {
       localStorage.getItem('cryptList')?.length === 0
     ) {
       localStorage.clear();
-      getCrypt().then((elem: CryptType[]) =>
-        localStorage.setItem('cryptList', JSON.stringify(elem))
-      );
+      setLoader(true);
+      getCrypt().then((elem: CryptType[]) => {
+        localStorage.setItem('cryptList', JSON.stringify(elem));
+        setLoader(false);
+      });
     }
     setList(getLocalStorageCrypt());
   }, []);
@@ -129,6 +132,7 @@ const CryptContainer = () => {
         handleSortAZ={() => handleSortAZ()}
         handleReset={() => handleReset()}
       />
+      {loader && <Spinner />}
       <CryptList list={list} />
     </div>
   );

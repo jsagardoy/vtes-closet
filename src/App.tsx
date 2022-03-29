@@ -10,11 +10,12 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
-import { getCrypt } from './util/helpFunction';
-import { CryptType } from './types/crypt_type';
+import { getCrypt, getLibrary } from './util/helpFunction';
+import { Spinner } from './components/main/components/global/Spinner';
 
 function App() {
   const auth = getAuth();
+  const [loader, setLoader]=React.useState<boolean>(false);
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
   const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(true);
   onAuthStateChanged(auth, (user) => {
@@ -32,10 +33,17 @@ function App() {
       localStorage.getItem('cryptList') === null ||
       localStorage.getItem('cryptList')?.length === 0
     ) {
-      localStorage.clear();
-      getCrypt().then((elem: CryptType[]) =>
-        localStorage.setItem('cryptList', JSON.stringify(elem))
-      );
+      setLoader(true);
+      getCrypt();
+      setLoader(false);
+    }
+    if (
+      localStorage.getItem('libraryList') === null ||
+      localStorage.getItem('libraryList')?.length === 0
+    ) {
+      setLoader(true);
+      getLibrary();
+      setLoader(false);
     }
   }, []);
 
@@ -48,7 +56,8 @@ function App() {
       </div>
       <div className='mainApp'>
         <Router>
-          <Sidebar toogle={toogleSidebar}/>
+          <Sidebar toogle={toogleSidebar} />
+          {loader && <Spinner />}
           <Switch>
             <Route exact path={'/'} component={PublicMain} />
             <Route exact path={'/home'} component={PublicMain} />

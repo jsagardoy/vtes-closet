@@ -54,6 +54,10 @@ const LibraryListComponent = (props: Props) => {
   React.useEffect(() => {
     setItems(initialValue);
   }, [initialValue, list]);
+
+  if (list.length === 0) {
+    return <></>;
+  }
 if (items.length === 0) {
   return (
     <p

@@ -34,18 +34,22 @@ const CryptListComponent = (props: Props) => {
       if (initItem) {
         setItems(
           items.concat([
-            ...list.slice(initItem +1, initItem ? initItem + 21 : 0 + 20),
+            ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
           ])
         );
       }
     }
   };
 
-  React.useEffect(() => {
+   React.useEffect(() => {
     setItems(initialValue);
-  }, [initialValue, list]);
+  }, [ initialValue, list ]); 
 
-  if (items.length === 0) {
+  if (list.length === 0) {
+    return <></>;
+  }
+
+  if (items.length === 0 && list.length!==0) {
     return (
       <p
         style={{
