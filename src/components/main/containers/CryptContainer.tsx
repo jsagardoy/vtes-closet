@@ -94,10 +94,8 @@ const CryptContainer = () => {
     ) {
       localStorage.clear();
       setLoader(true);
-      getCrypt().then((elem: CryptType[]) => {
-        localStorage.setItem('cryptList', JSON.stringify(elem));
-        setLoader(false);
-      });
+      getCrypt();
+      setLoader(false);
     }
     setList(getLocalStorageCrypt());
   }, []);

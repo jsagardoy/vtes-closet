@@ -58,11 +58,9 @@ const LibraryContainer = () => {
     ) {
       localStorage.clear();
       setLoader(true);
-      getLibrary().then((elem: LibraryType[]) => {
-        localStorage.setItem('libraryList', JSON.stringify(elem));
-        setLoader(false);
-      });
-    }
+      getLibrary();
+      setLoader(false);
+      }
     setList(getLocalStorageLibrary());
   }, []);
   return (

@@ -12,7 +12,12 @@ const defaultAvatarURL =
 
 const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
 const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+X strealth'];
-const ADDED_INTERCEPT = ['+1 intercept', '+2 intercept', '+3 intercept', '+X intercept'];
+const ADDED_INTERCEPT = [
+  '+1 intercept',
+  '+2 intercept',
+  '+3 intercept',
+  '+X intercept',
+];
 const ADDED_STRENGTH = [
   '+1 strength',
   '+2 strength',
@@ -351,7 +356,9 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
       (elem === 'bleed' &&
         ADDED_BLEED.some((bleed) => findInText(card, bleed) !== null)) ||
       (elem === 'bleed' &&
-        ADDED_INTERCEPT.some((intercept) => findInText(card, intercept) !== null)) ||
+        ADDED_INTERCEPT.some(
+          (intercept) => findInText(card, intercept) !== null
+        )) ||
       (elem === 'stealth' &&
         ADDED_STEALTH.some((stealth) => findInText(card, stealth) !== null)) ||
       (elem === 'strenth' &&
@@ -365,19 +372,24 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
 };
 
 export const getCrypt = async () => {
-  const data = await getDocs(collection(db, 'crypt'));
-
-  const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
-  return result;
+  try {
+    const data = await getDocs(collection(db, 'crypt'));
+    const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
+    localStorage.setItem('cryptList', JSON.stringify(result));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getLibrary = async () => {
-  const data = await getDocs(collection(db, 'library'));
-
-  const result: LibraryType[] = data.docs.map(
-    (doc) => doc.data() as LibraryType
-  );
-  return result;
+  try {
+    const data = await getDocs(collection(db, 'library'));
+    const result: LibraryType[] = data.docs.map((doc) => doc.data() as LibraryType);
+    localStorage.setItem('libraryList', JSON.stringify(result));
+  
+  } catch (error) {
+    console.log(error);
+}
 };
 
 export const getLocalStorageCrypt = (): CryptType[] => {
