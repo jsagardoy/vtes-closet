@@ -54,7 +54,19 @@ const LibraryListComponent = (props: Props) => {
   React.useEffect(() => {
     setItems(initialValue);
   }, [initialValue, list]);
-
+if (items.length === 0) {
+  return (
+    <p
+      style={{
+        textAlign: 'center',
+        color: 'Darkcyan',
+        marginBottom: '1em',
+      }}
+    >
+      No results
+    </p>
+  );
+}
   return (
     <InfiniteScroll
       dataLength={items.length}
