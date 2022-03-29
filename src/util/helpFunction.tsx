@@ -12,6 +12,7 @@ const defaultAvatarURL =
 
 const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
 const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+X strealth'];
+const ADDED_INTERCEPT = ['+1 intercept', '+2 intercept', '+3 intercept', '+X intercept'];
 const ADDED_STRENGTH = [
   '+1 strength',
   '+2 strength',
@@ -349,6 +350,8 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
       (elem === 'disciplineless' && card.disciplines === undefined) ||
       (elem === 'bleed' &&
         ADDED_BLEED.some((bleed) => findInText(card, bleed) !== null)) ||
+      (elem === 'bleed' &&
+        ADDED_INTERCEPT.some((intercept) => findInText(card, intercept) !== null)) ||
       (elem === 'stealth' &&
         ADDED_STEALTH.some((stealth) => findInText(card, stealth) !== null)) ||
       (elem === 'strenth' &&
