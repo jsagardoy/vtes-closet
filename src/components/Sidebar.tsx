@@ -12,7 +12,6 @@ interface Props {
 
 const Sidebar = (props: Props) => {
   const { toogle } = props;
-  const [animation, setAnimation] = React.useState<string>(toogle?"open":"close");
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
   const history: any = useHistory();

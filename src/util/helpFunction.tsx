@@ -10,6 +10,10 @@ const URLBase = 'https://static.krcg.org/png/icon/';
 const defaultAvatarURL =
   'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
 
+const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
+const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth','+X strealth'];
+const ADDED_STRENGTH = ['+1 strength', '+2 strength', '+3 strenth', '+X strength'];
+
 export const COLOR_AMARILLO = '#ECDBBA';
 
 export const getLogo = () => defaultAvatarURL;
@@ -293,7 +297,7 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
       aux = temp.every((elem) => elem === -1) ? card : null;
     }
     if (text === 'Titled') {
-      //in case filter is no title
+      //in case filter is titled
       const temp = getTitle().map((title) => card.card_text.indexOf(title));
       aux = temp.some((elem) => elem !== -1) ? card : null;
     }
@@ -319,7 +323,13 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
       (elem === 'blood_cost' && 'blood_cost' in card) ||
       (elem === 'clanless' && card.clans === undefined) ||
       (elem === 'disciplineless' && card.disciplines === undefined) ||
-      findInText(card, elem) !== null
+      (elem === 'bleed' && 
+        ADDED_BLEED.some(bleed => findInText(card, bleed) !== null)) ||
+      (elem==='stealth' &&
+        ADDED_STEALTH.some(stealth => findInText(card, stealth) !== null)) ||
+      (elem==='strenth' &&
+      ADDED_STRENGTH.some(strength => findInText(card, strength) !== null)) ||
+      findInText(card, elem)!==null
   );
 
   return result.every((elem) => elem === true);
