@@ -11,8 +11,13 @@ const defaultAvatarURL =
   'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
 
 const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
-const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth','+X strealth'];
-const ADDED_STRENGTH = ['+1 strength', '+2 strength', '+3 strenth', '+X strength'];
+const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+X strealth'];
+const ADDED_STRENGTH = [
+  '+1 strength',
+  '+2 strength',
+  '+3 strenth',
+  '+X strength',
+];
 
 export const COLOR_AMARILLO = '#ECDBBA';
 
@@ -52,7 +57,8 @@ export const getClanIcon = (clans: string[]): string[] => {
 
       switch (value) {
         case 'assamite':
-          baseURL = clanBaseURLDeprecated;
+          value = 'banuhaqim';
+          baseURL = clanBaseURL;
           break;
         case 'brujah':
           baseURL = clanBaseURLDeprecated;
@@ -84,6 +90,26 @@ export const getClanIcon = (clans: string[]): string[] => {
           break;
         case 'ventrue':
           baseURL = clanBaseURLDeprecated;
+          break;
+        case 'daughterofcacophony':
+          value = 'daughtersofcacophony';
+          baseURL = clanBaseURL;
+          break;
+        case 'harbingerofskulls':
+          value = 'harbingersofskulls';
+          baseURL = clanBaseURL;
+          break;
+        case 'abomination':
+          value = 'abominations';
+          baseURL = clanBaseURL;
+          break;
+        case 'ahrimane':
+          value = 'ahrimanes';
+          baseURL = clanBaseURL;
+          break;
+        case 'gargoyle':
+          value = 'gargoyles';
+          baseURL = clanBaseURL;
           break;
         default:
           baseURL = clanBaseURL;
@@ -131,9 +157,7 @@ export const getDiscInf = (): string[] => disciplines_inf;
 
 export const getClans = () =>
   [
-    'Assamite',
     'Brujah',
-    'Follower of Set',
     'Gangrel',
     'Lasombra',
     'Malkavian',
@@ -142,42 +166,42 @@ export const getClans = () =>
     'Toreador',
     'Tremere',
     'Ventrue',
-    'Abominations',
-    'Ahrimanes',
+    'Abomination',
+    'Ahrimane',
     'Akunanse',
     'Avenger',
     'Baali',
-    'Banuhaqim',
+    'Banu Haqim',
     'Blood Brother',
-    'Brujah Antitribu',
+    'Brujah antitribu',
     'Caitiff',
-    'Daughters of Cacophony',
+    'Daughter of Cacophony',
     'Defender',
-    'Gangrel Antitribu',
-    'Gargoyles',
+    'Gangrel antitribu',
+    'Gargoyle',
     'Giovanni',
     'Guruhi',
-    'Harbingers Of Skulls',
+    'Harbinger of Skulls',
     'Innocent',
     'Ishtarri',
     'Judge',
     'Kiasyd',
-    'Malkavian Antitribu',
+    'Malkavian antitribu',
     'Martyr',
     'Ministry',
     'Nagaraja',
-    'Nosferatu Antitribu',
+    'Nosferatu antitribu',
     'Osebo',
     'Pander',
     'Redeemer',
     'Salubri',
-    'Salubri Antitribu',
+    'Salubri antitribu',
     'Samedi',
-    'Toreador Antitribu',
-    'Tremere Antitribu',
+    'Toreador antitribu',
+    'Tremere antitribu',
     'True Brujah',
     'Tzimisce',
-    'Ventrue Antitribu',
+    'Ventrue antitribu',
     'Visionary',
   ].sort();
 
@@ -323,13 +347,15 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
       (elem === 'blood_cost' && 'blood_cost' in card) ||
       (elem === 'clanless' && card.clans === undefined) ||
       (elem === 'disciplineless' && card.disciplines === undefined) ||
-      (elem === 'bleed' && 
-        ADDED_BLEED.some(bleed => findInText(card, bleed) !== null)) ||
-      (elem==='stealth' &&
-        ADDED_STEALTH.some(stealth => findInText(card, stealth) !== null)) ||
-      (elem==='strenth' &&
-      ADDED_STRENGTH.some(strength => findInText(card, strength) !== null)) ||
-      findInText(card, elem)!==null
+      (elem === 'bleed' &&
+        ADDED_BLEED.some((bleed) => findInText(card, bleed) !== null)) ||
+      (elem === 'stealth' &&
+        ADDED_STEALTH.some((stealth) => findInText(card, stealth) !== null)) ||
+      (elem === 'strenth' &&
+        ADDED_STRENGTH.some(
+          (strength) => findInText(card, strength) !== null
+        )) ||
+      findInText(card, elem) !== null
   );
 
   return result.every((elem) => elem === true);
