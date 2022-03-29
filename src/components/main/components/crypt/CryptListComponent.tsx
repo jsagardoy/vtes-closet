@@ -31,12 +31,13 @@ const CryptListComponent = (props: Props) => {
       const initItem: number | undefined = list
         .map((elem, index) => isElement(elem, index))
         .find((elem) => elem !== -1);
-
-      setItems(
-        items.concat([
-          ...list.slice(initItem, initItem ? initItem + 20 : 0 + 20),
-        ])
-      );
+      if (initItem) {
+        setItems(
+          items.concat([
+            ...list.slice(initItem +1, initItem ? initItem + 21 : 0 + 20),
+          ])
+        );
+      }
     }
   };
 
