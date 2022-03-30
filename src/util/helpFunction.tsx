@@ -134,7 +134,6 @@ export const getDiscList = (discList: discType): string[] =>
       switch (value) {
         case 1:
           return discList.name[index].toLowerCase();
-
         case 2:
           return discList.name[index].toUpperCase();
         default:
@@ -155,7 +154,7 @@ export const getCardTypesIcon = (types: string[]): string[] =>
   });
 
 export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
-  type === 'blood' ? `${URLBase}blood${cost}.png` : `${URLBase}pool${cost}.png`;
+  type === 'blood' ? `${URLBase}blood${cost.toLowerCase()}.png` : `${URLBase}pool${cost.toLowerCase()}.png`;
 
 export const getBurnOption = (): string => `${URLBase}burn.png`;
 
@@ -284,13 +283,13 @@ const capacities: capacityType[] = [
 export const getCapacities = (): capacityType[] => capacities;
 
 export const getLibraryCardTypes = () => [
-  '',
   'Any',
   'Action',
   'Action modifier',
   'Ally',
   'Combat',
   'Conviction',
+  'Equipment',
   'Event',
   'Master',
   'Political action',
