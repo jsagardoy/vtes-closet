@@ -126,3 +126,9 @@
 .button__rotation{
    transform: rotate(180deg);
 }
+
+/* Increase the specificity */
+.searchIcon.Mui-disabled {
+  color: gray ;
+  opacity: 0.4;
+}
