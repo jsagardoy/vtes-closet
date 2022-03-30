@@ -11,7 +11,6 @@ import './LibraryNavbarList.css';
 import LibraryNavbarModal from './LibraryNavbarModal';
 
 interface NavbarLibraryProps {
-
   searchList: (
     name: string,
     discList: string[],
@@ -23,22 +22,12 @@ interface NavbarLibraryProps {
   handleSort: () => void;
 }
 
-const values: number[] = getDiscInf().map(() => 0);
-let aux: discType = { name: getDiscInf(), value: values };
-
 const NavbarLibrary = (props: NavbarLibraryProps): any => {
-  const { searchList, handleSort } = props;
-  const [showInput, setShowInput] = React.useState<boolean>(false);
-  const [inputSearch, setInputSearch] = React.useState<string>('');
-  const [showMore, setShowMore] = React.useState<boolean>(false);
-  const [rotate, setRotate] = React.useState<boolean>(false);
-
-  const [selectedLibraryCardType, setSelectedLibraryCardType] =
-    React.useState<string>('Any');
-  const [selected_discList, setSelected_discList] =
-    React.useState<discType>(aux);
-
-  const [checked, setChecked] = React.useState<LibraryPropType>({
+  const values: number[] = getDiscInf().map(() => 0);
+  let aux: discType = { name: getDiscInf(), value: values };
+  const initialDiscValues = { ...aux };
+  
+  const initialCheckedValues = {
     bleed: false,
     strength: false,
     stealth: false,
@@ -59,14 +48,28 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     blood_cost: false,
     pool_cost: false,
     disciplineless: false,
-  });
+  };
+  const initialCardTypeValue = 'Any';
+
+  const { searchList, handleSort } = props;
+
+  const [showInput, setShowInput] = React.useState<boolean>(false);
+  const [inputSearch, setInputSearch] = React.useState<string>('');
+  const [showMore, setShowMore] = React.useState<boolean>(false);
+  const [rotate, setRotate] = React.useState<boolean>(false);
+
+  const [selectedLibraryCardType, setSelectedLibraryCardType] =
+    React.useState<string>(initialCardTypeValue);
+  const [selected_discList, setSelected_discList] =
+    React.useState<discType>(initialDiscValues);
+  const [checked, setChecked] =
+    React.useState<LibraryPropType>(initialCheckedValues);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
   const handleMore = (): void => {
     setShowMore(!showMore);
   };
 
-  
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
     searchList(
@@ -170,12 +173,20 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
       checked
     );
   };
-  
 
   const handleRotate = () => {
     setRotate(!rotate);
-}
+  };
 
+  const handleResetButton = () => {
+    setSelected_discList(initialDiscValues);
+    setInputSearch('');
+    setSelectedLibraryCardType(initialCardTypeValue);
+    setSelectedClan('');
+    setSelectedSect('');
+    setChecked(initialCheckedValues);
+    searchList('', getDiscList(initialDiscValues), initialCardTypeValue, '', '', initialCheckedValues);
+  };
   /* React.useEffect(() => {}, []); */
 
   return (
@@ -208,7 +219,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
             <Search style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton
-            className = {rotate ? 'button__rotation' : ''}
+            className={rotate ? 'button__rotation' : ''}
             size='small'
             onClick={() => {
               handleRotate();
@@ -234,6 +245,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           handleSelectDisc={handleSelectDisc}
           handleChangeLibraryCardType={handleChangeLibraryCardType}
           handleCheck={handleCheck}
+          handleResetButton={handleResetButton}
         />
       </div>
     </>

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Checkbox,
   Divider,
   FormControl,
@@ -37,7 +38,7 @@ interface Props {
     prop: string,
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
-
+  handleResetButton: () => void;
 }
 const LibraryNavbarModal = (props: Props) => {
   const {
@@ -53,8 +54,10 @@ const LibraryNavbarModal = (props: Props) => {
     handleSelectDisc,
     handleChangeLibraryCardType,
     handleCheck,
+    handleResetButton
   } = props;
 
+  
   return (
     <Modal open={open} onClose={() => handleMore()} className='navbar__bottom'>
       <div className='filter__container'>
@@ -77,7 +80,7 @@ const LibraryNavbarModal = (props: Props) => {
         </div>
         <Divider />
         <div className='filter__clan'>
-          <InputLabel id='library_card_type_id'>Card Type</InputLabel>
+          <InputLabel id='library_card_type_id'>Type</InputLabel>
           <FormControl variant='standard'>
             <Select
               labelId='library_card_type_id'
@@ -97,7 +100,6 @@ const LibraryNavbarModal = (props: Props) => {
             </Select>
           </FormControl>
         </div>
-        <Divider />
         <div className='filter__clan'>
           <InputLabel>Clan</InputLabel>
           <FormControl variant='standard'>
@@ -125,7 +127,6 @@ const LibraryNavbarModal = (props: Props) => {
             </Select>
           </FormControl>
         </div>
-        <Divider />
         <div className='filter__sect'>
           <InputLabel>Sect</InputLabel>
           <FormControl variant='standard'>
@@ -335,6 +336,24 @@ const LibraryNavbarModal = (props: Props) => {
               <InputLabel>Pool Cost</InputLabel>
             </div>
           </div>
+        </div>
+        <Divider />
+        <div className='clear__button'>
+          <Button
+            style={{
+              color: 'darkcyan',
+              textTransform: 'capitalize',
+              backgroundColor: '#ECDBBA',
+              border: '1px solid darkcyan',
+              borderRadius: '2px',
+              marginTop: '1rem',
+              marginBottom: '1rem',
+            }}
+            size='small'
+             onClick={() => handleResetButton()} 
+          >
+            Reset Filters
+          </Button>
         </div>
       </div>
     </Modal>
