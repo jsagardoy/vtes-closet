@@ -3,8 +3,6 @@ import { Slider } from '@mui/material';
 import React from 'react';
 import {
   capacityType,
-  getCapacities,
-  getGroups,
   groupType,
 } from '../../../../util';
 import './SlidersComponent.css';
@@ -13,117 +11,94 @@ interface SliderProps {
   group: groupType;
   maxCapacity: capacityType;
   minCapacity: capacityType;
+  groups: groupType[];
   filterSliders: (
     group: groupType,
     maxCap: capacityType,
     minCap: capacityType
   ) => void;
-}
-
-export const SlidersComponent = (sliderProps: SliderProps) => {
-  const { filterSliders, group, maxCapacity, minCapacity } = sliderProps;
-  const groups: groupType[] = getGroups();
-  const cap: capacityType[] = getCapacities();
-  const [selectedGroup, setSelectedGroup] = React.useState<groupType>(group);
-  const [selectedMaxCap, setSelectedMaxCap] =
-    React.useState<capacityType>(maxCapacity);
-  const [selectedMinCap, setSelectedMinCap] =
-    React.useState<capacityType>(minCapacity);
-
-  const handleSlider = (
+  handleSliderGroup: (
     event: Event,
     group: number | number[],
     activeThumb: number
-  ): void => {
-    const elem = groups.find((g: groupType) => g.value === group);
-    if (elem) {
-      setSelectedGroup(elem);
-    }
-  };
-
-  const handleCommittedSlider = () =>
-    selectedGroup
-      ? filterSliders(selectedGroup, selectedMaxCap, selectedMinCap)
-      : undefined;
-
-  const handleSliderMaxCap = (
+  ) => void;
+  handleSliderMaxCap: (
     event: Event,
-    capacity: number|number[],
+    capacity: number | number[],
     activeThumb: number
-  ): void => {
-    const elem = cap.find((c: capacityType) => c.value === capacity);
-    if (elem) {
-      setSelectedMaxCap(elem);
-    }
-  };
-  const handleSliderMinCap = (
+  ) => void;
+  handleSliderMinCap: (
     event: Event,
-    capacity: number|number[],
+    capacity: number | number[],
     activeThumb: number
-  ): void => {
-    const elem = cap.find((c: capacityType) => c.value === capacity);
-    if (elem) {
-      setSelectedMinCap(elem);
-    }
-  };
+  ) => void;
+}
 
-  const handleCommittedSliderCap = () =>
-    selectedMaxCap
-      ? filterSliders(selectedGroup, selectedMaxCap, selectedMinCap)
-      : undefined;
+export const SlidersComponent = (sliderProps: SliderProps) => {
+  const { filterSliders, group, maxCapacity, minCapacity, groups, handleSliderGroup, handleSliderMaxCap, handleSliderMinCap } =
+    sliderProps;
+  
+  
+  const handleCommittedSlider = () => filterSliders(group, maxCapacity, minCapacity);
 
+  
+  
+  React.useEffect(() => {}, []);
   return (
     <>
-    <div className='slider__container'>
-      <div className='slider__group'>
-        <div className='slider__label'>
-          <InputLabel>Group: {selectedGroup?.label}</InputLabel>
+      <div className='slider__container'>
+        <div className='slider__group'>
+          <div className='slider__label'>
+            <InputLabel>Group: {group?.label}</InputLabel>
+          </div>
+          <div className='slider'>
+            <Slider
+              defaultValue={group.value}
+              value={group.value}
+              step={0.5}
+              size='small'
+              min={0.5}
+              max={groups.length / 2}
+              onChange={handleSliderGroup}
+              onChangeCommitted={handleCommittedSlider}
+            />
+          </div>
         </div>
-        <div className='slider'>
-          <Slider
-            defaultValue={group.value}
-            step={0.5}
-            size='small'
-            min={0.5}
-            max={groups.length / 2}
-            onChange={handleSlider}
-            onChangeCommitted={handleCommittedSlider}
-          />
+        <div className='slider__group'>
+          <div className='slider__label'>
+            <InputLabel>Max capacity: {maxCapacity?.label}</InputLabel>
+          </div>
+          <div className='slider'>
+            <Slider
+              defaultValue={maxCapacity?.value}
+              value={maxCapacity.value}
+              step={1}
+              size='small'
+              min={0}
+              max={11}
+              onChange={handleSliderMaxCap}
+              onChangeCommitted={handleCommittedSlider}
+            />
+          </div>
+        </div>
+        <div className='slider__group'>
+          <div className='slider__label'>
+            <InputLabel>Min capacity: {minCapacity?.label}</InputLabel>
+          </div>
+          <div className='slider'>
+            <Slider
+              defaultValue={minCapacity.value}
+              value={minCapacity.value}
+              step={1}
+              size='small'
+              min={0}
+              max={11}
+              onChange={handleSliderMinCap}
+              onChangeCommitted={handleCommittedSlider}
+            />
+          </div>
         </div>
       </div>
-      <div className='slider__group'>
-        <div className='slider__label'>
-          <InputLabel>Max capacity: {selectedMaxCap?.label}</InputLabel>
-        </div>
-        <div className='slider'>
-          <Slider
-            defaultValue={maxCapacity?.value}
-            step={1}
-            size='small'
-            min={0}
-            max={11}
-            onChange={handleSliderMaxCap}
-            onChangeCommitted={handleCommittedSliderCap}
-          />
-        </div>
-      </div>
-      <div className='slider__group'>
-        <div className='slider__label'>
-          <InputLabel>Min capacity: {selectedMinCap?.label}</InputLabel>
-        </div>
-        <div className='slider'>
-          <Slider
-            defaultValue={minCapacity.value}
-            step={1}
-            size='small'
-            min={0}
-            max={11}
-            onChange={handleSliderMinCap}
-            onChangeCommitted={handleCommittedSliderCap}
-          />
-        </div>
-      </div>
-      </div>
-      </>
+    </>
   );
 };

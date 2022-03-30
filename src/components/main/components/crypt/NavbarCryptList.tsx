@@ -18,6 +18,8 @@ import {
   getTitle,
   capacityType,
   getDiscInf,
+  getGroups,
+  getCapacities,
 } from '../../../../util';
 import { Avatar, Button, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
@@ -47,6 +49,7 @@ interface NavbarListProps {
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const { handleSort, handleSortAZ, handleReset } = navbarListProps;
+
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -55,7 +58,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const [selectedTitle, setSelectedTitle] = React.useState<string>('');
   const [rotate, setRotate] = React.useState<boolean>(false);
   const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
-
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
     value: 0.5,
     label: 'Any',
@@ -88,24 +90,28 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const values: number[] = disc_inf.map((elem) => 0);
   const aux: discType = { name: disc_inf, value: values };
 
+  const groups: groupType[] = getGroups();
+  const cap: capacityType[] = getCapacities();
+
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
 
   const handleResetButton = () => {
     setInputSearch('');
     setSelectedClan('');
-    setSelectedGroup({
+    const group: groupType = {
       value: 0.5,
       label: 'Any',
-    });
-    setSelectedMaxCap({
+    };
+    const maxCap: capacityType = {
       value: 0,
       label: 'Any',
-    });
-    setSelectedMinCap({
+    };
+    const minCap: capacityType = {
       value: 0,
       label: 'Any',
-    });
+    };
+    handleSliders(group, maxCap, minCap);
     setSelectedSect('');
     setSelectedTitle('');
     setSelected_discList(aux);
@@ -123,7 +129,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       slave: false,
     });
     handleReset();
-  }
+  };
   const handleFilterDisc = () => {
     const disc_list: string[] = getDiscList(selected_discList);
     searchList(
@@ -201,7 +207,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       selectedMinCap
     );
   };
-
   const handleSect = (event: SelectChangeEvent) => {
     setSelectedSect(event.target.value);
     searchList(
@@ -230,7 +235,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       selectedMinCap
     );
   };
-
   const prepareTitle = (title: string): string => {
     switch (title) {
       case '1 vote':
@@ -241,7 +245,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
         return title;
     }
   };
-
   const handleCheck = (
     prop: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -263,7 +266,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       selectedMinCap
     );
   };
-
   const handleSliders = (
     group: groupType,
     maxCap: capacityType,
@@ -285,13 +287,41 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       minCap
     );
   };
-
   const handleRotate = () => {
     setRotate(!rotate);
   };
-
   const handleRotateAZ = () => {
     setRotateAZ(!rotateAZ);
+  };
+  const handleSliderGroup = (
+    event: Event,
+    group: number | number[],
+    activeThumb: number
+  ): void => {
+    const elem = groups.find((g: groupType) => g.value === group);
+    if (elem) {
+      setSelectedGroup(elem);
+    }
+  };
+  const handleSliderMaxCap = (
+    event: Event,
+    capacity: number | number[],
+    activeThumb: number
+  ): void => {
+    const elem = cap.find((c: capacityType) => c.value === capacity);
+    if (elem) {
+      setSelectedMaxCap(elem);
+    }
+  };
+  const handleSliderMinCap = (
+    event: Event,
+    capacity: number | number[],
+    activeThumb: number
+  ): void => {
+    const elem = cap.find((c: capacityType) => c.value === capacity);
+    if (elem) {
+      setSelectedMinCap(elem);
+    }
   };
 
   React.useEffect(() => {}, []);
@@ -463,6 +493,10 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               group={selectedGroup}
               maxCapacity={selectedMaxCap}
               minCapacity={selectedMinCap}
+              groups={groups}
+              handleSliderGroup={handleSliderGroup}
+              handleSliderMaxCap={handleSliderMaxCap}
+              handleSliderMinCap={handleSliderMinCap}
             />
           </div>
           <Divider />
@@ -596,7 +630,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                 marginBottom: '1rem',
               }}
               size='small'
-              onClick={()=>handleResetButton()}
+              onClick={() => handleResetButton()}
             >
               Reset Filters
             </Button>
