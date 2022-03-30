@@ -353,7 +353,12 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               }}
             />
           ) : null}
-          <IconButton size='small' onClick={() => handleSearch()}>
+          <IconButton
+            size='small'
+            onClick={() => handleSearch()}
+            className='searchIcon'
+            disabled={inputSearch.length > 0}
+          >
             <Search style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton

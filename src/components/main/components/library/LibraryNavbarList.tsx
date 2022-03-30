@@ -26,7 +26,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const values: number[] = getDiscInf().map(() => 0);
   let aux: discType = { name: getDiscInf(), value: values };
   const initialDiscValues = { ...aux };
-  
+
   const initialCheckedValues = {
     bleed: false,
     strength: false,
@@ -159,7 +159,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     handleFilterDisc();
   };
   const handleSearch = () => {
-      setShowInput(!showInput);
+    setShowInput(!showInput);
   };
 
   const handleChangeLibraryCardType = (event: SelectChangeEvent) => {
@@ -185,7 +185,14 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     setSelectedClan('');
     setSelectedSect('');
     setChecked(initialCheckedValues);
-    searchList('', getDiscList(initialDiscValues), initialCardTypeValue, '', '', initialCheckedValues);
+    searchList(
+      '',
+      getDiscList(initialDiscValues),
+      initialCardTypeValue,
+      '',
+      '',
+      initialCheckedValues
+    );
   };
   /* React.useEffect(() => {}, []); */
 
@@ -215,7 +222,12 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
               }}
             />
           ) : null}
-          <IconButton size='small' onClick={() => handleSearch()} className='searchIcon' disabled={inputSearch.length>0}>
+          <IconButton
+            size='small'
+            onClick={() => handleSearch()}
+            className='searchIcon'
+            disabled={inputSearch.length > 0}
+          >
             <Search style={{ fill: 'darkcyan' }} />
           </IconButton>
           <IconButton
