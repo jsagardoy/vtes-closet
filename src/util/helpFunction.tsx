@@ -154,7 +154,9 @@ export const getCardTypesIcon = (types: string[]): string[] =>
   });
 
 export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
-  type === 'blood' ? `${URLBase}blood${cost.toLowerCase()}.png` : `${URLBase}pool${cost.toLowerCase()}.png`;
+  type === 'blood'
+    ? `${URLBase}blood${cost.toLowerCase()}.png`
+    : `${URLBase}pool${cost.toLowerCase()}.png`;
 
 export const getBurnOption = (): string => `${URLBase}burn.png`;
 
@@ -314,8 +316,12 @@ export const compareArrays = (
 };
 
 export const findInText = (card: CryptType | LibraryType, text: string) => {
+  // if (text !== 'pool cost'|| 'blood cost') {
   let aux = null;
   let textFixed = text;
+
+  if (card.card_text.includes('pool cost')) return null;
+  if (card.card_text.includes('blood cost')) return null;
   if (text !== '') {
     if (text === 'red_list' || 'enter_combat' || 'black_hand') {
       textFixed = text.replace('_', ' ');
@@ -338,6 +344,7 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
     aux = card;
   }
   return aux;
+  //  }
 };
 
 export const filterProps = (card: CryptType | LibraryType, props: any) => {
@@ -345,11 +352,14 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
     (elem: string) => props[elem] === true
   );
 
-  // hay q usar un every con el elem
   const result = elements.map(
     (elem) =>
-      (elem === 'pool_cost' && 'pool_cost' in card) ||
-      (elem === 'blood_cost' && 'blood_cost' in card) ||
+      (elem === 'pool_cost' &&
+        'pool_cost' in card &&
+        !card.card_text.includes('pool cost')) ||
+      (elem === 'blood_cost' &&
+        'blood_cost' in card &&
+        !card.card_text.includes('blood cost')) ||
       (elem === 'clanless' && card.clans === undefined) ||
       (elem === 'disciplineless' && card.disciplines === undefined) ||
       (elem === 'bleed' &&
@@ -383,12 +393,13 @@ export const getCrypt = async () => {
 export const getLibrary = async () => {
   try {
     const data = await getDocs(collection(db, 'library'));
-    const result: LibraryType[] = data.docs.map((doc) => doc.data() as LibraryType);
+    const result: LibraryType[] = data.docs.map(
+      (doc) => doc.data() as LibraryType
+    );
     localStorage.setItem('libraryList', JSON.stringify(result));
-  
   } catch (error) {
     console.log(error);
-}
+  }
 };
 
 export const getLocalStorageCrypt = (): CryptType[] => {

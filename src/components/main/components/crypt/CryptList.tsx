@@ -49,6 +49,7 @@ const CryptList = (props: listProps) => {
           handleClose={handleClose}
           handleNext={handleNext}
           handlePrevious={handlePrevious}
+          
         />
       ) : null}
       <CryptListComponent

@@ -232,7 +232,7 @@ if (items.length === 0) {
                       ) : library.pool_cost ? (
                         <Avatar
                           src={getCardCost(library.pool_cost, 'pool')}
-                          alt='Blood cost'
+                          alt='Pool cost'
                         />
                       ) : (
                         <></>

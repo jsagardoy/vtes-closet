@@ -33,7 +33,11 @@ const ModalCryp = (props: CryptProp) => {
   } = props;
 
   return (
-    <Modal className='modal' open={open} onClose={handleClose}>
+    <Modal
+      className='modal'
+      open={open}
+      onClose={handleClose}
+    >
       <Box className='modal__content'>
         <img src={openedCrypt.url} alt='card' />
         <div className='modal__right'>
