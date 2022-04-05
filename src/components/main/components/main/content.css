@@ -7,7 +7,7 @@
     overflow: auto;
     flex-wrap: wrap;
     padding-left: 5rem;
-    height: 100rem;
+    height: 100vh;
 }
 
 .card {
