@@ -26,7 +26,7 @@ function App() {
     }
   });
 
-  const handleClickLogo = () => setToogleSidebar(!toogleSidebar);
+  const handleClickMenuIcon = () => setToogleSidebar(!toogleSidebar);
 
   useEffect(() => {
     if (
@@ -52,20 +52,19 @@ function App() {
       <div className='App'>
         {/*  <Login /> */}
         <div className='main__header'>
-          <Header handleClickLogo={handleClickLogo} />
+          <Header handleClickLogo={handleClickMenuIcon} />
         </div>
         <div className='mainApp'>
-          <Sidebar toogle={toogleSidebar} />
+          <Sidebar toogle={toogleSidebar} handleToogle={handleClickMenuIcon} />
           {loader && <Spinner />}
           <Switch>
-            <Route exact path={'/'} >
+            <Route exact path={'/'}>
               <PublicMain toogle={toogleSidebar} />
-              </Route>
-            <Route exact path={'/crypt'} >
+            </Route>
+            <Route exact path={'/crypt'}>
               <CryptContainer toogle={toogleSidebar} />
             </Route>
             <Route exact path={'/library'} component={LibraryContainer} />
-            
             <PrivateRoute
               isLogged={isLogged}
               component={PrivateMain}

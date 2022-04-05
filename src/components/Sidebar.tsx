@@ -3,18 +3,21 @@ import { ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import './Sidebar.css';
 
 interface Props {
   toogle: boolean;
+  handleToogle: () => void;
 }
 
 const Sidebar = (props: Props) => {
-  const { toogle } = props;
+  const { toogle, handleToogle } = props;
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
   const history: any = useHistory();
+  const matches = useMediaQuery('(max-width:600px)');
 
   onAuthStateChanged(auth, (us) => {
     if (us) {
@@ -27,13 +30,22 @@ const Sidebar = (props: Props) => {
   const handleClick = (cardType: string) => {
     switch (cardType) {
       case 'Crypt':
+        if (matches) {
+          handleToogle();
+        }
         history.push('/crypt');
         break;
       case 'Library':
+        if (matches) {
+          handleToogle();
+        }
         history.push('/library');
         break;
       default:
-        console.log('por otro lado');
+        if (matches) {
+          handleToogle();
+        }
+        console.log('Wrong error');
         break;
     }
   };
@@ -131,6 +143,5 @@ const Sidebar = (props: Props) => {
       </div>
     </div>
   );
- 
-}
-   export default Sidebar;
+};
+export default Sidebar;
