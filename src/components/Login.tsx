@@ -3,6 +3,7 @@ import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
   const auth = getAuth();
@@ -13,8 +14,7 @@ const Login = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setShowLogout(true);
-    }
-    else {
+    } else {
       setShowLogout(false);
     }
   });
@@ -22,13 +22,17 @@ const Login = () => {
   const handleProvider = async (provider: string) => {
     const res = await socialMediaAuth(googleProvider);
     res !== null ? setShowLogout(true) : setShowLogout(false);
-    window.location.pathname = '/private';
+    if (res) {
+      localStorage.setItem('auth', JSON.stringify(res));
+      <Redirect to='/private'/>
+    }
   };
 
   const handleLogout = async () => {
     await signOut(auth);
     setShowLogout(false);
-    window.location.pathname = '/';
+    localStorage.removeItem('auth');
+    <Redirect to='/' />;
   };
   return (
     <div className='login'>
@@ -47,7 +51,6 @@ const Login = () => {
       >
         Logout
       </Button>
-      
     </div>
   );
 };

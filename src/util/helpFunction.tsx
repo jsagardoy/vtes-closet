@@ -390,6 +390,13 @@ export const getCrypt = async () => {
   }
 };
 
+export const getLocalStorageAuth = () => {
+  const aux = localStorage.getItem('auth');
+  if (aux) {
+    return JSON.parse(aux);
+  }
+}
+
 export const getLibrary = async () => {
   try {
     const data = await getDocs(collection(db, 'library'));
