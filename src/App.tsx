@@ -15,9 +15,9 @@ import { Spinner } from './components/main/components/global/Spinner';
 
 function App() {
   const auth = getAuth();
-  const [loader, setLoader]=React.useState<boolean>(false);
+  const [loader, setLoader] = React.useState<boolean>(false);
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
-  const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(true);
+  const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(false);
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
@@ -47,22 +47,25 @@ function App() {
     }
   }, []);
 
-
   return (
-    <div className='App'>
-      {/*  <Login /> */}
-      <div className='main__header'>
-        <Header handleClickLogo={handleClickLogo} />
-      </div>
-      <div className='mainApp'>
-        <Router>
+    <Router>
+      <div className='App'>
+        {/*  <Login /> */}
+        <div className='main__header'>
+          <Header handleClickLogo={handleClickLogo} />
+        </div>
+        <div className='mainApp'>
           <Sidebar toogle={toogleSidebar} />
           {loader && <Spinner />}
           <Switch>
-            <Route exact path={'/'} component={PublicMain} />
-            <Route exact path={'/home'} component={PublicMain} />
-            <Route exact path={'/crypt'} component={CryptContainer} />
+            <Route exact path={'/'} >
+              <PublicMain toogle={toogleSidebar} />
+              </Route>
+            <Route exact path={'/crypt'} >
+              <CryptContainer toogle={toogleSidebar} />
+            </Route>
             <Route exact path={'/library'} component={LibraryContainer} />
+            
             <PrivateRoute
               isLogged={isLogged}
               component={PrivateMain}
@@ -70,9 +73,9 @@ function App() {
               path='/private'
             />
           </Switch>
-        </Router>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

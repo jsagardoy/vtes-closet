@@ -10,8 +10,12 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './content.css';
 
+interface Props{
+  toogle:boolean
+}
 
-const PublicMain = () => {
+const PublicMain = (props: Props) => {
+  const { toogle } = props;
   const history: any = useHistory();
     
   const handleGoToCrypt = () => {
@@ -22,7 +26,7 @@ const PublicMain = () => {
   };
 
   return (
-    <div className='main__content'>
+    <div className={toogle ? 'hidden__main__content':'main__content'}>
       <Card
         className='card'
         style={{ backgroundColor: 'black', borderRadius: '25px' }}

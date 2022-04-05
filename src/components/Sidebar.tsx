@@ -39,75 +39,98 @@ const Sidebar = (props: Props) => {
   };
 
   return (
-   <div
-      className={toogle ? "sidebar" : "hidden"}>
-     <div className='list__container'>
-       <List className='list'>
-         <ListItemButton
-           alignItems='flex-start'
-           dense
-           divider
-           style={{ borderBottomColor: 'darkcyan' }}
-           onClick={() => handleClick('Crypt')}
-         >
-           <ListItemText primary='Crypt' />
-         </ListItemButton>
-         <ListItemButton
-           alignItems='flex-start'
-           dense
-           divider
-           style={{ borderBottomColor: 'darkcyan' }}
-           onClick={() => handleClick('Library')}
-         >
-           <ListItemText primary='Library' />
-         </ListItemButton>
-         {user ? (
-           <div className='privateSidebar'>
-             <ListItemButton
-               alignItems='flex-start'
-               dense
-               divider
-               style={{ borderBottomColor: 'darkcyan' }}
-             >
-               <ListItemText primary='Decks' />
-             </ListItemButton>
-             <ListItemButton
-               className='listItem'
-               alignItems='flex-start'
-               dense
-               divider
-               style={{ borderBottomColor: 'darkcyan' }}
-             >
-               <ListItemText
-                 className={'listItemText'}
-                 primary='Crypt Collection'
-                 secondaryTypographyProps={{
-                   color: 'darkcyan',
-                 }}
-               />
-             </ListItemButton>
-             <ListItemButton
-               alignItems='flex-start'
-               dense
-               divider
-               style={{ borderBottomColor: 'darkcyan' }}
-             >
-               <ListItemText
-                 className={'listItemText'}
-                 primary='Library Collection'
-                 secondaryTypographyProps={{
-                   color: 'darkcyan',
-                 }}
-               />
-             </ListItemButton>
-           </div>
-         ) : (
-           <></>
-         )}
-       </List>
-     </div>
-   </div>
- );
+    <div className={toogle ? 'sidebar' : 'hidden'}>
+      <div className='list__container'>
+        <List className='list'>
+          <ListItemButton
+            alignItems='center'
+            dense
+            divider
+            disableGutters
+            style={{
+              borderBottomColor: 'darkcyan',
+              width: '100%',
+              textAlign: 'center',
+            }}
+            onClick={() => handleClick('Crypt')}
+          >
+            <ListItemText primary='Crypt' />
+          </ListItemButton>
+          <ListItemButton
+            alignItems='center'
+            divider
+            disableGutters
+            style={{
+              borderBottomColor: 'darkcyan',
+              width: '100%',
+              textAlign: 'center',
+            }}
+            onClick={() => handleClick('Library')}
+          >
+            <ListItemText primary='Library' />
+          </ListItemButton>
+          {user ? (
+            <div className='list'>
+              <ListItemButton
+                alignItems='center'
+                dense
+                divider
+                disableGutters
+                style={{
+                  borderBottomColor: 'darkcyan',
+                  width: '100%',
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemText primary='Decks' />
+              </ListItemButton>
+              <ListItemButton
+                className='listItem'
+                alignItems='flex-start'
+                dense
+                divider
+                disableGutters
+                style={{
+                  borderBottomColor: 'darkcyan',
+                  width: '100%',
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemText
+                  className={'listItemText'}
+                  primary='Crypt Collection'
+                  secondaryTypographyProps={{
+                    color: 'darkcyan',
+                  }}
+                />
+              </ListItemButton>
+              <ListItemButton
+                alignItems='flex-start'
+                dense
+                divider
+                disableGutters
+                style={{
+                  borderBottomColor: 'darkcyan',
+                  width: '100%',
+                  textAlign: 'center',
+                }}
+              >
+                <ListItemText
+                  className={'listItemText'}
+                  primary='Library Collection'
+                  secondaryTypographyProps={{
+                    color: 'darkcyan',
+                  }}
+                />
+              </ListItemButton>
+            </div>
+          ) : (
+            <></>
+          )}
+        </List>
+      </div>
+    </div>
+  );
  
 }
    export default Sidebar;

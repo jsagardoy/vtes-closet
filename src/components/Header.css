@@ -7,6 +7,7 @@
   background-color: black;
   padding: 0.8rem 0;
   width: 100%;
+  min-width: 100%;
 }
 
 .header__left {
@@ -41,4 +42,21 @@
 }
 .userInfo h5 {
   margin-left: 1rem;
+}
+
+@media (max-width:600px){
+  
+  *{
+    font-size: small;
+  }
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: darkcyan;
+    border-bottom: 1px solid darkcyan;
+    background-color: black;
+    padding: 0.8rem 0;
+    width: 100em;
+  }
 }

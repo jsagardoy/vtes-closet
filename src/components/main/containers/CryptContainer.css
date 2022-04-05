@@ -1,0 +1,26 @@
+ .crypt__container {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+} 
+.menu__crypt__container {
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+    background-color: white;
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width:600px) {
+    .menu__crypt__container {
+        display:flex;
+        display: none;
+        opacity: 0;
+        width: 0px;
+        padding: 0px;
+        transition: all 1s;
+        z-index: 0;
+    }
+}

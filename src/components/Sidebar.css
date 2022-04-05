@@ -22,8 +22,44 @@
   transition: all 1s ;
    }
 .list {
+display:flex; 
+flex-direction:column;
+align-items: center;
+width: 100%;
+}
+.list__container { 
   width: 100%;
 }
-.list__container {
-  width: 100%;
+@media (max-width:600px) {
+  .sidebar {
+  display: flex;
+  justify-content: center;
+  border-right: 1px solid darkcyan;
+  background-color: black;
+  padding: 1rem;
+  color: darkcyan;
+  opacity:1;
+  visibility: visible;
+  transition: all 1s ;
+  z-index: 0;
+  min-width: 100%;
+  max-width: 100%;
+  padding:0;
+   }
+
+   .hidden{
+  background-color: black;
+  width: 0%;
+  max-width: 100%;
+  min-height: 100vh;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 1s ;
+
+   }
+  .list__container {
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+  }
 }

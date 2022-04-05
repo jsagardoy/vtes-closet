@@ -16,7 +16,12 @@ import {
 import CryptList from '../components/crypt/CryptList';
 import { Spinner } from '../components/global/Spinner';
 
-const CryptContainer = () => {
+interface Props{
+  toogle:boolean
+}
+
+const CryptContainer = (props: Props) => {
+  const { toogle } = props;
   const [list, setList] = React.useState<CryptType[]>(getLocalStorageCrypt());
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
@@ -101,7 +106,7 @@ const CryptContainer = () => {
   }, []);
 
   return (
-    <div className='crypt__list'>
+    <div className={toogle ? 'menu__crypt__container':'crypt__container'}>
       <NavbarCryptList
         searchList={(
           name: string,

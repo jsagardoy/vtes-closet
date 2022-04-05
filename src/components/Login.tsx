@@ -3,9 +3,10 @@ import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
+  let history = useHistory();
   const auth = getAuth();
   const [showLogout, setShowLogout] = React.useState<boolean>(
     auth.currentUser !== null
@@ -24,7 +25,7 @@ const Login = () => {
     res !== null ? setShowLogout(true) : setShowLogout(false);
     if (res) {
       localStorage.setItem('auth', JSON.stringify(res));
-      <Redirect to='/private'/>
+      history.push('/private');
     }
   };
 
@@ -32,7 +33,7 @@ const Login = () => {
     await signOut(auth);
     setShowLogout(false);
     localStorage.removeItem('auth');
-    <Redirect to='/' />;
+     history.push('/');
   };
   return (
     <div className='login'>

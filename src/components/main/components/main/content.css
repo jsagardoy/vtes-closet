@@ -1,6 +1,7 @@
 .main__content{
     display:flex;
     flex-direction: row;
+    justify-content:space-around;
     width: 100%;
     background-color: black;
     color:darkcyan;
@@ -8,7 +9,9 @@
     flex-wrap: wrap;
     padding-left: 5rem;
     height: 100vh;
+    padding:0px;
 }
+
 
 .card {
     width: 15rem;
@@ -23,5 +26,15 @@
     color: darkcyan;
     text-align: center;
 
+}
+
+@media (max-width:600px) {
+    .hidden__main__content {
+        visibility: hidden;
+        opacity: 0;
+        width: 0%;
+        padding: 0px;
+        transition: all 1s;
+    }
 }
 
