@@ -9,8 +9,7 @@ const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const URLBase = 'https://static.krcg.org/png/icon/';
 const defaultAvatarURL =
   'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
-
-const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
+export const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
 const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+X strealth'];
 const ADDED_INTERCEPT = [
   '+1 intercept',

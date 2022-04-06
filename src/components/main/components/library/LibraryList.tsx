@@ -2,7 +2,7 @@ import React from 'react';
 import { LibraryType } from '../../../../types/library_type';
 import LibraryModal from './LibraryModal';
 import LibraryListComponent from './LibraryListComponent';
-import './LibraryList.css';
+import '../global/CardDetail.css';
 interface LibraryListProps {
   list: LibraryType[];
 }

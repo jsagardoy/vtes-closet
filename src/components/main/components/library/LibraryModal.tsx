@@ -15,7 +15,6 @@ import {
   getDiscIcon,
 } from '../../../../util';
 import CardButtons from '../global/CardButtons';
-import './LibraryModal.css';
 
 interface LibraryModalProps {
   open: boolean;

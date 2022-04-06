@@ -1,5 +1,5 @@
 import React from 'react';
-import './CryptList.css';
+import '../global/CardDetail.css';
 import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
 import CryptListComponent from './CryptListComponent';
