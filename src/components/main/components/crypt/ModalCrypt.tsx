@@ -21,7 +21,7 @@ interface CryptProp {
   handleClose: () => void;
 }
 
-const ModalCryp = (props: CryptProp) => {
+const ModalCrypt = (props: CryptProp) => {
   const {
     openedCrypt,
     open,
@@ -37,6 +37,15 @@ const ModalCryp = (props: CryptProp) => {
       className='modal'
       open={open}
       onClose={handleClose}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowLeft') {
+          return handlePrevious();
+        }
+        if (e.key === 'ArrowRight') {
+          return handleNext();
+        }
+      }}
     >
       <Box className='modal__content'>
         <img src={openedCrypt.url} alt='card' />
@@ -119,4 +128,4 @@ const ModalCryp = (props: CryptProp) => {
   );
 };
 
-export default ModalCryp;
+export default ModalCrypt;

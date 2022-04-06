@@ -59,7 +59,7 @@ const LibraryNavbarModal = (props: Props) => {
 
   
   return (
-    <Modal open={open} onClose={() => handleMore()} className='navbar__bottom'>
+    <Modal open={open} onClose={() => handleMore() } className='navbar__bottom' >
       <div className='filter__container'>
         <div className='disc__container'>
           {getDiscIcon(selected_discList.name).map((dis, index) => {

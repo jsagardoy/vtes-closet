@@ -19,9 +19,15 @@ const CardButtons: React.FC<Props> = (props: Props) => {
         disabled={index === 0}
         size='small'
         onClick={() => handlePrevious()}
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowLeft') {
+            return handlePrevious();
+          }
+        }}
       >
         <NavigateBefore className='icon__button' />
       </IconButton>
+
       <IconButton
         disabled={index === list.length - 1}
         size='small'

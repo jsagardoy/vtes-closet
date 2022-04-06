@@ -48,7 +48,20 @@ const LibraryModal = (props: LibraryModalProps) => {
   };
 
   return (
-    <Modal className='modal' open={open} onClose={handleCloseModal}>
+    <Modal
+      className='modal'
+      open={open}
+      onClose={handleCloseModal}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowLeft') {
+          return handlePrevious();
+        }
+        if (e.key === 'ArrowRight') {
+          return handleNext();
+        }
+      }}
+    >
       <Box className='modal__content'>
         <img src={library.url} alt={library.name} />
         <div className='modal__right'>

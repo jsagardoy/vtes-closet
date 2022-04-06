@@ -25,16 +25,20 @@ const LibraryList = (props: LibraryListProps) => {
   };
 
   const handleNext = () => {
-    const newIndex: number = index + 1;
-    const library: LibraryType = list[newIndex];
-    handleItemToOpen(library, newIndex);
+    if (index < list.length - 1) { 
+      const newIndex: number = index + 1;
+      const library: LibraryType = list[newIndex];
+      handleItemToOpen(library, newIndex);
+    }
   };
   const handlePrevious = () => {
-    const newIndex: number = index - 1;
-    const library: LibraryType = list[newIndex];
-    handleItemToOpen(library, newIndex);
+    if (index > 0) {
+      const newIndex: number = index - 1;
+      const library: LibraryType = list[newIndex];
+      handleItemToOpen(library, newIndex);
+    }
   };
-    React.useEffect(() => {}, []); 
+  React.useEffect(() => {}, []);
   return (
     <>
       {selectedItem && openModal ? (
