@@ -18,7 +18,7 @@
   max-width: 20%;
   min-height: 100vh;
   opacity: 0;
-  visibility: hidden;
+  display:none;
   transition: all 1s ;
    }
 .list {
@@ -30,7 +30,7 @@ width: 100%;
 .list__container { 
   width: 100%;
 }
-@media (max-width:600px) {
+@media (max-width:480px) {
   .sidebar {
   display: flex;
   justify-content: center;
@@ -43,22 +43,22 @@ width: 100%;
   transition: all 1s ;
   z-index: 0;
   min-width: 100%;
-  max-width: 100%;
   padding:0;
    }
 
    .hidden{
   background-color: black;
   width: 0%;
-  max-width: 100%;
+  max-width: 480px;
   min-height: 100vh;
   opacity: 0;
-  visibility: hidden;
+  display: none;
   transition: all 1s ;
 
    }
   .list__container {
     width: 100%;
+    max-width: 480px;
     text-align: center;
     font-size: medium;
   }

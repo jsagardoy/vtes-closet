@@ -7,12 +7,30 @@
   overflow-y: auto;
 }
 .mainApp {
-  display:flex;
+  display: flex;
   background-color: black;
-  width:100%;
+  width: 100%;
 }
-.main__header{
-  display:flex;
-  width: 100% ;
+.main__header {
+  display: flex;
+  width: 100%;
 }
 
+/* RESPONSIVE */
+/* Tablets en horizonal y escritorios normales */
+@media (min-width: 768px) and (max-width: 1199px) {
+}
+
+/* Móviles en horizontal o tablets en vertical */
+@media (max-width: 767px) {
+}
+
+/* Móviles en vertical */
+@media (max-width: 480px) {
+  * {
+    font-size: smaller;
+  }
+  .main__header {
+    display: flex;
+  }
+}

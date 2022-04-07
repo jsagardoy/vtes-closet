@@ -44,19 +44,36 @@
   margin-left: 1rem;
 }
 
-@media (max-width:600px){
-  
-  *{
-    font-size: small;
-  }
+
+/* RESPONSIVE */
+/* Tablets en horizonal y escritorios normales */
+@media (min-width: 768px) and (max-width: 1199px) {
+}
+
+/* Móviles en horizontal o tablets en vertical */
+@media (max-width: 767px) {
+}
+
+/* Móviles en vertical */
+@media (max-width: 480px) {
+
   .header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
     color: darkcyan;
     border-bottom: 1px solid darkcyan;
     background-color: black;
     padding: 0.8rem 0;
     width: 100em;
+  }
+  .userName{
+    display:none;
+  }
+  .logoWeb{
+    display:none;
+  }
+  .siteName{
+    font-size: small;
   }
 }

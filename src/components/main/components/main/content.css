@@ -8,7 +8,6 @@
   overflow: auto;
   flex-wrap: wrap;
   padding-left: 5rem;
-  height: 100vh;
   padding: 0px;
 }
 
@@ -37,24 +36,21 @@
 /* Móviles en vertical */
 @media (max-width: 480px) {
   .main__content {
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    
+    align-items: center;
     width: 100%;
     background-color: black;
     color: darkcyan;
-    overflow: auto;
-    flex-wrap: wrap;
-    height: 100vh;
     padding: 0px;
     margin: 0px;
     margin-left: 0.5rem;
-    margin-top:0.5rem;
-
+    margin-top: 0.5rem;
+    flex-wrap: nowrap;
+    min-height: 100vh;
   }
   .hidden__main__content {
-    visibility: hidden;
+    display: none;
     opacity: 0;
     width: 0%;
     padding: 0px;
@@ -62,9 +58,9 @@
   }
   .card {
     margin-top: 2rem;
-    margin:0px;
-    padding:0px;
+    margin: 0px;
+    padding: 0px;
     margin-top: 1rem;
-    border:0px;
+    border: 0px;
   }
 }

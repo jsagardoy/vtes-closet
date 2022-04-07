@@ -123,3 +123,20 @@
 .button__activated__AZ{
   background-color: lightgrey;
 }
+
+/* RESPONSIVE */
+/* Tablets en horizonal y escritorios normales */
+@media (min-width: 768px) and (max-width: 1199px) {
+}
+
+/* Móviles en horizontal o tablets en vertical */
+@media (max-width: 767px) {
+}
+
+/* Móviles en vertical */
+@media (max-width: 480px) {
+  .navbarList h3 {
+  color: darkcyan;
+  font-size: small;
+}
+}

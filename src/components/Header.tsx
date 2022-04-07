@@ -36,18 +36,19 @@ const Header = (props: Props) => {
           onClick={() => handleClickLogo()}
         />
         <img
+          className='logoWeb'
           src='https://sites.google.com/site/ausnzvteschampionship/_/rsrc/1361307183822/home/2013/Casino-Playing-Cards-icon%20VTESlogo.jpg?height=320&width=320'
           alt='logo'
         />
       </div>
       <div className='header__center'>
-        <h3>Vtes Closet</h3>
+        <h3 className='siteName'>Vtes Closet</h3>
       </div>
       <div className='header__right'>
         <Login />
         <div className='userInfo'>
           <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
-          <h5>{userName}</h5>
+          <h5 className='userName'>{userName}</h5>
         </div>
       </div>
     </div>

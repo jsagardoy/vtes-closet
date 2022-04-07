@@ -109,7 +109,7 @@
   overflow-y: scroll;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
 }
 .modal__content {
   display: flex;
@@ -154,35 +154,46 @@
   justify-content: flex-start;
 }
 
-@media (max-width: 950px) {
-  .modal__content {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-  }
-  .modal__right__text {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: scroll;
-  }
+/* RESPONSIVE */
+/* Tablets en horizonal y escritorios normales */
+@media (min-width: 768px) and (max-width: 1199px) {
 }
-@media (max-height: 600px) {
+
+/* Móviles en horizontal o tablets en vertical */
+@media (max-width: 767px) {
+}
+
+/* Móviles en vertical */
+@media (max-width: 480px) {
+  .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+  }
   .modal__content {
-    position: static;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    flex-wrap: nowrap;
+    height: 100%;
+    max-height: none;
+    overflow-y:unset;
   }
   .modal__right__text {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: scroll;
+    min-width: fit-content;
+    max-width: none;
+  }
+  .modal img {
+    border: 0px;
+  }
+  .cardImage {
+    display: flex;
+    justify-content: center;
+    background-color: black;
   }
 }

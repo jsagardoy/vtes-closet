@@ -63,7 +63,7 @@ const LibraryModal = (props: LibraryModalProps) => {
       }}
     >
       <Box className='modal__content'>
-        <img src={library.url} alt={library.name} />
+          <img src={library.url} alt={library.name} />
         <div className='modal__right'>
           <div
             style={{
