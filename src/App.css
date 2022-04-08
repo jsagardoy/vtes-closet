@@ -10,6 +10,8 @@
   display: flex;
   background-color: black;
   width: 100%;
+  height: 100vh;
+  transition: all 1s ;
 }
 .main__header {
   display: flex;
@@ -30,6 +32,10 @@
   * {
     font-size: smaller;
   }
+  .mainApp {
+  transition: all 10s ;
+  height: fit-content;
+}
   .main__header {
     display: flex;
   }

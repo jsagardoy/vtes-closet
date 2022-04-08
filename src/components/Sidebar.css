@@ -6,56 +6,76 @@
   color: darkcyan;
   width: 20%;
   max-width: 20%;
-  min-height: 100vh;
-  opacity:1;
+  opacity: 1;
   visibility: visible;
-  transition: all 1s ;
+  transition: all 1s;
   z-index: 0;
-   }
-   .hidden{
+}
+.hidden {
+  display: flex;
   background-color: black;
   width: 0%;
   max-width: 20%;
   min-height: 100vh;
   opacity: 0;
-  display:none;
-  transition: all 1s ;
-   }
-.list {
-display:flex; 
-flex-direction:column;
-align-items: center;
-width: 100%;
+  visibility: hidden;
+  transition: all 1s;
 }
-.list__container { 
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
-@media (max-width:480px) {
+.list__container {
+  width: 100%;
+}
+/* RESPONSIVE */
+/* Tablets en horizonal y escritorios normales */
+@media (min-width: 768px) and (max-width: 1199px) {
+}
+
+/* Móviles en horizontal o tablets en vertical */
+@media (max-width: 767px) {
+}
+
+/* Móviles en vertical */
+@media (max-width: 480px) {
+  .hidden {
+    background-color: black;
+    width: 0%;
+    max-width: 20%;
+    min-height: 100vh;
+    height: fit-content;
+    opacity: 0;
+    display: none;
+    transition: all 1s;
+  }
   .sidebar {
-  display: flex;
-  justify-content: center;
-  border-right: 1px solid darkcyan;
-  background-color: black;
-  padding: 1rem;
-  color: darkcyan;
-  opacity:1;
-  visibility: visible;
-  transition: all 1s ;
-  z-index: 0;
-  min-width: 100%;
-  padding:0;
-   }
+    display: flex;
+    justify-content: center;
+    border-right: 1px solid darkcyan;
+    background-color: black;
+    color: darkcyan;
+    opacity: 1;
+    visibility: visible;
+    transition: all 1s;
+    z-index: 0;
+    min-width: 100%;
+    height: 100vh;
+    padding: 0;
+  }
 
-   .hidden{
-  background-color: black;
-  width: 0%;
-  max-width: 480px;
-  min-height: 100vh;
-  opacity: 0;
-  display: none;
-  transition: all 1s ;
-
-   }
+  .hidden {
+    display: flex;
+    visibility: hidden;
+    transition: all 1s;
+    background-color: black;
+    width: 0%;
+    max-width: 480px;
+    min-height: 100vh;
+    opacity: 0;
+  }
   .list__container {
     width: 100%;
     max-width: 480px;

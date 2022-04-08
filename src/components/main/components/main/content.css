@@ -9,9 +9,20 @@
   flex-wrap: wrap;
   padding-left: 5rem;
   padding: 0px;
+  transition: all 1s;
+}
+.hidden__main__content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  justify-content: flex-start;
+  transition: all 1s;
 }
 
 .card {
+  display:flex;
   width: 15rem;
   height: 15rem;
   margin-top: 2rem;
@@ -36,6 +47,7 @@
 /* Móviles en vertical */
 @media (max-width: 480px) {
   .main__content {
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -48,6 +60,7 @@
     margin-top: 0.5rem;
     flex-wrap: nowrap;
     min-height: 100vh;
+    height: fit-content;
   }
   .hidden__main__content {
     display: none;
@@ -57,6 +70,9 @@
     transition: all 1s;
   }
   .card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     margin-top: 2rem;
     margin: 0px;
     padding: 0px;
