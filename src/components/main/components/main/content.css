@@ -23,6 +23,7 @@
 
 .card {
   display:flex;
+  flex-direction: column;
   width: 15rem;
   height: 15rem;
   margin-top: 2rem;
