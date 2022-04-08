@@ -58,19 +58,19 @@ const LibraryListComponent = (props: Props) => {
   if (list.length === 0) {
     return <></>;
   }
-if (items.length === 0) {
-  return (
-    <p
-      style={{
-        textAlign: 'center',
-        color: 'Darkcyan',
-        marginBottom: '1em',
-      }}
-    >
-      No results
-    </p>
-  );
-}
+  if (items.length === 0) {
+    return (
+      <p
+        style={{
+          textAlign: 'center',
+          color: 'Darkcyan',
+          marginBottom: '1em',
+        }}
+      >
+        No results
+      </p>
+    );
+  }
   return (
     <InfiniteScroll
       dataLength={items.length}
@@ -106,138 +106,129 @@ if (items.length === 0) {
               onClick={() => handleItemToOpen(library)}
             >
               <Table id='table__library'>
-                <TableBody id='table__body'>
-                  <TableRow
-                    id='table__row'
-                    sx={{
-                      display: 'flex',
-                    }}
-                  >
-                    <TableCell
-                      align='left'
-                      size='small'
-                      id='table__cell'
-                      sx={{
-                        border: 0,
-                        width: '50%',
-                        color: 'darkcyan',
-                      }}
-                    >
-                      {library.name}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
+                <TableBody>
+                  <TableRow sx={{ display: 'flex' }}>
+                    <div className='table__name'>
+                      <TableCell
+                        align='left'
+                        size='small'
+                        id='table__cell'
+                        sx={{
+                          display: 'flex',
+                          border: 0,
+                          color: 'darkcyan',
+                        }}
+                      >
+                        {library.name}
+                      </TableCell>
+                    </div>
+                    <div className='table__icons'>
                       {library.burn_option ? (
-                        <Avatar src={getBurnOption()} alt='Burn option' />
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.clans ? (
-                        getClanIcon(library.clans).map(
-                          (clan: string, index: number) => (
-                            <Avatar
-                              key={clan && library.id && index}
-                              src={clan}
-                              alt={clan}
-                            />
-                          )
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '17.5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.disciplines ? (
-                        getDiscIcon(library.disciplines).map(
-                          (disc: string, index: number) => (
-                            <Avatar
-                              key={disc && library.id && index}
-                              src={disc}
-                              alt={disc}
-                            />
-                          )
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '17.5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {getCardTypesIcon(library.types).map(
-                        (type: string, index: number) => (
-                          <Avatar
-                            key={type && library.id && index}
-                            src={type}
-                            alt={type}
-                          />
-                        )
-                      )}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        border: 0,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        width: '5%',
-                      }}
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                    >
-                      {library.blood_cost ? (
-                        <Avatar
-                          src={getCardCost(library.blood_cost, 'blood')}
-                          alt='Blood cost'
-                        />
-                      ) : library.pool_cost ? (
-                        <Avatar
-                          src={getCardCost(library.pool_cost, 'pool')}
-                          alt='Pool cost'
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </TableCell>
+                        <TableCell
+                          sx={{
+                            border: 0,
+                            display: 'flex',
+                            flexDirection: 'row',
+                          }}
+                          size='small'
+                          id='table__cell'
+                        >
+                          <Avatar src={getBurnOption()} alt='Burn option' />
+                        </TableCell>
+                      ) : null}
+                      <div className='clans__list'>
+                        {library.clans ? (
+                          <TableCell
+                            sx={{
+                              border: 0,
+                              display: 'flex',
+                              flexDirection: 'row',
+                            }}
+                            size='small'
+                            id='table__cell'
+                          >
+                            {getClanIcon(library.clans).map(
+                              (clan: string, index: number) => (
+                                <Avatar
+                                  key={clan && library.id && index}
+                                  src={clan}
+                                  alt={clan}
+                                />
+                              )
+                            )}
+                          </TableCell>
+                        ) : null}
+                      </div>
+                      <div className='dicipline__list'>
+                        {library.disciplines ? (
+                          <TableCell
+                            sx={{
+                              border: 0,
+                              display: 'flex',
+                              flexDirection: 'row',
+                            }}
+                            size='small'
+                            id='table__cell'
+                          >
+                            {getDiscIcon(library.disciplines).map(
+                              (disc: string, index: number) => (
+                                <Avatar
+                                  key={disc && library.id && index}
+                                  src={disc}
+                                  alt={disc}
+                                />
+                              )
+                            )}
+                          </TableCell>
+                        ) : null}
+                      </div>
+                      <div className='type__list'>
+                        <TableCell
+                          sx={{
+                            border: 0,
+                            display: 'flex',
+                            flexDirection: 'row',
+                          }}
+                          size='small'
+                          id='table__cell'
+                        >
+                          {getCardTypesIcon(library.types).map(
+                            (type: string, index: number) => (
+                              <Avatar
+                                key={type && library.id && index}
+                                src={type}
+                                alt={type}
+                              />
+                            )
+                          )}
+                        </TableCell>
+                      </div>
+                      <div className='cost__list'>
+                        {library.blood_cost || library.pool_cost ? (
+                          <TableCell
+                            sx={{
+                              border: 0,
+                              display: 'flex',
+                              flexDirection: 'row',
+                            }}
+                            size='small'
+                            id='table__cell'
+                          >
+                            {library.blood_cost ? (
+                              <Avatar
+                                src={getCardCost(library.blood_cost, 'blood')}
+                                alt='Blood cost'
+                              />
+                            ) : library.pool_cost ? (
+                              <Avatar
+                                src={getCardCost(library.pool_cost, 'pool')}
+                                alt='Pool cost'
+                              />
+                            ) : null}
+                          </TableCell>
+                        ) : null}
+                      </div>
+                    </div>
                   </TableRow>
                 </TableBody>
               </Table>

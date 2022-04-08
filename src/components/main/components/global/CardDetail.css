@@ -109,7 +109,7 @@
   overflow-y: scroll;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 .modal__content {
   display: flex;
@@ -143,6 +143,10 @@
   display: flex;
   flex-direction: column;
 }
+.table__row {
+  display: flex;
+  flex-direction: row;
+}
 .clan__data {
   display: flex;
   flex-direction: row;
@@ -153,7 +157,34 @@
   flex-direction: column;
   justify-content: flex-start;
 }
-
+.table__name {
+  display: flex;
+  padding: 0px;
+  width: 25%;
+}
+.table__icons {
+  display: flex;
+  justify-content: flex-end;
+  width: 75%;
+}
+.dicipline__list {
+  display: flex;
+  justify-content: space-around;
+  width: max-content;
+}
+.type__list {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
+}
+.clans__list {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
+}
+.cost__list {
+  min-width: 4rem;
+}
 /* RESPONSIVE */
 /* Tablets en horizonal y escritorios normales */
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -179,7 +210,7 @@
     justify-content: flex-start;
     height: 100%;
     max-height: none;
-    overflow-y:unset;
+    overflow-y: unset;
   }
   .modal__right__text {
     display: flex;
@@ -195,5 +226,32 @@
     display: flex;
     justify-content: center;
     background-color: black;
+  }
+  .table__name {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px;
+  }
+  .table__icons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .dicipline__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .type__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .clans__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .cost__list {
+    min-width: 0em;
   }
 }
