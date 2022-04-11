@@ -51,7 +51,7 @@ const Sidebar = (props: Props) => {
   };
 
   return (
-    <div className={toogle ? 'sidebar' : 'hidden'}>
+    <aside className={toogle ? 'sidebar' : 'hidden'}>
       <div className='list__container'>
         <List className='list'>
           <ListItemButton
@@ -141,7 +141,7 @@ const Sidebar = (props: Props) => {
           )}
         </List>
       </div>
-    </div>
+    </aside>
   );
 };
 export default Sidebar;

@@ -49,8 +49,7 @@ function App() {
 
   return (
     <Router>
-      <div className='App'>
-        {/*  <Login /> */}
+      <div className='app'>
         <div className='main__header'>
           <Header handleClickLogo={handleClickMenuIcon} />
         </div>

@@ -10,6 +10,7 @@
   visibility: visible;
   transition: all 1s;
   z-index: 0;
+  height: 100%;
 }
 .hidden {
   display: flex;
