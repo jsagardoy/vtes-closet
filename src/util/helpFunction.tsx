@@ -363,7 +363,7 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
       (elem === 'disciplineless' && card.disciplines === undefined) ||
       (elem === 'bleed' &&
         ADDED_BLEED.some((bleed) => findInText(card, bleed) !== null)) ||
-      (elem === 'bleed' &&
+      (elem === 'intercept' &&
         ADDED_INTERCEPT.some(
           (intercept) => findInText(card, intercept) !== null
         )) ||
