@@ -55,8 +55,9 @@
     margin: 0px;
     margin-left: 0.5rem;
     margin-top: 0.5rem;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     height: fit-content;
+    height: 100vh;
   }
   .hidden__main__content {
     display: none;
