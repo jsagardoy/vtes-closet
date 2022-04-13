@@ -23,6 +23,16 @@ html {height: 100%;}
 
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
+    * {
+    font-size: smaller;
+  }
+  .mainApp {
+  transition: all 10s ;
+  height: fit-content;
+}
+  .main__header {
+    display: flex;
+  }
 }
 
 /* Móviles en vertical */

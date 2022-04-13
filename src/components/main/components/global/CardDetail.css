@@ -192,6 +192,70 @@
 
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
+  .modal {
+    display:flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    min-width:100%
+  }
+  .modal__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 100%;
+    max-height: none;
+    overflow-y: unset;
+    min-width: 100%;
+  }
+  .modal__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: azure;
+  width:100%;
+}
+  .modal__right__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: fit-content;
+    max-width: none;
+  }
+  .modal img {
+    border: 0px;
+  }
+  .cardImage {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+  }
+  .table__name {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px;
+  }
+  .table__icons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .dicipline__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .type__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .clans__list {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+  }
+  .cost__list {
+    min-width: 0em;
+  }
 }
 
 /* Móviles en vertical */

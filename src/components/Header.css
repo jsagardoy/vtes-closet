@@ -52,6 +52,25 @@
 
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
+  .header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: darkcyan;
+    border-bottom: 1px solid darkcyan;
+    background-color: black;
+    padding: 0.8rem 0;
+    width: 100em;
+  }
+  .userName{
+    display:none;
+  }
+  .logoWeb{
+    display:none;
+  }
+  .siteName{
+    font-size: small;
+  }
 }
 
 /* Móviles en vertical */

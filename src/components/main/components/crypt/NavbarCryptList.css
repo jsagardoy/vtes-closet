@@ -131,6 +131,10 @@
 
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
+    .navbarList h3 {
+  color: darkcyan;
+  font-size: small;
+}
 }
 
 /* Móviles en vertical */

@@ -43,6 +43,38 @@
 
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
+  .main__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+    color: darkcyan;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: nowrap;
+    height: fit-content;
+  }
+  .hidden__main__content {
+    display: none;
+    opacity: 0;
+    width: 0%;
+    padding: 0px;
+    transition: all 1s;
+  }
+  .card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 1rem;
+    border: 0px;
+  }
 }
 
 /* Móviles en vertical */
