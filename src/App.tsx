@@ -2,7 +2,12 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import PrivateRoute from './components/PrivateRoute';
@@ -18,6 +23,7 @@ function App() {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
   const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(false);
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
@@ -58,7 +64,11 @@ function App() {
           {loader && <Spinner />}
           <Switch>
             <Route exact path={'/'}>
-              <PublicMain toogle={toogleSidebar} />
+              {isLogged ? (
+                <Redirect to='private'/>
+              ) : (
+                <PublicMain toogle={toogleSidebar} />
+              )}
             </Route>
             <Route exact path={'/crypt'}>
               <CryptContainer toogle={toogleSidebar} />
