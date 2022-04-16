@@ -2,10 +2,8 @@ import {
   Avatar,
   List,
   ListItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
+  ListItemAvatar,
+  ListItemText
 } from '@mui/material';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -105,123 +103,68 @@ const LibraryListComponent = (props: Props) => {
               alignItems='flex-start'
               onClick={() => handleItemToOpen(library)}
             >
-              <Table id='table__library'>
-                <TableBody>
-                  <TableRow
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <TableCell
-                      align='left'
-                      size='small'
-                      id='table__cell'
-                      sx={{ border: '0px', width: '25%' }}
-                    >
-                      {library.name}
-                    </TableCell>
-                    {library.burn_option ? (
-                      <TableCell
-                        align='right'
-                        size='small'
-                        id='table__cell'
-                        sx={{ border: '0px', width: '5%' }}
-                      >
-                        <Avatar src={getBurnOption()} alt='Burn option' />
-                      </TableCell>
-                    ) : null}
-                    {library.clans ? (
-                      <TableCell
-                        align='right'
-                        size='small'
-                        id='table__cell'
-                        sx={{
-                          border: '0px',
-                          flexDirection: 'row',
-                          display: 'flex',
-                          width: '1O%',
-                        }}
-                      >
-                        {getClanIcon(library.clans).map(
-                          (clan: string, index: number) => (
-                            <Avatar
-                              key={clan && library.id && index}
-                              src={clan}
-                              alt={clan}
-                            />
-                          )
-                        )}
-                      </TableCell>
-                    ) : null}
-                    {library.disciplines ? (
-                      <TableCell
-                        size='small'
-                        id='table__cell'
-                        sx={{
-                          border: '0px',
-                          flexDirection: 'row',
-                          display: 'flex',
-                          width: '15%',
-                        }}
-                      >
-                        {getDiscIcon(library.disciplines).map(
-                          (disc: string, index: number) => (
-                            <Avatar
-                              key={disc && library.id && index}
-                              src={disc}
-                              alt={disc}
-                            />
-                          )
-                        )}
-                      </TableCell>
-                    ) : null}
+              <ListItemText className='list__item' primary={library.name} />
+              <div className='list__left'>
+                {library.burn_option ? (
+                  <Avatar src={getBurnOption()} alt='Burn option' />
+                ) : null}
+                {library.clans
+                  ? getClanIcon(library.clans).map(
+                      (clan: string, index: number) => (
+                        <ListItemAvatar
+                          className='list__avatar__icons'
+                          key={library.id && clan}
+                        >
+                          <Avatar
+                            key={clan && library.id && index}
+                            src={clan}
+                            alt={clan}
+                          />
+                        </ListItemAvatar>
+                      )
+                    )
+                  : null}
+                {library.disciplines
+                  ? getDiscIcon(library.disciplines).map(
+                      (disc: string, index: number) => (
+                        <ListItemAvatar
+                          className='list__avatar__icons'
+                          key={library.id && disc}
+                        >
+                          <Avatar src={disc} alt={disc} />
+                        </ListItemAvatar>
+                      )
+                    )
+                  : null}
 
-                    <TableCell
-                      align='right'
-                      size='small'
-                      id='table__cell'
-                      sx={{
-                        border: '0px',
-                        flexDirection: 'row',
-                        display: 'flex',
-                        width: '10%',
-                      }}
+                {getCardTypesIcon(library.types).map(
+                  (type: string, index: number) => (
+                    <ListItemAvatar
+                      className='list__avatar__icons'
+                      key={library.id && type}
                     >
-                      {getCardTypesIcon(library.types).map(
-                        (type: string, index: number) => (
-                          <Avatar
-                            key={type && library.id && index}
-                            src={type}
-                            alt={type}
-                          />
-                        )
-                      )}
-                    </TableCell>
-                    {library.blood_cost || library.pool_cost ? (
-                      <TableCell
-                        align='right'
-                        size='small'
-                        id='table__cell'
-                        sx={{ border: '0px', width: '5%' }}
-                      >
-                        {library.blood_cost ? (
-                          <Avatar
-                            src={getCardCost(library.blood_cost, 'blood')}
-                            alt='Blood cost'
-                          />
-                        ) : library.pool_cost ? (
-                          <Avatar
-                            src={getCardCost(library.pool_cost, 'pool')}
-                            alt='Pool cost'
-                          />
-                        ) : null}
-                      </TableCell>
-                    ) : null}
-                  </TableRow>
-                </TableBody>
-              </Table>
+                      <Avatar
+                        key={type && library.id && index}
+                        src={type}
+                        alt={type}
+                      />
+                    </ListItemAvatar>
+                  )
+                )}
+                {library.blood_cost || library.pool_cost ? (
+                  library.blood_cost ? (
+                    <Avatar
+                      src={getCardCost(library.blood_cost, 'blood')}
+                      alt='Blood cost'
+                    />
+                  ) : library.pool_cost ? (
+                    <Avatar
+                      src={getCardCost(library.pool_cost, 'pool')}
+                      alt='Pool cost'
+                    />
+                  ) : null
+                ) : null}
+              </div>
             </ListItem>
           ))
         )}
