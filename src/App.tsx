@@ -15,12 +15,9 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
-import { getCrypt, getLibrary } from './util/helpFunction';
-import { Spinner } from './components/main/components/global/Spinner';
 
 function App() {
   const auth = getAuth();
-  const [loader, setLoader] = React.useState<boolean>(false);
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
   const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(false);
 
@@ -35,22 +32,6 @@ function App() {
   const handleClickMenuIcon = () => setToogleSidebar(!toogleSidebar);
 
   useEffect(() => {
-    if (
-      localStorage.getItem('cryptList') === null ||
-      localStorage.getItem('cryptList')?.length === 0
-    ) {
-      setLoader(true);
-      getCrypt();
-      setLoader(false);
-    }
-    if (
-      localStorage.getItem('libraryList') === null ||
-      localStorage.getItem('libraryList')?.length === 0
-    ) {
-      setLoader(true);
-      getLibrary();
-      setLoader(false);
-    }
   }, []);
 
   return (
@@ -61,7 +42,6 @@ function App() {
         </div>
         <div className='mainApp'>
           <Sidebar toogle={toogleSidebar} handleToogle={handleClickMenuIcon} />
-          {loader && <Spinner />}
           <Switch>
             <Route exact path={'/'}>
               {isLogged ? (

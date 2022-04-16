@@ -197,7 +197,6 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   /* React.useEffect(() => {}, []); */
 
   return (
-    <>
       <div className='navbarList'>
         <div className='navbarList__left'>
           <h3>Library</h3>
@@ -260,7 +259,6 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           handleResetButton={handleResetButton}
         />
       </div>
-    </>
   );
 };
 

@@ -1,5 +1,3 @@
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../database/config';
 import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
 import { LibraryType } from '../types/library_type';
 
@@ -379,45 +377,34 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
   return result.every((elem) => elem === true);
 };
 
-export const getCrypt = async () => {
+/* export const getCrypt = async () => {
   try {
     const data = await getDocs(collection(db, 'crypt'));
     const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
-    localStorage.setItem('cryptList', JSON.stringify(result));
+    window.localStorage.setItem('cryptList', JSON.stringify(result));
   } catch (error) {
     console.log(error);
   }
-};
+}; */
 
 export const getLocalStorageAuth = () => {
   const aux = localStorage.getItem('auth');
   if (aux) {
     return JSON.parse(aux);
   }
-}
-
-export const getLibrary = async () => {
-  try {
-    const data = await getDocs(collection(db, 'library'));
-    const result: LibraryType[] = data.docs.map(
-      (doc) => doc.data() as LibraryType
-    );
-    localStorage.setItem('libraryList', JSON.stringify(result));
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export const getLocalStorageCrypt = (): CryptType[] => {
-  const aux = localStorage.getItem('cryptList');
+  const aux = window.localStorage.getItem('cryptList');
   if (aux) {
     const cryptList = JSON.parse(aux);
     return cryptList;
-  } else return [];
+  }
+  return [];
 };
 
 export const getLocalStorageLibrary = (): LibraryType[] => {
-  const aux = localStorage.getItem('libraryList');
+  const aux = window.localStorage.getItem('libraryList');
   if (aux) {
     const libraryList = JSON.parse(aux);
     return libraryList;

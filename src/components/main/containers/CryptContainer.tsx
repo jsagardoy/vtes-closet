@@ -8,24 +8,29 @@ import {
   compareArrays,
   filterProps,
   findInText,
-  getCrypt,
   getLocalStorageCrypt,
   groupType as GroupType,
 } from '../../../util';
 
 import CryptList from '../components/crypt/CryptList';
 import { Spinner } from '../components/global/Spinner';
+import { fetchCrypt } from '../../../service/fetchCrypt';
 
-interface Props{
-  toogle:boolean
+interface Props {
+  toogle: boolean;
 }
 
 const CryptContainer = (props: Props) => {
   const { toogle } = props;
-  const [list, setList] = React.useState<CryptType[]>(getLocalStorageCrypt());
+  const [list, setList] = React.useState<CryptType[]>([]);
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
+
+  const cryptList = async () => {
+    const result: CryptType[] = await getLocalStorageCrypt();
+    setList(result);
+  };
 
   const handleSearch = (
     name: string,
@@ -38,7 +43,7 @@ const CryptContainer = (props: Props) => {
     maxCap: capacityType,
     minCap: capacityType
   ) => {
-    const resp = getLocalStorageCrypt()
+    const resp = list
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -90,23 +95,25 @@ const CryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = (): void => setList(getLocalStorageCrypt());
+  const handleReset = async () => await cryptList();
 
   React.useEffect(() => {
     if (
-      localStorage.getItem('cryptList') === null ||
-      localStorage.getItem('cryptList')?.length === 0
+      window.localStorage.getItem('cryptList') === null ||
+      window.localStorage.getItem('cryptList')?.length === 0
     ) {
-      localStorage.clear();
       setLoader(true);
-      getCrypt();
+      fetchCrypt().then((data: CryptType[]) => {
+        setList(data);
+      });
       setLoader(false);
+    } else {
+      setList(getLocalStorageCrypt());
     }
-    setList(getLocalStorageCrypt());
   }, []);
 
   return (
-    <div className={toogle ? 'menu__crypt__container':'crypt__container'}>
+    <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
       <NavbarCryptList
         searchList={(
           name: string,

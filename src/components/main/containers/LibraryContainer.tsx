@@ -1,11 +1,11 @@
 import React from 'react';
+import { fetchLibrary } from '../../../service/fetchLibrary';
 
 import { LibraryPropType, LibraryType } from '../../../types/library_type';
 import {
   compareArrays,
   filterProps,
   findInText,
-  getLibrary,
   getLocalStorageLibrary,
 } from '../../../util/helpFunction';
 import { Spinner } from '../components/global/Spinner';
@@ -53,15 +53,17 @@ const LibraryContainer = () => {
 
   React.useEffect(() => {
     if (
-      localStorage.getItem('libraryList') === null ||
-      localStorage.getItem('libraryList')?.length === 0
+      window.localStorage.getItem('libraryList') === null ||
+      window.localStorage.getItem('libraryList')?.length === 0
     ) {
-      localStorage.clear();
       setLoader(true);
-      getLibrary();
+      fetchLibrary().then((data: LibraryType[]) => {
+        setList(data);
+      });
       setLoader(false);
-      }
-    setList(getLocalStorageLibrary());
+    } else {
+      setList(getLocalStorageLibrary());
+    }
   }, []);
   return (
     <div className='library__container'>
