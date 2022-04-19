@@ -6,7 +6,6 @@ import {
   compareArrays,
   filterProps,
   findInText,
-  getLocalStorageLibrary,
 } from '../../../util/helpFunction';
 import { Spinner } from '../components/global/Spinner';
 import LibraryList from '../components/library/LibraryList';
@@ -14,9 +13,7 @@ import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
 
 const LibraryContainer = () => {
-  const [list, setList] = React.useState<LibraryType[]>(
-    getLocalStorageLibrary()
-  );
+  const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
 
@@ -28,7 +25,7 @@ const LibraryContainer = () => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = getLocalStorageLibrary()
+    const resp = list
       .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
@@ -52,18 +49,11 @@ const LibraryContainer = () => {
   };
 
   React.useEffect(() => {
-    if (
-      window.localStorage.getItem('libraryList') === null ||
-      window.localStorage.getItem('libraryList')?.length === 0
-    ) {
       setLoader(true);
       fetchLibrary().then((data: LibraryType[]) => {
         setList(data);
       });
       setLoader(false);
-    } else {
-      setList(getLocalStorageLibrary());
-    }
   }, []);
   return (
     <div className='library__container'>

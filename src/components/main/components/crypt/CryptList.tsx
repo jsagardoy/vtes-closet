@@ -36,8 +36,8 @@ const CryptList = (props: listProps) => {
     handleOpen(crypt, newIndex);
   };
 
-  React.useEffect(() => { }, []); 
-  
+  React.useEffect(() => {}, []);
+
   return (
     <>
       {open && openedCrypt ? (
@@ -49,16 +49,17 @@ const CryptList = (props: listProps) => {
           handleClose={handleClose}
           handleNext={handleNext}
           handlePrevious={handlePrevious}
-          
         />
       ) : null}
-      <CryptListComponent
-        list={list}
-        initialValue={list.slice(0,20)}
-        handleOpen={(crypt: CryptType, index: number) =>
-          handleOpen(crypt, index)
-        }
-      />
+      {list && list.length > 0 && (
+        <CryptListComponent
+          list={list}
+          initialValue={list.slice(0, 20)}
+          handleOpen={(crypt: CryptType, index: number) =>
+            handleOpen(crypt, index)
+          }
+        />
+      )}
     </>
   );
 };

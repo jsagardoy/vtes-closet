@@ -52,6 +52,7 @@ const LibraryList = (props: LibraryListProps) => {
           handlePrevious={() => handlePrevious()}
         />
       ) : null}
+      {list && list.length > 0 &&
       <LibraryListComponent
         list={list}
         initialValue={list.slice(0, 20)}
@@ -59,6 +60,7 @@ const LibraryList = (props: LibraryListProps) => {
           handleItemToOpen(library, index)
         }
       />
+      }
     </>
   );
 };

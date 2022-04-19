@@ -377,15 +377,6 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
   return result.every((elem) => elem === true);
 };
 
-/* export const getCrypt = async () => {
-  try {
-    const data = await getDocs(collection(db, 'crypt'));
-    const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
-    window.localStorage.setItem('cryptList', JSON.stringify(result));
-  } catch (error) {
-    console.log(error);
-  }
-}; */
 
 export const getLocalStorageAuth = () => {
   const aux = localStorage.getItem('auth');
@@ -394,19 +385,3 @@ export const getLocalStorageAuth = () => {
   }
 };
 
-export const getLocalStorageCrypt = (): CryptType[] => {
-  const aux = window.localStorage.getItem('cryptList');
-  if (aux) {
-    const cryptList = JSON.parse(aux);
-    return cryptList;
-  }
-  return [];
-};
-
-export const getLocalStorageLibrary = (): LibraryType[] => {
-  const aux = window.localStorage.getItem('libraryList');
-  if (aux) {
-    const libraryList = JSON.parse(aux);
-    return libraryList;
-  } else return [];
-};
