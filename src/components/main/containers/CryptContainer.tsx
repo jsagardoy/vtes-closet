@@ -15,41 +15,22 @@ import CryptList from '../components/crypt/CryptList';
 import { Spinner } from '../components/global/Spinner';
 import { fetchCrypt } from '../../../service/fetchCrypt';
 
-import { useLocalStorage } from '../../../hooks/useSetLocalStorage';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 interface Props {
   toogle: boolean;
 }
 
 const CryptContainer = (props: Props) => {
-
-  const initialValue = () => {
-    if (
-      window.localStorage.getItem('cryptList') &&
-      window.localStorage.getItem('cryptList') !== null
-    ) {
-      console.log('localStorage');
-      const value = window.localStorage.getItem('cryptList');
-      if (value!==null)
-        return(JSON.parse(value));
-    } else {
-      fetchCrypt().then((data: CryptType[]) => {
-        console.log('database');
-        setLocalStorage(data);
-        return data;
-      });
-    }
-  };
-
-  const { toogle } = props;
-  const [list, setList] = React.useState<CryptType[]>(initialValue());
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<boolean>(false);
   const [localStorage, setLocalStorage] = useLocalStorage<CryptType[]>(
     'cryptList',
-    initialValue()
+    []
   );
+  const { toogle } = props;
+  const [list, setList] = React.useState<CryptType[]>([]);
+  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
+  const [sort, setSort] = React.useState<boolean>(false);
 
   const handleSearch = (
     name: string,
@@ -114,17 +95,33 @@ const CryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = async () => setList(initialValue);
-
-  
+  const handleReset = async () => setList(localStorage);
 
   React.useEffect(() => {
-    
-  },[]);
+    if (
+      localStorage &&
+      localStorage !== [] &&
+      localStorage.length > 0
+    ) {
+      setList(localStorage);
+    } else {
+      setLoader(true);
+      fetchCrypt()
+        .then((data: CryptType[]) => {
+          setList(data);
+          setLocalStorage(data);
+          setLoader(false);
+        })
+        .catch((error) => {
+          setLoader(false);
+          console.log(error);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
-      {loader && <Spinner />}
       <NavbarCryptList
         searchList={(
           name: string,
@@ -153,7 +150,7 @@ const CryptContainer = (props: Props) => {
         handleSortAZ={() => handleSortAZ()}
         handleReset={() => handleReset()}
       />
-
+      {loader && <Spinner />}
       <CryptList list={list} />
     </div>
   );

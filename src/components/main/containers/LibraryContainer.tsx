@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { fetchLibrary } from '../../../service/fetchLibrary';
 
 import { LibraryPropType, LibraryType } from '../../../types/library_type';
@@ -16,6 +17,7 @@ const LibraryContainer = () => {
   const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
+  const [localStorage, setLocalStorage] = useLocalStorage<LibraryType[]>('libraryList', []);
 
   const handleSearch = (
     name: string,
@@ -25,7 +27,7 @@ const LibraryContainer = () => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = list
+    const resp = localStorage
       .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
@@ -48,13 +50,24 @@ const LibraryContainer = () => {
     setSort(!sort);
   };
 
-  React.useEffect(() => {
-      setLoader(true);
-      fetchLibrary().then((data: LibraryType[]) => {
-        setList(data);
-      });
-      setLoader(false);
-  }, []);
+ React.useEffect(() => {
+   if (localStorage && localStorage !== [] && localStorage.length > 0) {
+     setList(localStorage);
+   } else {
+     setLoader(true);
+     fetchLibrary()
+       .then((data: LibraryType[]) => {
+         setList(data);
+         setLocalStorage(data);
+         setLoader(false);
+       })
+       .catch((error) => {
+         setLoader(false);
+         console.log(error);
+       });
+   }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, []);
   return (
     <div className='library__container'>
       <LibraryNavbarList
