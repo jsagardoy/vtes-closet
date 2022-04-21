@@ -218,7 +218,7 @@ export const getSects = () => [
   'Independent',
 ];
 
-export const getTitle = () => [
+export const getTitle = (): string[] => [
   'No Title',
   '1 vote',
   '2 votes',
@@ -319,6 +319,7 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
 
   if (card.card_text.includes('pool cost')) return null;
   if (card.card_text.includes('blood cost')) return null;
+
   if (text !== '') {
     if (text === 'red_list' || 'enter_combat' || 'black_hand') {
       textFixed = text.replace('_', ' ');
@@ -377,6 +378,36 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
   return result.every((elem) => elem === true);
 };
 
+export const filterTitle = (card: CryptType, titles: any) => {
+  const elements = Object.keys(titles).filter(
+    (elem: string) => titles[elem] === true
+  );
+
+  if (elements.length === 0) {
+    return true;
+  }
+
+  const result = elements.map(
+    (title) =>
+      (title === 'Vote1' && findInText(card, '1 vote (titled)') !== null) ||
+      (title === 'Votes2' && findInText(card, '2 votes (titled)') !== null) ||
+      (title === 'InnerCircle' && findInText(card, 'inner circle') !== null) ||
+      (title === 'NoTitle' &&
+        getTitle()
+          .map(
+            (elem: string) =>
+              !card.card_text.toLowerCase().includes(elem.toLowerCase())
+          )
+          .every((elem) => elem === true)) ||
+      (title === 'Titled' &&
+        getTitle().some(
+          (elem: string) =>
+            findInText(card, elem) !== null && elem !== ('No Title' || 'Title')
+        )) ||
+      findInText(card, title) !== null
+  );
+  return result.some((elem) => elem === true);
+};
 
 export const getLocalStorageAuth = () => {
   const aux = localStorage.getItem('auth');
@@ -384,4 +415,3 @@ export const getLocalStorageAuth = () => {
     return JSON.parse(aux);
   }
 };
-

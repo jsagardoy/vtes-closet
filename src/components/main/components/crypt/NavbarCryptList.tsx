@@ -7,7 +7,7 @@ import {
 } from '@material-ui/icons';
 import './NavbarCryptList.css';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import { discType, PropType } from '../../../../types/crypt_type';
+import { discType, PropType, TitleType } from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
   getClans,
@@ -36,7 +36,7 @@ interface NavbarListProps {
     discList: string[],
     clan: string,
     sect: string,
-    title: string,
+    title: TitleType,
     props: PropType,
     group: groupType,
     maxCap: capacityType,
@@ -55,7 +55,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
-  const [selectedTitle, setSelectedTitle] = React.useState<string>('');
+  //const [selectedTitle, setSelectedTitle] = React.useState<string>('');
   const [rotate, setRotate] = React.useState<boolean>(false);
   const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
@@ -82,6 +82,23 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     red_list: false,
     infernal: false,
     slave: false,
+  });
+  const [selectedTitle, setSelectedTitle] = React.useState<TitleType>({
+    NoTitle: false,
+    Vote1: false,
+    Votes2: false,
+    Archbishop: false,
+    Baron: false,
+    Bishop: false,
+    Cardinal: false,
+    InnerCircle: false,
+    Justicar: false,
+    Magaji: false,
+    Primogen: false,
+    Prince: false,
+    Priscus: false,
+    Regent: false,
+    Titled: false,
   });
 
   const disc_inf: string[] = getDiscInf();
@@ -113,7 +130,23 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     };
     handleSliders(group, maxCap, minCap);
     setSelectedSect('');
-    setSelectedTitle('');
+    setSelectedTitle({
+      NoTitle: false,
+      Vote1: false,
+      Votes2: false,
+      Archbishop: false,
+      Baron: false,
+      Bishop: false,
+      Cardinal: false,
+      InnerCircle: false,
+      Justicar: false,
+      Magaji: false,
+      Primogen: false,
+      Prince: false,
+      Priscus: false,
+      Regent: false,
+      Titled: false,
+    });
     setSelected_discList(aux);
     setChecked({
       bleed: false,
@@ -221,29 +254,44 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       selectedMinCap
     );
   };
-  const handleTitle = (event: SelectChangeEvent) => {
-    setSelectedTitle(event.target.value);
+  const prepareTitleField = (title: string): string => {
+    if (title === '1 vote') {
+      return 'Vote1';
+    }
+    if (title === '2 votes') {
+      return 'Votes2';
+    }
+    if (title === 'Inner Circle') {
+      return 'InnerCircle';
+    }
+    if (title === 'No Title') {
+      return 'NoTitle';
+    }
+    return title;
+  };
+  const handleTitle = (
+    title: string,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let titleField: string = prepareTitleField(title);
+    const newTitle: TitleType = {
+      ...selectedTitle,
+      [titleField]: event.target.checked,
+    };
+
+    setSelectedTitle(newTitle);
+
     searchList(
       inputSearch,
       getDiscList(selected_discList),
       selectedClan,
       selectedSect,
-      event.target.value,
+      newTitle,
       checked,
       selectedGroup,
       selectedMaxCap,
       selectedMinCap
     );
-  };
-  const prepareTitle = (title: string): string => {
-    switch (title) {
-      case '1 vote':
-        return '1 vote (titled)';
-      case '2 votes':
-        return '2 votes (titled)';
-      default:
-        return title;
-    }
   };
   const handleCheck = (
     prop: string,
@@ -324,6 +372,25 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     }
   };
 
+  const checkboxTitle = (title: string): boolean => {
+    if (title === '1 vote') {
+      const value = 'Vote1';
+      return selectedTitle[value];
+    }
+    if (title === '2 votes') {
+      const value = 'Votes2';
+      return selectedTitle[value];
+    }
+    if (title === 'Inner Circle') {
+      const value = 'InnerCircle';
+      return selectedTitle[value];
+    }
+    if (title === 'No Title') {
+      const value = 'NoTitle';
+      return selectedTitle[value];
+    }
+    return selectedTitle[title as keyof TitleType]
+  };
   React.useEffect(() => {}, []);
 
   const { searchList } = navbarListProps;
@@ -469,27 +536,19 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             </FormControl>
           </div>
           <Divider />
-          <div className='filter__title'>
-            <InputLabel>Title</InputLabel>
-            <FormControl variant='standard'>
-              <Select
-                id='select__title__id'
-                labelId='select__title__standard__label'
-                className='select__title'
-                value={selectedTitle}
-                onChange={handleTitle}
-                label='Title'
-              >
-                <MenuItem value=''>
-                  <em>None</em>
-                </MenuItem>
-                {getTitle().map((title) => (
-                  <MenuItem key={title} value={prepareTitle(title)}>
-                    {title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <div className='title__container'>
+            {getTitle().map((title: string) => (
+              <div key={title} className='title__pair'>
+                <Checkbox
+                  size='small'
+                  checked={checkboxTitle(title)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleTitle(title, e)
+                  }
+                />
+                <InputLabel>{title}</InputLabel>
+              </div>
+            ))}
           </div>
           <Divider />
           <div className='filter__slider__group'>

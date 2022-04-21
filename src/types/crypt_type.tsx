@@ -68,6 +68,22 @@ export interface PropType {
   red_list: boolean;
   infernal: boolean;
   slave: boolean;
-
+}
+export interface TitleType{
+  NoTitle: boolean;
+  Vote1: boolean;
+  Votes2: boolean;
+  Archbishop: boolean;
+  Baron: boolean;
+  Bishop: boolean;
+  Cardinal: boolean;
+  InnerCircle: boolean;
+  Justicar: boolean;
+  Magaji: boolean;
+  Primogen: boolean;
+  Prince: boolean;
+  Priscus: boolean;
+  Regent: boolean;
+  Titled: boolean;
 }
 

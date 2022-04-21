@@ -2,11 +2,12 @@ import React from 'react';
 import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
-import { CryptType, PropType } from '../../../types/crypt_type';
+import { CryptType, PropType, TitleType } from '../../../types/crypt_type';
 import {
   capacityType,
   compareArrays,
   filterProps,
+  filterTitle,
   findInText,
   groupType as GroupType,
 } from '../../../util';
@@ -37,7 +38,7 @@ const CryptContainer = (props: Props) => {
     discList: string[],
     clan: string,
     sect: string,
-    title: string,
+    title: TitleType,
     props: PropType,
     group: GroupType,
     maxCap: capacityType,
@@ -52,7 +53,7 @@ const CryptContainer = (props: Props) => {
           : item.clans.map((clanItem) => clanItem)
       )
       .filter((item) => findInText(item, sect))
-      .filter((item) => findInText(item, title))
+      .filter((item) => filterTitle(item, title))
       .filter((item) => filterProps(item, props))
       .filter((item) => filterGroup(item, group))
       .filter((item) => filterMaxCapacity(item, maxCap))
@@ -128,7 +129,7 @@ const CryptContainer = (props: Props) => {
           discList: string[],
           clan: string,
           sect: string,
-          title: string,
+          title: TitleType,
           props: PropType,
           group: GroupType,
           maxCap: capacityType,
