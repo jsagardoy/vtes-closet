@@ -5,12 +5,13 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { CryptType } from '../../../../types/crypt_type';
 import {
+  composeText,
   getClanIcon,
   getDiscIcon,
 } from '../../../../util/helpFunction';
 import CardButtons from '../global/CardButtons';
 import CloseIcon from '@mui/icons-material/Close';
-
+import parse from 'html-react-parser';
 interface CryptProp {
   openedCrypt: CryptType;
   open: boolean;
@@ -48,7 +49,7 @@ const ModalCrypt = (props: CryptProp) => {
       }}
     >
       <Box className='modal__content'>
-        <img src={openedCrypt.url} alt='card' />
+        <img className='modal__main__img' src={openedCrypt.url} alt='card' />
         <div className='modal__right'>
           <div
             style={{
@@ -98,12 +99,16 @@ const ModalCrypt = (props: CryptProp) => {
                 ))}
               </div>
               <Divider />
-              <Typography variant='body2'>{openedCrypt.card_text}</Typography>
+              <div className='card__text'>
+                <Typography variant='subtitle2'>
+                  {parse(composeText(openedCrypt.card_text))}
+                </Typography>
+              </div>
             </div>
             <div className='modal__right__bottom'>
               <Divider />
               <Typography variant='caption'>
-                Sets:{' '}
+                Sets:
                 {Object.keys(openedCrypt.sets).map((set, index) =>
                   index !== Object.keys(openedCrypt.sets).length - 1
                     ? `${set}, `

@@ -1,4 +1,4 @@
-//type groupType = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
 type capacityType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 type advType = ['', 'Advanced'];
 type typeType = ['Vampire', 'Imbued'];
@@ -87,3 +87,8 @@ export interface TitleType{
   Titled: boolean;
 }
 
+export interface ComposedTextType {
+  regex: RegExp;
+  URL: string;
+  alt:string
+}

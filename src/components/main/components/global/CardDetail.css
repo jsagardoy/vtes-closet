@@ -55,16 +55,28 @@
   background-color: azure;
 }
 
-.modal img {
+.modal__main__img {
   border: 2px solid #000;
   box-shadow: 0 0 15px #ddd;
 }
-
+.img__in__text {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0px;
+  display: inline-flex;
+}
+.card__text{
+  display:inline-block;
+}
 .clan {
   display: flex;
   align-items: center;
 }
-
+.icon__text {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
 .clan__avatar__icon {
   display: flex;
   margin-left: 0.5rem;
@@ -86,7 +98,6 @@
 .modal__right__text {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin-left: 1rem;
   margin-right: 1rem;
   max-width: 28rem;
@@ -193,10 +204,10 @@
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
   .modal {
-    display:flex;
+    display: flex;
     flex-direction: row;
     overflow-y: scroll;
-    min-width:100%
+    min-width: 100%;
   }
   .modal__content {
     display: flex;
@@ -208,12 +219,12 @@
     min-width: 100%;
   }
   .modal__right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: azure;
-  width:100%;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: azure;
+    width: 100%;
+  }
   .modal__right__text {
     display: flex;
     flex-direction: column;

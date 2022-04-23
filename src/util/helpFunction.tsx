@@ -1,7 +1,12 @@
-import { CryptType, disciplines_inf, discType } from '../types/crypt_type';
+import {
+  ComposedTextType,
+  CryptType,
+  disciplines_inf,
+  discType,
+} from '../types/crypt_type';
 import { LibraryType } from '../types/library_type';
 
-const discBaseURL = 'https://static.krcg.org/png_wb/disc/';
+const discBaseURL = 'https://static.krcg.org/png_wb/disc';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
 const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const URLBase = 'https://static.krcg.org/png/icon/';
@@ -158,7 +163,8 @@ export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
 export const getBurnOption = (): string => `${URLBase}burn.png`;
 
 export const getDiscInf = (): string[] => disciplines_inf;
-
+export const getDiscSup = (): string[] =>
+  disciplines_inf.map((dis) => dis.toUpperCase());
 export const getClans = () =>
   [
     'Brujah',
@@ -414,4 +420,70 @@ export const getLocalStorageAuth = () => {
   if (aux) {
     return JSON.parse(aux);
   }
+};
+
+const imgReplace = (replacements: ComposedTextType[], str: string) => {
+  let result = str;
+  replacements.forEach((elem) => {
+    result = result.replaceAll(
+      elem.regex,
+      `<img src="${elem.URL}" alt="${elem.alt}" style="vertical-align:middle" className="img__in__text" />`
+    );
+  });
+
+  return result;
+};
+
+const boldReplace = (
+  replacements: string[],
+  str: string,
+  regex: RegExp
+): string => {
+  let result = str;
+  replacements.forEach((elem) => {
+    result = result.replaceAll(
+      regex,
+      `<strong>${elem.substring(1, elem.length - 1)}</strong>`
+    );
+  });
+  return result;
+};
+
+export const composeText = (text: string): string => {
+  const regex = /(\[\w{3}\])/gi;
+  let result = text;
+
+  const boldRegexp = new RegExp('/([^/]*/)', 'g');
+  const vampBold = result.match(boldRegexp);
+  if (vampBold) {
+    result = boldReplace(vampBold, result, boldRegexp);
+  }
+
+  const values = result.match(regex);
+
+  if (values) {
+    const tupla: ComposedTextType[] = values.map((value) => {
+      const newRegExp = `(\\[${value.substring(1, 4)}\\])`;
+      return {
+        regex: new RegExp(newRegExp, 'g'),
+        URL: getDiscIcon([value.substring(1, 4)])[0],
+        alt: value,
+      };
+    });
+    result = imgReplace(tupla, result);
+  }
+  const merged: ComposedTextType[] = [
+    {
+      regex: new RegExp(/(\[MERGED\])/gi),
+      URL: 'https://static.krcg.org/png_wb/icon/merged.png',
+      alt: '[MERGED]',
+    },
+  ];
+  const mergedRegex = new RegExp(/(\[MERGED\])/gi);
+  const mergedValue = result.match(mergedRegex);
+  if (mergedValue) {
+    result = imgReplace(merged, result);
+  }
+
+  return result;
 };

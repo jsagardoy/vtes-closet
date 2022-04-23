@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { LibraryType } from '../../../../types/library_type';
 import {
+  composeText,
   getBurnOption,
   getCardCost,
   getCardTypesIcon,
@@ -15,6 +16,7 @@ import {
   getDiscIcon,
 } from '../../../../util';
 import CardButtons from '../global/CardButtons';
+import parse from 'html-react-parser';
 
 interface LibraryModalProps {
   open: boolean;
@@ -63,7 +65,7 @@ const LibraryModal = (props: LibraryModalProps) => {
       }}
     >
       <Box className='modal__content'>
-          <img src={library.url} alt={library.name} />
+        <img src={library.url} alt={library.name} />
         <div className='modal__right'>
           <div
             style={{
@@ -96,14 +98,10 @@ const LibraryModal = (props: LibraryModalProps) => {
                     )
                   )}
                 </div>
-              ) : (
-                <></>
-              )}
+              ) : null}
               {library.burn_option ? (
                 <Avatar src={getBurnOption()} alt='Burn option' />
-              ) : (
-                <></>
-              )}
+              ) : null}
               {library.clans ? (
                 <div className='clan__data'>
                   <Typography variant='subtitle2'>Clan:</Typography>
@@ -115,9 +113,7 @@ const LibraryModal = (props: LibraryModalProps) => {
                     />
                   ))}
                 </div>
-              ) : (
-                <></>
-              )}
+              ) : null}
               {library.disciplines ? (
                 <div className='disc'>
                   <Typography variant='subtitle2'>Disciplines:</Typography>
@@ -135,9 +131,7 @@ const LibraryModal = (props: LibraryModalProps) => {
                     )
                   )}
                 </div>
-              ) : (
-                <></>
-              )}
+              ) : null}
               <div className='cost'>
                 {library.blood_cost || library.pool_cost ? (
                   <Typography
@@ -146,9 +140,7 @@ const LibraryModal = (props: LibraryModalProps) => {
                   >
                     Card cost:
                   </Typography>
-                ) : (
-                  <></>
-                )}
+                ) : null}
                 {library.blood_cost ? (
                   <Avatar
                     src={getCardCost(library.blood_cost, 'blood')}
@@ -159,13 +151,15 @@ const LibraryModal = (props: LibraryModalProps) => {
                     src={getCardCost(library.pool_cost, 'pool')}
                     alt='Pool cost'
                   />
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </div>
             </div>
             <Divider sx={{ margin: '1px' }} />
-            <Typography variant='subtitle2'>{library.card_text}</Typography>
+            <div className='card__text'>
+              <Typography variant='subtitle2'>
+                {parse(composeText(library.card_text))}
+              </Typography>
+            </div>
             <Divider />
             <div className='artist'>
               <Typography variant='subtitle2'>Artists: </Typography>
@@ -176,9 +170,8 @@ const LibraryModal = (props: LibraryModalProps) => {
               </Typography>
             </div>
             <Divider />
-
             {library.rulings ? (
-              <>
+              <div>
                 <Typography variant='subtitle2'>Rulings:</Typography>
 
                 {library.rulings.text.map((t, index) => (
@@ -192,10 +185,8 @@ const LibraryModal = (props: LibraryModalProps) => {
                     </Link>
                   </div>
                 ))}
-              </>
-            ) : (
-              <></>
-            )}
+              </div>
+            ) : null}
           </div>
           <CardButtons
             handleNext={() => handleNext()}
