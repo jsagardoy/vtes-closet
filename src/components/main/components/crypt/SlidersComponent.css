@@ -3,13 +3,14 @@
   align-items: center;
   margin: 1em;
   margin-right: 2em;
-  width: 9em;
+  width: 50%;
 }
 
 .slider__label {
   display: flex;
   align-items: center;
   margin: 1em;
+  width:50%;
 }
 .slider__container{
   display:flex;
