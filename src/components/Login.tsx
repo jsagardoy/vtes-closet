@@ -5,9 +5,7 @@ import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
 import { useHistory } from 'react-router-dom';
 
-
 const Login = () => {
-  
   let history = useHistory();
   const auth = getAuth();
   const [showLogout, setShowLogout] = React.useState<boolean>(
@@ -26,7 +24,7 @@ const Login = () => {
     const res = await socialMediaAuth(googleProvider);
     res !== null ? setShowLogout(true) : setShowLogout(false);
     if (res) {
-      window.localStorage.setItem('auth', JSON.stringify(res));
+      window.sessionStorage.setItem('auth', JSON.stringify(res));
       history.push('/private');
     }
   };
@@ -34,8 +32,8 @@ const Login = () => {
   const handleLogout = async () => {
     await signOut(auth);
     setShowLogout(false);
-    window.localStorage.removeItem('auth');
-     history.push('/');
+    window.sessionStorage.removeItem('auth');
+    history.push('/');
   };
   return (
     <div className='login'>

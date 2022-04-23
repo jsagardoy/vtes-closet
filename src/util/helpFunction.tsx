@@ -415,8 +415,8 @@ export const filterTitle = (card: CryptType, titles: any) => {
   return result.some((elem) => elem === true);
 };
 
-export const getLocalStorageAuth = () => {
-  const aux = localStorage.getItem('auth');
+export const getSessionStorageAuth = () => {
+  const aux = sessionStorage.getItem('auth');
   if (aux) {
     return JSON.parse(aux);
   }

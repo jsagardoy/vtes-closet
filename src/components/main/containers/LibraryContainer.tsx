@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { fetchLibrary } from '../../../service/fetchLibrary';
 
 import { LibraryPropType, LibraryType } from '../../../types/library_type';
@@ -17,7 +17,7 @@ const LibraryContainer = () => {
   const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [localStorage, setLocalStorage] = useLocalStorage<LibraryType[]>('libraryList', []);
+  const [sessionStorage, setSessionStorage] = useSessionStorage<LibraryType[]>('libraryList', []);
 
   const handleSearch = (
     name: string,
@@ -27,7 +27,7 @@ const LibraryContainer = () => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = localStorage
+    const resp = sessionStorage
       .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
@@ -51,14 +51,14 @@ const LibraryContainer = () => {
   };
 
  React.useEffect(() => {
-   if (localStorage && localStorage !== [] && localStorage.length > 0) {
-     setList(localStorage);
+   if (sessionStorage && sessionStorage !== [] && sessionStorage.length > 0) {
+     setList(sessionStorage);
    } else {
      setLoader(true);
      fetchLibrary()
        .then((data: LibraryType[]) => {
          setList(data);
-         setLocalStorage(data);
+         setSessionStorage(data);
          setLoader(false);
        })
        .catch((error) => {

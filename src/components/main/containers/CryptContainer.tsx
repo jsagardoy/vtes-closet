@@ -16,7 +16,7 @@ import CryptList from '../components/crypt/CryptList';
 import { Spinner } from '../components/global/Spinner';
 import { fetchCrypt } from '../../../service/fetchCrypt';
 
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import { useSessionStorage } from '../../../hooks/useSessionStorage';
 
 interface Props {
   toogle: boolean;
@@ -24,7 +24,7 @@ interface Props {
 
 const CryptContainer = (props: Props) => {
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [localStorage, setLocalStorage] = useLocalStorage<CryptType[]>(
+  const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
     []
   );
@@ -44,7 +44,7 @@ const CryptContainer = (props: Props) => {
     maxCap: capacityType,
     minCap: capacityType
   ) => {
-    const resp = localStorage
+    const resp = sessionStorage
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -96,21 +96,21 @@ const CryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = async () => setList(localStorage);
+  const handleReset = async () => setList(sessionStorage);
 
   React.useEffect(() => {
     if (
-      localStorage &&
-      localStorage !== [] &&
-      localStorage.length > 0
+      sessionStorage &&
+      sessionStorage !== [] &&
+      sessionStorage.length > 0
     ) {
-      setList(localStorage);
+      setList(sessionStorage);
     } else {
       setLoader(true);
       fetchCrypt()
         .then((data: CryptType[]) => {
           setList(data);
-          setLocalStorage(data);
+          setSessionStorage(data);
           setLoader(false);
         })
         .catch((error) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const useLocalStorage = <T extends unknown>(
+export const useSessionStorage = <T extends unknown>(
   key: string,
   initialValue: T
 ): [T, any] => {
@@ -9,7 +9,7 @@ export const useLocalStorage = <T extends unknown>(
       return initialValue;
     }
     try {
-      const item = window.localStorage.getItem(key);
+      const item = window.sessionStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export const useLocalStorage = <T extends unknown>(
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
       if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        window.sessionStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
       console.log(error);
