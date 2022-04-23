@@ -425,7 +425,7 @@ export const getSessionStorageAuth = () => {
 const imgReplace = (replacements: ComposedTextType[], str: string) => {
   let result = str;
   replacements.forEach((elem) => {
-    result = result.replaceAll(
+    result = result.replace(
       elem.regex,
       `<img src="${elem.URL}" alt="${elem.alt}" style="vertical-align:middle" className="img__in__text" />`
     );
@@ -441,7 +441,7 @@ const boldReplace = (
 ): string => {
   let result = str;
   replacements.forEach((elem) => {
-    result = result.replaceAll(
+    result = result.replace(
       regex,
       `<strong>${elem.substring(1, elem.length - 1)}</strong>`
     );
@@ -467,7 +467,7 @@ export const composeText = (text: string): string => {
       return {
         regex: new RegExp(newRegExp, 'g'),
         URL: getDiscIcon([value.substring(1, 4)])[0],
-        alt: value,
+        alt: value.substring(1, 4),
       };
     });
     result = imgReplace(tupla, result);
@@ -476,7 +476,7 @@ export const composeText = (text: string): string => {
     {
       regex: new RegExp(/(\[MERGED\])/gi),
       URL: 'https://static.krcg.org/png_wb/icon/merged.png',
-      alt: '[MERGED]',
+      alt: 'MERGED',
     },
   ];
   const mergedRegex = new RegExp(/(\[MERGED\])/gi);
