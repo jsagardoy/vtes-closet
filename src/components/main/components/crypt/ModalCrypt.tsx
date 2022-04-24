@@ -12,6 +12,8 @@ import {
 import CardButtons from '../global/CardButtons';
 import CloseIcon from '@mui/icons-material/Close';
 import parse from 'html-react-parser';
+import '../global/CardDetail.css';
+
 interface CryptProp {
   openedCrypt: CryptType;
   open: boolean;
@@ -49,7 +51,11 @@ const ModalCrypt = (props: CryptProp) => {
       }}
     >
       <Box className='modal__content'>
-        <img className='modal__main__img' src={openedCrypt.url} alt='card' />
+        <img
+          className='modal__main__img'
+          src={openedCrypt.url}
+          alt={openedCrypt.name}
+        />
         <div className='modal__right'>
           <div
             style={{

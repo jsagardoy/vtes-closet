@@ -17,6 +17,7 @@ import {
 } from '../../../../util';
 import CardButtons from '../global/CardButtons';
 import parse from 'html-react-parser';
+import '../global/CardDetail.css';
 
 interface LibraryModalProps {
   open: boolean;
@@ -65,7 +66,11 @@ const LibraryModal = (props: LibraryModalProps) => {
       }}
     >
       <Box className='modal__content'>
-        <img src={library.url} alt={library.name} />
+        <img
+          className='modal__main__img'
+          src={library.url}
+          alt={library.name}
+        />
         <div className='modal__right'>
           <div
             style={{
