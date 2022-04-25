@@ -59,7 +59,7 @@ const LibraryNavbarModal = (props: Props) => {
 
   
   return (
-    <Modal open={open} onClose={() => handleMore() } className='navbar__bottom' >
+    <Modal open={open} onClose={() => handleMore()} className='navbar__bottom'>
       <div className='filter__container'>
         <div className='disc__container'>
           {getDiscIcon(selected_discList.name).map((dis, index) => {
@@ -226,22 +226,32 @@ const LibraryNavbarModal = (props: Props) => {
             <div className='prop__pair'>
               <Checkbox
                 size='small'
+                checked={checked.nonTitled}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('nonTitled', e)
+                }
+              />
+              <InputLabel>Non-titled</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
+                checked={checked.banned}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('banned', e)
+                }
+              />
+              <InputLabel>Banned</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
                 checked={checked.disciplineless}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   handleCheck('disciplineless', e)
                 }
               />
               <InputLabel>Discipliness</InputLabel>
-            </div>
-            <div className='prop__pair'>
-              <Checkbox
-                size='small'
-                checked={checked.combo}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  handleCheck('combo', e)
-                }
-              />
-              <InputLabel>Combo</InputLabel>
             </div>
           </div>
           <div className='prop__column'>
@@ -273,7 +283,7 @@ const LibraryNavbarModal = (props: Props) => {
                   handleCheck('burnable', e)
                 }
               />
-              <InputLabel>Burnable</InputLabel>
+              <InputLabel>Burn option</InputLabel>
             </div>
             <div className='prop__pair'>
               <Checkbox
@@ -318,6 +328,16 @@ const LibraryNavbarModal = (props: Props) => {
             <div className='prop__pair'>
               <Checkbox
                 size='small'
+                checked={checked.combo}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleCheck('combo', e)
+                }
+              />
+              <InputLabel>Combo</InputLabel>
+            </div>
+            <div className='prop__pair'>
+              <Checkbox
+                size='small'
                 checked={checked.blood_cost}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   handleCheck('blood_cost', e)
@@ -350,7 +370,7 @@ const LibraryNavbarModal = (props: Props) => {
               marginBottom: '1rem',
             }}
             size='small'
-             onClick={() => handleResetButton()} 
+            onClick={() => handleResetButton()}
           >
             Reset Filters
           </Button>

@@ -4,6 +4,7 @@ export interface LibraryType {
   id: number;
   name: string;
   url: string;
+  banned?: string;
   types: string[];
   card_text: string;
   clans?: string[];
@@ -34,6 +35,7 @@ export interface LibraryPropType extends PropType {
   banned: boolean;
   clanless: boolean;
   disciplineless: boolean;
+  nonTitled: boolean;
   titled: boolean;
   anarch: boolean;
   combo: boolean;

@@ -28,7 +28,7 @@ const LibraryContainer = () => {
     props: LibraryPropType
   ) => {
     const resp = sessionStorage
-      .filter((item: LibraryType) => item.name.toLowerCase().includes(name))
+      .filter((item: LibraryType) =>findInText(item,name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
         libraryCardType === 'Any' ? item : item.types.includes(libraryCardType)

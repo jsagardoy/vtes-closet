@@ -12,19 +12,19 @@ const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const URLBase = 'https://static.krcg.org/png/icon/';
 const defaultAvatarURL =
   'https://api-private.atlassian.com/users/1c084c56463bf985dcc9910ef9573fd1/avatar';
-export const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+X bleed'];
-const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+X strealth'];
+export const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+x bleed'];
+const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+x strealth'];
 const ADDED_INTERCEPT = [
   '+1 intercept',
   '+2 intercept',
   '+3 intercept',
-  '+X intercept',
+  '+x intercept',
 ];
 const ADDED_STRENGTH = [
   '+1 strength',
   '+2 strength',
-  '+3 strenth',
-  '+X strength',
+  '+3 strength',
+  '+x strength',
 ];
 
 export const COLOR_AMARILLO = '#ECDBBA';
@@ -215,7 +215,7 @@ export const getClans = () =>
     'Visionary',
   ].sort();
 
-export const getSects = () => [
+export const getSects = ():string[] => [
   '',
   'Anarch',
   'Camarilla',
@@ -327,21 +327,108 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
   if (card.card_text.includes('blood cost')) return null;
 
   if (text !== '') {
+    if (
+      getSects().map(elem=>elem.toLowerCase()).includes(text.toLowerCase()) &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      ADDED_BLEED.includes(text.toLowerCase()) &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      ADDED_INTERCEPT.includes(text.toLowerCase()) &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      ADDED_STEALTH.includes(text.toLowerCase()) &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      ADDED_STRENGTH.includes(text.toLowerCase()) &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'infernal' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'slave' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'black hand' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'aggravated' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'enter combat' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'flight' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
+    if (
+      text.toLowerCase() === 'red list' &&
+      card.card_text.toLowerCase().includes(text.toLowerCase())
+    ) {
+      aux = card;
+    }
     if (text === 'red_list' || 'enter_combat' || 'black_hand') {
       textFixed = text.replace('_', ' ');
     }
-    if (text === 'No Title') {
-      //in case filter is no title
-      const temp = getTitle().map((title) => card.card_text.indexOf(title));
-      aux = temp.every((elem) => elem === -1) ? card : null;
+    //Titled
+    if (text === 'titled') {
+      aux =
+        (card.card_text.toLowerCase().includes(textFixed.toLowerCase()) &&
+          !card.card_text.toLowerCase().includes('non-titled')) ||
+        getTitle().some((title) =>
+          card.card_text.toLowerCase().includes(title.toLowerCase())
+        )
+          ? card
+          : null;
     }
-    if (text === 'Titled') {
-      //in case filter is titled
-      const temp = getTitle().map((title) => card.card_text.indexOf(title));
-      aux = temp.some((elem) => elem !== -1) ? card : null;
+    //Not Titled
+    if (
+      text === 'nonTitled' &&
+      !getTitle().some((title) =>
+        card.card_text.toLowerCase().includes(title.toLowerCase())
+      )
+    ) {
+      aux = !card.card_text.toLowerCase().includes('titled') ? card : null;
     }
-
-    if (card.card_text.toLowerCase().includes(textFixed.toLowerCase())) {
+    //textSearch
+    if (
+      text !== 'titled' &&
+      text === 'nonTitled' &&
+      (card.card_text.toLowerCase().includes(textFixed.toLowerCase()) ||
+        card.name.toLowerCase().includes(textFixed.toLowerCase()))
+    ) {
       aux = card;
     }
   } else {
@@ -378,6 +465,17 @@ export const filterProps = (card: CryptType | LibraryType, props: any) => {
         ADDED_STRENGTH.some(
           (strength) => findInText(card, strength) !== null
         )) ||
+      (elem === 'banned' && 'banned' in card && card.banned !== null) ||
+      (elem === 'nonTitled' && findInText(card, 'nonTitled') !== null) ||
+      (elem === 'combo' && isCombo(card.types)) ||
+      (elem === 'burnable' && 'burn_option' in card && card.burn_option) ||
+      (elem === 'black_hand' && findInText(card, 'black hand') !== null) ||
+      (elem === 'aggravated' && findInText(card, 'aggravated') !== null) ||
+      (elem === 'enter_combat' && findInText(card, 'enter combat') !== null) ||
+      (elem === 'flight' && findInText(card, 'flight') !== null) ||
+      (elem === 'red_list' && findInText(card, 'red list') !== null) ||
+      (elem === 'infernal' && findInText(card, 'infernal') !== null) ||
+      (elem === 'slave' && findInText(card, 'slave') !== null) ||
       findInText(card, elem) !== null
   );
 
@@ -421,6 +519,8 @@ export const getSessionStorageAuth = () => {
     return JSON.parse(aux);
   }
 };
+
+const isCombo = (types: string[]) => types.length > 1;
 
 const imgReplace = (replacements: ComposedTextType[], str: string) => {
   let result = str;

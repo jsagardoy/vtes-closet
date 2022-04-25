@@ -42,6 +42,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     banned: false,
     clanless: false,
     titled: false,
+    nonTitled:false,
     anarch: false,
     combo: false,
     burnable: false,
