@@ -22,6 +22,7 @@ interface Props {
 const CryptListComponent = (props: Props) => {
   const { list, handleOpen, initialValue } = props;
   //const initialValue = list.slice(0, 20);
+  
   const [items, setItems] = React.useState<typeCryptInventory[]>([]);
 
   const isElement = (elem: CryptType, index: number): number => {
@@ -66,6 +67,8 @@ const CryptListComponent = (props: Props) => {
       </p>
     );
   }
+
+ 
 
   return (
     <InfiniteScroll

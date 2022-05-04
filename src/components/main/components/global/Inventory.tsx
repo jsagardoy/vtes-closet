@@ -1,4 +1,6 @@
 import React from 'react';
+//import { useSessionStorage } from '../../../../hooks/useSessionStorage';
+
 import { typeCryptInventory } from '../../../../types/inventory_type';
 import InventoryData from './InventoryData';
 
@@ -8,8 +10,19 @@ interface Props {
 
 const Inventory = (props: Props) => {
   const { card } = props;
-  
   const [inventory, setInventory] = React.useState<typeCryptInventory>(card);
+  
+  const includeInStorage = (inventory: typeCryptInventory) => {
+    const value = window.sessionStorage.getItem('cryptInventoryList');
+    if (value) {
+      const list: typeCryptInventory[] = JSON.parse(value);
+      const newList: typeCryptInventory[] = list.map((elem) =>
+        elem.id === inventory.id ? inventory : elem
+      );
+      const newValue = JSON.stringify(newList);
+      window.sessionStorage.setItem('cryptInventoryList', newValue);
+    } 
+   };
   
   const generateInventory = (key: string, value: number) => {
 
@@ -17,12 +30,10 @@ const Inventory = (props: Props) => {
         ...inventory,
         [key.toLowerCase()]: value,
       };
-      setInventory(newInventory);
-
-    console.log('New inventory: ', newInventory);
+    setInventory(newInventory);
+    includeInStorage(newInventory);
   };
 
-  //React.useEffect ( () =>{console.log(newInventoryList)} ,[newInventoryList])
   return ( 
      <>
       <div className='inventory__buttons'>
