@@ -1,3 +1,4 @@
+
 .listItemText {
   width: 100%;
   color: darkcyan;
@@ -42,11 +43,17 @@
 .avatar__disciplines__icons {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 .list__left {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.inventory__buttons{
+  display: flex;
+  flex-direction: row;
 }
 .modal__right {
   display: flex;

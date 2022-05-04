@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch
+  Switch,
 } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -15,6 +15,7 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
+import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
 
 function App() {
   const auth = getAuth();
@@ -29,10 +30,10 @@ function App() {
     }
   });
 
+
   const handleClickMenuIcon = () => setToogleSidebar(!toogleSidebar);
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Router>
@@ -45,13 +46,13 @@ function App() {
           <Switch>
             <Route exact path={'/'}>
               {isLogged && window.sessionStorage.getItem('auth') ? (
-                <Redirect to='private'/>
+                <Redirect to='private' />
               ) : (
                 <PublicMain toogle={toogleSidebar} />
               )}
             </Route>
             <Route exact path={'/crypt'}>
-              <CryptContainer toogle={toogleSidebar} />
+              <CryptContainer toogle={toogleSidebar}/>
             </Route>
             <Route exact path={'/library'} component={LibraryContainer} />
             <PrivateRoute
@@ -59,6 +60,19 @@ function App() {
               component={PrivateMain}
               exact
               path='/private'
+            />
+            {/* inventario */}
+            <PrivateRoute
+              isLogged={isLogged}
+              component={InventoryCryptContainer}
+              exact
+              path='/private/:userId/inventory/crypt'
+            />
+            <PrivateRoute
+              isLogged={isLogged}
+              component={InventoryCryptContainer}
+              exact
+              path='/private/:userId/inventory/library'
             />
           </Switch>
         </div>

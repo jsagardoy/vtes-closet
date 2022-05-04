@@ -23,12 +23,13 @@ interface Props {
 }
 
 const CryptContainer = (props: Props) => {
+  const { toogle} = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
     []
   );
-  const { toogle } = props;
+  
   const [list, setList] = React.useState<CryptType[]>([]);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
@@ -152,7 +153,7 @@ const CryptContainer = (props: Props) => {
         handleReset={() => handleReset()}
       />
       {loader && <Spinner />}
-      <CryptList list={list} />
+      <CryptList list={list}/>
     </div>
   );
 };

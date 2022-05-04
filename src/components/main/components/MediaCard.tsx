@@ -6,18 +6,35 @@ interface Props {
   imageCardType: 'library' | 'crypt' | 'deck';
 }
 
-const MediaCard = (props: Props) => {
+const MediaCard = (props: Props) => { 
   const { title, imageCardType: cardType } = props;
   const history: any = useHistory();
   const cryptURL = 'https://static.krcg.org/card/cardbackcrypt.jpg';
   const libraryURL = 'https://static.krcg.org/card/cardbacklibrary.jpg';
   const deckURL = 'https://static.krcg.org/card/cardbacktoken.jpg';
+  const getUserId = () => {
+    const user = window.sessionStorage.getItem('auth');
+    if (user) {
+      const userData = JSON.parse(user);
+      return userData.uid;
+    }
+    return null;
+  };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const userId = getUserId();
   const handleGoToCrypt = () => {
     history.push('/crypt');
   };
   const handleGoToLibrary = () => {
     history.push('/library');
+  };
+
+  const handleGoToCollectionCrypt = () => {
+    history.push(`/private/:${userId}/inventory/crypt`);
+  };
+  const handleGoToCollectionLibrary = () => {
+    history.push(`/private/:{userId}/inventory/library`);
   };
 
   return (
@@ -52,6 +69,12 @@ const MediaCard = (props: Props) => {
             }
             if (title.toLowerCase() === 'library') {
               handleGoToLibrary();
+            }
+            if (title.toLowerCase() === 'Collection - Crypt'.toLowerCase()) {
+              handleGoToCollectionCrypt();
+            }
+            if (title.toLowerCase() === 'Collection - Library'.toLowerCase()) {
+              handleGoToCollectionLibrary();
             }
           }}
         >
