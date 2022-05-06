@@ -587,3 +587,11 @@ export const composeText = (text: string): string => {
 
   return result;
 };
+export const getUserId = () => {
+  const user = window.sessionStorage.getItem('auth');
+  if (user) {
+    const userData = JSON.parse(user);
+    return userData.uid;
+  }
+  return null;
+};

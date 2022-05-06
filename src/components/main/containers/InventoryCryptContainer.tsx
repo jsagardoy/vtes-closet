@@ -60,14 +60,6 @@ const InventoryCryptContainer = (props: Props) => {
        .filter((item) => filterMinCapacity(item, minCap));
      setList(resp);
    };
-   const getUserId = () => {
-     const user = window.sessionStorage.getItem('auth');
-     if (user) {
-       const userData = JSON.parse(user);
-       return userData.uid;
-     }
-     return null;
-   };
    const filterMaxCapacity = (item: CryptType, maxCap: capacityType) =>
      maxCap.value === 0 ? item : item.capacity <= maxCap.value;
 
@@ -117,7 +109,6 @@ const InventoryCryptContainer = (props: Props) => {
            const resultData: typeCryptInventory[] = newData.map((elem: CryptType) => {
              return {
                ...elem,
-               uid: getUserId(),
                have: 0,
                want: 0,
                trade: 0,

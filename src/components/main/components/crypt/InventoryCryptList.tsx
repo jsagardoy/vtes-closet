@@ -4,6 +4,8 @@ import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
 import InventoryCryptComponent from './InventoryCryptComponent';
 import { typeCryptInventory } from '../../../../types/inventory_type';
+import { Button } from '@mui/material';
+import { setCryptInventory } from '../../../../service/setCryptInventory';
 
 interface listProps {
   list: typeCryptInventory[]; //habrá que hacer también la opción para las cartas de librería
@@ -26,6 +28,9 @@ const InventoryCryptList = (props: listProps) => {
     setOpenedCrypt(undefined);
   };
 
+  const handleSave = () => {
+    setCryptInventory();
+  }
   const handleNext = () => {
     const newIndex: number = cryptIndex + 1;
     const crypt: CryptType = list[newIndex];
@@ -52,6 +57,7 @@ const InventoryCryptList = (props: listProps) => {
           handlePrevious={handlePrevious}
         />
       ) : null}
+      <Button onClick={()=>handleSave()} >Save</Button>
       {list && list.length > 0 && (
         <InventoryCryptComponent
           list={list}
@@ -66,3 +72,4 @@ const InventoryCryptList = (props: listProps) => {
 };
 
 export default InventoryCryptList;
+
