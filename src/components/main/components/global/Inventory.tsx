@@ -42,24 +42,28 @@ const Inventory = (props: Props) => {
             generateInventory(key, value)
           }
           label='Have'
+          initialValue={card.have}
         />
         <InventoryData
           getValue={(key: string, value: number) =>
             generateInventory(key, value)
           }
           label='Want'
+          initialValue={card.want}
         />
         <InventoryData
           getValue={(key: string, value: number) =>
             generateInventory(key, value)
           }
           label='Trade'
+          initialValue={card.trade}
         />
         <InventoryData
           getValue={(key: string, value: number) =>
             generateInventory(key, value)
           }
           label='Used'
+          initialValue={card.used}
         />
       </div>
     </>

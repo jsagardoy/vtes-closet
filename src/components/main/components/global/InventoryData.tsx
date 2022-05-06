@@ -5,11 +5,12 @@ import { useInventory } from '../../../../hooks/useInventory';
 interface Props {
   label: string;
   getValue: (key: string, value: number) => void;
+  initialValue: number;
 }
 
 const InventoryData = (props: Props) => {
-  const { counter, increment, set, decrement } = useInventory(0);
-  const { label, getValue } = props;
+  const { label, getValue,initialValue } = props;
+  const { counter, increment, set, decrement } = useInventory(initialValue||0);
 
   React.useEffect(() => {
     getValue(label, counter);

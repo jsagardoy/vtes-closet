@@ -9,6 +9,7 @@ import React from 'react';
    filterProps,
    filterTitle,
    findInText,
+   getUserId,
    groupType as GroupType,
  } from '../../../util';
 
@@ -18,6 +19,7 @@ import React from 'react';
  import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import InventoryCryptList from '../components/crypt/InventoryCryptList';
 import { typeCryptInventory } from '../../../types/inventory_type';
+import { fetchCryptInventory } from '../../../service/fetchCryptInventory';
   interface Props {
    toogle: boolean;
   }
@@ -102,27 +104,39 @@ const InventoryCryptContainer = (props: Props) => {
        setList(sessionStorage);
      } else {
        setLoader(true);
+       const uid = getUserId();
+       fetchCryptInventory(`${uid}-1`).then((data: typeCryptInventory[]) => {
+         fetchCryptInventory(`${uid}-2`).then((data2: typeCryptInventory[]) => {
+           if (data && data2) {
+             const composedArray = data.concat(data2);
+             setList(composedArray);
+             setSessionStorage(composedArray);
+             setLoader(false);
+           } else {
+             fetchCrypt()
+               .then((data: CryptType[]) => {
+                 const newData: CryptType[] = [...data];
+                 const resultData: typeCryptInventory[] = newData.map((elem: CryptType) => {
+                   return {
+                     ...elem,
+                     have: 0,
+                     want: 0,
+                     trade: 0,
+                     used: 0,
+                   };
+                 })
+                 setList(resultData);
+                 setSessionStorage(resultData);
+                 setLoader(false);
+               })
+               .catch((error) => {
+                 setLoader(false);
+                 console.log(error);
+               })
+           }
+         })})
        //si no hay valores para el usuario. Hay que implementar si ya tiene
-       fetchCrypt()
-         .then((data: CryptType[]) => {
-           const newData: CryptType[] = [...data];
-           const resultData: typeCryptInventory[] = newData.map((elem: CryptType) => {
-             return {
-               ...elem,
-               have: 0,
-               want: 0,
-               trade: 0,
-               used: 0,
-             };
-}) 
-           setList(resultData);
-           setSessionStorage(resultData);
-           setLoader(false);
-         })
-         .catch((error) => {
-           setLoader(false);
-           console.log(error);
-         });
+       
      }
      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
