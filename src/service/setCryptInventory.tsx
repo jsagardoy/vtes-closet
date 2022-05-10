@@ -23,8 +23,8 @@ export const setCryptInventory = async () => {
     const taskDocRef2 = doc(db, 'cryptInventory', `${uid}-2`);
 
     try {
-      await setDoc(taskDocRef1, newData1);
-      await setDoc(taskDocRef2, newData2);
+      await setDoc(taskDocRef1, newData1,{merge:true});
+      await setDoc(taskDocRef2, newData2,{merge:true});
     } catch (err) {
       console.log(err);
     }
