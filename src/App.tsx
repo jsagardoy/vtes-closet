@@ -3,10 +3,10 @@ import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import {
-  BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
+  useHistory,
 } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -17,16 +17,20 @@ import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
 import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
 
+
 function App() {
   const auth = getAuth();
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
   const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(false);
-
+  const history = useHistory();
+  
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
+      history.push('/private');
     } else {
       setIsLogged(false);
+      history.push('/');
     }
   });
 
@@ -35,8 +39,7 @@ function App() {
 
   useEffect(() => {}, []);
 
-  return (
-    <Router>
+  return (  
       <div className='app'>
         <div className='main__header'>
           <Header handleClickLogo={handleClickMenuIcon} />
@@ -77,7 +80,6 @@ function App() {
           </Switch>
         </div>
       </div>
-    </Router>
   );
 }
 
