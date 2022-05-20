@@ -35,7 +35,7 @@ const Inventory = (props: Props) => {
   };
 
   return ( 
-     <>
+  
       <div className='inventory__buttons'>
         <InventoryData
           getValue={(key: string, value: number) =>
@@ -66,7 +66,6 @@ const Inventory = (props: Props) => {
           initialValue={card.used}
         />
       </div>
-    </>
   );
 };
 

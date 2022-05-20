@@ -1,4 +1,4 @@
-import { Button, TextField, Box, Tooltip } from '@mui/material';
+import { TextField, Box, Tooltip } from '@mui/material';
 import React from 'react';
 import { useInventory } from '../../../../hooks/useInventory';
 
@@ -24,6 +24,7 @@ const InventoryData = (props: Props) => {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            marginLeft: '0.5rem',
           }}
         >
           <TextField
@@ -52,23 +53,27 @@ const InventoryData = (props: Props) => {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        marginLeft: '0.5rem',
       }}
     >
-      <Button
-        size='small'
+      <button
         disabled={counter <= 0}
-        sx={{
-          color: 'darkcyan',
+        style={{
+          display: 'flex',
           height: '100%',
+          color: 'black',
+          padding: '0.3rem',
+          alignItems: 'center',
         }}
         onClick={decrement}
       >
         -
-      </Button>
+      </button>
       <TextField
         sx={{
           paddingLeft: '0.1rem',
           width: '2.5rem',
+          marginLeft: '0.5rem',
         }}
         InputProps={{ disableUnderline: true }}
         variant='standard'
@@ -79,15 +84,18 @@ const InventoryData = (props: Props) => {
         onChange={(e) => set(Number(e.target.value))}
         value={counter}
       />
-      <Button
-        size='small'
-        sx={{
-          color: 'darkcyan',
+      <button
+        style={{
+          display: 'flex',
+          height: '100%',
+          color: 'black',
+          padding: '0.3rem',
+          alignItems: 'center',
         }}
         onClick={increment}
       >
         +
-      </Button>
+      </button>
     </Box>
   );
 };

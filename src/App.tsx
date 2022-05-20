@@ -27,7 +27,6 @@ function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
-      history.push('/private');
     } else {
       setIsLogged(false);
       history.push('/');

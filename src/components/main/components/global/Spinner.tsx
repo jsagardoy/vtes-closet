@@ -8,6 +8,6 @@ export const Spinner = () => (
       justifyContent: 'center',
     }}
   >
-    <CircularProgress variant='indeterminate'/>
+    <CircularProgress size={40} thickness={4} variant='indeterminate' />
   </Box>
 );

@@ -4,9 +4,9 @@ import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
 import InventoryCryptComponent from './InventoryCryptComponent';
 import { typeCryptInventory } from '../../../../types/inventory_type';
-import { Button } from '@mui/material';
+import { Fab } from '@mui/material';
 import { setCryptInventory } from '../../../../service/setCryptInventory';
-
+import SaveIcon from '@mui/icons-material/Save';
 interface listProps {
   list: typeCryptInventory[]; //habrá que hacer también la opción para las cartas de librería
 }
@@ -30,7 +30,7 @@ const InventoryCryptList = (props: listProps) => {
 
   const handleSave = () => {
     setCryptInventory();
-  }
+  };
   const handleNext = () => {
     const newIndex: number = cryptIndex + 1;
     const crypt: CryptType = list[newIndex];
@@ -46,6 +46,22 @@ const InventoryCryptList = (props: listProps) => {
 
   return (
     <>
+      <Fab
+        sx={{
+          color: '#ECDBBA',
+          backgroundColor: 'darkcyan',
+          position: 'fixed',
+          right: '20%',
+          top: '90%',
+          bottom: '10%',
+          left:'80%',
+          zIndex: '1000'
+        }}
+        aria-label='Save'
+        onClick={() => handleSave()}
+      >
+        <SaveIcon />
+      </Fab>
       {open && openedCrypt ? (
         <ModalCrypt
           open={open}
@@ -57,7 +73,7 @@ const InventoryCryptList = (props: listProps) => {
           handlePrevious={handlePrevious}
         />
       ) : null}
-      <Button onClick={()=>handleSave()} >Save</Button>
+
       {list && list.length > 0 && (
         <InventoryCryptComponent
           list={list}
@@ -72,4 +88,3 @@ const InventoryCryptList = (props: listProps) => {
 };
 
 export default InventoryCryptList;
-
