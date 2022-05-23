@@ -47,7 +47,7 @@ function App() {
           <Sidebar toogle={toogleSidebar} handleToogle={handleClickMenuIcon} />
           <Switch>
             <Route exact path={'/'}>
-              {isLogged && window.sessionStorage.getItem('auth') ? (
+              {isLogged && window.localStorage.getItem('auth') ? (
                 <Redirect to='private' />
               ) : (
                 <PublicMain toogle={toogleSidebar} />

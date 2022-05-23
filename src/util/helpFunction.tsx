@@ -514,7 +514,7 @@ export const filterTitle = (card: CryptType, titles: any) => {
 };
 
 export const getSessionStorageAuth = () => {
-  const aux = sessionStorage.getItem('auth');
+  const aux = localStorage.getItem('auth');
   if (aux) {
     return JSON.parse(aux);
   }
@@ -588,7 +588,7 @@ export const composeText = (text: string): string => {
   return result;
 };
 export const getUserId = () => {
-  const user = window.sessionStorage.getItem('auth');
+  const user = window.localStorage.getItem('auth');
   if (user) {
     const userData = JSON.parse(user);
     return userData.uid;

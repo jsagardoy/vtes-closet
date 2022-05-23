@@ -13,7 +13,7 @@ const MediaCard = (props: Props) => {
   const libraryURL = 'https://static.krcg.org/card/cardbacklibrary.jpg';
   const deckURL = 'https://static.krcg.org/card/cardbacktoken.jpg';
   const getUserId = () => {
-    const user = window.sessionStorage.getItem('auth');
+    const user = window.localStorage.getItem('auth');
     if (user) {
       const userData = JSON.parse(user);
       return userData.uid;

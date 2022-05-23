@@ -24,7 +24,7 @@ const Login = () => {
     const res = await socialMediaAuth(googleProvider);
     res !== null ? setShowLogout(true) : setShowLogout(false);
     if (res) {
-      window.sessionStorage.setItem('auth', JSON.stringify(res));
+      window.localStorage.setItem('auth', JSON.stringify(res));
       history.push('/private');
     }
   };
@@ -32,7 +32,7 @@ const Login = () => {
   const handleLogout = async () => {
     await signOut(auth);
     setShowLogout(false);
-    window.sessionStorage.removeItem('auth');
+    window.localStorage.removeItem('auth');
     history.push('/');
   };
   return (
