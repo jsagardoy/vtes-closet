@@ -69,7 +69,7 @@ const InventoryData = (props: Props) => {
         }}
         onClick={() => {
           decrement();
-          getCounter(label, counter + 1);
+          getCounter(label, counter - 1);
         }}
       >
         -
