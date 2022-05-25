@@ -11,7 +11,7 @@ const splitData = (data: []) => {
   return result;
 };
 /* function to add new task to firestore */
-export const setCryptInventory = async () => {
+export const setCryptInventory = async ():Promise<string> => {
   const dataString = window.sessionStorage.getItem('cryptInventoryList');
   if (dataString) {
     const data = JSON.parse(dataString);
@@ -24,9 +24,12 @@ export const setCryptInventory = async () => {
 
     try {
       await setDoc(taskDocRef1, newData1,{merge:true});
-      await setDoc(taskDocRef2, newData2,{merge:true});
+      await setDoc(taskDocRef2, newData2, { merge: true });
+      return ('Data successfully added.');
     } catch (err) {
       console.log(err);
+      return ('Error while saving data');
     }
   }
+  return ('Error');
 };

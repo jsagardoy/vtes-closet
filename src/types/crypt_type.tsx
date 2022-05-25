@@ -1,7 +1,7 @@
 
 type capacityType = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 type advType = ['', 'Advanced'];
-type typeType = ['Vampire', 'Imbued'];
+type typeType = 'Vampire' | 'Imbued';
 type bannedType = ['', 'Banned'];
 
 export interface CryptType {
@@ -9,7 +9,7 @@ export interface CryptType {
   aka?: string;
   name: string;
   url: string;
-  types: typeType;
+  types: typeType[];
   clans: string[];
   group: string;
   capacity: capacityType;

@@ -1,71 +1,52 @@
-import React from 'react';
-//import { useSessionStorage } from '../../../../hooks/useSessionStorage';
+
+import React, { useEffect } from 'react';
 
 import { typeCryptInventory } from '../../../../types/inventory_type';
 import InventoryData from './InventoryData';
 
 interface Props {
   card: typeCryptInventory;
+  updateInventory: (inventory: typeCryptInventory) => void;
 }
 
 const Inventory = (props: Props) => {
-  const { card } = props;
-  const [inventory, setInventory] = React.useState<typeCryptInventory>(card);
+  const { card, updateInventory } = props;
+  useEffect(() => { 
+  }, [card]);
   
-  const includeInStorage = (inventory: typeCryptInventory) => {
-    const value = window.sessionStorage.getItem('cryptInventoryList');
-    if (value) {
-      const list: typeCryptInventory[] = JSON.parse(value);
-      const newList: typeCryptInventory[] = list.map((elem) =>
-        elem.id === inventory.id ? inventory : elem
-      );
-      const newValue = JSON.stringify(newList);
-      window.sessionStorage.setItem('cryptInventoryList', newValue);
-    } 
-   };
-  
-  const generateInventory = (key: string, value: number) => {
-
-      const newInventory: typeCryptInventory = {
-        ...inventory,
-        [key.toLowerCase()]: value,
-      };
-    setInventory(newInventory);
-    includeInStorage(newInventory);
+  const generateInventory = (key: string, value: number): void => {
+    const newInventory: typeCryptInventory = {
+      ...card,
+      [key.toLowerCase()]: value,
+    };
+    if (newInventory !== card) {
+      updateInventory(newInventory);
+    }
   };
 
-  return ( 
-  
-      <div className='inventory__buttons'>
+  return (
+    <div className='inventory__buttons'>
         <InventoryData
-          getValue={(key: string, value: number) =>
-            generateInventory(key, value)
-          }
-          label='Have'
-          initialValue={card.have}
-        />
-        <InventoryData
-          getValue={(key: string, value: number) =>
-            generateInventory(key, value)
-          }
-          label='Want'
-          initialValue={card.want}
-        />
-        <InventoryData
-          getValue={(key: string, value: number) =>
-            generateInventory(key, value)
-          }
-          label='Trade'
-          initialValue={card.trade}
-        />
-        <InventoryData
-          getValue={(key: string, value: number) =>
-            generateInventory(key, value)
-          }
-          label='Used'
-          initialValue={card.used}
-        />
-      </div>
+        label='Have'
+        initialValue={card.have}
+        getCounter={(label, counter) => {generateInventory(label, counter)}}
+      />
+      <InventoryData
+        label='Want'
+        initialValue={card.want}
+        getCounter={(label, counter) => generateInventory(label, counter)}
+      />
+      <InventoryData
+        label='Trade'
+        initialValue={card.trade}
+        getCounter={(label, counter) => generateInventory(label, counter)}
+      />
+      <InventoryData
+        label='Used'
+        initialValue={card.used}
+        getCounter={(label, counter) => generateInventory(label, counter)}
+      />
+    </div>
   );
 };
 

@@ -17,13 +17,14 @@ interface Props {
   list: typeCryptInventory[];
   initialValue: typeCryptInventory[];
   handleOpen: (crypt: CryptType, index: number) => void;
+  updateInventory: (inventory: typeCryptInventory) => void;
 }
 
-const CryptListComponent = (props: Props) => {
-  const { list, handleOpen, initialValue } = props;
+const InventoryCryptComponent = (props: Props) => {
+  const { list, handleOpen, initialValue, updateInventory } = props;
   //const initialValue = list.slice(0, 20);
-  
-  const [items, setItems] = React.useState<typeCryptInventory[]>([]);
+
+  const [items, setItems] = React.useState<typeCryptInventory[]>(initialValue);
 
   const isElement = (elem: CryptType, index: number): number => {
     return elem && items.length > 0 && elem.id === items[items.length - 1].id
@@ -48,7 +49,8 @@ const CryptListComponent = (props: Props) => {
 
   React.useEffect(() => {
     setItems(initialValue);
-  }, [initialValue, list]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [list,initialValue]);
 
   if (list.length === 0) {
     return <></>;
@@ -67,8 +69,6 @@ const CryptListComponent = (props: Props) => {
       </p>
     );
   }
-
- 
 
   return (
     <InfiniteScroll
@@ -107,9 +107,7 @@ const CryptListComponent = (props: Props) => {
                 dense
                 alignItems='flex-start'
               >
-                <Inventory
-                  card={crypt}
-                />
+                <Inventory card={crypt} updateInventory={updateInventory} />
                 <ListItemText
                   className='list__item'
                   onClick={() => handleOpen(crypt, index)}
@@ -132,7 +130,6 @@ const CryptListComponent = (props: Props) => {
                   <ListItemText
                     className='list__item__icons'
                     primary={crypt.capacity}
-                    //secondary={getDiscIcon(crypt.discipline)}
                   />
                 </div>
               </ListItem>
@@ -144,4 +141,4 @@ const CryptListComponent = (props: Props) => {
   );
 };
 
-export default CryptListComponent;
+export default InventoryCryptComponent;

@@ -1,25 +1,26 @@
-import { TextField, Box, Tooltip } from '@mui/material';
 import React from 'react';
+import { TextField, Box, Tooltip } from '@mui/material';
 import { useInventory } from '../../../../hooks/useInventory';
 
 interface Props {
   label: string;
-  getValue: (key: string, value: number) => void;
   initialValue: number;
+  getCounter: (label: string, counter: number) => void;
 }
 
 const InventoryData = (props: Props) => {
-  const { label, getValue,initialValue } = props;
-  const { counter, increment, set, decrement } = useInventory(initialValue||0);
-
-  React.useEffect(() => {
-    getValue(label, counter);
+  const { label, initialValue, getCounter } = props;
+  const { counter, increment, set, decrement } = useInventory(
+    initialValue || 0
+  );
+  /*      React.useEffect(() => {
+    getCounter(label,counter)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counter]);
+  }, [counter])  */
 
   if (label === 'Used') {
     return (
-      <Tooltip title='Cards already in use in your decks' placement='top' arrow>
+      <Tooltip title='Cards already used in your decks' placement='top' arrow>
         <Box
           sx={{
             display: 'flex',
@@ -47,6 +48,7 @@ const InventoryData = (props: Props) => {
       </Tooltip>
     );
   }
+
   return (
     <Box
       sx={{
@@ -65,7 +67,10 @@ const InventoryData = (props: Props) => {
           padding: '0.3rem',
           alignItems: 'center',
         }}
-        onClick={decrement}
+        onClick={() => {
+          decrement();
+          getCounter(label, counter + 1);
+        }}
       >
         -
       </button>
@@ -81,7 +86,10 @@ const InventoryData = (props: Props) => {
         size='small'
         aria-disabled={true}
         label={label}
-        onChange={(e) => set(Number(e.target.value))}
+        onChange={(e) => {
+          set(Number(e.target.value));
+          getCounter(label, Number(e.target.value));
+        }}
         value={counter}
       />
       <button
@@ -92,7 +100,10 @@ const InventoryData = (props: Props) => {
           padding: '0.3rem',
           alignItems: 'center',
         }}
-        onClick={increment}
+        onClick={() => {
+          increment();
+          getCounter(label, counter + 1);
+        }}
       >
         +
       </button>
