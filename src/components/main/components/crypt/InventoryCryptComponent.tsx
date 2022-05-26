@@ -49,8 +49,7 @@ const InventoryCryptComponent = (props: Props) => {
 
   React.useEffect(() => {
     setItems(initialValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list,initialValue]);
+  }, [list, initialValue]);
 
   if (list.length === 0) {
     return <></>;
@@ -107,7 +106,12 @@ const InventoryCryptComponent = (props: Props) => {
                 dense
                 alignItems='flex-start'
               >
-                <Inventory card={crypt} updateInventory={updateInventory} />
+                <Inventory
+                  card={crypt}
+                  updateInventory={(inventory: typeCryptInventory) =>
+                    updateInventory(inventory)
+                  }
+                />
                 <ListItemText
                   className='list__item'
                   onClick={() => handleOpen(crypt, index)}

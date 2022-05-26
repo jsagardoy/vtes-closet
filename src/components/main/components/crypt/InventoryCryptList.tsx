@@ -19,9 +19,8 @@ const InventoryCryptList = (props: listProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
   const [cryptIndex, setCryptIndex] = React.useState<number>(0);
-  const [inventoryList, setInventoryList] = React.useState<
-    typeCryptInventory[]
-  >(list);
+  const [inventoryList, setInventoryList] =
+    React.useState<typeCryptInventory[]>(list);
   const [showSnackbar, setShowSnackbar] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('');
   const [saving, setSaving] = React.useState<boolean>(false);
@@ -40,7 +39,7 @@ const InventoryCryptList = (props: listProps) => {
   const handleSave = () => {
     setLoader(true);
     setSaving(true);
-    includeInStorage(inventoryList!==[]?inventoryList:list);
+    includeInStorage(inventoryList !== [] ? inventoryList : list);
     setCryptInventory()
       .then((msg) => {
         setShowSnackbar(true);
@@ -71,17 +70,20 @@ const InventoryCryptList = (props: listProps) => {
     window.sessionStorage.setItem('cryptInventoryList', newValue);
   };
 
-  const updateInventory = (newInventory: typeCryptInventory) => {
+  const updateInventory = React.useCallback((newInventory: typeCryptInventory) => () =>{
     const newList: typeCryptInventory[] = list.map((elem: typeCryptInventory) =>
       elem.id === newInventory.id ? newInventory : elem
     );
     setInventoryList(newList);
     updateList(newList);
-  };
+  },[list, updateList]);
+
 
   const handleCloseSnackbar = () => setShowSnackbar(false);
 
-  React.useEffect(() => {setInventoryList(list)}, [list]);
+  React.useEffect(() => {
+    setInventoryList(list);
+  }, [list]);
 
   return (
     <>
@@ -122,7 +124,7 @@ const InventoryCryptList = (props: listProps) => {
           handleOpen={(crypt: CryptType, index: number) =>
             handleOpen(crypt, index)
           }
-          updateInventory={updateInventory}
+          updateInventory={(newInventory:typeCryptInventory)=>updateInventory(newInventory)}
         />
       ) : null}
 

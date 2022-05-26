@@ -98,7 +98,7 @@ const InventoryCryptContainer = (props: Props) => {
 
   const handleReset = async () => setList(sessionStorage);
   const handleUpdateList = (newList: typeCryptInventory[]) => {
-    setSessionStorage(newList);
+    //setSessionStorage(newList);
     setList(newList);
   };
 
@@ -227,9 +227,9 @@ const InventoryCryptContainer = (props: Props) => {
     []
   );
 
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     setList(sessionStorage);
-  }, [list, sessionStorage]);
+  }, [list, sessionStorage]); */
 
   return (
     <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}> 

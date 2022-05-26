@@ -11,7 +11,9 @@ interface Props {
 
 const Inventory = (props: Props) => {
   const { card, updateInventory } = props;
+  const [cardData, setCardData] = React.useState<typeCryptInventory>(card);
   useEffect(() => { 
+    setCardData(card);
   }, [card]);
   
   const generateInventory = (key: string, value: number): void => {
@@ -19,6 +21,7 @@ const Inventory = (props: Props) => {
       ...card,
       [key.toLowerCase()]: value,
     };
+    setCardData(newInventory);
     if (newInventory !== card) {
       updateInventory(newInventory);
     }
@@ -26,24 +29,26 @@ const Inventory = (props: Props) => {
 
   return (
     <div className='inventory__buttons'>
-        <InventoryData
+      <InventoryData
         label='Have'
-        initialValue={card.have}
-        getCounter={(label, counter) => {generateInventory(label, counter)}}
+        initialValue={cardData.have}
+        getCounter={(label, counter) => {
+          generateInventory(label, counter);
+        }}
       />
       <InventoryData
         label='Want'
-        initialValue={card.want}
+        initialValue={cardData.want}
         getCounter={(label, counter) => generateInventory(label, counter)}
       />
       <InventoryData
         label='Trade'
-        initialValue={card.trade}
+        initialValue={cardData.trade}
         getCounter={(label, counter) => generateInventory(label, counter)}
       />
       <InventoryData
         label='Used'
-        initialValue={card.used}
+        initialValue={cardData.used}
         getCounter={(label, counter) => generateInventory(label, counter)}
       />
     </div>
