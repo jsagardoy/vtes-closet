@@ -16,6 +16,7 @@ import LibraryContainer from './components/main/containers/LibraryContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import PrivateMain from './components/main/components/main/PrivateMain';
 import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
+import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
 
 
 function App() {
@@ -72,7 +73,7 @@ function App() {
             />
             <PrivateRoute
               isLogged={isLogged}
-              component={InventoryCryptContainer}
+              component={InventoryLibraryContainer}
               exact
               path='/private/:userId/inventory/library'
             />
