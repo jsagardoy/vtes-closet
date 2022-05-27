@@ -1,23 +1,27 @@
-
 import React, { useEffect } from 'react';
 
-import { typeCryptInventory } from '../../../../types/inventory_type';
+import {
+  cryptInventoryType,
+  libraryInventoryType,
+} from '../../../../types/inventory_type';
 import InventoryData from './InventoryData';
 
 interface Props {
-  card: typeCryptInventory;
-  updateInventory: (inventory: typeCryptInventory) => void;
+  card: cryptInventoryType | libraryInventoryType;
+  updateInventory: (inventory: cryptInventoryType | libraryInventoryType) => void;
 }
 
 const Inventory = (props: Props) => {
   const { card, updateInventory } = props;
-  const [cardData, setCardData] = React.useState<typeCryptInventory>(card);
-  useEffect(() => { 
+  const [cardData, setCardData] = React.useState<
+    cryptInventoryType | libraryInventoryType
+  >(card);
+  useEffect(() => {
     setCardData(card);
   }, [card]);
-  
+
   const generateInventory = (key: string, value: number): void => {
-    const newInventory: typeCryptInventory = {
+    const newInventory: cryptInventoryType | libraryInventoryType = {
       ...card,
       [key.toLowerCase()]: value,
     };

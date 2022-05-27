@@ -13,10 +13,6 @@ const InventoryData = (props: Props) => {
   const { counter, increment, set, decrement } = useInventory(
     initialValue || 0
   );
- React.useEffect(() => {
-    //getCounter(label, counter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[counter]);
 
   if (label === 'Used') {
     return (
@@ -69,7 +65,7 @@ const InventoryData = (props: Props) => {
         }}
         onClick={() => {
           decrement();
-      getCounter(label, counter - 1); 
+          getCounter(label, counter - 1);
         }}
       >
         -
@@ -88,7 +84,7 @@ const InventoryData = (props: Props) => {
         label={label}
         onChange={(e) => {
           set(Number(e.target.value));
-           getCounter(label, Number(e.target.value)); 
+          getCounter(label, Number(e.target.value));
         }}
         value={counter}
       />
@@ -102,7 +98,7 @@ const InventoryData = (props: Props) => {
         }}
         onClick={() => {
           increment();
-          getCounter(label, counter + 1); 
+          getCounter(label, counter + 1);
         }}
       >
         +

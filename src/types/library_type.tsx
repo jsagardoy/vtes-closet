@@ -17,7 +17,7 @@ export interface LibraryType {
       rarity: string;
     }[];
   };
-  scans: {
+  scans?: {
     name: string;
     URL: string;
   };

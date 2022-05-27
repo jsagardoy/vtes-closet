@@ -11,20 +11,20 @@ import { getDiscIcon } from '../../../../util/helpFunction';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
 import Inventory from '../global/Inventory';
-import { typeCryptInventory } from '../../../../types/inventory_type';
+import { cryptInventoryType } from '../../../../types/inventory_type';
 
 interface Props {
-  list: typeCryptInventory[];
-  initialValue: typeCryptInventory[];
+  list: cryptInventoryType[];
+  initialValue: cryptInventoryType[];
   handleOpen: (crypt: CryptType, index: number) => void;
-  updateInventory: (inventory: typeCryptInventory) => void;
+  updateInventory: (inventory: cryptInventoryType) => void;
 }
 
 const InventoryCryptComponent = (props: Props) => {
   const { list, handleOpen, initialValue, updateInventory } = props;
   //const initialValue = list.slice(0, 20);
 
-  const [items, setItems] = React.useState<typeCryptInventory[]>(initialValue);
+  const [items, setItems] = React.useState<cryptInventoryType[]>(initialValue);
 
   const isElement = (elem: CryptType, index: number): number => {
     return elem && items.length > 0 && elem.id === items[items.length - 1].id
@@ -94,7 +94,7 @@ const InventoryCryptComponent = (props: Props) => {
             <span>No results</span>
           </div>
         ) : (
-          items.map((crypt: typeCryptInventory, index: number) => (
+          items.map((crypt: cryptInventoryType, index: number) => (
             <div
               className='crypt__row'
               key={crypt.id && crypt.name && Math.random()}
@@ -108,15 +108,15 @@ const InventoryCryptComponent = (props: Props) => {
               >
                 <Inventory
                   card={crypt}
-                  updateInventory={(inventory: typeCryptInventory) =>
-                    updateInventory(inventory)
+                  updateInventory={(inventory) =>
+                    updateInventory(inventory as cryptInventoryType)
                   }
                 />
                 <ListItemText
                   className='list__item'
                   onClick={() => handleOpen(crypt, index)}
                   primary={crypt.name}
-                  secondary={`${crypt.clans.map((clan) => clan)}: ${
+                  secondary={`${crypt.clans.map((clan: string) => clan)}: ${
                     crypt.group
                   }`}
                 />
