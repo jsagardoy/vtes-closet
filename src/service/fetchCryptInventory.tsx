@@ -1,8 +1,8 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../database/config';
-import { typeCryptInventory } from '../types/inventory_type';
+import { cryptInventoryType } from '../types/inventory_type';
 
-export const fetchCryptInventory = async (id:string): Promise<typeCryptInventory[] | any> => {
+export const fetchCryptInventory = async (id:string): Promise<cryptInventoryType[] | any> => {
 
     
     const docRef = doc(db, 'cryptInventory', id);

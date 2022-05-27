@@ -18,7 +18,7 @@ import { fetchCrypt } from '../../../service/fetchCrypt';
 
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import InventoryCryptList from '../components/crypt/InventoryCryptList';
-import { typeCryptInventory } from '../../../types/inventory_type';
+import { cryptInventoryType } from '../../../types/inventory_type';
 import { fetchCryptInventory } from '../../../service/fetchCryptInventory';
 interface Props {
   toogle: boolean;
@@ -28,9 +28,9 @@ const InventoryCryptContainer = (props: Props) => {
   const { toogle } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<
-    typeCryptInventory[]
+    cryptInventoryType[]
   >('cryptInventoryList', []);
-  const [list, setList] = React.useState<typeCryptInventory[]>([]);
+  const [list, setList] = React.useState<cryptInventoryType[]>([]);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
 
@@ -97,7 +97,7 @@ const InventoryCryptContainer = (props: Props) => {
   };
 
   const handleReset = async () => setList(sessionStorage);
-  const handleUpdateList = (newList: typeCryptInventory[]) => {
+  const handleUpdateList = (newList: cryptInventoryType[]) => {
     //setSessionStorage(newList);
     setList(newList);
   };
@@ -115,9 +115,9 @@ const InventoryCryptContainer = (props: Props) => {
         setLoader(true);
         const uid = getUserId();
         fetchCryptInventory(`${uid}-1`)
-          .then((data: typeCryptInventory[]) => {
+          .then((data: cryptInventoryType[]) => {
             fetchCryptInventory(`${uid}-2`).then(
-              (data2: typeCryptInventory[]) => {
+              (data2: cryptInventoryType[]) => {
                 if (data && data2 && data.length > 0 && data2.length > 0) {
                   const composedArray = data.concat(data2);
                   setList(composedArray);
@@ -127,7 +127,7 @@ const InventoryCryptContainer = (props: Props) => {
                   fetchCrypt()
                     .then((data: CryptType[]) => {
                       const newData: CryptType[] = [...data];
-                      const resultData: typeCryptInventory[] = newData.map(
+                      const resultData: cryptInventoryType[] = newData.map(
                         (elem: CryptType) => {
                           return {
                             ...elem,
@@ -152,7 +152,7 @@ const InventoryCryptContainer = (props: Props) => {
           })
           .catch((error) => {
             //TEMPORSAL: en caso de que haya sobrepasadp las peticiones BBDD carga el mock de datos.
-            const data: typeCryptInventory[] = [
+            const data: cryptInventoryType[] = [
               {
                 capacity: 4,
                 group: '2',

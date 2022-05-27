@@ -3,15 +3,15 @@ import '../global/CardDetail.css';
 import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
 import InventoryCryptComponent from './InventoryCryptComponent';
-import { typeCryptInventory } from '../../../../types/inventory_type';
+import { cryptInventoryType } from '../../../../types/inventory_type';
 import { Alert, Fab, Snackbar } from '@mui/material';
 import { setCryptInventory } from '../../../../service/setCryptInventory';
 import SaveIcon from '@mui/icons-material/Save';
 import { Spinner } from '../global/Spinner';
 
 interface listProps {
-  list: typeCryptInventory[];
-  updateList: (list: typeCryptInventory[]) => void;
+  list: cryptInventoryType[];
+  updateList: (list: cryptInventoryType[]) => void;
 }
 
 const InventoryCryptList = (props: listProps) => {
@@ -20,7 +20,7 @@ const InventoryCryptList = (props: listProps) => {
   const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
   const [cryptIndex, setCryptIndex] = React.useState<number>(0);
   const [inventoryList, setInventoryList] =
-    React.useState<typeCryptInventory[]>(list);
+    React.useState<cryptInventoryType[]>(list);
   const [showSnackbar, setShowSnackbar] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('');
   const [saving, setSaving] = React.useState<boolean>(false);
@@ -65,13 +65,13 @@ const InventoryCryptList = (props: listProps) => {
     handleOpen(crypt, newIndex);
   };
 
-  const includeInStorage = (inventory: typeCryptInventory[]) => {
+  const includeInStorage = (inventory: cryptInventoryType[]) => {
     const newValue = JSON.stringify(inventory);
     window.sessionStorage.setItem('cryptInventoryList', newValue);
   };
 
-  const updateInventory = React.useCallback((newInventory: typeCryptInventory) => () =>{
-    const newList: typeCryptInventory[] = list.map((elem: typeCryptInventory) =>
+  const updateInventory = React.useCallback((newInventory: cryptInventoryType) => () =>{
+    const newList: cryptInventoryType[] = list.map((elem: cryptInventoryType) =>
       elem.id === newInventory.id ? newInventory : elem
     );
     setInventoryList(newList);
@@ -124,7 +124,7 @@ const InventoryCryptList = (props: listProps) => {
           handleOpen={(crypt: CryptType, index: number) =>
             handleOpen(crypt, index)
           }
-          updateInventory={(newInventory:typeCryptInventory)=>updateInventory(newInventory)}
+          updateInventory={(newInventory:cryptInventoryType)=>updateInventory(newInventory)}
         />
       ) : null}
 
