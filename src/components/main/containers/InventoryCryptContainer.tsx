@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
 
@@ -97,11 +97,12 @@ const InventoryCryptContainer = (props: Props) => {
   };
 
   const handleReset = async () => setList(sessionStorage);
-  const handleUpdateList = (newList: cryptInventoryType[]) => {
+  const handleUpdateList = useCallback((newList: cryptInventoryType[]) => {
     //setSessionStorage(newList);
     setList(newList);
-  };
+  },[]);
 
+  
   React.useEffect(
     () => {
       if (
@@ -227,12 +228,8 @@ const InventoryCryptContainer = (props: Props) => {
     []
   );
 
-  /* React.useEffect(() => {
-    setList(sessionStorage);
-  }, [list, sessionStorage]); */
-
   return (
-    <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}> 
+    <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
       <NavbarCryptList
         searchList={(
           name: string,

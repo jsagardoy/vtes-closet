@@ -19,10 +19,9 @@ const InventoryLibraryContainer = () => {
   const [list, setList] = React.useState<libraryInventoryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [sessionStorage, setSessionStorage] = useSessionStorage<libraryInventoryType[]>(
-    'libraryInventoryList',
-    []
-  );
+  const [sessionStorage, setSessionStorage] = useSessionStorage<
+    libraryInventoryType[]
+  >('libraryInventoryList', []);
 
   const handleSearch = (
     name: string,
@@ -93,38 +92,59 @@ const InventoryLibraryContainer = () => {
           .then((data: libraryInventoryType[]) => {
             fetchLibraryInventory(`${uid}-2`).then(
               (data2: libraryInventoryType[]) => {
-                if (data && data2 && data.length > 0 && data2.length > 0) {
-                  const composedArray = data.concat(data2);
-                  setList(composedArray);
-                  setSessionStorage(composedArray);
-                  setLoader(false);
-                } else {
-                  fetchLibrary()
-                    .then((data: libraryInventoryType[]) => {
-                      const newData: libraryInventoryType[] = [...data];
-                      const resultData: libraryInventoryType[] = newData.map(
-                        (elem: libraryInventoryType) => {
-                          return {
-                            ...elem,
-                            have: 0,
-                            want: 0,
-                            trade: 0,
-                            used: 0,
-                          };
+                fetchLibraryInventory(`${uid}-3`).then(
+                  (data3: libraryInventoryType[]) => {
+                    fetchLibraryInventory(`${uid}-4`).then(
+                      (data4: libraryInventoryType[]) => {
+                        if (
+                          data &&
+                          data2 &&
+                          data3 &&
+                          data4 &&
+                          data.length > 0 &&
+                          data2.length > 0 &&
+                          data3.length > 0 &&
+                          data4.length > 0
+                        ) {
+                          const composedArray = data.concat(
+                            data2,
+                            data3,
+                            data4
+                          );
+                          setList(composedArray);
+                          setSessionStorage(composedArray);
+                          setLoader(false);
+                        } else {
+                          fetchLibrary()
+                            .then((data: libraryInventoryType[]) => {
+                              const newData: libraryInventoryType[] = [...data];
+                              const resultData: libraryInventoryType[] =
+                                newData.map((elem: libraryInventoryType) => {
+                                  return {
+                                    ...elem,
+                                    have: 0,
+                                    want: 0,
+                                    trade: 0,
+                                    used: 0,
+                                  };
+                                });
+                              setList(resultData);
+                              setSessionStorage(resultData);
+                              setLoader(false);
+                            })
+                            .catch((error) => {
+                              setLoader(false);
+                              console.log(error);
+                            });
                         }
-                      );
-                      setList(resultData);
-                      setSessionStorage(resultData);
-                      setLoader(false);
-                    })
-                    .catch((error) => {
-                      setLoader(false);
-                      console.log(error);
-                    });
-                }
+                      }
+                    );
+                  }
+                );
               }
             );
           })
+
           .catch((error) => {
             console.log('Error Accessing Database');
             setLoader(false);

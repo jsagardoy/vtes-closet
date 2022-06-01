@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import '../global/CardDetail.css';
 import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
@@ -70,18 +70,21 @@ const InventoryCryptList = (props: listProps) => {
     window.sessionStorage.setItem('cryptInventoryList', newValue);
   };
 
-  const updateInventory = React.useCallback((newInventory: cryptInventoryType) => () =>{
-    const newList: cryptInventoryType[] = list.map((elem: cryptInventoryType) =>
-      elem.id === newInventory.id ? newInventory : elem
-    );
-    setInventoryList(newList);
-    updateList(newList);
-  },[list, updateList]);
-
+  const updateInventory = useCallback(
+    (newInventory: cryptInventoryType) => {
+      const newList: cryptInventoryType[] = list.map(
+        (elem: cryptInventoryType) =>
+          elem.id === newInventory.id ? newInventory : elem
+      );
+      setInventoryList(newList);
+      updateList(newList);
+    },
+    [list, updateList]
+  );
 
   const handleCloseSnackbar = () => setShowSnackbar(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setInventoryList(list);
   }, [list]);
 
@@ -124,7 +127,7 @@ const InventoryCryptList = (props: listProps) => {
           handleOpen={(crypt: CryptType, index: number) =>
             handleOpen(crypt, index)
           }
-          updateInventory={(newInventory:cryptInventoryType)=>updateInventory(newInventory)}
+          updateInventory={updateInventory}
         />
       ) : null}
 

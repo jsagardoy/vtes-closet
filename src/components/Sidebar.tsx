@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import './Sidebar.css';
+import { getUserId } from '../util';
 
 interface Props {
   toogle: boolean;
@@ -28,6 +29,7 @@ const Sidebar = (props: Props) => {
   });
 
   const handleClick = (cardType: string) => {
+    const userId = getUserId();
     switch (cardType) {
       case 'Crypt':
         if (matches) {
@@ -41,6 +43,19 @@ const Sidebar = (props: Props) => {
         }
         history.push('/library');
         break;
+      case 'InventoryLibrary':
+        if (matches) {
+          handleToogle();
+        }
+        history.push(`/private/:${userId}/inventory/library`);
+        break;
+      case 'InventoryCrypt':
+        if (matches) {
+          handleToogle();
+        }
+          history.push(`/private/:${userId}/inventory/crypt`);
+        break;
+      
       default:
         if (matches) {
           handleToogle();
@@ -107,6 +122,7 @@ const Sidebar = (props: Props) => {
                   width: '100%',
                   textAlign: 'center',
                 }}
+                onClick={() => handleClick('InventoryCrypt')}
               >
                 <ListItemText
                   className={'listItemText'}
@@ -126,6 +142,7 @@ const Sidebar = (props: Props) => {
                   width: '100%',
                   textAlign: 'center',
                 }}
+                onClick={() => handleClick('InventoryLibrary')}
               >
                 <ListItemText
                   className={'listItemText'}

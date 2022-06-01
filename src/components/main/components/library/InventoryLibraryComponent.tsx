@@ -16,7 +16,7 @@ import {
 } from '../../../../util/helpFunction';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
-import Inventory from '../global/Inventory';
+import InventoryLibrary from './InventoryLibrary';
 import { libraryInventoryType } from '../../../../types/inventory_type';
 
 interface Props {
@@ -113,10 +113,11 @@ const InventoryLibraryComponent = (props: Props) => {
                 dense
                 alignItems='flex-start'
               >
-                <Inventory
-                  card = {library}
-                  updateInventory={(inventory) => { updateInventory(inventory as libraryInventoryType); }
-                  }
+                <InventoryLibrary
+                  card={library}
+                  updateInventory={(inventory) => {
+                    updateInventory(inventory);
+                  }}
                 />
                 <ListItemText
                   className='list__item'

@@ -4,14 +4,14 @@ import {
   cryptInventoryType,
   libraryInventoryType,
 } from '../../../../types/inventory_type';
-import InventoryData from './InventoryData';
+import InventoryData from '../global/InventoryData';
 
 interface Props {
-  card: cryptInventoryType | libraryInventoryType;
-  updateInventory: (inventory: cryptInventoryType | libraryInventoryType) => void;
+  card: libraryInventoryType;
+  updateInventory: (inventory: libraryInventoryType) => void;
 }
 
-const Inventory = (props: Props) => {
+const InventoryLibrary = (props: Props) => {
   const { card, updateInventory } = props;
   const [cardData, setCardData] = React.useState<
     cryptInventoryType | libraryInventoryType
@@ -59,4 +59,4 @@ const Inventory = (props: Props) => {
   );
 };
 
-export default Inventory;
+export default InventoryLibrary;

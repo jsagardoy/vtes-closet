@@ -10,8 +10,8 @@ import { CryptType } from '../../../../types/crypt_type';
 import { getDiscIcon } from '../../../../util/helpFunction';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
-import Inventory from '../global/Inventory';
 import { cryptInventoryType } from '../../../../types/inventory_type';
+import InventoryCrypt from './InventoryCrypt';
 
 interface Props {
   list: cryptInventoryType[];
@@ -106,11 +106,9 @@ const InventoryCryptComponent = (props: Props) => {
                 dense
                 alignItems='flex-start'
               >
-                <Inventory
+                <InventoryCrypt
                   card={crypt}
-                  updateInventory={(inventory) =>
-                    updateInventory(inventory as cryptInventoryType)
-                  }
+                  updateInventory={(inventory: cryptInventoryType) => { updateInventory(inventory); }}
                 />
                 <ListItemText
                   className='list__item'

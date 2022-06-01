@@ -71,7 +71,7 @@ const InventoryLibraryList = (props: listProps) => {
   };
 
   const updateInventory = React.useCallback(
-    (newInventory: libraryInventoryType) => () => {
+    (newInventory: libraryInventoryType) => {
       const newList: libraryInventoryType[] = list.map(
         (elem: libraryInventoryType) =>
           elem.id === newInventory.id ? newInventory : elem
