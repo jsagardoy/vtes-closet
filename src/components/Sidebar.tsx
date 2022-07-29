@@ -43,6 +43,12 @@ const Sidebar = (props: Props) => {
         }
         history.push('/library');
         break;
+      case 'Decks':
+        if (matches) {
+          handleToogle();
+        }
+          history.push(`/private/:${userId}/decks`);
+        break;
       case 'InventoryLibrary':
         if (matches) {
           handleToogle();
@@ -108,8 +114,15 @@ const Sidebar = (props: Props) => {
                   width: '100%',
                   textAlign: 'center',
                 }}
+                onClick={() => handleClick('Decks')}
               >
-                <ListItemText primary='Decks' />
+                <ListItemText
+                  className={'listItemText'}
+                  primary='Decks'
+                  secondaryTypographyProps={{
+                    color: 'darkcyan',
+                  }}
+                />
               </ListItemButton>
               <ListItemButton
                 className='listItem'

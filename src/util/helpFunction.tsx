@@ -593,5 +593,6 @@ export const getUserId = () => {
     const userData = JSON.parse(user);
     return userData.uid;
   }
+  console.log('Error in login')
   return null;
 };

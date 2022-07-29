@@ -23,7 +23,7 @@ const Login = () => {
   const handleProvider = async (provider: string) => {
     const res = await socialMediaAuth(googleProvider);
     res !== null ? setShowLogout(true) : setShowLogout(false);
-    if (res) {
+    if (res && auth) {
       window.localStorage.setItem('auth', JSON.stringify(res));
       history.push('/private');
     }

@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardMedia } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { getUserId } from '../../../util';
 
 interface Props {
   title: string;
@@ -12,17 +13,9 @@ const MediaCard = (props: Props) => {
   const cryptURL = 'https://static.krcg.org/card/cardbackcrypt.jpg';
   const libraryURL = 'https://static.krcg.org/card/cardbacklibrary.jpg';
   const deckURL = 'https://static.krcg.org/card/cardbacktoken.jpg';
-  const getUserId = () => {
-    const user = window.localStorage.getItem('auth');
-    if (user) {
-      const userData = JSON.parse(user);
-      return userData.uid;
-    }
-    return null;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  
   const userId = getUserId();
+
   const handleGoToCrypt = () => {
     history.push('/crypt');
   };
@@ -34,7 +27,10 @@ const MediaCard = (props: Props) => {
     history.push(`/private/:${userId}/inventory/crypt`);
   };
   const handleGoToCollectionLibrary = () => {
-    history.push(`/private/:{userId}/inventory/library`);
+    history.push(`/private/:${userId}/inventory/library`);
+  };
+  const handleGoToDecks = () => {
+    history.push(`/private/:${userId}/decks`);
   };
 
   return (
@@ -75,6 +71,9 @@ const MediaCard = (props: Props) => {
             }
             if (title.toLowerCase() === 'Collection - Library'.toLowerCase()) {
               handleGoToCollectionLibrary();
+            }
+            if (title.toLowerCase() === 'Decks'.toLowerCase()) {
+              handleGoToDecks();
             }
           }}
         >
