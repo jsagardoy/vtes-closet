@@ -587,7 +587,7 @@ export const composeText = (text: string): string => {
 
   return result;
 };
-export const getUserId = () => {
+export const getUserId = ():string|null => {
   const user = window.localStorage.getItem('auth');
   if (user) {
     const userData = JSON.parse(user);

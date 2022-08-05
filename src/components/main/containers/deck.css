@@ -1,0 +1,39 @@
+*{color:darkcyan}
+.container{
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+.info{
+    margin-bottom: 0.5rem;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.menu__item{
+    width: min-content;
+    text-transform: capitalize;
+}
+.deck__container{
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    justify-content: flex-start;
+
+}
+.deck{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid darkcyan
+}
+.search__container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid darkcyan
+}
+

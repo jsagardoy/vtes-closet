@@ -18,6 +18,7 @@ import PrivateMain from './components/main/components/main/PrivateMain';
 import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
 import DecksContainer from './components/main/containers/DecksContainer';
+import DeckContainer from './components/main/containers/DeckContainer';
 
 
 function App() {
@@ -71,6 +72,13 @@ function App() {
             component={DecksContainer}
             exact
             path='/private/:userId/decks'
+          />
+          {/* Deck */}
+          <PrivateRoute
+            isLogged={isLogged}
+            component={DeckContainer}
+            exact
+            path='/private/:userId/decks/:deckId'
           />
           {/* inventario */}
 

@@ -1,7 +1,14 @@
-import { CryptType } from './crypt_type';
-import { LibraryType } from './library_type';
+export type Archetype =
+  | 'toolbox'
+  | 'undefined'
+  | 'allies'
+  | 'bleed'
+  | 'block'
+  | 'combat'
+  | 'political'
+  | 'evil';
 
-type Archetype = [
+export const getArchetype = (): Archetype[] => [
   'toolbox',
   'undefined',
   'allies',
@@ -9,12 +16,16 @@ type Archetype = [
   'block',
   'combat',
   'political',
-  'evil'
+  'evil',
 ];
 export interface DeckType {
+  id: string;
   name: string;
   description: string;
   deckType: Archetype;
-  crypt: CryptType[];
-  library: LibraryType[];
+  crypt: {
+    id: string;
+    quantity: number;
+  }[];
+  library: { id: string; quantity: number }[];
 }

@@ -1,0 +1,52 @@
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
+import { Archetype, DeckType } from '../../../types/deck_type';
+import DeckInfoComponent from '../components/deck/DeckInfoComponent';
+import './deck.css';
+const DeckContainer = () => {
+  const initialDeck: DeckType = {
+    id: '',
+    name: '',
+    description: '',
+    deckType: 'undefined',
+    crypt: [{ id: '', quantity: 0 }],
+    library: [{ id: '', quantity: 0 }],
+  };
+
+  const { userId, deckId }: any = useParams();
+  const [deck, setDeck] = React.useState<DeckType>(initialDeck);
+
+  const handleChangeSelection = (newValue: Archetype) => {
+    setDeck({ ...deck, deckType: newValue });
+  };
+
+  React.useEffect(() => {
+    fetchSelectedDeck(userId, deckId).then((data) => setDeck(data[0].data()));
+  }, [deckId, userId, setDeck]);
+
+  return (
+    <div className='container'>
+      <DeckInfoComponent
+        deck={deck}
+        handleChangeSelection={(newValue: Archetype) =>
+          handleChangeSelection(newValue)
+        }
+      />
+      <div className='deck__container'>
+        <div className='deck'>
+          deck
+          <div className='deck__crypt'>crypt</div>
+          <div className='deck__library'>library</div>
+        </div>
+        <div className='search__container'>
+          Search Container
+          <div className='crypt__search'>crypt</div>
+          <div className='library__search'>library</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DeckContainer;
