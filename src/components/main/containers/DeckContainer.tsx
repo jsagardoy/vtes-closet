@@ -16,10 +16,10 @@ const DeckContainer = () => {
 
   const { userId, deckId }: any = useParams();
   const [deck, setDeck] = React.useState<DeckType>(initialDeck);
-
-  const handleChangeSelection = (newValue: Archetype) => {
-    setDeck({ ...deck, deckType: newValue });
-  };
+  
+  const handleChange = (field: string, value: string|Archetype) => {
+    setDeck({ ...deck, [field]: value });
+  }
 
   React.useEffect(() => {
     fetchSelectedDeck(userId, deckId).then((data) => setDeck(data[0].data()));
@@ -29,9 +29,7 @@ const DeckContainer = () => {
     <div className='container'>
       <DeckInfoComponent
         deck={deck}
-        handleChangeSelection={(newValue: Archetype) =>
-          handleChangeSelection(newValue)
-        }
+        handleChange={(field:string, value:string|Archetype)=>handleChange(field,value)}
       />
       <div className='deck__container'>
         <div className='deck'>
