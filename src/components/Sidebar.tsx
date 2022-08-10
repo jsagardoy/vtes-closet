@@ -1,5 +1,4 @@
-import { List } from '@material-ui/core';
-import { ListItemButton, ListItemText } from '@mui/material';
+import { List, ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React from 'react';
 import { useHistory } from 'react-router-dom';

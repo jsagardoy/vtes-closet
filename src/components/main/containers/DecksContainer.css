@@ -1,13 +1,13 @@
-.table__cell__header{
-  color:darkcyan;
+.table__cell__header {
+  color: darkcyan;
   font-weight: bolder;
 }
-.table__cell{
-  color:darkcyan;
+.table__cell {
+  color: darkcyan;
 }
-.table__body__decks__container{
-  width:100%;
-  color:darkcyan;
+.table__body__decks__container {
+  width: 100%;
+  color: darkcyan;
 }
 .decks__container {
   display: flex;
@@ -15,10 +15,10 @@
   color: darkcyan;
   width: 100%;
 }
-.decks__title{
+.decks__title {
   display: flex;
   justify-content: center;
-  background-color: #ecdbba;
+  background-color: HEADER_COLOR;
 }
 .containers {
   display: flex;
@@ -38,9 +38,9 @@
   margin-bottom: 0px;
   margin-top: 0px;
   border-bottom: 1px solid darkcyan;
-  background-color: #ecdbba;
+  background-color: HEADER_COLOR;
 }
-.content{
-    display: flex;
-    flex-direction: column;
+.content {
+  display: flex;
+  flex-direction: column;
 }

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
 import { Archetype, DeckType } from '../../../types/deck_type';
 import DeckInfoComponent from '../components/deck/DeckInfoComponent';
+import DeckListComponent from '../components/deck/DeckListComponent';
 import './deck.css';
 const DeckContainer = () => {
   const initialDeck: DeckType = {
@@ -16,10 +17,10 @@ const DeckContainer = () => {
 
   const { userId, deckId }: any = useParams();
   const [deck, setDeck] = React.useState<DeckType>(initialDeck);
-  
-  const handleChange = (field: string, value: string|Archetype) => {
+
+  const handleChange = (field: string, value: string | Archetype) => {
     setDeck({ ...deck, [field]: value });
-  }
+  };
 
   React.useEffect(() => {
     fetchSelectedDeck(userId, deckId).then((data) => setDeck(data[0].data()));
@@ -29,14 +30,12 @@ const DeckContainer = () => {
     <div className='container'>
       <DeckInfoComponent
         deck={deck}
-        handleChange={(field:string, value:string|Archetype)=>handleChange(field,value)}
+        handleChange={(field: string, value: string | Archetype) =>
+          handleChange(field, value)
+        }
       />
       <div className='deck__container'>
-        <div className='deck'>
-          deck
-          <div className='deck__crypt'>crypt</div>
-          <div className='deck__library'>library</div>
-        </div>
+          <DeckListComponent deck={deck}/>
         <div className='search__container'>
           Search Container
           <div className='crypt__search'>crypt</div>

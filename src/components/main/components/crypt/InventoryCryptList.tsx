@@ -8,6 +8,7 @@ import { Alert, Fab, Snackbar } from '@mui/material';
 import { setCryptInventory } from '../../../../service/setCryptInventory';
 import SaveIcon from '@mui/icons-material/Save';
 import { Spinner } from '../global/Spinner';
+import { HEADER_COLOR } from '../../../../util/helpFunction';
 
 interface listProps {
   list: cryptInventoryType[];
@@ -93,7 +94,7 @@ const InventoryCryptList = (props: listProps) => {
       {loader && <Spinner />}
       <Fab
         sx={{
-          color: '#ECDBBA',
+          color: HEADER_COLOR,
           backgroundColor: 'darkcyan',
           position: 'fixed',
           right: '20%',

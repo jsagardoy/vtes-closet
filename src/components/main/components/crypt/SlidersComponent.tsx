@@ -1,5 +1,4 @@
-import InputLabel from '@material-ui/core/InputLabel';
-import { Slider } from '@mui/material';
+import { Slider, InputLabel } from '@mui/material';
 import React from 'react';
 import {
   capacityType,

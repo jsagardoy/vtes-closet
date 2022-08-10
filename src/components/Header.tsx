@@ -1,10 +1,10 @@
 import React from 'react';
-import { Avatar } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
 import './Header.css';
 import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getLogo } from '../util/helpFunction';
+import { Avatar } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 interface Props {
   handleClickLogo:() => void;
@@ -30,9 +30,9 @@ const Header = (props: Props) => {
   return (
     <div className='header'>
       <div className='header__left'>
-        <Menu
+        <MenuIcon
           fontSize='large'
-          style={{ fill: 'darkcyan' }}
+          sx={{ fill: 'darkcyan' }}
           onClick={() => handleClickLogo()}
         />
         <img

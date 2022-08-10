@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  HighlightOff,
-  MoreVert,
-  Search,
-  SortByAlpha,
-} from '@material-ui/icons';
 import './NavbarCryptList.css';
-import IconButton from '@material-ui/core/IconButton/IconButton';
 import { discType, PropType, TitleType } from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
@@ -20,15 +13,15 @@ import {
   getDiscInf,
   getGroups,
   getCapacities,
+  HEADER_COLOR,
 } from '../../../../util';
-import { Avatar, Button, InputLabel, MenuItem } from '@material-ui/core';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Checkbox, Divider, FormControl } from '@mui/material';
+import { Avatar, Button, Checkbox, Divider, FormControl, IconButton, InputLabel, MenuItem } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
 import { groupType } from '../../../../util';
-import { Sort } from '@mui/icons-material';
+import { HighlightOff, MoreVert, Search, Sort, SortByAlpha } from '@mui/icons-material';
 
 interface NavbarListProps {
   searchList: (
@@ -389,7 +382,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       const value = 'NoTitle';
       return selectedTitle[value];
     }
-    return selectedTitle[title as keyof TitleType]
+    return selectedTitle[title as keyof TitleType];
   };
   React.useEffect(() => {}, []);
 
@@ -437,7 +430,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
           >
             <SortByAlpha
               className={rotateAZ ? 'button__activated__AZ' : ''}
-              style={{ fill: 'darkcyan' }}
+              sx={{ fill: 'darkcyan' }}
             />
           </IconButton>
           <IconButton
@@ -684,10 +677,10 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
           <Divider />
           <div className='clear__button'>
             <Button
-              style={{
+              sx={{
                 color: 'darkcyan',
                 textTransform: 'capitalize',
-                backgroundColor: '#ECDBBA',
+                backgroundColor: HEADER_COLOR,
                 border: '1px solid darkcyan',
                 borderRadius: '2px',
                 marginTop: '1rem',

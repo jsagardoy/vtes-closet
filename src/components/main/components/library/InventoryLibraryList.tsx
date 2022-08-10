@@ -8,6 +8,7 @@ import { Spinner } from '../global/Spinner';
 import { LibraryType } from '../../../../types/library_type';
 import { setLibraryInventory } from '../../../../service/setLibraryInventory';
 import InventoryLibraryComponent from './InventoryLibraryComponent';
+import { HEADER_COLOR } from '../../../../util/helpFunction';
 
 interface listProps {
   list: libraryInventoryType[];
@@ -93,7 +94,7 @@ const InventoryLibraryList = (props: listProps) => {
       {loader && <Spinner />}
       <Fab
         sx={{
-          color: '#ECDBBA',
+          color: HEADER_COLOR,
           backgroundColor: 'darkcyan',
           position: 'fixed',
           right: '20%',

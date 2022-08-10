@@ -27,7 +27,7 @@ const ADDED_STRENGTH = [
   '+x strength',
 ];
 
-export const COLOR_AMARILLO = '#ECDBBA';
+export const HEADER_COLOR:string = '#ECDBBA';
 
 export const getLogo = () => defaultAvatarURL;
 export const getDiscIcon = (discs: string[]): string[] => {
@@ -215,7 +215,7 @@ export const getClans = () =>
     'Visionary',
   ].sort();
 
-export const getSects = ():string[] => [
+export const getSects = (): string[] => [
   '',
   'Anarch',
   'Camarilla',
@@ -328,7 +328,9 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
 
   if (text !== '') {
     if (
-      getSects().map(elem=>elem.toLowerCase()).includes(text.toLowerCase()) &&
+      getSects()
+        .map((elem) => elem.toLowerCase())
+        .includes(text.toLowerCase()) &&
       card.card_text.toLowerCase().includes(text.toLowerCase())
     ) {
       aux = card;
@@ -587,12 +589,12 @@ export const composeText = (text: string): string => {
 
   return result;
 };
-export const getUserId = ():string|null => {
+export const getUserId = (): string | null => {
   const user = window.localStorage.getItem('auth');
   if (user) {
     const userData = JSON.parse(user);
     return userData.uid;
   }
-  console.log('Error in login')
+  console.log('Error in login');
   return null;
 };

@@ -6,7 +6,7 @@
   margin-bottom: 0px;
   margin-top: 0px;
   border-bottom: 1px solid darkcyan;
-  background-color: #ecdbba;
+  background-color: HEADER_COLOR;
 }
 .navbarList h3 {
   color: darkcyan;
@@ -150,22 +150,22 @@
     font-size: small;
   }
   .filter__container {
-  margin-top: 0rem;
-  margin-right: 0rem;
-  display: inline;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  width: 95%;
-  max-width: none;
-  max-height:none;
-  height: 100%;
-  border-left: 0px solid darkcyan;
-  border-right: 0px solid darkcyan;
-  border-bottom: 0px solid darkcyan;
-  box-shadow:none;
-  border-radius: 0px;
-  background-color: azure;
-  overflow-y: auto;
-  overflow-x: auto;
-}
+    margin-top: 0rem;
+    margin-right: 0rem;
+    display: inline;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 95%;
+    max-width: none;
+    max-height: none;
+    height: 100%;
+    border-left: 0px solid darkcyan;
+    border-right: 0px solid darkcyan;
+    border-bottom: 0px solid darkcyan;
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: azure;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
 }

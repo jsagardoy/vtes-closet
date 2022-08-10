@@ -1,9 +1,9 @@
-import { Button } from '@material-ui/core';
 import React from 'react';
 import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const Login = () => {
   let history = useHistory();

@@ -12,7 +12,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
-import { discType} from '../../../../types/crypt_type';
+import { discType } from '../../../../types/crypt_type';
 import { LibraryPropType } from '../../../../types/library_type';
 
 import {
@@ -21,6 +21,7 @@ import {
   getDiscIcon,
   getLibraryCardTypes,
   getSects,
+  HEADER_COLOR,
 } from '../../../../util/helpFunction';
 interface Props {
   open: boolean;
@@ -54,10 +55,9 @@ const LibraryNavbarModal = (props: Props) => {
     handleSelectDisc,
     handleChangeLibraryCardType,
     handleCheck,
-    handleResetButton
+    handleResetButton,
   } = props;
 
-  
   return (
     <Modal open={open} onClose={() => handleMore()} className='navbar__bottom'>
       <div className='filter__container'>
@@ -363,7 +363,7 @@ const LibraryNavbarModal = (props: Props) => {
             style={{
               color: 'darkcyan',
               textTransform: 'capitalize',
-              backgroundColor: '#ECDBBA',
+              backgroundColor: HEADER_COLOR,
               border: '1px solid darkcyan',
               borderRadius: '2px',
               marginTop: '1rem',
