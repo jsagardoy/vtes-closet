@@ -1,3 +1,6 @@
+import { CryptType } from './crypt_type';
+import { LibraryType } from './library_type';
+
 export type Archetype =
   | 'toolbox'
   | 'undefined'
@@ -18,14 +21,23 @@ export const getArchetype = (): Archetype[] => [
   'political',
   'evil',
 ];
+
+export type ListType = {
+  id: string;
+  quantity: number;
+};
+
+export interface ExtendedDeckType {
+  quantity: number;
+  data: LibraryType | CryptType;
+  cardType: 'library' | 'crypt';
+}
+
 export interface DeckType {
   id: string;
   name: string;
   description: string;
   deckType: Archetype;
-  crypt: {
-    id: string;
-    quantity: number;
-  }[];
-  library: { id: string; quantity: number }[];
+  crypt: ListType[];
+  library: ListType[];
 }

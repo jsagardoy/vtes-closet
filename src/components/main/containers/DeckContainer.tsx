@@ -11,31 +11,37 @@ const DeckContainer = () => {
     name: '',
     description: '',
     deckType: 'undefined',
-    crypt: [{ id: '', quantity: 0 }],
-    library: [{ id: '', quantity: 0 }],
+    crypt: [],
+    library: [],
   };
 
   const { userId, deckId }: any = useParams();
-  const [deck, setDeck] = React.useState<DeckType>(initialDeck);
+  const [deckData, setDeckData] = React.useState<DeckType>(
+    initialDeck as DeckType
+  );
 
   const handleChange = (field: string, value: string | Archetype) => {
-    setDeck({ ...deck, [field]: value });
+    setDeckData({ ...deckData, [field]: value });
   };
 
   React.useEffect(() => {
-    fetchSelectedDeck(userId, deckId).then((data) => setDeck(data[0].data()));
-  }, [deckId, userId, setDeck]);
+    const fetchDecks = async () => {
+      const result = await fetchSelectedDeck(userId, deckId);
+      setDeckData(result);
+    };
+    fetchDecks();
+  }, [deckId, userId]);
 
   return (
     <div className='container'>
       <DeckInfoComponent
-        deck={deck}
+        deck={deckData}
         handleChange={(field: string, value: string | Archetype) =>
           handleChange(field, value)
         }
       />
       <div className='deck__container'>
-          <DeckListComponent deck={deck}/>
+        <DeckListComponent deck={deckData} />
         <div className='search__container'>
           Search Container
           <div className='crypt__search'>crypt</div>

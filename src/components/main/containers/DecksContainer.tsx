@@ -20,22 +20,7 @@ const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [deckList, setDeckList] = React.useState<DeckType[]>([]);
   const history = useHistory();
-  /* <div className='deck__container'>
-      <div className='containers'>
-        <div className='headers'>decks</div>
-        <div className='content'>
-          <div>crypt</div>
-          <div>library</div>
-        </div>
-      </div>
-      <div className='containers'>
-        <div className='headers'>Search area</div>
-        <div className='content'>
-          <div>content</div>
-        </div>
-      </div>
-    </div> */
-
+ 
   React.useEffect(() => {
     setLoader(true);
     const uid = getUserId();
@@ -89,9 +74,9 @@ const DecksContainer = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {deckList.map((deck: DeckType) => (
+          {deckList.map((deck: DeckType, index:number) => (
             <TableRow
-              key={deck.id}
+              key={index}
               onClick={() => {
                 handleSelectedDeck(deck.id);
               }}

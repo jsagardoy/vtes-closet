@@ -12,7 +12,7 @@ export const fetchSelectedDeck = async (
     );
     const querySnapshot = await getDocs(q);
     const result = querySnapshot.docs
-    return result;
+    return result[0].data();
     //return (querySnapshot.forEach((doc) => { return doc.data() }));
   } catch (error) {
     console.log('Error in db: ' + error);
