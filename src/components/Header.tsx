@@ -2,31 +2,43 @@ import React from 'react';
 import './Header.css';
 import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { getLogo } from '../util/helpFunction';
 import { Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { getUser } from '../util';
 
 interface Props {
   handleClickLogo:() => void;
 }
 const Header = (props: Props) => {
   const { handleClickLogo } = props;
-
-  const defaultAvatarURL = getLogo();
   const auth = getAuth();
-  const [photoURL, setPhotoURL] = React.useState<string>(defaultAvatarURL);
+  const [photoURL, setPhotoURL] = React.useState<string>('');
   const [userName, setUserName] = React.useState<string>('');
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setPhotoURL(user.photoURL ? user.photoURL : defaultAvatarURL);
-      setUserName(user.displayName ? user.displayName : '');
-    } else {
-      setPhotoURL(defaultAvatarURL);
-      setUserName('');
+ 
+  React.useEffect(() => {
+    if (auth) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          
+          const picURL = user.photoURL ? user.photoURL:'';
+          const displayName = user.displayName ? user.displayName:'';
+          setPhotoURL(picURL);
+          setUserName(displayName);
+        } else {
+          setPhotoURL('');
+          setUserName('');
+        }
+      });
     }
-  });
 
+    const user = getUser();
+    if (user) {
+      setPhotoURL(user.photoURL);
+    }
+  }, [auth]);
+
+    
   return (
     <div className='header'>
       <div className='header__left'>
@@ -47,7 +59,7 @@ const Header = (props: Props) => {
       <div className='header__right'>
         <Login />
         <div className='userInfo'>
-          <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
+           <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} /> 
           <h5 className='userName'>{userName}</h5>
         </div>
       </div>
