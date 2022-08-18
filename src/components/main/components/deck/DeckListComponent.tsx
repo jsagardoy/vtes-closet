@@ -13,10 +13,11 @@ import DeckComponent from './DeckComponent';
 
 interface Props {
   deck: DeckType;
+  updateDeck: (extendedLibrary: ExtendedDeckType[], extendedCrypt: ExtendedDeckType[]) => void;
 }
 
 const DeckListComponent = (props: Props) => {
-  const { deck } = props;
+  const { deck, updateDeck } = props;
   const [extendedLibrary, setExtendedLibrary] = React.useState<
     ExtendedDeckType[]
   >([]);
@@ -37,7 +38,7 @@ const DeckListComponent = (props: Props) => {
     }
 
     if (cardType === 'crypt') {
-      selectedItem = extendedLibrary.find(
+      selectedItem = extendedCrypt.find(
         (elem: ExtendedDeckType) => elem.data.id === id
       );
     }
@@ -48,6 +49,7 @@ const DeckListComponent = (props: Props) => {
         const newExtendedLibrary: ExtendedDeckType[] = extendedLibrary.map(
           (elem) => (elem.data.id === id ? newItem : elem)
         );
+        updateDeck(newExtendedLibrary, extendedCrypt);
         setExtendedLibrary(newExtendedLibrary);
       }
 
@@ -55,9 +57,9 @@ const DeckListComponent = (props: Props) => {
         const newExtendedCrypt: ExtendedDeckType[] = extendedCrypt.map((elem) =>
           elem.data.id === id ? newItem : elem
         );
+        updateDeck(extendedLibrary, newExtendedCrypt);
         setExtendedCrypt(newExtendedCrypt);
       }
-      console.table(extendedLibrary);
     }
   };
 
@@ -118,7 +120,7 @@ const DeckListComponent = (props: Props) => {
         buildExtendedData(result, 'crypt');
       }
     };
-    fetchCryptData();    
+    fetchCryptData();
   }, [deck]);
 
   return (
@@ -146,7 +148,11 @@ const DeckListComponent = (props: Props) => {
         </Typography>
         <DeckComponent
           data={extendedCrypt}
-          updateQuantity={updateQuantity}
+          updateQuantity={(
+            newQuantity: number,
+            id: number,
+            cardType: 'library' | 'crypt'
+          ) => updateQuantity(newQuantity, id, cardType)}
         />
       </Box>
       <Box className='deck__library'>
@@ -163,7 +169,11 @@ const DeckListComponent = (props: Props) => {
         </Typography>
         <DeckComponent
           data={extendedLibrary}
-          updateQuantity={updateQuantity}
+          updateQuantity={(
+            newQuantity: number,
+            id: number,
+            cardType: 'library' | 'crypt'
+          ) => updateQuantity(newQuantity, id, cardType)}
         />
       </Box>
     </Box>

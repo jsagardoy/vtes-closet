@@ -1,7 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
-import { Archetype, DeckType } from '../../../types/deck_type';
+import { updateDeckService } from '../../../service/updateDeckService';
+import {
+  Archetype,
+  DeckType,
+  ExtendedDeckType,
+  ListType,
+} from '../../../types/deck_type';
 import DeckInfoComponent from '../components/deck/DeckInfoComponent';
 import DeckListComponent from '../components/deck/DeckListComponent';
 import './deck.css';
@@ -24,6 +30,28 @@ const DeckContainer = () => {
     setDeckData({ ...deckData, [field]: value });
   };
 
+  const updateDeck = (
+    library: ExtendedDeckType[],
+    crypt: ExtendedDeckType[]
+  ) => {
+    const newLibrary: ListType[] = library.map((elem: ExtendedDeckType) => ({
+      id: elem.data.id.toString(),
+      quantity: elem.quantity,
+    }));
+
+    const newCrypt: ListType[] = crypt.map((elem: ExtendedDeckType) => ({
+      id: elem.data.id.toString(),
+      quantity: elem.quantity,
+    }));
+
+    const newDeck: DeckType = {
+      ...deckData,
+      library: newLibrary,
+      crypt: newCrypt,
+    };
+    updateDeckService(newDeck);
+  };
+
   React.useEffect(() => {
     const fetchDecks = async () => {
       const result = await fetchSelectedDeck(userId, deckId);
@@ -41,7 +69,13 @@ const DeckContainer = () => {
         }
       />
       <div className='deck__container'>
-        <DeckListComponent deck={deckData} />
+        <DeckListComponent
+          deck={deckData}
+          updateDeck={(
+            library: ExtendedDeckType[],
+            crypt: ExtendedDeckType[]
+          ) => updateDeck(library, crypt)}
+        />
         <div className='search__container'>
           Search Container
           <div className='crypt__search'>crypt</div>

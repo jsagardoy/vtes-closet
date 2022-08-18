@@ -36,7 +36,11 @@ const DeckComponent = (props: Props) => {
               <QuantityButtonComponent
                 initialQuantity={elem.quantity}
                 id={elem.data.id}
-                updateQuantity={updateQuantity}
+                updateQuantity={(
+                  newQuantity: number,
+                  id: number,
+                  cardType: 'library' | 'crypt'
+                ) => updateQuantity(newQuantity, id, cardType)}
                 cardType={elem.cardType}
               />
             </TableCell>
