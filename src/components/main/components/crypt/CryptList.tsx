@@ -3,9 +3,16 @@ import '../global/CardDetail.css';
 import { CryptType } from '../../../../types/crypt_type';
 import ModalCrypt from './ModalCrypt';
 import CryptListComponent from './CryptListComponent';
+import { LibraryType } from '../../../../types/library_type';
+import { CardType } from '../../../../types/deck_type';
 
 interface listProps {
-  list: CryptType[]; //habrá que hacer también la opción para las cartas de librería
+  list: CryptType[];
+  deckMode: boolean;
+  handleAddCardToDeck: (
+    crypt: CryptType | LibraryType,
+    cardType:CardType,
+  ) => void;
 }
 
 const CryptList = (props: listProps) => {
@@ -13,7 +20,7 @@ const CryptList = (props: listProps) => {
   const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
   const [cryptIndex, setCryptIndex] = React.useState<number>(0);
 
-  const { list } = props;
+  const { list, deckMode, handleAddCardToDeck } = props;
 
   const handleOpen = (crypt: CryptType, index: number) => {
     setOpenedCrypt(crypt);
@@ -53,6 +60,11 @@ const CryptList = (props: listProps) => {
       ) : null}
       {list && list.length > 0 && (
         <CryptListComponent
+          handleAddCardToDeck={(
+            card: CryptType | LibraryType,
+            cardType: CardType
+          ) => handleAddCardToDeck(card, cardType)}
+          deckMode={deckMode}
           list={list}
           initialValue={list.slice(0, 20)}
           handleOpen={(crypt: CryptType, index: number) =>

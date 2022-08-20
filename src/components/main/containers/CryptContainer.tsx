@@ -17,19 +17,26 @@ import { Spinner } from '../components/global/Spinner';
 import { fetchCrypt } from '../../../service/fetchCrypt';
 
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
+import { LibraryType } from '../../../types/library_type';
+import { CardType } from '../../../types/deck_type';
 
 interface Props {
   toogle: boolean;
+  deckMode: boolean;
+  handleAddCardToDeck: (
+    card: CryptType | LibraryType,
+    cardType:CardType,
+  ) => void;
 }
 
 const CryptContainer = (props: Props) => {
-  const { toogle} = props;
+  const { toogle, deckMode, handleAddCardToDeck } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
     []
   );
-  
+
   const [list, setList] = React.useState<CryptType[]>([]);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
@@ -100,11 +107,7 @@ const CryptContainer = (props: Props) => {
   const handleReset = async () => setList(sessionStorage);
 
   React.useEffect(() => {
-    if (
-      sessionStorage &&
-      sessionStorage !== [] &&
-      sessionStorage.length > 0
-    ) {
+    if (sessionStorage && sessionStorage !== [] && sessionStorage.length > 0) {
       setList(sessionStorage);
     } else {
       setLoader(true);
@@ -153,7 +156,14 @@ const CryptContainer = (props: Props) => {
         handleReset={() => handleReset()}
       />
       {loader && <Spinner />}
-      <CryptList list={list}/>
+      <CryptList
+        list={list}
+        deckMode={deckMode}
+        handleAddCardToDeck={(
+          card: CryptType | LibraryType,
+          cardType:CardType
+        ) => handleAddCardToDeck(card, cardType)}
+      />
     </div>
   );
 };

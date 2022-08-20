@@ -27,10 +27,11 @@ export type ListType = {
   quantity: number;
 };
 
+export type CardType = 'library'|'crypt'
 export interface ExtendedDeckType {
   quantity: number;
   data: LibraryType | CryptType;
-  cardType: 'library' | 'crypt';
+  cardType: CardType;
 }
 
 export interface DeckType {

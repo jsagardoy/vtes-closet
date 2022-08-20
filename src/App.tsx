@@ -3,12 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
-import {
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import PrivateRoute from './components/PrivateRoute';
@@ -20,14 +15,16 @@ import InventoryCryptContainer from './components/main/containers/InventoryCrypt
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
 import DecksContainer from './components/main/containers/DecksContainer';
 import DeckContainer from './components/main/containers/DeckContainer';
-
+import { CryptType } from './types/crypt_type';
+import { CardType } from './types/deck_type';
+import { LibraryType } from './types/library_type';
 
 function App() {
   const auth = getAuth();
   const [isLogged, setIsLogged] = React.useState<boolean>(false);
   const [toogleSidebar, setToogleSidebar] = React.useState<boolean>(false);
   const history = useHistory();
-  
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLogged(true);
@@ -37,8 +34,12 @@ function App() {
     }
   });
 
-
   const handleClickMenuIcon = () => setToogleSidebar(!toogleSidebar);
+
+  const handleAddCardToDeck = (
+    card: LibraryType | CryptType,
+    cardType: CardType
+  ) => {};
 
   useEffect(() => {}, []);
 
@@ -58,7 +59,16 @@ function App() {
             )}
           </Route>
           <Route exact path={'/crypt'}>
-            <CryptContainer toogle={toogleSidebar} />
+            <CryptContainer
+              deckMode={false}
+              toogle={toogleSidebar}
+              handleAddCardToDeck={(
+                card: LibraryType | CryptType,
+                cardType: CardType
+              ) => {
+                handleAddCardToDeck(card, cardType);
+              }}
+            />
           </Route>
           <Route exact path={'/library'} component={LibraryContainer} />
           <PrivateRoute

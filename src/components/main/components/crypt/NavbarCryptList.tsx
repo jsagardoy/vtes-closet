@@ -42,13 +42,11 @@ interface NavbarListProps {
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const { handleSort, handleSortAZ, handleReset } = navbarListProps;
-
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
-  //const [selectedTitle, setSelectedTitle] = React.useState<string>('');
   const [rotate, setRotate] = React.useState<boolean>(false);
   const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({

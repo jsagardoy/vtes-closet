@@ -2,14 +2,18 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
 import { updateDeckService } from '../../../service/updateDeckService';
+import { CryptType } from '../../../types/crypt_type';
 import {
   Archetype,
+  CardType,
   DeckType,
   ExtendedDeckType,
   ListType,
 } from '../../../types/deck_type';
+import { LibraryType } from '../../../types/library_type';
 import DeckInfoComponent from '../components/deck/DeckInfoComponent';
 import DeckListComponent from '../components/deck/DeckListComponent';
+import SearchDeckContainer from '../components/deck/searchDeckCards/SearchDeckContainer';
 import './deck.css';
 const DeckContainer = () => {
   const initialDeck: DeckType = {
@@ -52,6 +56,13 @@ const DeckContainer = () => {
     updateDeckService(newDeck);
   };
 
+  const handleAddCardToDeck = (
+    card: CryptType | LibraryType,
+    cardType: CardType
+  ) => {
+    console.log('estoy aquí');
+  };
+  
   React.useEffect(() => {
     const fetchDecks = async () => {
       const result = await fetchSelectedDeck(userId, deckId);
@@ -77,9 +88,9 @@ const DeckContainer = () => {
           ) => updateDeck(library, crypt)}
         />
         <div className='search__container'>
-          Search Container
-          <div className='crypt__search'>crypt</div>
-          <div className='library__search'>library</div>
+          <SearchDeckContainer
+            handleAddCardToDeck={(card:LibraryType|CryptType, cardType:CardType) => handleAddCardToDeck(card,cardType)}
+          />
         </div>
       </div>
     </div>

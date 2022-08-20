@@ -27,9 +27,8 @@ export const updateDeckService = async (data: DeckType) => {
         library: data.library,
         name:data.name
       }
-      const response = await updateDoc(taskDocRef, elem );
-      
-      console.log('%cData successfully added. ', 'color:green'+response);
+      await updateDoc(taskDocRef, elem );
+      console.log('%cData successfully added. ', 'color:green');
     } catch (err) {
         console.log('%cError while saving data', 'color:red');
         console.log(err);

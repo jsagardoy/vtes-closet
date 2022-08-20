@@ -3,21 +3,29 @@ import {
   List,
   ListItem,
   ListItemAvatar,
+  ListItemButton,
   ListItemText,
 } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { getDiscIcon } from '../../../../util/helpFunction';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
+import { Box } from '@mui/system';
+import { LibraryType } from '../../../../types/library_type';
+import { CardType } from '../../../../types/deck_type';
 interface Props {
   list: CryptType[];
   initialValue: CryptType[];
   handleOpen: (crypt: CryptType, index: number) => void;
+  deckMode: boolean;
+  handleAddCardToDeck: (card: CryptType|LibraryType, cardType:CardType) => void;
 }
 
 const CryptListComponent = (props: Props) => {
-  const { list, handleOpen, initialValue } = props;
+  const { list, handleOpen, initialValue, deckMode, handleAddCardToDeck } =
+    props;
   //const initialValue = list.slice(0, 20);
   const [items, setItems] = React.useState<CryptType[]>([]);
 
@@ -63,8 +71,6 @@ const CryptListComponent = (props: Props) => {
     );
   }
   return (
-
-   
     <InfiniteScroll
       dataLength={items.length}
       next={fetchMoreData}
@@ -72,20 +78,29 @@ const CryptListComponent = (props: Props) => {
       loader={<Spinner />}
       style={{ overflow: 'hidden' }}
       endMessage={
-        <p style={{
-          textAlign: 'center', color: 'Darkcyan', marginBottom:'1em'}}>
+        <p
+          style={{
+            textAlign: 'center',
+            color: 'Darkcyan',
+            marginBottom: '1em',
+          }}
+        >
           No more content
         </p>
       }
     >
-      <List className='crypt__list' >
+      <List className='crypt__list'>
         {items.length === 0 ? (
           <div className='span__no__result'>
             <span>No results</span>
           </div>
         ) : (
           items.map((crypt: CryptType, index: number) => (
-            <div key={crypt.id && crypt.name && Math.random()}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }} key={crypt.id && crypt.name && Math.random()}>
+              {deckMode ?
+              <ListItemButton onClick={(e)=>handleAddCardToDeck(crypt,'crypt')}><AddCircleRoundedIcon /></ListItemButton>
+              :null
+            }
               <ListItem
                 key={crypt.id && crypt.name && Math.random()}
                 button
@@ -94,6 +109,7 @@ const CryptListComponent = (props: Props) => {
                 alignItems='flex-start'
                 onClick={() => handleOpen(crypt, index)}
               >
+                
                 <ListItemText
                   className='list__item'
                   primary={crypt.name}
@@ -119,7 +135,7 @@ const CryptListComponent = (props: Props) => {
                   />
                 </div>
               </ListItem>
-            </div>
+            </Box>
           ))
         )}
       </List>

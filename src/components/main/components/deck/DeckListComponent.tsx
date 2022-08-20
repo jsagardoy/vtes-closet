@@ -13,7 +13,10 @@ import DeckComponent from './DeckComponent';
 
 interface Props {
   deck: DeckType;
-  updateDeck: (extendedLibrary: ExtendedDeckType[], extendedCrypt: ExtendedDeckType[]) => void;
+  updateDeck: (
+    extendedLibrary: ExtendedDeckType[],
+    extendedCrypt: ExtendedDeckType[]
+  ) => void;
 }
 
 const DeckListComponent = (props: Props) => {
