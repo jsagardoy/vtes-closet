@@ -3,6 +3,7 @@ import React from 'react';
 import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
 import { CryptType } from '../../../../types/crypt_type';
 import {
+  CardType,
   DeckType,
   ExtendedDeckType,
   ListType,
@@ -17,10 +18,11 @@ interface Props {
     extendedLibrary: ExtendedDeckType[],
     extendedCrypt: ExtendedDeckType[]
   ) => void;
+  handleRemoveCard: (id: number, cardType: CardType) => void;
 }
 
 const DeckListComponent = (props: Props) => {
-  const { deck, updateDeck } = props;
+  const { deck, updateDeck,handleRemoveCard } = props;
   const [extendedLibrary, setExtendedLibrary] = React.useState<
     ExtendedDeckType[]
   >([]);
@@ -67,7 +69,6 @@ const DeckListComponent = (props: Props) => {
   };
 
   React.useEffect(() => {
-    //console.log(JSON.stringify(deck));
     const getQuantityCurrentCard = (
       id: string,
       cardType: 'library' | 'crypt'
@@ -82,23 +83,25 @@ const DeckListComponent = (props: Props) => {
     };
     const buildExtendedData = (
       list: LibraryType[] | CryptType[],
-      cardType: 'library' | 'crypt'
+      cardType: CardType
     ) => {
-      const data: ExtendedDeckType[] = list?.map(
-        (elem: LibraryType | CryptType) => {
-          return {
-            data: elem,
-            quantity: getQuantityCurrentCard(elem.id.toString(), cardType),
-            cardType: cardType,
-          };
+      if (list) {
+        const newData: ExtendedDeckType[] = list?.map(
+          (elem: LibraryType | CryptType) => {
+            return {
+              data: elem,
+              quantity: getQuantityCurrentCard(elem.id.toString(), cardType),
+              cardType: cardType,
+            };
+          }
+          );
+          if (cardType === 'library') {
+            setExtendedLibrary(newData);
+          }
+          if (cardType === 'crypt') {
+            setExtendedCrypt(newData);
+          }
         }
-      );
-      if (cardType === 'library') {
-        setExtendedLibrary(data);
-      }
-      if (cardType === 'crypt') {
-        setExtendedCrypt(data);
-      }
     };
     const fetchLibraryData = async () => {
       const fetchArray = await deck?.library?.map((elem) =>
@@ -113,7 +116,7 @@ const DeckListComponent = (props: Props) => {
     };
     fetchLibraryData();
     const fetchCryptData = async () => {
-      const fetchArray = await deck?.crypt?.map((elem) =>
+      const fetchArray:Promise<any>[] = await deck?.crypt?.map((elem) =>
         fetchSelectedCard(elem.id, 'crypt')
       );
       const resultPromisePromise = await Promise.all<any>(fetchArray);
@@ -154,8 +157,9 @@ const DeckListComponent = (props: Props) => {
           updateQuantity={(
             newQuantity: number,
             id: number,
-            cardType: 'library' | 'crypt'
+            cardType: CardType
           ) => updateQuantity(newQuantity, id, cardType)}
+          handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
         />
       </Box>
       <Box className='deck__library'>
@@ -175,8 +179,9 @@ const DeckListComponent = (props: Props) => {
           updateQuantity={(
             newQuantity: number,
             id: number,
-            cardType: 'library' | 'crypt'
+            cardType: CardType
           ) => updateQuantity(newQuantity, id, cardType)}
+          handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
         />
       </Box>
     </Box>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { fetchLibrary } from '../../../service/fetchLibrary';
+import { CryptType } from '../../../types/crypt_type';
+import { CardType } from '../../../types/deck_type';
 
 import { LibraryPropType, LibraryType } from '../../../types/library_type';
 import {
@@ -13,7 +15,16 @@ import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
 
-const LibraryContainer = () => {
+interface Props {
+  deckMode: boolean;
+  handleAddCardToDeck: (
+    card: CryptType | LibraryType,
+    cardType: CardType
+  ) => void;
+}
+
+const LibraryContainer = (props:Props) => {
+    const { deckMode, handleAddCardToDeck } = props;
   const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
@@ -82,7 +93,14 @@ const LibraryContainer = () => {
         handleSort={() => handleSort()}
       />
       {loader && <Spinner />}
-      <LibraryList list={list} />
+      <LibraryList
+        list={list}
+        deckMode={deckMode}
+        handleAddCardToDeck={(
+          card: CryptType | LibraryType,
+          cardType: CardType
+        ) => handleAddCardToDeck(card, cardType)}
+      />
     </div>
   );
 };

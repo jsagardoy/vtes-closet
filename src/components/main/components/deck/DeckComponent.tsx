@@ -6,7 +6,7 @@ import {
   TableRow,
 } from '@mui/material';
 import React from 'react';
-import { ExtendedDeckType } from '../../../../types/deck_type';
+import { CardType, ExtendedDeckType } from '../../../../types/deck_type';
 import QuantityButtonComponent from './QuantityButtonComponent';
 
 interface Props {
@@ -16,11 +16,17 @@ interface Props {
     id: number,
     cardType: 'library' | 'crypt'
   ) => void;
+  handleRemoveCard: (id: number, cardType: CardType) => void;
 }
 
-const DeckComponent = (props: Props) => {
-  const { data, updateQuantity } = props;
 
+
+const DeckComponent = (props: Props) => {
+  const { data, updateQuantity,handleRemoveCard } = props;
+
+  React.useEffect(() => {
+  }, [data]);
+  
   return (
     <Table>
       <TableHead sx={{ backgroundColor: 'white' }}>
@@ -34,6 +40,7 @@ const DeckComponent = (props: Props) => {
           <TableRow key={elem.data.id}>
             <TableCell sx={{ color: 'darkcyan', backgroundColor: 'white' }}>
               <QuantityButtonComponent
+                handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
                 initialQuantity={elem.quantity}
                 id={elem.data.id}
                 updateQuantity={(

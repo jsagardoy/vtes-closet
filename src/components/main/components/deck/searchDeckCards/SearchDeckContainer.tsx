@@ -1,10 +1,11 @@
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../../types/crypt_type';
 import { CardType } from '../../../../../types/deck_type';
 import { LibraryType } from '../../../../../types/library_type';
 import { HEADER_COLOR } from '../../../../../util/helpFunction';
 import CryptContainer from '../../../containers/CryptContainer';
+import LibraryContainer from '../../../containers/LibraryContainer';
 import TabPanel from './TabPanel';
 
 
@@ -69,14 +70,23 @@ const SearchDeckContainer = (props: Props) => {
         </Tabs>
       </Box>
       <TabPanel value={selectedTab} index={0}>
-          <CryptContainer
-            deckMode={true}
-            toogle={false}
-            handleAddCardToDeck={(card: CryptType | LibraryType, cardType :CardType) => handleAddCardToDeck(card, cardType)}
-          />
+        <CryptContainer
+          deckMode={true}
+          toogle={false}
+          handleAddCardToDeck={(
+            card: CryptType | LibraryType,
+            cardType: CardType
+          ) => handleAddCardToDeck(card, cardType)}
+        />
       </TabPanel>
       <TabPanel value={selectedTab} index={1}>
-        <Typography>Library</Typography>
+        <LibraryContainer
+          deckMode={true}
+          handleAddCardToDeck={(
+            card: CryptType | LibraryType,
+            cardType: CardType
+          ) => handleAddCardToDeck(card, cardType)}
+        />
       </TabPanel>
     </>
   );

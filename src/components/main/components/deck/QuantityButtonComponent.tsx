@@ -4,24 +4,26 @@ import { useInventory } from '../../../../hooks/useInventory';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CardType } from '../../../../types/deck_type';
 
 interface Props {
   initialQuantity: number;
   id: number;
   cardType: 'library' | 'crypt';
   updateQuantity: (
-    newQunatity: number,
+    newQuantity: number,
     id: number,
-    cardType: 'library' | 'crypt'
+    cardType: CardType
   ) => void;
+  handleRemoveCard:(id: number, cardType:CardType)=>void;
 }
 
 const QuantityButtonComponent = (props: Props) => {
-  const { initialQuantity, updateQuantity, id, cardType } = props;
-  const { increment, decrement, counter } = useInventory(initialQuantity);
+  const { initialQuantity, updateQuantity, id, cardType, handleRemoveCard } = props;
+  const { increment, decrement, counter,set } = useInventory(initialQuantity);
   const handleDisabledButton = (): boolean => counter <= 0;
 
-  
+  React.useEffect(()=>{set(initialQuantity)},[initialQuantity,set])
   return (
     <Box
       sx={{
@@ -50,7 +52,7 @@ const QuantityButtonComponent = (props: Props) => {
       }}>
         <AddCircleIcon />
       </IconButton>
-      <IconButton aria-label='remove'>
+      <IconButton aria-label='remove' onClick={()=>handleRemoveCard(id,cardType)}>
         <DeleteIcon />
       </IconButton>
     </Box>
