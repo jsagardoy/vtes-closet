@@ -29,7 +29,7 @@ const DeckContainer = () => {
   const [deckData, setDeckData] = React.useState<DeckType>(
     initialDeck as DeckType
   );
-
+  
   const handleChange = (field: string, value: string | Archetype) => {
     setDeckData({ ...deckData, [field]: value });
   };
@@ -155,6 +155,7 @@ const DeckContainer = () => {
         }
       />
       <div className='deck__container'>
+        
         <DeckListComponent
           deck={deckData}
           updateDeck={(
