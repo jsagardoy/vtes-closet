@@ -21,6 +21,7 @@ export const updateDeckService = async (data: DeckType) => {
   if (taskDocRef) {
     try {
       const elem = {
+        id:data.id,
         crypt: data.crypt,
         deckType: data.deckType,
         description: data.description,

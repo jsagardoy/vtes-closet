@@ -12,15 +12,20 @@ interface Props {
 const Header = (props: Props) => {
   const { handleClickLogo } = props;
   const auth = getAuth();
-  const [photoURL, setPhotoURL] = React.useState<string>('');
+  const [photoURL, setPhotoURL] = React.useState<string>(auth.currentUser?.photoURL||'');
   const [userName, setUserName] = React.useState<string>('');
 
  
   React.useEffect(() => {
+    
+    const user = getUser();
+    if (user) {
+      setPhotoURL(user.photoURL);
+      setUserName(user.displayName);
+    }
     if (auth) {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          
           const picURL = user.photoURL ? user.photoURL:'';
           const displayName = user.displayName ? user.displayName:'';
           setPhotoURL(picURL);
@@ -32,10 +37,7 @@ const Header = (props: Props) => {
       });
     }
 
-    const user = getUser();
-    if (user) {
-      setPhotoURL(user.photoURL);
-    }
+    
   }, [auth]);
 
     

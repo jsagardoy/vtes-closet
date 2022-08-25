@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -8,19 +9,26 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box } from '@mui/system';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchDecks } from '../../../service/fetchDecks';
 import { DeckType } from '../../../types/deck_type';
-import { getUserId } from '../../../util/helpFunction';
+import { getUserId, HEADER_COLOR } from '../../../util/helpFunction';
 import { Spinner } from '../components/global/Spinner';
 import './DecksContainer.css';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { uuidv4 } from '@firebase/util';
+import { createNewDeck } from '../../../service/createNewDeck';
+import { deleteDeck } from '../../../service/deleteDeck';
+
 
 const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [deckList, setDeckList] = React.useState<DeckType[]>([]);
   const history = useHistory();
- 
+
   React.useEffect(() => {
     setLoader(true);
     const uid = getUserId();
@@ -40,6 +48,15 @@ const DecksContainer = () => {
     }
     //si no hay valores para el usuario. Hay que implementar si ya tiene
   }, []);
+
+  const handleRemoveDeck = (id: string) => {
+    const newDekList: DeckType[] = deckList.filter(
+      (elem: DeckType) => elem.id !== id
+    );
+    deleteDeck(id);
+    setDeckList(newDekList);
+    
+  };
 
   const tableOfContent = (
     <TableContainer component={Paper}>
@@ -71,21 +88,54 @@ const DecksContainer = () => {
             >
               Description
             </TableCell>
+            <TableCell
+              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
+              variant='head'
+              align='left'
+            >
+              Action
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {deckList.map((deck: DeckType, index:number) => (
-            <TableRow
-              key={index}
-              onClick={() => {
-                handleSelectedDeck(deck.id);
-              }}
-            >
-              <TableCell sx={{ color: 'darkcyan' }}>{deck.id}</TableCell>
-              <TableCell sx={{ color: 'darkcyan' }}>{deck.name}</TableCell>
-              <TableCell sx={{ color: 'darkcyan' }}>{deck.deckType}</TableCell>
-              <TableCell sx={{ color: 'darkcyan' }}>
+          {deckList.map((deck: DeckType, index: number) => (
+            <TableRow key={index}>
+              <TableCell
+                onClick={() => {
+                  handleSelectedDeck(deck.id);
+                }}
+                sx={{ color: 'darkcyan' }}
+              >
+                {index+1}
+              </TableCell>
+              <TableCell
+                onClick={() => {
+                  handleSelectedDeck(deck.id);
+                }}
+                sx={{ color: 'darkcyan' }}
+              >
+                {deck.name}
+              </TableCell>
+              <TableCell
+                onClick={() => {
+                  handleSelectedDeck(deck.id);
+                }}
+                sx={{ color: 'darkcyan' }}
+              >
+                {deck.deckType}
+              </TableCell>
+              <TableCell
+                onClick={() => {
+                  handleSelectedDeck(deck.id);
+                }}
+                sx={{ color: 'darkcyan' }}
+              >
                 {deck.description}
+              </TableCell>
+              <TableCell sx={{ color: 'darkcyan' }}>
+                <IconButton onClick={() => handleRemoveDeck(deck.id)}>
+                  <DeleteIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
@@ -104,13 +154,38 @@ const DecksContainer = () => {
     }
   };
 
+  const handleCreateDeck = () => {
+    const newDeck: DeckType = {
+      id: uuidv4(),
+      name: '',
+      description: '',
+      deckType: 'undefined',
+      crypt: [],
+      library: [],
+    };
+    //TODO: insertar en BBDD
+    createNewDeck(newDeck);
+    setDeckList((prev) => ([...prev, newDeck]));
+    const userId = getUserId();
+    history.push(`/private/${userId}/decks/${newDeck.id}`);
+  };
+
+  const titleStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: HEADER_COLOR,
+  };
+
   const response = (
     <div className='decks__container'>
-      <div className='decks__title'>
+      <Box sx={titleStyle}>
         <Typography sx={{ fontWeight: 'bold' }} variant='h5'>
           Decks List
         </Typography>
-      </div>
+      </Box>
+      <IconButton sx={{ color: 'darkcyan' }} onClick={() => handleCreateDeck()}>
+        Create new deck <AddCircleIcon />
+      </IconButton>
       {loader && <Spinner />}
       {deckList && deckList.length > 0 && tableOfContent}
       {(!deckList || deckList.length === 0) && !loader && (
