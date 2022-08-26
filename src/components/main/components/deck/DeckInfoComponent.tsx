@@ -1,6 +1,7 @@
 import {
   Box,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -9,27 +10,49 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Archetype, DeckType, getArchetype } from '../../../../types/deck_type';
+import SaveIcon from '@mui/icons-material/Save';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useHistory } from 'react-router-dom';
+import { getUserId } from '../../../../util';
 
 interface Props {
-  handleChange: (field: string, value: string|Archetype) => void;
+  handleSaveDataInfo: (selectedDeck: DeckType) => void;
   deck: DeckType;
 }
 const DeckInfoComponent = (props: Props) => {
-  const { deck, handleChange } = props;
+  const { deck, handleSaveDataInfo } = props;
+  const [selectedDeck, setSelectedDeck] = React.useState<DeckType>(deck);
+  const history = useHistory();
+  const handleChange = (field: string, value: string | Archetype) => {
+    const newDeck: DeckType = { ...selectedDeck, [field]: value };
+    setSelectedDeck(newDeck);
+  };
+  React.useEffect(() => {
+    setSelectedDeck(deck);
+  }, [deck]);
+
+  const handleGoBack = () => {
+    const uid = getUserId();
+    history.push(`/private/${uid}/decks/`);
+  }
+
   return (
     <Box>
       <FormControl className='info' fullWidth>
+        <IconButton onClick={() => handleGoBack()}>
+          <ArrowBackIcon />
+        </IconButton>
         <Typography sx={{ alignSelf: 'center' }} variant='h5'>
           Deck Info
         </Typography>
         <TextField
           name='name'
-          sx={{ m: 1,width: '98%' }}
+          sx={{ m: 1, width: '98%' }}
           fullWidth
           variant='standard'
           label='Name'
           placeholder='Deck name'
-          value={deck.name}
+          value={selectedDeck.name}
           onChange={(e) => handleChange(e.target.name, e.target.value)}
         />
         <TextField
@@ -38,7 +61,7 @@ const DeckInfoComponent = (props: Props) => {
           variant='standard'
           label='Description'
           placeholder='Description'
-          value={deck.description}
+          value={selectedDeck.description}
           onChange={(e) => handleChange(e.target.name, e.target.value)}
         />
         <Box>
@@ -51,15 +74,15 @@ const DeckInfoComponent = (props: Props) => {
                 borderColor: 'darkcyan',
                 justifyContent: 'flex-end',
                 textTransform: 'capitalize',
-                          }}
-                          name='deckType'
+              }}
+              name='deckType'
               labelId='select-label'
               id='select'
               placeholder='Deck archetype'
-              value={deck.deckType}
+              value={selectedDeck.deckType}
               label='Archetype'
               onChange={(e) =>
-                handleChange(e.target.name,e.target.value as Archetype)
+                handleChange(e.target.name, e.target.value as Archetype)
               }
             >
               {getArchetype().map((elem: Archetype) => (
@@ -70,6 +93,11 @@ const DeckInfoComponent = (props: Props) => {
             </Select>
           </FormControl>
         </Box>
+        {
+          <IconButton onClick={() => handleSaveDataInfo(selectedDeck)}>
+            <SaveIcon />
+          </IconButton>
+        }
       </FormControl>
     </Box>
   );

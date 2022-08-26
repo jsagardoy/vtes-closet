@@ -30,7 +30,7 @@ export type ListType = {
 export type CardType = 'library'|'crypt'
 export interface ExtendedDeckType {
   quantity: number;
-  data: LibraryType | CryptType;
+  data: (LibraryType | CryptType);
   cardType: CardType;
 }
 

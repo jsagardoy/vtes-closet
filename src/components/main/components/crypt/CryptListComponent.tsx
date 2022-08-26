@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
-import { getDiscIcon } from '../../../../util/helpFunction';
+import { getCleanedName, getDiscIcon } from '../../../../util/helpFunction';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
@@ -112,7 +112,7 @@ const CryptListComponent = (props: Props) => {
                 
                 <ListItemText
                   className='list__item'
-                  primary={crypt.name}
+                  primary={getCleanedName(crypt.name)}
                   secondary={`${crypt.clans.map((clan) => clan)}: ${
                     crypt.group
                   }`}

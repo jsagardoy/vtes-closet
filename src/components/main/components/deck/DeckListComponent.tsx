@@ -10,7 +10,7 @@ import {
 } from '../../../../types/deck_type';
 import { LibraryType } from '../../../../types/library_type';
 import { HEADER_COLOR } from '../../../../util/helpFunction';
-import DeckComponent from './DeckComponent';
+import DeckCryptComponent from './DeckCryptComponent';
 
 interface Props {
   deck: DeckType;
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const DeckListComponent = (props: Props) => {
-  const { deck, updateDeck,handleRemoveCard } = props;
+  const { deck, updateDeck, handleRemoveCard } = props;
   const [extendedLibrary, setExtendedLibrary] = React.useState<
     ExtendedDeckType[]
   >([]);
@@ -94,14 +94,14 @@ const DeckListComponent = (props: Props) => {
               cardType: cardType,
             };
           }
-          );
-          if (cardType === 'library') {
-            setExtendedLibrary(newData);
-          }
-          if (cardType === 'crypt') {
-            setExtendedCrypt(newData);
-          }
+        );
+        if (cardType === 'library') {
+          setExtendedLibrary(newData);
         }
+        if (cardType === 'crypt') {
+          setExtendedCrypt(newData);
+        }
+      }
     };
     const fetchLibraryData = async () => {
       const fetchArray = await deck?.library?.map((elem) =>
@@ -116,7 +116,7 @@ const DeckListComponent = (props: Props) => {
     };
     fetchLibraryData();
     const fetchCryptData = async () => {
-      const fetchArray:Promise<any>[] = await deck?.crypt?.map((elem) =>
+      const fetchArray: Promise<any>[] = await deck?.crypt?.map((elem) =>
         fetchSelectedCard(elem.id, 'crypt')
       );
       const resultPromisePromise = await Promise.all<any>(fetchArray);
@@ -141,25 +141,31 @@ const DeckListComponent = (props: Props) => {
         <Typography variant='h6'>Deck</Typography>
       </Box>
       <Box className='deck__crypt'>
-        <Typography
-          variant='subtitle1'
+        <Box
           sx={{
+            width: '100',
             backgroundColor: HEADER_COLOR,
-            paddingLeft: '1rem',
             borderBottom: '3px solid darkcyan',
+            paddingLeft: '1rem',
+            paddingRight:'1rem',
             borderTop: '1px solid darkcyan',
+            display: 'flex',
+            justifyContent: 'space-between',
           }}
         >
-          Crypt
-        </Typography>
-        <DeckComponent
+          <Typography variant='subtitle1'>Crypt</Typography>
+          <Typography variant='subtitle1'>{extendedCrypt.length}</Typography>
+        </Box>
+        <DeckCryptComponent
           data={extendedCrypt}
           updateQuantity={(
             newQuantity: number,
             id: number,
             cardType: CardType
           ) => updateQuantity(newQuantity, id, cardType)}
-          handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
+          handleRemoveCard={(id: number, cardType: CardType) =>
+            handleRemoveCard(id, cardType)
+          }
         />
       </Box>
       <Box className='deck__library'>
@@ -174,7 +180,7 @@ const DeckListComponent = (props: Props) => {
         >
           Library
         </Typography>
-        <DeckComponent
+        {/* <DeckComponent
           data={extendedLibrary}
           updateQuantity={(
             newQuantity: number,
@@ -182,7 +188,7 @@ const DeckListComponent = (props: Props) => {
             cardType: CardType
           ) => updateQuantity(newQuantity, id, cardType)}
           handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
-        />
+        /> */}
       </Box>
     </Box>
   );

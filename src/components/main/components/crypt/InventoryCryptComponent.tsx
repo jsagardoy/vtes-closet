@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
-import { getDiscIcon } from '../../../../util/helpFunction';
+import { getCleanedName, getDiscIcon } from '../../../../util/helpFunction';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
 import { cryptInventoryType } from '../../../../types/inventory_type';
@@ -108,12 +108,14 @@ const InventoryCryptComponent = (props: Props) => {
               >
                 <InventoryCrypt
                   card={crypt}
-                  updateInventory={(inventory: cryptInventoryType) => { updateInventory(inventory); }}
+                  updateInventory={(inventory: cryptInventoryType) => {
+                    updateInventory(inventory);
+                  }}
                 />
                 <ListItemText
                   className='list__item'
                   onClick={() => handleOpen(crypt, index)}
-                  primary={crypt.name}
+                  primary={getCleanedName(crypt.name)}
                   secondary={`${crypt.clans.map((clan: string) => clan)}: ${
                     crypt.group
                   }`}

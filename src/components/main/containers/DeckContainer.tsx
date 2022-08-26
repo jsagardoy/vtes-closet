@@ -4,7 +4,6 @@ import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
 import { updateDeckService } from '../../../service/updateDeckService';
 import { CryptType } from '../../../types/crypt_type';
 import {
-  Archetype,
   CardType,
   DeckType,
   ExtendedDeckType,
@@ -30,10 +29,14 @@ const DeckContainer = () => {
     initialDeck as DeckType
   );
   
-  const handleChange = (field: string, value: string | Archetype) => {
-    setDeckData({ ...deckData, [field]: value });
-  };
+/*   const handleChange = (field: string, value: string | Archetype) => {
+    const newDeck:DeckType = { ...deckData, [field]: value };
+    setDeckData(newDeck);
+  }; */
 
+  const handleSaveDataInfo = (deck:DeckType) => {
+    updateDeckService(deck);
+   }
   /*  const getExtendedCard = (
     card: CryptType | LibraryType,
     cardType: CardType,
@@ -150,9 +153,7 @@ const DeckContainer = () => {
     <div className='container'>
       <DeckInfoComponent
         deck={deckData}
-        handleChange={(field: string, value: string | Archetype) =>
-          handleChange(field, value)
-        }
+        handleSaveDataInfo={handleSaveDataInfo}
       />
       <div className='deck__container'>
         

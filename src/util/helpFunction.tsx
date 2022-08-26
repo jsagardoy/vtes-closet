@@ -598,6 +598,11 @@ export const getUserId = (): string | null => {
   return null;
 };
 
+export const getCleanedName = (name: string) => {
+  const regExp = /\s\(.*?\)/g;
+  return name.replaceAll(regExp, '');
+};
+
 export const getUser = () => {
   const user = window.localStorage.getItem('auth');
   if (user) {
