@@ -1,4 +1,3 @@
-import { validate } from '@babel/types';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
