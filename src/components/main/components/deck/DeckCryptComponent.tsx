@@ -92,7 +92,7 @@ const DeckCryptComponent = (props: Props) => {
       });
 
       return capacities
-        ? capacities.reduce((a, b) => a + b) / capacities.length
+        ? (capacities.reduce((a, b) => a + b) / capacities.length).toFixed(2)
         : 0;
     }
     return 0;
@@ -104,7 +104,8 @@ const DeckCryptComponent = (props: Props) => {
         const value = elem.data as CryptType;
         return value.group;
       });
-      return groups ? groups : [];
+      const setGroup =  new Set(groups)
+      return groups ? Array.from(setGroup).sort() : [];
     }
     return [];
   }
@@ -125,11 +126,12 @@ const DeckCryptComponent = (props: Props) => {
           display: 'flex',
           borderBottom: '1px solid darkcyan',
           flexDirection: 'row',
+          justifyContent: 'space-evenly',
         }}
       >
-        <Typography>Max Capacity:{getMaxCapacity()} </Typography>
         <Typography>Min Capacity:{getMinCapacity()} </Typography>
-        <Typography>Averge Capacity: {getAvgCapacity()} </Typography>
+        <Typography>Max Capacity:{getMaxCapacity()} </Typography>
+        <Typography>Average Capacity: {getAvgCapacity()} </Typography>
         <Typography>
           Groups: [
           {getGroups().map((group: string, index: number) => {
