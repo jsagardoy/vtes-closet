@@ -162,6 +162,7 @@ export const getCardCost = (cost: string, type: 'blood' | 'pool'): string =>
 export const getBurnOption = (): string => `${URLBase}burn.png`;
 
 export const getDiscInf = (): string[] => disciplines_inf;
+
 export const getDiscSup = (): string[] =>
   disciplines_inf.map((dis) => dis.toUpperCase());
 export const getClans = () =>
@@ -299,6 +300,26 @@ export const getLibraryCardTypes = () => [
   'Political Action',
   'Reaction',
   'Power',
+  'Token',
+];
+export const getLibraryCardTypesSorted = ():string[] => [
+  'Master',
+  'Conviction',
+  'Power',
+  'Action',
+  'Ally',
+  'Equipment',
+  'Political Action',
+  'Action Modifier',
+  'Combat',
+  'Reaction',
+  'Action Modifier,Reaction',
+  'Action Modifier,Combat',
+  'Action,Reaction',
+  'Action,Combat',
+  'Combat,Reaction',
+  'Event',
+  'Any',
   'Token',
 ];
 

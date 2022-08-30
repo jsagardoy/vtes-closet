@@ -1,3 +1,4 @@
+import { validate } from '@babel/types';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
@@ -11,6 +12,7 @@ import {
 import { LibraryType } from '../../../../types/library_type';
 import { HEADER_COLOR } from '../../../../util/helpFunction';
 import DeckCryptComponent from './DeckCryptComponent';
+import DeckLibraryComponent from './DeckLibraryComponent';
 
 interface Props {
   deck: DeckType;
@@ -29,6 +31,17 @@ const DeckListComponent = (props: Props) => {
   const [extendedCrypt, setExtendedCrypt] = React.useState<ExtendedDeckType[]>(
     []
   );
+
+  const [cryptSizeError, setCryptSizeError] = React.useState<boolean>(false);
+  const [cryptGroupError, setCryptGroupError] = React.useState<boolean>(false);
+  const [cryptBannedError, setCryptBannedError] =
+    React.useState<boolean>(false);
+  const [librarySizeError, setLibrarySizeError] =
+    React.useState<boolean>(false);
+  const [libraryExceededSizeError, setLibraryExceededSizeError] =
+    React.useState<boolean>(false);
+  const [libraryBannedError, setLibraryBannedError] =
+    React.useState<boolean>(false);
 
   const updateQuantity = (
     newValue: number,
@@ -66,6 +79,16 @@ const DeckListComponent = (props: Props) => {
         setExtendedCrypt(newExtendedCrypt);
       }
     }
+  };
+
+  const calculateLibrary = (): number => {
+    const quantity = extendedLibrary.map((elem) => elem.quantity);
+    return quantity.length > 0 ? quantity.reduce((acum, a) => acum + a) : 0;
+  };
+
+  const calculateCrypt = (): number => {
+    const quantity = extendedCrypt.map((elem) => elem.quantity);
+    return quantity.length > 0 ? quantity.reduce((acum, a) => acum + a) : 0;
   };
 
   React.useEffect(() => {
@@ -128,6 +151,71 @@ const DeckListComponent = (props: Props) => {
     };
     fetchCryptData();
   }, [deck]);
+  //Validates deckLibrary when changes in the list
+  React.useEffect(() => {
+    const validateDeckLibrarySize = () => {
+      if (calculateLibrary() < 60) {
+        setLibrarySizeError(true);
+      } else {
+        setLibrarySizeError(false);
+      }
+    };
+
+    const validateDeckLibraryExceededSize = () => {
+      if (calculateLibrary() > 90) {
+        setLibraryExceededSizeError(true);
+      } else {
+        setLibraryExceededSizeError(false);
+      }
+    };
+
+    const validateDeckBannedLibrary = () => {
+      if (
+        extendedLibrary.map((elem) => elem.data).find((elem) => elem.banned)
+      ) {
+        setLibraryBannedError(true);
+      } else {
+        setLibraryBannedError(false);
+      }
+    };
+    validateDeckLibrarySize();
+    validateDeckBannedLibrary();
+    validateDeckLibraryExceededSize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extendedLibrary]);
+
+  //Validates deckCrypt when changes in the list
+  React.useEffect(() => {
+    const validateDeckBannedCrypt = () => {
+      if (extendedCrypt.map((elem) => elem.data).find((elem) => elem.banned)) {
+        setCryptBannedError(true);
+      } else {
+        setCryptBannedError(false);
+      }
+    };
+    const validateDeckCryptSize = (): void => {
+      if (calculateCrypt() < 12) {
+        setCryptSizeError(true);
+      } else setCryptSizeError(false);
+    };
+    const validateDeckCrytptGroups = (): void => {
+      const cryptList = extendedCrypt.map((elem) => elem.data as CryptType);
+      const groupList: number[] = cryptList.map((elem) => Number(elem.group));
+      const setGroup = new Set(groupList);
+      const newArray: number[] = Array.from(setGroup);
+      const max = Math.max(...newArray);
+      const min = Math.min(...newArray);
+      if (max - min > 1) {
+        setCryptGroupError(true);
+      } else {
+        setCryptGroupError(false);
+      }
+    };
+    validateDeckCryptSize();
+    validateDeckCrytptGroups();
+    validateDeckBannedCrypt();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extendedCrypt]);
 
   return (
     <Box className='deck'>
@@ -147,14 +235,49 @@ const DeckListComponent = (props: Props) => {
             backgroundColor: HEADER_COLOR,
             borderBottom: '3px solid darkcyan',
             paddingLeft: '1rem',
-            paddingRight:'1rem',
+            paddingRight: '1rem',
             borderTop: '1px solid darkcyan',
             display: 'flex',
             justifyContent: 'space-between',
           }}
         >
           <Typography variant='subtitle1'>Crypt</Typography>
-          <Typography variant='subtitle1'>{extendedCrypt.length}</Typography>
+          <Typography variant='subtitle1'>{calculateCrypt()}</Typography>
+        </Box>
+        <Box>
+          {cryptSizeError ? (
+            <Typography
+              sx={{
+                backgroundColor: HEADER_COLOR,
+                color: 'red',
+                fontSize: 'smaller',
+              }}
+            >
+              The crypt must contain at least 12 crypt cards
+            </Typography>
+          ) : null}
+          {cryptGroupError ? (
+            <Typography
+              sx={{
+                backgroundColor: HEADER_COLOR,
+                color: 'red',
+                fontSize: 'smaller',
+              }}
+            >
+              Invalid groups. Groups must be consecutives.
+            </Typography>
+          ) : null}
+          {cryptBannedError ? (
+            <Typography
+              sx={{
+                backgroundColor: HEADER_COLOR,
+                color: 'red',
+                fontSize: 'smaller',
+              }}
+            >
+              Your crypt contains a banned card.
+            </Typography>
+          ) : null}
         </Box>
         <DeckCryptComponent
           data={extendedCrypt}
@@ -168,28 +291,66 @@ const DeckListComponent = (props: Props) => {
           }
         />
       </Box>
-      <Box className='deck__library'>
-        <Typography
-          variant='subtitle1'
-          sx={{
-            backgroundColor: HEADER_COLOR,
-            paddingLeft: '1rem',
-            borderBottom: '3px solid darkcyan',
-            borderTop: '3px solid darkcyan',
-          }}
-        >
-          Library
-        </Typography>
-        {/* <DeckComponent
-          data={extendedLibrary}
-          updateQuantity={(
-            newQuantity: number,
-            id: number,
-            cardType: CardType
-          ) => updateQuantity(newQuantity, id, cardType)}
-          handleRemoveCard={(id:number,cardType:CardType)=>handleRemoveCard(id,cardType)}
-        /> */}
+      <Box
+        sx={{
+          width: '100',
+          backgroundColor: HEADER_COLOR,
+          borderBottom: '3px solid darkcyan',
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+          borderTop: '1px solid darkcyan',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant='subtitle1'>Library</Typography>
+        <Typography variant='subtitle1'>{calculateLibrary()}</Typography>
       </Box>
+      <Box>
+        {librarySizeError ? (
+          <Typography
+            sx={{
+              backgroundColor: HEADER_COLOR,
+              color: 'red',
+              fontSize: 'smaller',
+            }}
+          >
+            The library must contain at least 60 library cards.
+          </Typography>
+        ) : null}
+        {libraryExceededSizeError ? (
+          <Typography
+            sx={{
+              backgroundColor: HEADER_COLOR,
+              color: 'red',
+              fontSize: 'smaller',
+            }}
+          >
+            The library exceeded the 90 library cards limitation.
+          </Typography>
+        ) : null}
+        {libraryBannedError ? (
+          <Typography
+            sx={{
+              backgroundColor: HEADER_COLOR,
+              color: 'red',
+              fontSize: 'smaller',
+            }}
+          >
+            Your library contains at least one banned card.
+          </Typography>
+        ) : null}
+      </Box>
+
+      <DeckLibraryComponent
+        data={extendedLibrary}
+        updateQuantity={(newQuantity: number, id: number, cardType: CardType) =>
+          updateQuantity(newQuantity, id, cardType)
+        }
+        handleRemoveCard={(id: number, cardType: CardType) =>
+          handleRemoveCard(id, cardType)
+        }
+      />
     </Box>
   );
 };
