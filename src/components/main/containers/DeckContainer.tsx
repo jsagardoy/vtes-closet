@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
@@ -28,15 +29,23 @@ const DeckContainer = () => {
   const [deckData, setDeckData] = React.useState<DeckType>(
     initialDeck as DeckType
   );
-  
-/*   const handleChange = (field: string, value: string | Archetype) => {
+  const [openSnackBar, setOpenSnackBar] = React.useState<boolean>(false);
+  const [errorSnackBar, setErrorSnackBar] = React.useState<boolean>(false);
+
+  /*   const handleChange = (field: string, value: string | Archetype) => {
     const newDeck:DeckType = { ...deckData, [field]: value };
     setDeckData(newDeck);
   }; */
 
-  const handleSaveDataInfo = (deck:DeckType) => {
-    updateDeckService(deck);
-   }
+  const handleSaveDataInfo = async (deck: DeckType) => {
+    try {
+      await updateDeckService(deck);
+      setOpenSnackBar(true);
+    } catch (error) {
+      console.log('%cError', 'color:red');
+      setErrorSnackBar(true);
+    }
+  };
   /*  const getExtendedCard = (
     card: CryptType | LibraryType,
     cardType: CardType,
@@ -44,6 +53,9 @@ const DeckContainer = () => {
   ): ExtendedDeckType => {
     return { data: card, quantity: quantity, cardType: cardType };
   }; */
+  const handleCloseSnackBar = (): void => setOpenSnackBar((prev) => !prev);
+  const handleCloseErrorSnackBar = (): void =>
+    setErrorSnackBar((prev) => !prev);
 
   const updateDeck = (
     library: ExtendedDeckType[],
@@ -82,16 +94,16 @@ const DeckContainer = () => {
         const newCryptList: ListType[] = [...deckData.crypt, newCryptElem];
         const newDeck: DeckType = { ...deckData, crypt: newCryptList };
         updateDeckService(newDeck);
-        setDeckData({...newDeck});
+        setDeckData({ ...newDeck });
       } else {
         const list = [...deckData.crypt];
-        const newCrypt:ListType[] = list.map((elem:ListType) => {
+        const newCrypt: ListType[] = list.map((elem: ListType) => {
           if (elem.id === card.id.toString()) {
-            return {id:card.id.toString(),quantity:elem.quantity+1}
+            return { id: card.id.toString(), quantity: elem.quantity + 1 };
           }
           return elem;
-        })
-        const newDeck: DeckType = { ...deckData, crypt: newCrypt }
+        });
+        const newDeck: DeckType = { ...deckData, crypt: newCrypt };
         updateDeckService(newDeck);
         setDeckData({ ...newDeck });
       }
@@ -103,11 +115,17 @@ const DeckContainer = () => {
       );
 
       if (index === -1) {
-        const newLibraryElem: ListType = { id: card.id.toString(), quantity: 1 };
-        const newLibraryList: ListType[] = [...deckData.library, newLibraryElem];
+        const newLibraryElem: ListType = {
+          id: card.id.toString(),
+          quantity: 1,
+        };
+        const newLibraryList: ListType[] = [
+          ...deckData.library,
+          newLibraryElem,
+        ];
         const newDeck: DeckType = { ...deckData, library: newLibraryList };
         updateDeckService(newDeck);
-        setDeckData({...newDeck});
+        setDeckData({ ...newDeck });
       } else {
         const list = [...deckData.library];
         const newLibrary: ListType[] = list.map((elem: ListType) => {
@@ -125,10 +143,12 @@ const DeckContainer = () => {
 
   const handleRemoveCard = (id: number, cardType: CardType) => {
     if (cardType === 'crypt') {
-        const newList: ListType[] = [...deckData.crypt.filter((elem)=>elem.id!==id.toString())];
-        const newDeck:DeckType = {...deckData, crypt: newList };
-        updateDeckService(newDeck);
-        setDeckData({...newDeck});
+      const newList: ListType[] = [
+        ...deckData.crypt.filter((elem) => elem.id !== id.toString()),
+      ];
+      const newDeck: DeckType = { ...deckData, crypt: newList };
+      updateDeckService(newDeck);
+      setDeckData({ ...newDeck });
     }
 
     if (cardType === 'library') {
@@ -156,14 +176,15 @@ const DeckContainer = () => {
         handleSaveDataInfo={handleSaveDataInfo}
       />
       <div className='deck__container'>
-        
         <DeckListComponent
           deck={deckData}
           updateDeck={(
             library: ExtendedDeckType[],
             crypt: ExtendedDeckType[]
           ) => updateDeck(library, crypt)}
-          handleRemoveCard={(id:number, cardType:CardType)=>handleRemoveCard(id, cardType)}
+          handleRemoveCard={(id: number, cardType: CardType) =>
+            handleRemoveCard(id, cardType)
+          }
         />
         <div className='search__container'>
           <SearchDeckContainer
@@ -173,6 +194,30 @@ const DeckContainer = () => {
             ) => handleAddCardToDeck(card, cardType)}
           />
         </div>
+      </div>
+      <div>
+        <Snackbar
+          open={openSnackBar}
+          autoHideDuration={3000}
+          onClose={handleCloseSnackBar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={handleCloseSnackBar} severity='success'>
+            Data successfully saved!
+          </Alert>
+        </Snackbar>
+      </div>
+      <div>
+        <Snackbar
+          open={errorSnackBar}
+          autoHideDuration={3000}
+          onClose={handleCloseErrorSnackBar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert onClose={handleCloseErrorSnackBar} severity='error'>
+            Error saving Data!
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
