@@ -167,7 +167,7 @@ const DeckCryptComponent = (props: Props) => {
                   updateQuantity={(
                     newQuantity: number,
                     id: number,
-                    cardType: 'library' | 'crypt'
+                    cardType: CardType
                   ) => updateQuantity(newQuantity, id, cardType)}
                   cardType={elem.cardType}
                 />

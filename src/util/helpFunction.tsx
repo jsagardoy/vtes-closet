@@ -347,6 +347,12 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
   if (card.card_text.includes('blood cost')) return null;
 
   if (text !== '') {
+    if (card.card_text.toLowerCase().includes(textFixed.toLowerCase())) {
+      aux = card;
+    }
+     if (card.name.toLowerCase().includes(textFixed.toLowerCase())) {
+       aux = card;
+     }
     if (
       getSects()
         .map((elem) => elem.toLowerCase())

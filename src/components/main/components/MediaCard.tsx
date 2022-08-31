@@ -1,10 +1,11 @@
 import { Button, Card, CardActions, CardMedia } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { CardType } from '../../../types/deck_type';
 import { getUserId } from '../../../util';
 
 interface Props {
   title: string;
-  imageCardType: 'library' | 'crypt' | 'deck';
+  imageCardType: CardType | 'deck';
 }
 
 const MediaCard = (props: Props) => { 
