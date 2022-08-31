@@ -25,7 +25,7 @@ interface Props {
   deckMode: boolean;
   handleAddCardToDeck: (
     card: CryptType | LibraryType,
-    cardType:CardType,
+    cardType: CardType
   ) => void;
 }
 
@@ -53,7 +53,11 @@ const CryptContainer = (props: Props) => {
     minCap: capacityType
   ) => {
     const resp = sessionStorage
-      .filter((item) => item.name.toLowerCase().includes(name))
+      .filter(
+        (item) =>
+          item.name.toLowerCase().includes(name.toLowerCase()) ||
+          item.card_text.toLowerCase().includes(name.toLowerCase())
+      )
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
         clan !== ''
@@ -161,7 +165,7 @@ const CryptContainer = (props: Props) => {
         deckMode={deckMode}
         handleAddCardToDeck={(
           card: CryptType | LibraryType,
-          cardType:CardType
+          cardType: CardType
         ) => handleAddCardToDeck(card, cardType)}
       />
     </div>
