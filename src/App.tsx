@@ -34,8 +34,8 @@ function App() {
     }
   });
 
-  const handleClickMenuIcon = () => setToogleSidebar(!toogleSidebar);
-
+  const handleClickMenuIcon = () => setToogleSidebar((prev)=>!prev);
+//only added becauser needed to reuse component
   const handleAddCardToDeck = (
     card: LibraryType | CryptType,
     cardType: CardType

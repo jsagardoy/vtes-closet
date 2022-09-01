@@ -2,8 +2,6 @@ import { List, ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import useMediaQuery from '@mui/material/useMediaQuery';
-
 import './Sidebar.css';
 import { getUserId } from '../util';
 
@@ -17,7 +15,6 @@ const Sidebar = (props: Props) => {
   const auth = getAuth();
   const [user, setUser] = React.useState<any>(auth);
   const history: any = useHistory();
-  const matches = useMediaQuery('(max-width:600px)');
 
   onAuthStateChanged(auth, (us) => {
     if (us) {
@@ -31,46 +28,33 @@ const Sidebar = (props: Props) => {
     const userId = getUserId();
     switch (cardType) {
       case 'Crypt':
-        if (matches) {
-          handleToogle();
-        }
+        handleToogle();
         history.push('/crypt');
         break;
       case 'Library':
-        if (matches) {
-          handleToogle();
-        }
+        handleToogle();
         history.push('/library');
         break;
       case 'Decks':
-        if (matches) {
-          handleToogle();
-        }
-          history.push(`/private/:${userId}/decks`);
+        handleToogle();
+        history.push(`/private/:${userId}/decks`);
         break;
       case 'InventoryLibrary':
-        if (matches) {
-          handleToogle();
-        }
+        handleToogle();
         history.push(`/private/:${userId}/inventory/library`);
         break;
       case 'InventoryCrypt':
-        if (matches) {
-          handleToogle();
-        }
-          history.push(`/private/:${userId}/inventory/crypt`);
+        handleToogle();
+        history.push(`/private/:${userId}/inventory/crypt`);
         break;
-      
       default:
-        if (matches) {
-          handleToogle();
-        }
-        console.log('Wrong error');
+        handleToogle();
+        alert('Wrong error');
         break;
     }
   };
 
-  return (
+  return toogle ? (
     <aside className={toogle ? 'sidebar' : 'hidden'}>
       <div className='list__container'>
         <List className='list'>
@@ -171,6 +155,6 @@ const Sidebar = (props: Props) => {
         </List>
       </div>
     </aside>
-  );
+  ) : null;
 };
 export default Sidebar;
