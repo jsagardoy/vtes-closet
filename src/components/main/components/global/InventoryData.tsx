@@ -1,18 +1,43 @@
 import React from 'react';
-import { TextField, Box, Tooltip } from '@mui/material';
+import { TextField, Box, Tooltip, IconButton } from '@mui/material';
 import { useInventory } from '../../../../hooks/useInventory';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import {
+  cryptInventoryType,
+  libraryInventoryType,
+} from '../../../../types/inventory_type';
 interface Props {
+  card: cryptInventoryType | libraryInventoryType;
   label: string;
   initialValue: number;
-  getCounter: (label: string, counter: number) => void;
+  updateInventory: (card: cryptInventoryType | libraryInventoryType) => void;
 }
 
 const InventoryData = (props: Props) => {
-  const { label, initialValue, getCounter } = props;
-  const { counter, increment, set, decrement } = useInventory(
-    initialValue || 0
+  const { label, initialValue, updateInventory, card } = props;
+  const { counter, set } = useInventory(initialValue ?? 0);
+
+  const generateInventory = React.useMemo(
+    () => (value: number) => {
+      const newInventory: cryptInventoryType | libraryInventoryType = {
+        ...card,
+        [label.toLowerCase()]: value,
+      };
+      updateInventory(newInventory);
+    },
+    [card, label, updateInventory]
   );
+
+  const handleClick = React.useMemo(
+    () => (value: number) => {
+      set(value);
+      generateInventory(value);
+    },
+    [generateInventory, set]
+  );
+
+  React.useEffect(() => {}, []);
 
   if (label === 'Used') {
     return (
@@ -36,7 +61,6 @@ const InventoryData = (props: Props) => {
             aria-disabled={true}
             disabled
             label={label}
-            onChange={(e) => set(Number(e.target.value))}
             value={counter}
             variant='standard'
           />
@@ -54,9 +78,9 @@ const InventoryData = (props: Props) => {
         marginLeft: '0.5rem',
       }}
     >
-      <button
+      <IconButton
         disabled={counter <= 0}
-        style={{
+        sx={{
           display: 'flex',
           height: '100%',
           color: 'black',
@@ -64,12 +88,11 @@ const InventoryData = (props: Props) => {
           alignItems: 'center',
         }}
         onClick={() => {
-          decrement();
-          getCounter(label, counter - 1);
+          handleClick(counter - 1);
         }}
       >
-        -
-      </button>
+        <RemoveCircleIcon />
+      </IconButton>
       <TextField
         sx={{
           paddingLeft: '0.1rem',
@@ -82,27 +105,20 @@ const InventoryData = (props: Props) => {
         size='small'
         aria-disabled={true}
         label={label}
-        onChange={(e) => {
-          set(Number(e.target.value));
-          getCounter(label, Number(e.target.value));
-        }}
-        value={counter}
+        value={counter < 0 ? 0 : counter}
       />
-      <button
-        style={{
+      <IconButton
+        sx={{
           display: 'flex',
           height: '100%',
           color: 'black',
           padding: '0.3rem',
           alignItems: 'center',
         }}
-        onClick={() => {
-          increment();
-          getCounter(label, counter + 1);
-        }}
+        onClick={() => handleClick(counter + 1)}
       >
-        +
-      </button>
+        <AddCircleIcon />
+      </IconButton>
     </Box>
   );
 };

@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useMemo, useRef } from 'react';
 import './CryptContainer.css';
 import NavbarCryptList from '../components/crypt/NavbarCryptList';
-
 import { CryptType, PropType, TitleType } from '../../../types/crypt_type';
 import {
   capacityType,
@@ -9,17 +8,19 @@ import {
   filterProps,
   filterTitle,
   findInText,
-  getUserId,
   groupType as GroupType,
 } from '../../../util';
-
 import { Spinner } from '../components/global/Spinner';
 import { fetchCrypt } from '../../../service/fetchCrypt';
-
-import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import InventoryCryptList from '../components/crypt/InventoryCryptList';
 import { cryptInventoryType } from '../../../types/inventory_type';
 import { fetchCryptInventory } from '../../../service/fetchCryptInventory';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { setCryptInventory } from '../../../service/setCryptInventory';
+import Fab from '@mui/material/Fab';
+import SaveIcon from '@mui/icons-material/Save';
+
 interface Props {
   toogle: boolean;
 }
@@ -27,12 +28,13 @@ interface Props {
 const InventoryCryptContainer = (props: Props) => {
   const { toogle } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [sessionStorage, setSessionStorage] = useSessionStorage<
-    cryptInventoryType[]
-  >('cryptInventoryList', []);
   const [list, setList] = React.useState<cryptInventoryType[]>([]);
   const [sortAZ, setSortAZ] = React.useState<boolean>(false);
   const [sort, setSort] = React.useState<boolean>(false);
+  const [message, setMessage] = React.useState<string>('');
+  const [saving, setSaving] = React.useState<boolean>(false);
+  const [showSnackbar, setShowSnackbar] = React.useState<boolean>(false);
+  const initialData = useRef<cryptInventoryType[]>(list);
 
   const handleSearch = (
     name: string,
@@ -45,7 +47,7 @@ const InventoryCryptContainer = (props: Props) => {
     maxCap: capacityType,
     minCap: capacityType
   ) => {
-    const resp = sessionStorage
+    const resp = initialData.current
       .filter((item) => item.name.toLowerCase().includes(name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -96,137 +98,105 @@ const InventoryCryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = async () => setList(sessionStorage);
-  const handleUpdateList = useCallback((newList: cryptInventoryType[]) => {
-    //setSessionStorage(newList);
-    setList(newList);
-  },[]);
+  const handleReset = async () => {}; /* setList(localStorage) ;*/
 
-  
-  React.useEffect(
-    () => {
-      if (
-        sessionStorage &&
-        sessionStorage !== [] &&
-        sessionStorage.length > 0 &&
-        list === []
-      ) {
-        setList(sessionStorage);
-      } else {
-        setLoader(true);
-        const uid = getUserId();
-        fetchCryptInventory(`${uid}-1`)
-          .then((data: cryptInventoryType[]) => {
-            fetchCryptInventory(`${uid}-2`).then(
-              (data2: cryptInventoryType[]) => {
-                if (data && data2 && data.length > 0 && data2.length > 0) {
-                  const composedArray = data.concat(data2);
-                  setList(composedArray);
-                  setSessionStorage(composedArray);
-                  setLoader(false);
-                } else {
-                  fetchCrypt()
-                    .then((data: CryptType[]) => {
-                      const newData: CryptType[] = [...data];
-                      const resultData: cryptInventoryType[] = newData.map(
-                        (elem: CryptType) => {
-                          return {
-                            ...elem,
-                            have: 0,
-                            want: 0,
-                            trade: 0,
-                            used: 0,
-                          };
-                        }
-                      );
-                      setList(resultData);
-                      setSessionStorage(resultData);
-                      setLoader(false);
-                    })
-                    .catch((error) => {
-                      setLoader(false);
-                      console.log(error);
-                    });
-                }
-              }
-            );
-          })
-          .catch((error) => {
-            //TEMPORSAL: en caso de que haya sobrepasadp las peticiones BBDD carga el mock de datos.
-            const data: cryptInventoryType[] = [
-              {
-                capacity: 4,
-                group: '2',
-                id: 200001,
-                name: 'Aabbt Kindred (G2)',
-                sets: {
-                  'Final Nights': [
-                    {
-                      rarity: 'Uncommon',
-                      release_date: '2001-06-11',
-                      frequency: 2,
-                    },
-                  ],
-                  'Print on Demand': [
-                    {
-                      copies: 1,
-                      precon: 'DriveThruCards',
-                    },
-                  ],
-                },
-                artists: ['Lawrence Snelly'],
+  const handleSave = (): void => {
+    setLoader(true);
+    setSaving(true);
+    setCryptInventory(list)
+      .then((msg) => {
+        setShowSnackbar(true);
+        setMessage(JSON.stringify(msg));
+        setSaving(false);
+        setLoader(false);
+      })
+      .catch((msg) => {
+        setShowSnackbar(true);
+        setMessage(msg);
+        setSaving(false);
+        setLoader(false);
+      });
+  };
 
-                clans: ['Ministry'],
-                url: 'https://static.krcg.org/card/aabbtkindredg2.jpg',
-
-                disciplines: ['for', 'pre', 'ser'],
-                card_text:
-                  'Independent: Aabbt Kindred cannot perform directed actions unless /Nefertiti/ is ready. Aabbt Kindred can prevent 1 damage each combat. Non-unique.',
-                types: ['Vampire'],
-
-                have: 0,
-                want: 0,
-                trade: 0,
-                used: 0,
-              },
-              {
-                types: ['Vampire'],
-                clans: ['Nosferatu antitribu'],
-                url: 'https://static.krcg.org/card/aaronbathurstg4.jpg',
-                name: 'Aaron Bathurst (G4)',
-                group: '4',
-                id: 200002,
-                artists: ['Rik Martin'],
-
-                disciplines: ['for', 'obf', 'pot'],
-
-                sets: {
-                  'Third Edition': [
-                    {
-                      rarity: 'Vampire',
-                      release_date: '2006-09-04',
-                    },
-                  ],
-                },
-                capacity: 4,
-
-                card_text: 'Sabbat.',
-                have: 0,
-                want: 0,
-                trade: 0,
-                used: 0,
-              },
-            ];
-            setList(data);
-            setSessionStorage(data);
-            setLoader(false);
-          });
-      }
-      //si no hay valores para el usuario. Hay que implementar si ya tiene
+  const handleUpdateList = useMemo(
+    () => (newList: cryptInventoryType[]) => {
+      setList(newList);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+  const handleCloseSnackbar = () => setShowSnackbar(false);
+
+  React.useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const data = await fetchCryptInventory();
+        if (!data) {
+          //si no hay inventario creado
+          const value = window.localStorage.getItem('cryptList');
+          let noInventory;
+          if (value) {
+            noInventory = JSON.parse(value);
+          }
+          if (noInventory) {
+            noInventory = JSON.parse(noInventory);
+            window.localStorage.setItem('cryptInventory', JSON.stringify(noInventory));
+          } else {
+            noInventory = await fetchCrypt();
+          }
+          if (noInventory) {
+            const newData: CryptType[] = noInventory;
+            const resultData: cryptInventoryType[] = newData.map(
+              (elem: CryptType) => ({
+                ...elem,
+                want:0,
+                have:0,
+                used:0,
+                trade:0
+              })
+            );
+            setList(resultData);
+            initialData.current = [...resultData];
+            setLoader(false);
+          } else {
+            setList(data);
+            initialData.current = [...data];
+            setLoader(false);
+          }
+        } else {
+          //hay datos para el inventario
+          const noInventory =
+            window.localStorage.getItem('cryptList') ?? (await fetchCrypt());
+          const newData: cryptInventoryType[] = data.map(
+            (elem: cryptInventoryType) => {
+              const invent = noInventory.find(
+                (inventory: CryptType) => inventory.id === elem.id
+              );
+              if (invent) {
+                const newInventory: cryptInventoryType = {
+                  ...invent,
+                  have: elem.have,
+                  want: elem.want,
+                  trade: elem.trade,
+                  used: elem.used,
+                };
+                return newInventory;
+              }
+              return null;
+            }
+          );
+          const newValue = newData.filter((elem) => elem !== null);
+          setList(newValue);
+          initialData.current = newValue;
+          setLoader(false);
+        }
+      };
+
+      setLoader(true);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
@@ -260,6 +230,45 @@ const InventoryCryptContainer = (props: Props) => {
       />
       {loader && <Spinner />}
       <InventoryCryptList list={list} updateList={handleUpdateList} />
+      <Fab
+        sx={{
+          backgroundColor: 'darkcyan',
+          position: 'fixed',
+          right: '20%',
+          top: '90%',
+          bottom: '10%',
+          left: '80%',
+          zIndex: '1000',
+        }}
+        disabled={saving}
+        aria-label='Save'
+        onClick={() => handleSave()}
+      >
+        <SaveIcon />
+      </Fab>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        {message.toLowerCase().includes('error') ? (
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity='error'
+            sx={{ width: '100%' }}
+          >
+            {message}
+          </Alert>
+        ) : (
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity='success'
+            sx={{ width: '100%' }}
+          >
+            {message}
+          </Alert>
+        )}
+      </Snackbar>
     </div>
   );
 };

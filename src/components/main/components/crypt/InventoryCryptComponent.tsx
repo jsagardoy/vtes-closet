@@ -5,7 +5,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { getCleanedName, getDiscIcon } from '../../../../util/helpFunction';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -23,29 +23,32 @@ interface Props {
 const InventoryCryptComponent = (props: Props) => {
   const { list, handleOpen, initialValue, updateInventory } = props;
   //const initialValue = list.slice(0, 20);
-
   const [items, setItems] = React.useState<cryptInventoryType[]>(initialValue);
 
-  const isElement = (elem: CryptType, index: number): number => {
-    return elem && items.length > 0 && elem.id === items[items.length - 1].id
-      ? index
-      : -1;
-  };
+  const isElement = useMemo(() => {
+    return (elem: CryptType, index: number): number => {
+      return elem && items.length > 0 && elem.id === items[items.length - 1].id
+        ? index
+        : -1;
+    };
+  }, [items]);
 
-  const fetchMoreData = () => {
-    if (list) {
-      const initItem: number | undefined = list
-        .map((elem, index) => isElement(elem, index))
-        .find((elem) => elem !== -1);
-      if (initItem) {
-        setItems(
-          items.concat([
-            ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
-          ])
-        );
+  const fetchMoreData = useMemo(() => {
+    return () => {
+      if (list) {
+        const initItem: number | undefined = list
+          .map((elem, index) => isElement(elem, index))
+          .find((elem) => elem !== -1);
+        if (initItem) {
+          setItems(
+            items.concat([
+              ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
+            ])
+          );
+        }
       }
-    }
-  };
+    };
+  }, [isElement, items, list]);
 
   React.useEffect(() => {
     setItems(initialValue);
