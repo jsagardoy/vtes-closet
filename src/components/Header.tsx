@@ -2,15 +2,19 @@ import React from 'react';
 import './Header.css';
 import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getUser } from '../util';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 interface Props {
-  handleClickLogo:() => void;
+  paletteMode: string;
+  handleClickLogo: () => void;
+  handleColorMode: () => void;
 }
 const Header = (props: Props) => {
-  const { handleClickLogo } = props;
+  const { handleClickLogo,paletteMode,handleColorMode } = props;
   const auth = getAuth();
   const [photoURL, setPhotoURL] = React.useState<string>(auth.currentUser?.photoURL||'');
   const [userName, setUserName] = React.useState<string>('');
@@ -44,23 +48,30 @@ const Header = (props: Props) => {
   return (
     <div className='header'>
       <div className='header__left'>
-        <MenuIcon
-          fontSize='large'
-          onClick={() => handleClickLogo()}
-        />
+        <MenuIcon fontSize='large' onClick={() => handleClickLogo()} />
         <img
           className='logoWeb'
           src='https://sites.google.com/site/ausnzvteschampionship/_/rsrc/1361307183822/home/2013/Casino-Playing-Cards-icon%20VTESlogo.jpg?height=320&width=320'
           alt='logo'
         />
-      </div>
+      <IconButton
+        sx={{ ml: 1 }}
+        onClick={()=>handleColorMode()}
+        color='inherit'
+      >
+        {paletteMode=== 'dark' ? (
+          <Brightness7Icon />
+        ) : (
+          <Brightness4Icon />
+        )}
+      </IconButton></div>
       <div className='header__center'>
         <h3 className='siteName'>Vtes Closet</h3>
       </div>
       <div className='header__right'>
         <Login />
         <div className='userInfo'>
-           <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} /> 
+          <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
           <h5 className='userName'>{userName}</h5>
         </div>
       </div>
