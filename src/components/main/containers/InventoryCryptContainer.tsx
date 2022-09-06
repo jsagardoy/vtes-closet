@@ -239,6 +239,7 @@ const InventoryCryptContainer = (props: Props) => {
           bottom: '10%',
           left: '80%',
           zIndex: '1000',
+          color: 'white',
         }}
         disabled={saving}
         aria-label='Save'

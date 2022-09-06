@@ -31,12 +31,12 @@ const InventoryCrypt = (props: Props) => {
         initialValue={card.trade}
         updateInventory={(card) => updateInventory(card as cryptInventoryType)}
       />
-      <InventoryData
+      {/* <InventoryData
         label='Used'
         card={card}
         initialValue={card.used}
         updateInventory={(card) => updateInventory(card as cryptInventoryType)}
-      />
+      /> */}
     </div>
   );
 };
