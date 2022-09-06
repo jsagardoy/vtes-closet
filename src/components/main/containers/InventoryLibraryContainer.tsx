@@ -1,27 +1,29 @@
-import React from 'react';
-import { useSessionStorage } from '../../../hooks/useSessionStorage';
+import { Alert, Fab, Snackbar } from '@mui/material';
+import React, { useMemo, useRef } from 'react';
 import { fetchLibrary } from '../../../service/fetchLibrary';
 import { fetchLibraryInventory } from '../../../service/fetchLibraryInventory';
 import { libraryInventoryType } from '../../../types/inventory_type';
-import { LibraryPropType } from '../../../types/library_type';
+import { LibraryPropType, LibraryType } from '../../../types/library_type';
 import {
   compareArrays,
   filterProps,
   findInText,
-  getUserId,
 } from '../../../util/helpFunction';
 import { Spinner } from '../components/global/Spinner';
 import InventoryLibraryList from '../components/library/InventoryLibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
+import SaveIcon from '@mui/icons-material/Save';
+import { setLibraryInventory } from '../../../service/setLibraryInventory';
 
 const InventoryLibraryContainer = () => {
   const [list, setList] = React.useState<libraryInventoryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [sessionStorage, setSessionStorage] = useSessionStorage<
-    libraryInventoryType[]
-  >('libraryInventoryList', []);
+  const [message, setMessage] = React.useState<string>('');
+  const [saving, setSaving] = React.useState<boolean>(false);
+  const [showSnackbar, setShowSnackbar] = React.useState<boolean>(false);
+  const initialData = useRef<libraryInventoryType[]>(list);
 
   const handleSearch = (
     name: string,
@@ -31,7 +33,7 @@ const InventoryLibraryContainer = () => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = sessionStorage
+    const resp = initialData.current
       .filter((item) => findInText(item, name))
       .filter((item) => compareArrays(item.disciplines, discList))
       .filter((item) =>
@@ -53,108 +55,110 @@ const InventoryLibraryContainer = () => {
       : list.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
     setSort(!sort);
   };
-  const handleUpdateList = (newList: libraryInventoryType[]) => {
-    //setSessionStorage(newList);
-    setList(newList);
-  };
 
-  React.useEffect(() => {
-    if (sessionStorage && sessionStorage !== [] && sessionStorage.length > 0) {
-      setList(sessionStorage);
-    } else {
+    const handleSave = (): void => {
       setLoader(true);
-      fetchLibrary()
-        .then((data: libraryInventoryType[]) => {
-          setList(data);
-          setSessionStorage(data);
+      setSaving(true);
+      setLibraryInventory(list)
+        .then((msg) => {
+          setShowSnackbar(true);
+          setMessage(JSON.stringify(msg));
+          setSaving(false);
           setLoader(false);
         })
-        .catch((error) => {
+        .catch((msg) => {
+          setShowSnackbar(true);
+          setMessage(msg);
+          setSaving(false);
           setLoader(false);
-          console.log(error);
         });
-    }
+    };
+
+ const handleUpdateList = useMemo(
+   () => (newList: libraryInventoryType[]) => {
+     setList(newList);
+   },
+   []
+ );
+
+  const handleCloseSnackbar = () => setShowSnackbar(false);
+  
+  React.useEffect(() => {
+     try {
+       const fetchData = async () => {
+         const data = await fetchLibraryInventory();
+         if (!data) {
+           //si no hay inventario creado
+           const value = window.localStorage.getItem('libraryList');
+           let noInventory;
+           if (value) {
+             noInventory = JSON.parse(value);
+           }
+           if (noInventory) {
+             noInventory = JSON.parse(noInventory);
+             window.localStorage.setItem(
+               'libraryInventory',
+               JSON.stringify(noInventory)
+             );
+           } else {
+             noInventory = await fetchLibrary();
+           }
+           if (noInventory) {
+             const newData: LibraryType[] = noInventory;
+             const resultData: libraryInventoryType[] = newData.map(
+               (elem: LibraryType) => ({
+                 ...elem,
+                 want: 0,
+                 have: 0,
+                 used: 0,
+                 trade: 0,
+               })
+             );
+             setList(resultData);
+             initialData.current = [...resultData];
+             setLoader(false);
+           } else {
+             setList(data);
+             initialData.current = [...data];
+             setLoader(false);
+           }
+         } else {
+           //hay datos para el inventario
+           const noInventory =
+             window.localStorage.getItem('libraryList') ?? (await fetchLibrary());
+           const newData: libraryInventoryType[] = data.map(
+             (elem: libraryInventoryType) => {
+               const invent = noInventory.find(
+                 (inventory: LibraryType) => inventory.id === elem.id
+               );
+               if (invent) {
+                 const newInventory: libraryInventoryType = {
+                   ...invent,
+                   have: elem.have,
+                   want: elem.want,
+                   trade: elem.trade,
+                   used: elem.used,
+                 };
+                 return newInventory;
+               }
+               return null;
+             }
+           );
+           const newValue = newData.filter((elem) => elem !== null);
+           setList(newValue);
+           initialData.current = newValue;
+           setLoader(false);
+         }
+       };
+
+       setLoader(true);
+       fetchData();
+     } catch (error) {
+       console.log(error);
+     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  React.useEffect(
-    () => {
-      if (
-        sessionStorage &&
-        sessionStorage !== [] &&
-        sessionStorage.length > 0 &&
-        list === []
-      ) {
-        setList(sessionStorage);
-      } else {
-        setLoader(true);
-        const uid = getUserId();
-        fetchLibraryInventory(`${uid}-1`)
-          .then((data: libraryInventoryType[]) => {
-            fetchLibraryInventory(`${uid}-2`).then(
-              (data2: libraryInventoryType[]) => {
-                fetchLibraryInventory(`${uid}-3`).then(
-                  (data3: libraryInventoryType[]) => {
-                    fetchLibraryInventory(`${uid}-4`).then(
-                      (data4: libraryInventoryType[]) => {
-                        if (
-                          data &&
-                          data2 &&
-                          data3 &&
-                          data4 &&
-                          data.length > 0 &&
-                          data2.length > 0 &&
-                          data3.length > 0 &&
-                          data4.length > 0
-                        ) {
-                          const composedArray = data.concat(
-                            data2,
-                            data3,
-                            data4
-                          );
-                          setList(composedArray);
-                          setSessionStorage(composedArray);
-                          setLoader(false);
-                        } else {
-                          fetchLibrary()
-                            .then((data: libraryInventoryType[]) => {
-                              const newData: libraryInventoryType[] = [...data];
-                              const resultData: libraryInventoryType[] =
-                                newData.map((elem: libraryInventoryType) => {
-                                  return {
-                                    ...elem,
-                                    have: 0,
-                                    want: 0,
-                                    trade: 0,
-                                    used: 0,
-                                  };
-                                });
-                              setList(resultData);
-                              setSessionStorage(resultData);
-                              setLoader(false);
-                            })
-                            .catch((error) => {
-                              setLoader(false);
-                              console.log(error);
-                            });
-                        }
-                      }
-                    );
-                  }
-                );
-              }
-            );
-          })
-
-          .catch((error) => {
-            console.log('Error Accessing Database');
-            setLoader(false);
-          });
-      }
-      //si no hay valores para el usuario. Hay que implementar si ya tiene
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+ 
   return (
     <div className='library__container'>
       <LibraryNavbarList
@@ -170,6 +174,45 @@ const InventoryLibraryContainer = () => {
       />
       {loader && <Spinner />}
       <InventoryLibraryList list={list} updateList={handleUpdateList} />
+      <Fab
+        sx={{
+          backgroundColor: 'darkcyan',
+          position: 'fixed',
+          right: '20%',
+          top: '90%',
+          bottom: '10%',
+          left: '80%',
+          zIndex: '1000',
+        }}
+        disabled={saving}
+        aria-label='Save'
+        onClick={() => handleSave()}
+      >
+        <SaveIcon />
+      </Fab>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        {message.toLowerCase().includes('error') ? (
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity='error'
+            sx={{ width: '100%' }}
+          >
+            {message}
+          </Alert>
+        ) : (
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity='success'
+            sx={{ width: '100%' }}
+          >
+            {message}
+          </Alert>
+        )}
+      </Snackbar>
     </div>
   );
 };

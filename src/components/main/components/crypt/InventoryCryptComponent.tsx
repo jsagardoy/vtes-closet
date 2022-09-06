@@ -22,7 +22,6 @@ interface Props {
 
 const InventoryCryptComponent = (props: Props) => {
   const { list, handleOpen, initialValue, updateInventory } = props;
-  //const initialValue = list.slice(0, 20);
   const [items, setItems] = React.useState<cryptInventoryType[]>(initialValue);
 
   const isElement = useMemo(() => {
