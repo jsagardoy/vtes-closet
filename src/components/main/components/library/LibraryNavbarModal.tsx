@@ -21,7 +21,6 @@ import {
   getDiscIcon,
   getLibraryCardTypes,
   getSects,
-  HEADER_COLOR,
 } from '../../../../util/helpFunction';
 interface Props {
   open: boolean;
@@ -361,10 +360,9 @@ const LibraryNavbarModal = (props: Props) => {
         <div className='clear__button'>
           <Button
             style={{
-              color: 'darkcyan',
               textTransform: 'capitalize',
-              backgroundColor: HEADER_COLOR,
-              border: '1px solid darkcyan',
+
+              border: '1px solid black',
               borderRadius: '2px',
               marginTop: '1rem',
               marginBottom: '1rem',

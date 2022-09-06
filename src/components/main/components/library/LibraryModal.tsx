@@ -80,7 +80,7 @@ const LibraryModal = (props: LibraryModalProps) => {
             }}
           >
             <Button onClick={() => handleCloseModal()}>
-              <CloseIcon style={{ color: 'darkcyan' }} />
+              <CloseIcon style={{}} />
             </Button>
           </div>
           <div className='modal__right__text'>

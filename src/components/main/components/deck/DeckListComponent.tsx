@@ -9,7 +9,6 @@ import {
   ListType,
 } from '../../../../types/deck_type';
 import { LibraryType } from '../../../../types/library_type';
-import { HEADER_COLOR } from '../../../../util/helpFunction';
 import DeckCryptComponent from './DeckCryptComponent';
 import DeckLibraryComponent from './DeckLibraryComponent';
 
@@ -222,7 +221,6 @@ const DeckListComponent = (props: Props) => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          backgroundColor: HEADER_COLOR,
         }}
       >
         <Typography variant='h6'>Deck</Typography>
@@ -231,11 +229,11 @@ const DeckListComponent = (props: Props) => {
         <Box
           sx={{
             width: '100',
-            backgroundColor: HEADER_COLOR,
-            borderBottom: '3px solid darkcyan',
+
+            borderBottom: '3px solid black',
             paddingLeft: '1rem',
             paddingRight: '1rem',
-            borderTop: '1px solid darkcyan',
+            borderTop: '1px solid black',
             display: 'flex',
             justifyContent: 'space-between',
           }}
@@ -247,7 +245,6 @@ const DeckListComponent = (props: Props) => {
           {cryptSizeError ? (
             <Typography
               sx={{
-                backgroundColor: HEADER_COLOR,
                 color: 'red',
                 fontSize: 'smaller',
               }}
@@ -258,7 +255,6 @@ const DeckListComponent = (props: Props) => {
           {cryptGroupError ? (
             <Typography
               sx={{
-                backgroundColor: HEADER_COLOR,
                 color: 'red',
                 fontSize: 'smaller',
               }}
@@ -269,7 +265,6 @@ const DeckListComponent = (props: Props) => {
           {cryptBannedError ? (
             <Typography
               sx={{
-                backgroundColor: HEADER_COLOR,
                 color: 'red',
                 fontSize: 'smaller',
               }}
@@ -293,11 +288,11 @@ const DeckListComponent = (props: Props) => {
       <Box
         sx={{
           width: '100',
-          backgroundColor: HEADER_COLOR,
-          borderBottom: '3px solid darkcyan',
+
+          borderBottom: '3px solid black',
           paddingLeft: '1rem',
           paddingRight: '1rem',
-          borderTop: '1px solid darkcyan',
+          borderTop: '1px solid black',
           display: 'flex',
           justifyContent: 'space-between',
         }}
@@ -309,7 +304,6 @@ const DeckListComponent = (props: Props) => {
         {librarySizeError ? (
           <Typography
             sx={{
-              backgroundColor: HEADER_COLOR,
               color: 'red',
               fontSize: 'smaller',
             }}
@@ -320,7 +314,6 @@ const DeckListComponent = (props: Props) => {
         {libraryExceededSizeError ? (
           <Typography
             sx={{
-              backgroundColor: HEADER_COLOR,
               color: 'red',
               fontSize: 'smaller',
             }}
@@ -331,7 +324,6 @@ const DeckListComponent = (props: Props) => {
         {libraryBannedError ? (
           <Typography
             sx={{
-              backgroundColor: HEADER_COLOR,
               color: 'red',
               fontSize: 'smaller',
             }}

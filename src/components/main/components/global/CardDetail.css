@@ -1,24 +1,20 @@
 
 .listItemText {
   width: 100%;
-  color: darkcyan;
   align-items: center;
 }
 .crypt__list {
   width: 100%;
-  background-color: white;
 }
 
 .list__item {
   width: 30%;
-  color: darkcyan;
 }
 .list__item__icons {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 30%;
-  color: darkcyan;
 }
 .list__item__icons span {
   margin-top: 0.2rem;
@@ -59,12 +55,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: azure;
 }
 
 .modal__main__img {
-  border: 2px solid #000;
-  box-shadow: 0 0 15px #ddd;
+  border: 2px solid black;
+  box-shadow: 0 0 15px white;
 }
 .img__in__text {
   width: 1.5rem;
@@ -100,7 +95,6 @@
 .span__no__result {
   display: flex;
   justify-content: center;
-  color: darkcyan;
 }
 .modal__right__text {
   display: flex;
@@ -124,7 +118,6 @@
 
 .modal {
   position: relative;
-  color: darkcyan;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
@@ -140,7 +133,7 @@
 
 .button__container {
   display: flex;
-  background-color: lightgrey;
+  background-color: white;
   justify-content: space-between;
 }
 .disc {
@@ -224,8 +217,8 @@
     overflow-y: unset;
   }
   .modal__main__img {
-    border: 2px solid #000;
-    box-shadow: 0 0 15px #ddd;
+    border: 2px solid black;
+    box-shadow: 0 0 15px white;
     object-fit: contain;
     background-color: black;
   }
@@ -260,7 +253,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: azure;
+    background-color: white;
     width: 100%;
   }
   .modal__right__text {
@@ -351,8 +344,8 @@
     border: 0px;
   }
   .modal__main__img {
-    border: 2px solid #000;
-    box-shadow: 0 0 15px #ddd;
+    border: 2px solid black;
+    box-shadow: 0 0 15px white;
     object-fit: contain;
     background-color: black;
   }

@@ -13,15 +13,29 @@ import {
   getDiscInf,
   getGroups,
   getCapacities,
-  HEADER_COLOR,
 } from '../../../../util';
 import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
-import { Avatar, Button, Checkbox, Divider, FormControl, IconButton, InputLabel, MenuItem } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  Divider,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
 import { groupType } from '../../../../util';
-import { HighlightOff, MoreVert, Search, Sort, SortByAlpha } from '@mui/icons-material';
+import {
+  HighlightOff,
+  MoreVert,
+  Search,
+  Sort,
+  SortByAlpha,
+} from '@mui/icons-material';
 
 interface NavbarListProps {
   searchList: (
@@ -417,7 +431,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             className='searchIcon'
             disabled={inputSearch.length > 0}
           >
-            <Search style={{ fill: 'darkcyan' }} />
+            <Search />
           </IconButton>
           <IconButton
             size='small'
@@ -428,7 +442,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
           >
             <SortByAlpha
               className={rotateAZ ? 'button__activated__AZ' : ''}
-              sx={{ fill: 'darkcyan' }}
             />
           </IconButton>
           <IconButton
@@ -439,10 +452,10 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               handleSort();
             }}
           >
-            <Sort style={{ fill: 'darkcyan' }} />
+            <Sort/>
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
-            <MoreVert style={{ fill: 'darkcyan' }} />
+            <MoreVert />
           </IconButton>
         </div>
       </div>
@@ -676,10 +689,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
           <div className='clear__button'>
             <Button
               sx={{
-                color: 'darkcyan',
                 textTransform: 'capitalize',
-                backgroundColor: HEADER_COLOR,
-                border: '1px solid darkcyan',
+                border: '1px solid black',
                 borderRadius: '2px',
                 marginTop: '1rem',
                 marginBottom: '1rem',

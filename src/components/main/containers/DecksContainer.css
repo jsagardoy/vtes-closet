@@ -1,32 +1,25 @@
 .table__cell__header {
-  color: darkcyan;
   font-weight: bolder;
 }
-.table__cell {
-  color: darkcyan;
-}
+
 .table__body__decks__container {
   width: 100%;
-  color: darkcyan;
 }
 .decks__container {
   display: flex;
   flex-direction: column;
-  color: darkcyan;
   width: 100%;
 }
 .decks__title {
   display: flex;
   justify-content: center;
-  background-color: HEADER_COLOR;
 }
 .containers {
   display: flex;
   flex-direction: column;
   height: max-content;
-  border: 2px solid darkcyan;
+  border: 2px solid black;
   border-radius: 5px;
-  background-color: white;
   width: 50%;
 }
 
@@ -37,8 +30,7 @@
   padding-top: 1rem;
   margin-bottom: 0px;
   margin-top: 0px;
-  border-bottom: 1px solid darkcyan;
-  background-color: #ECDBBA;
+  border-bottom: 1px solid black;
 }
 .content {
   display: flex;

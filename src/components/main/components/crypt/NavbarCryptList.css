@@ -11,14 +11,9 @@
   align-items: center;
   margin-left: 2em;
 }
-
-
 .clear__button {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.button__activated__AZ {
-  background-color: lightgrey;
 }
 

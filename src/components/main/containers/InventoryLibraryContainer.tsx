@@ -176,7 +176,6 @@ const InventoryLibraryContainer = () => {
       <InventoryLibraryList list={list} updateList={handleUpdateList} />
       <Fab
         sx={{
-          backgroundColor: 'darkcyan',
           position: 'fixed',
           right: '20%',
           top: '90%',

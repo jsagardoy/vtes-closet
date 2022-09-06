@@ -24,7 +24,6 @@ import {
   getCleanedName,
   getDiscIcon,
   getLibraryCardTypesSorted,
-  HEADER_COLOR,
 } from '../../../../util';
 
 import QuantityButtonComponent from './QuantityButtonComponent';
@@ -106,24 +105,24 @@ const DeckLibraryComponent = (props: Props) => {
   };
 
   const tableHeadContent = (showLabel: boolean) => (
-    <TableHead key={uuidv4()} sx={{ backgroundColor: 'white' }}>
+    <TableHead key={uuidv4()}>
       {showLabel ? (
         <TableRow>
-          <TableCell sx={{ color: 'darkcyan' }}>Quantity</TableCell>
-          <TableCell sx={{ color: 'darkcyan' }}>Card name</TableCell>
-          <TableCell sx={{ color: 'darkcyan' }}>Burn Option</TableCell>
-          <TableCell sx={{ color: 'darkcyan' }}>Disciplines</TableCell>
-          <TableCell sx={{ color: 'darkcyan' }}>Clan</TableCell>
-          <TableCell sx={{ color: 'darkcyan' }}>Cost</TableCell>
+          <TableCell>Quantity</TableCell>
+          <TableCell>Card name</TableCell>
+          <TableCell>Burn Option</TableCell>
+          <TableCell>Disciplines</TableCell>
+          <TableCell>Clan</TableCell>
+          <TableCell>Cost</TableCell>
         </TableRow>
       ) : (
         <TableRow>
-          <TableCell sx={{ color: 'darkcyan' }} />
-          <TableCell sx={{ color: 'darkcyan' }} />
-          <TableCell sx={{ color: 'darkcyan' }} />
-          <TableCell sx={{ color: 'darkcyan' }} />
-          <TableCell sx={{ color: 'darkcyan' }} />
-          <TableCell sx={{ color: 'darkcyan' }} />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
         </TableRow>
       )}
     </TableHead>
@@ -137,8 +136,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* quantity */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -160,8 +158,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Card Name */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '32%',
                 maxWidth: '32%',
               }}
@@ -172,8 +169,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Burn option */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -183,8 +179,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* disciplines */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -199,8 +194,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Clan */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '16%',
               }}
               onClick={() => handleOpenModal(elem, index)}
@@ -210,8 +204,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Cost */}
             <TableCell
               sx={{
-                color: 'darkcyan',
-                backgroundColor: 'white',
+                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -228,20 +221,18 @@ const DeckLibraryComponent = (props: Props) => {
     if (!type.includes(',')) {
       const url = getCardTypesIcon([type]);
       return (
-        <Avatar sx={{ backgroundColor: 'white' }} src={url.at(0)} alt={type} />
+        <Avatar src={url.at(0)} alt={type} />
       );
     }
     if (type.includes(',')) {
       const newTypes = type.split(',');
       return getCardTypesIcon(newTypes).map((type: string, index: number) => (
         <ListItemAvatar
-          sx={{ backgroundColor: 'white' }}
-          className='list__avatar__icons'
+                    className='list__avatar__icons'
           key={uuidv4()}
         >
           <Avatar
-            sx={{ backgroundColor: 'white' }}
-            key={uuidv4()}
+                        key={uuidv4()}
             src={type}
             alt={type}
           />
@@ -316,10 +307,10 @@ const DeckLibraryComponent = (props: Props) => {
       <Box
         key={uuidv4()}
         sx={{
-          backgroundColor: HEADER_COLOR,
+         
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid darkcyan',
+          borderBottom: '1px solid black',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}
@@ -333,7 +324,6 @@ const DeckLibraryComponent = (props: Props) => {
           <Box key={uuidv4()}>
             <Box
               sx={{
-                backgroundColor: 'white',
                 display: 'flex',
                 alignItems: 'center',
               }}

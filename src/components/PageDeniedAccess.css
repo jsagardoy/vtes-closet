@@ -4,8 +4,6 @@
     top:0;
     width:100%;
     height: 1000vh;
-    color: red;
-    background-color:white;
     text-align: center;
 }
 .denied__access__title{
@@ -14,12 +12,10 @@
 .denied__access__span{
     display:block;
     position:relative;
-    color: black;
     display: inline;
 }
 .denied__access__image{
     border-radius: 50%;
-    border:1px solid black;
     margin-top: 2rem;
     box-shadow: 5px 10px 8px darkslategray ;
 }

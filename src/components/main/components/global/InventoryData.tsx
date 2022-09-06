@@ -83,7 +83,6 @@ const InventoryData = (props: Props) => {
         sx={{
           display: 'flex',
           height: '100%',
-          color: 'black',
           padding: '0.3rem',
           alignItems: 'center',
         }}
@@ -111,7 +110,6 @@ const InventoryData = (props: Props) => {
         sx={{
           display: 'flex',
           height: '100%',
-          color: 'black',
           padding: '0.3rem',
           alignItems: 'center',
         }}

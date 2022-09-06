@@ -92,7 +92,7 @@ const DeckInfoComponent = (props: Props) => {
                   sx={{
                     m: 1,
                     width: 'maxContent',
-                    borderColor: 'darkcyan',
+                    border: '1px solid black',
                     justifyContent: 'flex-end',
                     textTransform: 'capitalize',
                   }}

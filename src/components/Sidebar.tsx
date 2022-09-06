@@ -63,8 +63,8 @@ const Sidebar = (props: Props) => {
             dense
             divider
             disableGutters
-            style={{
-              borderBottomColor: 'darkcyan',
+            sx={{
+              borderBottom: '1px solid black',
               width: '100%',
               textAlign: 'center',
             }}
@@ -76,8 +76,8 @@ const Sidebar = (props: Props) => {
             alignItems='center'
             divider
             disableGutters
-            style={{
-              borderBottomColor: 'darkcyan',
+            sx={{
+              borderBottom: '1px solid black',
               width: '100%',
               textAlign: 'center',
             }}
@@ -92,8 +92,8 @@ const Sidebar = (props: Props) => {
                 dense
                 divider
                 disableGutters
-                style={{
-                  borderBottomColor: 'darkcyan',
+                sx={{
+                  borderBottom: '1px solid black',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -102,9 +102,7 @@ const Sidebar = (props: Props) => {
                 <ListItemText
                   className={'listItemText'}
                   primary='Decks'
-                  secondaryTypographyProps={{
-                    color: 'darkcyan',
-                  }}
+                  secondaryTypographyProps={{}}
                 />
               </ListItemButton>
               <ListItemButton
@@ -113,8 +111,8 @@ const Sidebar = (props: Props) => {
                 dense
                 divider
                 disableGutters
-                style={{
-                  borderBottomColor: 'darkcyan',
+                sx={{
+                  borderBottom: '1px solid black',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -123,9 +121,7 @@ const Sidebar = (props: Props) => {
                 <ListItemText
                   className={'listItemText'}
                   primary='Crypt Collection'
-                  secondaryTypographyProps={{
-                    color: 'darkcyan',
-                  }}
+                  secondaryTypographyProps={{}}
                 />
               </ListItemButton>
               <ListItemButton
@@ -133,8 +129,8 @@ const Sidebar = (props: Props) => {
                 dense
                 divider
                 disableGutters
-                style={{
-                  borderBottomColor: 'darkcyan',
+                sx={{
+                  borderBottom: '1px solid black',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -143,9 +139,7 @@ const Sidebar = (props: Props) => {
                 <ListItemText
                   className={'listItemText'}
                   primary='Library Collection'
-                  secondaryTypographyProps={{
-                    color: 'darkcyan',
-                  }}
+                  secondaryTypographyProps={{}}
                 />
               </ListItemButton>
             </div>

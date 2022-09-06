@@ -14,7 +14,7 @@ import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 
 import { CardType, ExtendedDeckType } from '../../../../types/deck_type';
-import { getClanIcon, getCleanedName, getDiscIcon, HEADER_COLOR } from '../../../../util';
+import { getClanIcon, getCleanedName, getDiscIcon } from '../../../../util';
 
 import QuantityButtonComponent from './QuantityButtonComponent';
 
@@ -121,10 +121,9 @@ const DeckCryptComponent = (props: Props) => {
       ) : null}
       <Box
         sx={{
-          backgroundColor: HEADER_COLOR,
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid darkcyan',
+          borderBottom: '1px solid black',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}
@@ -144,20 +143,20 @@ const DeckCryptComponent = (props: Props) => {
         </Typography>
       </Box>
       <Table>
-        <TableHead sx={{ backgroundColor: 'white' }}>
+        <TableHead >
           <TableRow>
-            <TableCell sx={{ color: 'darkcyan' }}>Quantity</TableCell>
-            <TableCell sx={{ color: 'darkcyan' }}>Clan</TableCell>
-            <TableCell sx={{ color: 'darkcyan' }}>Card name</TableCell>
-            <TableCell sx={{ color: 'darkcyan' }}>Group</TableCell>
-            <TableCell sx={{ color: 'darkcyan' }}>Disciplines</TableCell>
-            <TableCell sx={{ color: 'darkcyan' }}>Capacity</TableCell>
+            <TableCell sx={{  }}>Quantity</TableCell>
+            <TableCell sx={{  }}>Clan</TableCell>
+            <TableCell sx={{  }}>Card name</TableCell>
+            <TableCell sx={{  }}>Group</TableCell>
+            <TableCell sx={{  }}>Disciplines</TableCell>
+            <TableCell sx={{  }}>Capacity</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data?.map((elem: ExtendedDeckType, index: number) => (
             <TableRow key={elem.data.id}>
-              <TableCell sx={{ color: 'darkcyan', backgroundColor: 'white' }}>
+              <TableCell >
                 <QuantityButtonComponent
                   handleRemoveCard={(id: number, cardType: CardType) =>
                     handleRemoveCard(id, cardType)
@@ -173,26 +172,25 @@ const DeckCryptComponent = (props: Props) => {
                 />
               </TableCell>
               <TableCell
-                sx={{ color: 'darkcyan', backgroundColor: 'white' }}
+                
                 onClick={() => handleOpenModal(elem, index)}
               >
                 {elem.data.clans ? getClan(elem.data as CryptType) : null}
               </TableCell>
               <TableCell
-                sx={{ color: 'darkcyan', backgroundColor: 'white' }}
+               
                 onClick={() => handleOpenModal(elem, index)}
               >
                 {getCleanedName(elem.data.name)}
               </TableCell>
               <TableCell
                 className='list__item__icons'
-                sx={{ color: 'darkcyan', backgroundColor: 'white' }}
                 onClick={() => handleOpenModal(elem, index)}
               >
                 {getGroup(elem.data as CryptType)}
               </TableCell>
               <TableCell
-                sx={{ color: 'darkcyan', backgroundColor: 'white' }}
+               
                 onClick={() => handleOpenModal(elem, index)}
               >
                 <div className='list__left'>
@@ -203,13 +201,12 @@ const DeckCryptComponent = (props: Props) => {
               </TableCell>
               <TableCell
                 className='list__item__icons'
-                sx={{ color: 'darkcyan', backgroundColor: 'white' }}
+               
                 onClick={() => handleOpenModal(elem, index)}
               >
                 <Box
                   sx={{
                     backgroundColor: 'darkred',
-                    color: 'white',
                     borderRadius: '50%',
                     width: '1rem',
                     textAlign: 'center',

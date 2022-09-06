@@ -3,14 +3,15 @@ import React from 'react';
 import { CryptType } from '../../../../../types/crypt_type';
 import { CardType } from '../../../../../types/deck_type';
 import { LibraryType } from '../../../../../types/library_type';
-import { HEADER_COLOR } from '../../../../../util/helpFunction';
 import CryptContainer from '../../../containers/CryptContainer';
 import LibraryContainer from '../../../containers/LibraryContainer';
 import TabPanel from './TabPanel';
 
-
 interface Props {
-  handleAddCardToDeck: (card: CryptType | LibraryType, cardType: CardType) => void;
+  handleAddCardToDeck: (
+    card: CryptType | LibraryType,
+    cardType: CardType
+  ) => void;
 }
 
 const SearchDeckContainer = (props: Props) => {
@@ -20,7 +21,7 @@ const SearchDeckContainer = (props: Props) => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
-  
+
   return (
     <>
       <Box
@@ -28,19 +29,15 @@ const SearchDeckContainer = (props: Props) => {
           display: 'flex',
           justifyContent: 'flexStart',
           alignItems: 'center',
-          backgroundColor: HEADER_COLOR,
-          color: 'darkcyan',
+
           height: '4rem',
         }}
       >
         <Tabs
           sx={{
-            '& button:hover': {
-              backgroundColor: 'darkcyan',
-              color: `${HEADER_COLOR}`,
-            },
+            '& button:hover': {},
           }}
-          TabIndicatorProps={{ sx: { backgroundColor: 'darkcyan' } }}
+          TabIndicatorProps={{ sx: { } }}
           textColor='inherit'
           value={selectedTab}
           onChange={handleChange}

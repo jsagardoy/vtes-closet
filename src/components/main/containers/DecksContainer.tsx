@@ -15,14 +15,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchDecks } from '../../../service/fetchDecks';
 import { DeckType } from '../../../types/deck_type';
-import { getUserId, HEADER_COLOR } from '../../../util/helpFunction';
+import { getUserId } from '../../../util/helpFunction';
 import { Spinner } from '../components/global/Spinner';
 import './DecksContainer.css';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { uuidv4 } from '@firebase/util';
 import { createNewDeck } from '../../../service/createNewDeck';
 import { deleteDeck } from '../../../service/deleteDeck';
-
 
 const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
@@ -55,7 +54,6 @@ const DecksContainer = () => {
     );
     deleteDeck(id);
     setDeckList(newDekList);
-    
   };
 
   const tableOfContent = (
@@ -63,36 +61,19 @@ const DecksContainer = () => {
       <Table size='small' aria-label='Decks list'>
         <TableHead>
           <TableRow>
-            <TableCell
-              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
-              align='left'
-            >
+            <TableCell sx={{ fontWeight: 'bold' }} align='left'>
               #
             </TableCell>
-            <TableCell
-              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
-              align='left'
-            >
+            <TableCell sx={{ fontWeight: 'bold' }} align='left'>
               Deck name
             </TableCell>
-            <TableCell
-              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
-              align='left'
-            >
+            <TableCell sx={{ fontWeight: 'bold' }} align='left'>
               Type
             </TableCell>
-            <TableCell
-              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
-              variant='head'
-              align='left'
-            >
+            <TableCell sx={{ fontWeight: 'bold' }} variant='head' align='left'>
               Description
             </TableCell>
-            <TableCell
-              sx={{ color: 'darkcyan', fontWeight: 'bold' }}
-              variant='head'
-              align='left'
-            >
+            <TableCell sx={{ fontWeight: 'bold' }} variant='head' align='left'>
               Action
             </TableCell>
           </TableRow>
@@ -104,15 +85,15 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{ color: 'darkcyan' }}
+                sx={{}}
               >
-                {index+1}
+                {index + 1}
               </TableCell>
               <TableCell
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{ color: 'darkcyan' }}
+                sx={{}}
               >
                 {deck.name}
               </TableCell>
@@ -120,7 +101,7 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{ color: 'darkcyan' }}
+                sx={{}}
               >
                 {deck.deckType}
               </TableCell>
@@ -128,11 +109,11 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{ color: 'darkcyan' }}
+                sx={{}}
               >
                 {deck.description}
               </TableCell>
-              <TableCell sx={{ color: 'darkcyan' }}>
+              <TableCell sx={{}}>
                 <IconButton onClick={() => handleRemoveDeck(deck.id)}>
                   <DeleteIcon />
                 </IconButton>
@@ -165,7 +146,7 @@ const DecksContainer = () => {
     };
     //TODO: insertar en BBDD
     createNewDeck(newDeck);
-    setDeckList((prev) => ([...prev, newDeck]));
+    setDeckList((prev) => [...prev, newDeck]);
     const userId = getUserId();
     history.push(`/private/${userId}/decks/${newDeck.id}`);
   };
@@ -173,7 +154,6 @@ const DecksContainer = () => {
   const titleStyle = {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: HEADER_COLOR,
   };
 
   const response = (
@@ -183,7 +163,7 @@ const DecksContainer = () => {
           Decks List
         </Typography>
       </Box>
-      <IconButton sx={{ color: 'darkcyan' }} onClick={() => handleCreateDeck()}>
+      <IconButton sx={{}} onClick={() => handleCreateDeck()}>
         Create new deck <AddCircleIcon />
       </IconButton>
       {loader && <Spinner />}

@@ -228,7 +228,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
             className='searchIcon'
             disabled={inputSearch.length > 0}
           >
-            <Search style={{ fill: 'darkcyan' }} />
+            <Search />
           </IconButton>
           <IconButton
             className={rotate ? 'button__rotation' : ''}
@@ -238,10 +238,10 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
               handleSort();
             }}
           >
-            <Sort style={{ fill: 'darkcyan' }} />
+            <Sort />
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
-            <MoreVert style={{ fill: 'darkcyan' }} />
+            <MoreVert />
           </IconButton>
         </div>
         <LibraryNavbarModal

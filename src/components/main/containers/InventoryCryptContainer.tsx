@@ -232,14 +232,12 @@ const InventoryCryptContainer = (props: Props) => {
       <InventoryCryptList list={list} updateList={handleUpdateList} />
       <Fab
         sx={{
-          backgroundColor: 'darkcyan',
           position: 'fixed',
           right: '20%',
           top: '90%',
           bottom: '10%',
           left: '80%',
           zIndex: '1000',
-          color: 'white',
         }}
         disabled={saving}
         aria-label='Save'

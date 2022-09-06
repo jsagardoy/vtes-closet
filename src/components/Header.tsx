@@ -46,7 +46,6 @@ const Header = (props: Props) => {
       <div className='header__left'>
         <MenuIcon
           fontSize='large'
-          sx={{ fill: 'darkcyan' }}
           onClick={() => handleClickLogo()}
         />
         <img

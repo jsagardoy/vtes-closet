@@ -70,7 +70,7 @@ const InventoryLibraryComponent = (props: Props) => {
       <p
         style={{
           textAlign: 'center',
-          color: 'Darkcyan',
+
           marginBottom: '1em',
         }}
       >
@@ -90,7 +90,7 @@ const InventoryLibraryComponent = (props: Props) => {
         <p
           style={{
             textAlign: 'center',
-            color: 'Darkcyan',
+
             marginBottom: '1em',
           }}
         >

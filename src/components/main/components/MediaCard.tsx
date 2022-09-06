@@ -39,7 +39,6 @@ const MediaCard = (props: Props) => {
       className='card'
       sx={{
         padding: '1rem',
-        backgroundColor: 'black',
         borderRadius: '25px',
         paddingBottom: '0px',
       }}
@@ -58,7 +57,6 @@ const MediaCard = (props: Props) => {
       />
       <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
         <Button
-          style={{ color: 'darkcyan' }}
           size='small'
           onClick={() => {
             if (title.toLowerCase() === 'crypt') {

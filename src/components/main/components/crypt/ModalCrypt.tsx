@@ -65,7 +65,7 @@ const ModalCrypt = (props: CryptProp) => {
             }}
           >
             <Button onClick={() => handleClose()}>
-              <CloseIcon style={{ color: 'darkcyan' }} />
+              <CloseIcon style={{}} />
             </Button>
           </div>
           <div className='modal__right__text'>

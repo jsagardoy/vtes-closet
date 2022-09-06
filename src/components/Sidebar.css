@@ -1,9 +1,7 @@
 .sidebar {
   display: absolute;
-  border-right: 1px solid darkcyan;
-  background-color: black;
+  border-right: 1px solid black;
   padding: 1rem;
-  color: darkcyan;
   width: 20%;
   max-width: 20%;
   opacity: 1;
@@ -14,7 +12,6 @@
 }
 .hidden {
   display: flex;
-  background-color: black;
   width: 0%;
   max-width: 20%;
   min-height: 100vh;
@@ -39,7 +36,6 @@
 /* Móviles en horizontal o tablets en vertical */
 @media (max-width: 767px) {
   .hidden {
-    background-color: black;
     width: 0%;
     max-width: 20%;
     min-height: 100vh;
@@ -51,9 +47,6 @@
   .sidebar {
     display: flex;
     justify-content: center;
-    border-right: 1px solid darkcyan;
-    background-color: black;
-    color: darkcyan;
     opacity: 1;
     visibility: visible;
     transition: all 1s;
@@ -67,7 +60,6 @@
     display: flex;
     visibility: hidden;
     transition: all 1s;
-    background-color: black;
     width: 0%;
     max-width: 480px;
     min-height: 100vh;
@@ -83,7 +75,6 @@
 /* Móviles en vertical */
 @media (max-width: 480px) {
   .hidden {
-    background-color: black;
     width: 0%;
     max-width: 20%;
     min-height: 100vh;
@@ -95,9 +86,6 @@
   .sidebar {
     display: flex;
     justify-content: center;
-    border-right: 1px solid darkcyan;
-    background-color: black;
-    color: darkcyan;
     opacity: 1;
     visibility: visible;
     transition: all 1s;
@@ -111,7 +99,6 @@
     display: flex;
     visibility: hidden;
     transition: all 1s;
-    background-color: black;
     width: 0%;
     max-width: 480px;
     min-height: 100vh;

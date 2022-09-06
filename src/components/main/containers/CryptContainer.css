@@ -2,13 +2,12 @@
     display:flex;
     flex-direction: column;
     width: 100%;
-    background-color: white;
+   
 } 
 .menu__crypt__container {
     display: flex;
     flex-direction:column;
     width: 100%;
-    background-color: white;
     opacity: 1;
     visibility: visible;
 }

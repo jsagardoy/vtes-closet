@@ -5,6 +5,7 @@ import {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
@@ -59,15 +60,14 @@ const CryptListComponent = (props: Props) => {
 
   if (items.length === 0 && list.length!==0) {
     return (
-      <p
-        style={{
+      <Typography variant='subtitle2'
+        sx={{
           textAlign: 'center',
-          color: 'Darkcyan',
           marginBottom: '1em',
         }}
       >
         No results
-      </p>
+      </Typography>
     );
   }
   return (
@@ -81,7 +81,6 @@ const CryptListComponent = (props: Props) => {
         <p
           style={{
             textAlign: 'center',
-            color: 'Darkcyan',
             marginBottom: '1em',
           }}
         >

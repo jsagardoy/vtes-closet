@@ -39,7 +39,7 @@ const Login = () => {
     <div className='login'>
       <Button
         id='loginId'
-        style={{ color: 'darkcyan', display: showLogout ? 'none' : 'inline' }}
+        style={{ display: showLogout ? 'none' : 'inline' }}
         onClick={() => handleProvider('google')}
       >
         Login
@@ -47,7 +47,7 @@ const Login = () => {
       <Button
         id='logoutId'
         disabled={!showLogout}
-        style={{ color: 'darkcyan', display: !showLogout ? 'none' : 'inline' }}
+        style={{ display: !showLogout ? 'none' : 'inline' }}
         onClick={() => handleLogout()} //handle logout
       >
         Logout
