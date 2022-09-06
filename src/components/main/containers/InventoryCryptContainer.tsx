@@ -98,7 +98,7 @@ const InventoryCryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = async () => {}; /* setList(localStorage) ;*/
+  const handleReset = async () => {setList(initialData.current)}; 
 
   const handleSave = (): void => {
     setLoader(true);
