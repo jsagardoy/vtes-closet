@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { fetchLibrary } from '../../../service/fetchLibrary';
@@ -80,7 +81,7 @@ const LibraryContainer = (props:Props) => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
  }, []);
   return (
-    <div className='library__container'>
+    <Box className='library__container'>
       <LibraryNavbarList
         searchList={(
           name: string,
@@ -101,7 +102,7 @@ const LibraryContainer = (props:Props) => {
           cardType: CardType
         ) => handleAddCardToDeck(card, cardType)}
       />
-    </div>
+    </Box>
   );
 };
 

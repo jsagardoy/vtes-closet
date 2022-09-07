@@ -1,4 +1,4 @@
-import { Button, Modal } from '@mui/material';
+import { Button, Modal, Paper } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -71,8 +71,8 @@ const LibraryModal = (props: LibraryModalProps) => {
           src={library.url}
           alt={library.name}
         />
-        <div className='modal__right'>
-          <div
+        <Paper className='modal__right'>
+          <Box
             style={{
               display: 'flex',
               justifyContent: 'flex-end',
@@ -82,16 +82,16 @@ const LibraryModal = (props: LibraryModalProps) => {
             <Button onClick={() => handleCloseModal()}>
               <CloseIcon style={{}} />
             </Button>
-          </div>
-          <div className='modal__right__text'>
-            <div className='modal__right__top'>
+          </Box>
+          <Box className='modal__right__text'>
+            <Box className='modal__right__top'>
               <Typography variant='h6' className='title'>
                 {library.name}
               </Typography>
-            </div>
-            <div className='card__data'>
+            </Box>
+            <Box className='card__data'>
               {library.types ? (
-                <div className='card__type'>
+                <Box className='card__type'>
                   <Typography variant='subtitle2'>Card type:</Typography>
                   {getCardTypesIcon(library.types).map(
                     (type: string, index) => (
@@ -102,13 +102,13 @@ const LibraryModal = (props: LibraryModalProps) => {
                       />
                     )
                   )}
-                </div>
+                </Box>
               ) : null}
               {library.burn_option ? (
                 <Avatar src={getBurnOption()} alt='Burn option' />
               ) : null}
               {library.clans ? (
-                <div className='clan__data'>
+                <Box className='clan__data'>
                   <Typography variant='subtitle2'>Clan:</Typography>
                   {getClanIcon(library.clans).map((clan, index) => (
                     <Avatar
@@ -117,10 +117,10 @@ const LibraryModal = (props: LibraryModalProps) => {
                       alt={clan}
                     />
                   ))}
-                </div>
+                </Box>
               ) : null}
               {library.disciplines ? (
-                <div className='disc'>
+                <Box className='disc'>
                   <Typography variant='subtitle2'>Disciplines:</Typography>
                   {getDiscIcon(library.disciplines).map(
                     (disc: string, index: number) => (
@@ -135,9 +135,9 @@ const LibraryModal = (props: LibraryModalProps) => {
                       />
                     )
                   )}
-                </div>
+                </Box>
               ) : null}
-              <div className='cost'>
+              <Box className='cost'>
                 {library.blood_cost || library.pool_cost ? (
                   <Typography
                     sx={{ display: 'flex', flexDirection: 'row' }}
@@ -157,30 +157,30 @@ const LibraryModal = (props: LibraryModalProps) => {
                     alt='Pool cost'
                   />
                 ) : null}
-              </div>
-            </div>
+              </Box>
+            </Box>
             <Divider sx={{ margin: '1px' }} />
-            <div className='card__text'>
+            <Box className='card__text'>
               <Typography variant='subtitle2'>
                 {parse(composeText(library.card_text))}
               </Typography>
-            </div>
+            </Box>
             <Divider />
-            <div className='artist'>
+            <Box className='artist'>
               <Typography variant='subtitle2'>Artists: </Typography>
               <Typography variant='subtitle2'>
                 {library.artists.map((a: string, index: number) =>
                   index === library.artists.length - 1 ? a : `${a}, `
                 )}
               </Typography>
-            </div>
+            </Box>
             <Divider />
             {library.rulings ? (
-              <div>
+              <Box>
                 <Typography variant='subtitle2'>Rulings:</Typography>
 
                 {library.rulings.text.map((t, index) => (
-                  <div key={index} className='ruling'>
+                  <Box key={index} className='ruling'>
                     <Typography variant='subtitle2'>{linkText(t)}</Typography>
                     <Link
                       variant='subtitle2'
@@ -188,18 +188,18 @@ const LibraryModal = (props: LibraryModalProps) => {
                     >
                       {getLinkText(t)}
                     </Link>
-                  </div>
+                  </Box>
                 ))}
-              </div>
+              </Box>
             ) : null}
-          </div>
+          </Box>
           <CardButtons
             handleNext={() => handleNext()}
             handlePrevious={() => handlePrevious()}
             list={list}
             index={index}
           />
-        </div>
+        </Paper>
       </Box>
     </Modal>
   );

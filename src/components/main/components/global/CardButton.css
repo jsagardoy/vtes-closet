@@ -1,6 +1,5 @@
 .button__container{
   display:flex;
-  background-color: lightgrey;
   justify-content: space-between;
 }
 .modal__right__text{

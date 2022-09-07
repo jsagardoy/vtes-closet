@@ -2,7 +2,7 @@ import React from 'react';
 import './Header.css';
 import Login from './Login';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar, Box, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getUser } from '../util';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -46,8 +46,8 @@ const Header = (props: Props) => {
 
     
   return (
-    <div className='header'>
-      <div className='header__left'>
+    <Box className='header'>
+      <Box className='header__left'>
         <MenuIcon fontSize='large' onClick={() => handleClickLogo()} />
         <img
           className='logoWeb'
@@ -64,18 +64,18 @@ const Header = (props: Props) => {
         ) : (
           <Brightness4Icon />
         )}
-      </IconButton></div>
-      <div className='header__center'>
+      </IconButton></Box>
+      <Box className='header__center'>
         <h3 className='siteName'>Vtes Closet</h3>
-      </div>
-      <div className='header__right'>
+      </Box>
+      <Box className='header__right'>
         <Login />
-        <div className='userInfo'>
+        <Box className='userInfo'>
           <Avatar id='avatar' variant='circular' alt='avatar' src={photoURL} />
           <h5 className='userName'>{userName}</h5>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

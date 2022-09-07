@@ -46,17 +46,29 @@ const DeckCryptComponent = (props: Props) => {
   };
 
   const getDisciplines = (discList: string[]) => (
-    <div className='list__left'>
+    <Box className='list__left'>
       {getDiscIcon(discList).map((disc) => (
         <ListItemAvatar className='list__avatar__icons' key={disc}>
-          <Avatar src={disc} alt={disc} />
+          <Avatar
+            sx={{ backgroundColor: 'white' }}
+            variant='rounded'
+            src={disc}
+            alt={disc}
+          />
         </ListItemAvatar>
       ))}
-    </div>
+    </Box>
   );
   const getClan = (crypt: CryptType) =>
     getClanIcon(crypt.clans).map((clan) => (
-      <Avatar className='clan__avatar__icon' key={clan} src={clan} alt={clan} />
+      <Avatar
+        sx={{ backgroundColor: 'white' }}
+        variant='rounded'
+        className='clan__avatar__icon'
+        key={clan}
+        src={clan}
+        alt={clan}
+      />
     ));
 
   const getCapacity = (crypt: CryptType) => crypt.capacity;
@@ -71,19 +83,19 @@ const DeckCryptComponent = (props: Props) => {
       return capacities ? Math.max(...capacities) : 0;
     }
     return 0;
-  }
+  };
 
   const getMinCapacity = () => {
-    if (data && data.length>0) {
+    if (data && data.length > 0) {
       const capacities: number[] | undefined = data?.map((elem) => {
         const value = elem.data as CryptType;
         return value.capacity;
       });
 
       return capacities ? Math.min(...capacities) : 0;
-    };
+    }
     return 0;
-  }
+  };
   const getAvgCapacity = () => {
     if (data && data.length > 0) {
       const capacities: number[] | undefined = data?.map((elem) => {
@@ -96,20 +108,20 @@ const DeckCryptComponent = (props: Props) => {
         : 0;
     }
     return 0;
-   };
-  
+  };
+
   const getGroups = (): string[] => {
     if (data && data.length > 0) {
       const groups: string[] | undefined = data?.map((elem) => {
         const value = elem.data as CryptType;
         return value.group;
       });
-      const setGroup =  new Set(groups)
+      const setGroup = new Set(groups);
       return groups ? Array.from(setGroup).sort() : [];
     }
     return [];
-  }
-  
+  };
+
   return (
     <>
       {openModal ? (
@@ -123,7 +135,7 @@ const DeckCryptComponent = (props: Props) => {
         sx={{
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid black',
+          borderBottom: '1px solid',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}
@@ -143,20 +155,20 @@ const DeckCryptComponent = (props: Props) => {
         </Typography>
       </Box>
       <Table>
-        <TableHead >
+        <TableHead>
           <TableRow>
-            <TableCell sx={{  }}>Quantity</TableCell>
-            <TableCell sx={{  }}>Clan</TableCell>
-            <TableCell sx={{  }}>Card name</TableCell>
-            <TableCell sx={{  }}>Group</TableCell>
-            <TableCell sx={{  }}>Disciplines</TableCell>
-            <TableCell sx={{  }}>Capacity</TableCell>
+            <TableCell sx={{}}>Quantity</TableCell>
+            <TableCell sx={{}}>Clan</TableCell>
+            <TableCell sx={{}}>Card name</TableCell>
+            <TableCell sx={{}}>Group</TableCell>
+            <TableCell sx={{}}>Disciplines</TableCell>
+            <TableCell sx={{}}>Capacity</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data?.map((elem: ExtendedDeckType, index: number) => (
             <TableRow key={elem.data.id}>
-              <TableCell >
+              <TableCell>
                 <QuantityButtonComponent
                   handleRemoveCard={(id: number, cardType: CardType) =>
                     handleRemoveCard(id, cardType)
@@ -171,16 +183,10 @@ const DeckCryptComponent = (props: Props) => {
                   cardType={elem.cardType}
                 />
               </TableCell>
-              <TableCell
-                
-                onClick={() => handleOpenModal(elem, index)}
-              >
+              <TableCell onClick={() => handleOpenModal(elem, index)}>
                 {elem.data.clans ? getClan(elem.data as CryptType) : null}
               </TableCell>
-              <TableCell
-               
-                onClick={() => handleOpenModal(elem, index)}
-              >
+              <TableCell onClick={() => handleOpenModal(elem, index)}>
                 {getCleanedName(elem.data.name)}
               </TableCell>
               <TableCell
@@ -189,27 +195,28 @@ const DeckCryptComponent = (props: Props) => {
               >
                 {getGroup(elem.data as CryptType)}
               </TableCell>
-              <TableCell
-               
-                onClick={() => handleOpenModal(elem, index)}
-              >
-                <div className='list__left'>
+              <TableCell onClick={() => handleOpenModal(elem, index)}>
+                <Box className='list__left'>
                   {elem.data.disciplines
                     ? getDisciplines(elem.data.disciplines)
                     : null}
-                </div>
+                </Box>
               </TableCell>
               <TableCell
                 className='list__item__icons'
-               
                 onClick={() => handleOpenModal(elem, index)}
               >
                 <Box
                   sx={{
+                    display: 'flex',
                     backgroundColor: 'darkred',
+                    color: 'white',
                     borderRadius: '50%',
-                    width: '1rem',
-                    textAlign: 'center',
+                    width: '30px',
+                    height: '30px',
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
                   {getCapacity(elem.data as CryptType)}

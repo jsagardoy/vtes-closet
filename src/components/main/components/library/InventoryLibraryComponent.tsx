@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   List,
   ListItem,
   ListItemAvatar,
@@ -100,12 +101,12 @@ const InventoryLibraryComponent = (props: Props) => {
     >
       <List className='library__list'>
         {items.length === 0 ? (
-          <div className='span__no__result'>
+          <Box className='span__no__result'>
             <span>No results</span>
-          </div>
+          </Box>
         ) : (
           items.map((library: libraryInventoryType, index: number) => (
-            <div
+            <Box
               className='library__row'
               key={library.id && library.name && Math.random()}
             >
@@ -127,7 +128,7 @@ const InventoryLibraryComponent = (props: Props) => {
                   primary={library.name}
                   onClick={() => handleOpen(library, index)}
                 />
-                <div className='list__left'>
+                <Box className='list__left'>
                   {library.burn_option ? (
                     <Avatar src={getBurnOption()} alt='Burn option' />
                   ) : null}
@@ -181,15 +182,15 @@ const InventoryLibraryComponent = (props: Props) => {
                         alt='Blood cost'
                       />
                     ) : library.pool_cost ? (
-                      <Avatar
+                        <Avatar
                         src={getCardCost(library.pool_cost, 'pool')}
                         alt='Pool cost'
                       />
                     ) : null
                   ) : null}
-                </div>
+                </Box>
               </ListItem>
-            </div>
+            </Box>
           ))
         )}
       </List>

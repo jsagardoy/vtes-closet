@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Paper } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
@@ -56,8 +56,8 @@ const ModalCrypt = (props: CryptProp) => {
           src={openedCrypt.url}
           alt={openedCrypt.name}
         />
-        <div className='modal__right'>
-          <div
+        <Paper className='modal__right'>
+          <Box
             style={{
               display: 'flex',
               justifyContent: 'flex-end',
@@ -67,13 +67,13 @@ const ModalCrypt = (props: CryptProp) => {
             <Button onClick={() => handleClose()}>
               <CloseIcon style={{}} />
             </Button>
-          </div>
-          <div className='modal__right__text'>
-            <div className='modal__right__top'>
+          </Box>
+          <Box className='modal__right__text'>
+            <Box className='modal__right__top'>
               <Typography variant='h6' className='title'>
                 {openedCrypt.name} {openedCrypt.aka}
               </Typography>
-              <div className='clan'>
+              <Box className='clan'>
                 <Typography variant='subtitle1'>
                   {openedCrypt.clans.map((clan) => clan)}
                 </Typography>
@@ -85,7 +85,7 @@ const ModalCrypt = (props: CryptProp) => {
                     alt={clan}
                   />
                 ))}
-              </div>
+              </Box>
               <Typography variant='subtitle2'>
                 Group: {openedCrypt.group}
               </Typography>
@@ -94,7 +94,7 @@ const ModalCrypt = (props: CryptProp) => {
               </Typography>
               <Divider />
               <Typography variant='subtitle2'>Disciplines:</Typography>
-              <div className='disc__content'>
+              <Box className='disc__content'>
                 {getDiscIcon(openedCrypt.disciplines).map((disc) => (
                   <Avatar
                     key={openedCrypt.id && disc}
@@ -103,15 +103,15 @@ const ModalCrypt = (props: CryptProp) => {
                     alt={disc}
                   />
                 ))}
-              </div>
+              </Box>
               <Divider />
-              <div className='card__text'>
+              <Box className='card__text'>
                 <Typography variant='subtitle2'>
                   {parse(composeText(openedCrypt.card_text))}
                 </Typography>
-              </div>
-            </div>
-            <div className='modal__right__bottom'>
+              </Box>
+            </Box>
+            <Box className='modal__right__bottom'>
               <Divider />
               <Typography variant='caption'>
                 Sets:
@@ -125,15 +125,15 @@ const ModalCrypt = (props: CryptProp) => {
               <Typography variant='caption'>
                 Artists: {openedCrypt.artists}
               </Typography>
-            </div>
-          </div>
+            </Box>
+          </Box>
           <CardButtons
             handleNext={() => handleNext()}
             handlePrevious={() => handlePrevious()}
             list={list}
             index={cryptIndex}
           />
-        </div>
+        </Paper>
       </Box>
     </Modal>
   );

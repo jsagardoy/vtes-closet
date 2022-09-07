@@ -3,7 +3,7 @@ import socialMediaAuth from '../service/auth';
 import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
 import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const Login = () => {
   let history = useHistory();
@@ -36,7 +36,7 @@ const Login = () => {
     history.push('/');
   };
   return (
-    <div className='login'>
+    <Box className='login'>
       <Button
         id='loginId'
         style={{ display: showLogout ? 'none' : 'inline' }}
@@ -52,7 +52,7 @@ const Login = () => {
       >
         Logout
       </Button>
-    </div>
+    </Box>
   );
 };
 

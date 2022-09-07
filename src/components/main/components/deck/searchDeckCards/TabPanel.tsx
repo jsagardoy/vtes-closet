@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 interface TabPanelProps {
@@ -9,14 +10,14 @@ const TabPanel = (props: TabPanelProps) => {
     const { children, value, index} = props;
 
     return (
-      <div
+      <Box
         role='tabpanel'
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
       >
           {children}
-      </div>
+      </Box>
     );
 }
 export default TabPanel;

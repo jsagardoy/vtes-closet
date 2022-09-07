@@ -1,5 +1,5 @@
 import { HighlightOff, MoreVert, Search, Sort} from '@mui/icons-material';
-import { TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import { SelectChangeEvent } from '@mui/material/Select/Select';
@@ -198,11 +198,11 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   /* React.useEffect(() => {}, []); */
 
   return (
-      <div className='navbarList'>
-        <div className='navbarList__left'>
+      <Box className='navbarList'>
+        <Box className='navbarList__left'>
           <h3>Library</h3>
-        </div>
-        <div className='navbarList__right'>
+        </Box>
+        <Box className='navbarList__right'>
           {showInput ? (
             <TextField
               autoFocus
@@ -243,7 +243,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert />
           </IconButton>
-        </div>
+        </Box>
         <LibraryNavbarModal
           open={showMore}
           selectedSect={selectedSect}
@@ -259,7 +259,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           handleCheck={handleCheck}
           handleResetButton={handleResetButton}
         />
-      </div>
+      </Box>
   );
 };
 

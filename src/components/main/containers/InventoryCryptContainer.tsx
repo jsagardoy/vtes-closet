@@ -20,6 +20,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { setCryptInventory } from '../../../service/setCryptInventory';
 import Fab from '@mui/material/Fab';
 import SaveIcon from '@mui/icons-material/Save';
+import { Box } from '@mui/material';
 
 interface Props {
   toogle: boolean;
@@ -199,7 +200,7 @@ const InventoryCryptContainer = (props: Props) => {
   }, []);
 
   return (
-    <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
+    <Box className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
       <NavbarCryptList
         searchList={(
           name: string,
@@ -231,6 +232,8 @@ const InventoryCryptContainer = (props: Props) => {
       {loader && <Spinner />}
       <InventoryCryptList list={list} updateList={handleUpdateList} />
       <Fab
+        
+        color='secondary'
         sx={{
           position: 'fixed',
           right: '20%',
@@ -268,7 +271,7 @@ const InventoryCryptContainer = (props: Props) => {
           </Alert>
         )}
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

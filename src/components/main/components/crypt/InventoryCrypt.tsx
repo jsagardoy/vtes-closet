@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 import { cryptInventoryType } from '../../../../types/inventory_type';
@@ -12,7 +13,7 @@ const InventoryCrypt = (props: Props) => {
   const { card, updateInventory } = props;
 
   return (
-    <div className='inventory__buttons'>
+    <Box className='inventory__buttons'>
       <InventoryData
         label='Have'
         card={card}
@@ -37,7 +38,7 @@ const InventoryCrypt = (props: Props) => {
         initialValue={card.used}
         updateInventory={(card) => updateInventory(card as cryptInventoryType)}
       /> */}
-    </div>
+    </Box>
   );
 };
 

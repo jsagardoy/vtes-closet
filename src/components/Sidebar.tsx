@@ -1,4 +1,4 @@
-import { List, ListItemButton, ListItemText } from '@mui/material';
+import { Box, List, ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -56,7 +56,7 @@ const Sidebar = (props: Props) => {
 
   return toogle ? (
     <aside className={toogle ? 'sidebar' : 'hidden'}>
-      <div className='list__container'>
+      <Box className='list__container'>
         <List className='list'>
           <ListItemButton
             alignItems='center'
@@ -64,7 +64,7 @@ const Sidebar = (props: Props) => {
             divider
             disableGutters
             sx={{
-              borderBottom: '1px solid black',
+              borderBottom: '1px solid',
               width: '100%',
               textAlign: 'center',
             }}
@@ -77,7 +77,7 @@ const Sidebar = (props: Props) => {
             divider
             disableGutters
             sx={{
-              borderBottom: '1px solid black',
+              borderBottom: '1px solid',
               width: '100%',
               textAlign: 'center',
             }}
@@ -86,14 +86,14 @@ const Sidebar = (props: Props) => {
             <ListItemText primary='Library' />
           </ListItemButton>
           {user ? (
-            <div className='list'>
+            <Box className='list'>
               <ListItemButton
                 alignItems='center'
                 dense
                 divider
                 disableGutters
                 sx={{
-                  borderBottom: '1px solid black',
+                  borderBottom: '1px solid',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -112,7 +112,7 @@ const Sidebar = (props: Props) => {
                 divider
                 disableGutters
                 sx={{
-                  borderBottom: '1px solid black',
+                  borderBottom: '1px solid',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -130,7 +130,7 @@ const Sidebar = (props: Props) => {
                 divider
                 disableGutters
                 sx={{
-                  borderBottom: '1px solid black',
+                  borderBottom: '1px solid',
                   width: '100%',
                   textAlign: 'center',
                 }}
@@ -142,12 +142,12 @@ const Sidebar = (props: Props) => {
                   secondaryTypographyProps={{}}
                 />
               </ListItemButton>
-            </div>
+            </Box>
           ) : (
             <></>
           )}
         </List>
-      </div>
+      </Box>
     </aside>
   ) : null;
 };

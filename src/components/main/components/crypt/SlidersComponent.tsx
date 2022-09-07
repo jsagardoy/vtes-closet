@@ -1,4 +1,4 @@
-import { Slider, InputLabel } from '@mui/material';
+import { Slider, InputLabel, Box } from '@mui/material';
 import React from 'react';
 import {
   capacityType,
@@ -45,12 +45,12 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
   React.useEffect(() => {}, []);
   return (
     <>
-      <div className='slider__container'>
-        <div className='slider__group'>
-          <div className='slider__label'>
+      <Box className='slider__container'>
+        <Box className='slider__group'>
+          <Box className='slider__label'>
             <InputLabel>Group: {group?.label}</InputLabel>
-          </div>
-          <div className='slider'>
+          </Box>
+          <Box className='slider'>
             <Slider
               defaultValue={group.value}
               value={group.value}
@@ -61,13 +61,13 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
               onChange={handleSliderGroup}
               onChangeCommitted={handleCommittedSlider}
             />
-          </div>
-        </div>
-        <div className='slider__group'>
-          <div className='slider__label'>
+          </Box>
+        </Box>
+        <Box className='slider__group'>
+          <Box className='slider__label'>
             <InputLabel>Max capacity: {maxCapacity?.label}</InputLabel>
-          </div>
-          <div className='slider'>
+          </Box>
+          <Box className='slider'>
             <Slider
               defaultValue={maxCapacity?.value}
               value={maxCapacity.value}
@@ -78,13 +78,13 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
               onChange={handleSliderMaxCap}
               onChangeCommitted={handleCommittedSlider}
             />
-          </div>
-        </div>
-        <div className='slider__group'>
-          <div className='slider__label'>
+          </Box>
+        </Box>
+        <Box className='slider__group'>
+          <Box className='slider__label'>
             <InputLabel>Min capacity: {minCapacity?.label}</InputLabel>
-          </div>
-          <div className='slider'>
+          </Box>
+          <Box className='slider'>
             <Slider
               defaultValue={minCapacity.value}
               value={minCapacity.value}
@@ -95,9 +95,9 @@ export const SlidersComponent = (sliderProps: SliderProps) => {
               onChange={handleSliderMinCap}
               onChangeCommitted={handleCommittedSlider}
             />
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 };

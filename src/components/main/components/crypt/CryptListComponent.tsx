@@ -90,9 +90,9 @@ const CryptListComponent = (props: Props) => {
     >
       <List className='crypt__list'>
         {items.length === 0 ? (
-          <div className='span__no__result'>
+          <Box className='span__no__result'>
             <span>No results</span>
-          </div>
+          </Box>
         ) : (
           items.map((crypt: CryptType, index: number) => (
             <Box sx={{ display: 'flex', alignItems: 'center' }} key={crypt.id && crypt.name && Math.random()}>
@@ -116,14 +116,14 @@ const CryptListComponent = (props: Props) => {
                     crypt.group
                   }`}
                 />
-                <div className='list__left'>
+                <Box className='list__left'>
                   {getDiscIcon(crypt.disciplines).map((dis) => {
                     return (
                       <ListItemAvatar
                         className='list__avatar__icons'
                         key={crypt.id && dis}
                       >
-                        <Avatar src={dis} alt={dis} />
+                        <Avatar sx={{backgroundColor:'white'}} variant='rounded' src={dis} alt={dis} />
                       </ListItemAvatar>
                     );
                   })}
@@ -132,7 +132,7 @@ const CryptListComponent = (props: Props) => {
                     primary={crypt.capacity}
                     //secondary={getDiscIcon(crypt.discipline)}
                   />
-                </div>
+                </Box>
               </ListItem>
             </Box>
           ))

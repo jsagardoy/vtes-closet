@@ -25,6 +25,8 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
+  Box,
+  Paper,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
@@ -401,11 +403,12 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
   const { searchList } = navbarListProps;
   return (
     <>
-      <div className='navbarList'>
-        <div className='navbarList__left'>
+      <Divider />
+      <Box className='navbarList'>
+        <Box className='navbarList__left'>
           <h3>Crypt</h3>
-        </div>
-        <div className='navbarList__right'>
+        </Box>
+        <Box className='navbarList__right'>
           {showInput ? (
             <TextField
               autoFocus
@@ -440,9 +443,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               handleSortAZ();
             }}
           >
-            <SortByAlpha
-              className={rotateAZ ? 'button__activated__AZ' : ''}
-            />
+            <SortByAlpha className={rotateAZ ? 'button__activated__AZ' : ''} />
           </IconButton>
           <IconButton
             className={rotate ? 'button__rotation' : ''}
@@ -452,20 +453,21 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               handleSort();
             }}
           >
-            <Sort/>
+            <Sort />
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert />
           </IconButton>
-        </div>
-      </div>
+        </Box>
+      </Box>
+      <Divider />
       <Modal
         open={showMore}
         onClose={() => handleMore()}
         className='navbar__bottom'
       >
-        <div className='filter__container'>
-          <div className='disc__container'>
+        <Paper className='filter__container'>
+          <Box className='disc__container'>
             {getDiscIcon(selected_discList.name).map((dis, index) => {
               return (
                 <IconButton
@@ -486,9 +488,9 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                 </IconButton>
               );
             })}
-          </div>
+          </Box>
           <Divider />
-          <div className='filter__clan'>
+          <Box className='filter__clan'>
             <InputLabel>Clan</InputLabel>
             <FormControl variant='standard'>
               <Select
@@ -514,10 +516,10 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                 ))}
               </Select>
             </FormControl>
-          </div>
+          </Box>
           <Divider />
 
-          <div className='filter__sect'>
+          <Box className='filter__sect'>
             <InputLabel>Sect</InputLabel>
             <FormControl variant='standard'>
               <Select
@@ -538,11 +540,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                 ))}
               </Select>
             </FormControl>
-          </div>
+          </Box>
           <Divider />
-          <div className='title__container'>
+          <Box className='title__container'>
             {getTitle().map((title: string) => (
-              <div key={title} className='title__pair'>
+              <Box key={title} className='title__pair'>
                 <Checkbox
                   size='small'
                   checked={checkboxTitle(title)}
@@ -551,11 +553,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>{title}</InputLabel>
-              </div>
+              </Box>
             ))}
-          </div>
+          </Box>
           <Divider />
-          <div className='filter__slider__group'>
+          <Box className='filter__slider__group'>
             <SlidersComponent
               filterSliders={handleSliders}
               group={selectedGroup}
@@ -566,11 +568,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
               handleSliderMaxCap={handleSliderMaxCap}
               handleSliderMinCap={handleSliderMinCap}
             />
-          </div>
+          </Box>
           <Divider />
-          <div className='filter__props'>
-            <div className='prop__column'>
-              <div className='prop__pair'>
+          <Box className='filter__props'>
+            <Box className='prop__column'>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.bleed}
@@ -579,8 +581,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>+ Bleed</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.strength}
@@ -589,8 +591,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>+ Strength</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.stealth}
@@ -599,8 +601,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>+ Stealth</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.intercept}
@@ -609,8 +611,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>+ Intercept</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.aggravated}
@@ -619,9 +621,9 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Aggravated</InputLabel>
-              </div>
+              </Box>
 
-              <div className='prop__pair'>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.enter_combat}
@@ -630,10 +632,10 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Enter combat</InputLabel>
-              </div>
-            </div>
-            <div className='prop__column'>
-              <div className='prop__pair'>
+              </Box>
+            </Box>
+            <Box className='prop__column'>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.flight}
@@ -642,8 +644,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Flight</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.black_hand}
@@ -652,8 +654,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Black Hand</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.red_list}
@@ -662,8 +664,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Red List</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.infernal}
@@ -672,8 +674,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Infernal</InputLabel>
-              </div>
-              <div className='prop__pair'>
+              </Box>
+              <Box className='prop__pair'>
                 <Checkbox
                   size='small'
                   checked={checked.slave}
@@ -682,11 +684,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
                   }
                 />
                 <InputLabel>Slave</InputLabel>
-              </div>
-            </div>
-          </div>
+              </Box>
+            </Box>
+          </Box>
           <Divider />
-          <div className='clear__button'>
+          <Box className='clear__button'>
             <Button
               sx={{
                 textTransform: 'capitalize',
@@ -700,8 +702,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             >
               Reset Filters
             </Button>
-          </div>
-        </div>
+          </Box>
+        </Paper>
       </Modal>
     </>
   );

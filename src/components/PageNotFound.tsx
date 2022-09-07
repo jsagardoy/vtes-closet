@@ -1,10 +1,11 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
 const PageNotFound = () => {
   return (
-    <div>
+    <Box>
       <h3>Page not found</h3>
-    </div>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Box, Snackbar } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
@@ -170,12 +170,12 @@ const DeckContainer = () => {
   }, [deckId, userId]);
 
   return (
-    <div className='container'>
+    <Box className='container'>
       <DeckInfoComponent
         deck={deckData}
         handleSaveDataInfo={handleSaveDataInfo}
       />
-      <div className='deck__container'>
+      <Box className='deck__container'>
         <DeckListComponent
           deck={deckData}
           updateDeck={(
@@ -186,16 +186,16 @@ const DeckContainer = () => {
             handleRemoveCard(id, cardType)
           }
         />
-        <div className='search__container'>
+        <Box className='search__container'>
           <SearchDeckContainer
             handleAddCardToDeck={(
               card: LibraryType | CryptType,
               cardType: CardType
             ) => handleAddCardToDeck(card, cardType)}
           />
-        </div>
-      </div>
-      <div>
+        </Box>
+      </Box>
+      <Box>
         <Snackbar
           open={openSnackBar}
           autoHideDuration={3000}
@@ -206,8 +206,8 @@ const DeckContainer = () => {
             Data successfully saved!
           </Alert>
         </Snackbar>
-      </div>
-      <div>
+      </Box>
+      <Box>
         <Snackbar
           open={errorSnackBar}
           autoHideDuration={3000}
@@ -218,8 +218,8 @@ const DeckContainer = () => {
             Error saving Data!
           </Alert>
         </Snackbar>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

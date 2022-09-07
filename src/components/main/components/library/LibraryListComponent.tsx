@@ -21,6 +21,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { Spinner } from '../global/Spinner';
 import { CryptType } from '../../../../types/crypt_type';
 import { CardType } from '../../../../types/deck_type';
+import { uuidv4 } from '@firebase/util';
 
 interface Props {
   handleItemToOpen: (library: LibraryType) => void;
@@ -106,14 +107,18 @@ const LibraryListComponent = (props: Props) => {
     >
       <List className='crypt__list'>
         {items.length === 0 ? (
-          <div className='span__no__result'>
+          <Box className='span__no__result'>
             <span>No results</span>
-          </div>
+          </Box>
         ) : (
           items.map((library: LibraryType) => (
             <Box
-              sx={{ display: 'flex', alignItems: 'center' }}
-              key={library.id && library.name && Math.random()}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              key={uuidv4()}
             >
               {deckMode ? (
                 <ListItemButton
@@ -127,13 +132,17 @@ const LibraryListComponent = (props: Props) => {
                 button
                 divider
                 dense
-                alignItems='flex-start'
                 onClick={() => handleItemToOpen(library)}
               >
                 <ListItemText className='list__item' primary={library.name} />
-                <div className='list__left'>
+                <Box className='list__left'>
                   {library.burn_option ? (
-                    <Avatar src={getBurnOption()} alt='Burn option' />
+                    <Avatar
+                      sx={{ backgroundColor: 'white' }}
+                      variant='rounded'
+                      src={getBurnOption()}
+                      alt='Burn option'
+                    />
                   ) : null}
                   {library.clans
                     ? getClanIcon(library.clans).map(
@@ -143,6 +152,8 @@ const LibraryListComponent = (props: Props) => {
                             key={library.id && clan}
                           >
                             <Avatar
+                              sx={{ backgroundColor: 'white' }}
+                              variant='rounded'
                               key={clan && library.id && index}
                               src={clan}
                               alt={clan}
@@ -158,7 +169,12 @@ const LibraryListComponent = (props: Props) => {
                             className='list__avatar__icons'
                             key={library.id && disc}
                           >
-                            <Avatar src={disc} alt={disc} />
+                            <Avatar
+                              sx={{ backgroundColor: 'white' }}
+                              variant='rounded'
+                              src={disc}
+                              alt={disc}
+                            />
                           </ListItemAvatar>
                         )
                       )
@@ -171,6 +187,8 @@ const LibraryListComponent = (props: Props) => {
                         key={library.id && type}
                       >
                         <Avatar
+                          sx={{ backgroundColor: 'white' }}
+                          variant='rounded'
                           key={type && library.id && index}
                           src={type}
                           alt={type}
@@ -181,17 +199,21 @@ const LibraryListComponent = (props: Props) => {
                   {library.blood_cost || library.pool_cost ? (
                     library.blood_cost ? (
                       <Avatar
+                        sx={{ backgroundColor: 'white' }}
+                        variant='rounded'
                         src={getCardCost(library.blood_cost, 'blood')}
                         alt='Blood cost'
                       />
                     ) : library.pool_cost ? (
                       <Avatar
+                        sx={{ backgroundColor: 'white' }}
+                        variant='rounded'
                         src={getCardCost(library.pool_cost, 'pool')}
                         alt='Pool cost'
                       />
                     ) : null
                   ) : null}
-                </div>
+                </Box>
               </ListItem>
             </Box>
           ))

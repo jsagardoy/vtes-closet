@@ -1,4 +1,4 @@
-import { Alert, Fab, Snackbar } from '@mui/material';
+import { Alert, Box, Fab, Snackbar } from '@mui/material';
 import React, { useMemo, useRef } from 'react';
 import { fetchLibrary } from '../../../service/fetchLibrary';
 import { fetchLibraryInventory } from '../../../service/fetchLibraryInventory';
@@ -160,7 +160,7 @@ const InventoryLibraryContainer = () => {
   }, []);
  
   return (
-    <div className='library__container'>
+    <Box className='library__container'>
       <LibraryNavbarList
         searchList={(
           name: string,
@@ -212,7 +212,7 @@ const InventoryLibraryContainer = () => {
           </Alert>
         )}
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   List,
   ListItem,
   ListItemAvatar,
@@ -92,12 +93,12 @@ const InventoryCryptComponent = (props: Props) => {
     >
       <List className='crypt__list'>
         {items.length === 0 ? (
-          <div className='span__no__result'>
+          <Box className='span__no__result'>
             <span>No results</span>
-          </div>
+          </Box>
         ) : (
           items.map((crypt: cryptInventoryType, index: number) => (
-            <div
+            <Box
               className='crypt__row'
               key={crypt.id && crypt.name && Math.random()}
             >
@@ -122,14 +123,19 @@ const InventoryCryptComponent = (props: Props) => {
                     crypt.group
                   }`}
                 />
-                <div className='list__left'>
+                <Box className='list__left'>
                   {getDiscIcon(crypt.disciplines).map((dis) => {
                     return (
                       <ListItemAvatar
                         className='list__avatar__icons'
                         key={crypt.id && dis}
                       >
-                        <Avatar src={dis} alt={dis} />
+                        <Avatar
+                          sx={{ backgroundColor: 'white' }}
+                          variant='rounded'
+                          src={dis}
+                          alt={dis}
+                        />
                       </ListItemAvatar>
                     );
                   })}
@@ -137,9 +143,9 @@ const InventoryCryptComponent = (props: Props) => {
                     className='list__item__icons'
                     primary={crypt.capacity}
                   />
-                </div>
+                </Box>
               </ListItem>
-            </div>
+            </Box>
           ))
         )}
       </List>

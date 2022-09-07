@@ -19,6 +19,7 @@ import { fetchCrypt } from '../../../service/fetchCrypt';
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { LibraryType } from '../../../types/library_type';
 import { CardType } from '../../../types/deck_type';
+import { Box } from '@mui/material';
 
 interface Props {
   toogle: boolean;
@@ -130,7 +131,7 @@ const CryptContainer = (props: Props) => {
   }, []);
 
   return (
-    <div className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
+    <Box className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
       <NavbarCryptList
         searchList={(
           name: string,
@@ -168,7 +169,7 @@ const CryptContainer = (props: Props) => {
           cardType: CardType
         ) => handleAddCardToDeck(card, cardType)}
       />
-    </div>
+    </Box>
   );
 };
 

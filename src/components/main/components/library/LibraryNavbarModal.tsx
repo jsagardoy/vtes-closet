@@ -10,6 +10,8 @@ import {
   Modal,
   Select,
   SelectChangeEvent,
+  Box,
+  Paper,
 } from '@mui/material';
 import React from 'react';
 import { discType } from '../../../../types/crypt_type';
@@ -59,8 +61,8 @@ const LibraryNavbarModal = (props: Props) => {
 
   return (
     <Modal open={open} onClose={() => handleMore()} className='navbar__bottom'>
-      <div className='filter__container'>
-        <div className='disc__container'>
+      <Paper className='filter__container'>
+        <Box className='disc__container'>
           {getDiscIcon(selected_discList.name).map((dis, index) => {
             return (
               <IconButton
@@ -76,9 +78,9 @@ const LibraryNavbarModal = (props: Props) => {
               </IconButton>
             );
           })}
-        </div>
+        </Box>
         <Divider />
-        <div className='filter__clan'>
+        <Box className='filter__clan'>
           <InputLabel id='library_card_type_id'>Type</InputLabel>
           <FormControl variant='standard'>
             <Select
@@ -98,8 +100,8 @@ const LibraryNavbarModal = (props: Props) => {
               ))}
             </Select>
           </FormControl>
-        </div>
-        <div className='filter__clan'>
+        </Box>
+        <Box className='filter__clan'>
           <InputLabel>Clan</InputLabel>
           <FormControl variant='standard'>
             <Select
@@ -125,8 +127,8 @@ const LibraryNavbarModal = (props: Props) => {
               ))}
             </Select>
           </FormControl>
-        </div>
-        <div className='filter__sect'>
+        </Box>
+        <Box className='filter__sect'>
           <InputLabel>Sect</InputLabel>
           <FormControl variant='standard'>
             <Select
@@ -147,11 +149,11 @@ const LibraryNavbarModal = (props: Props) => {
               ))}
             </Select>
           </FormControl>
-        </div>
+        </Box>
         <Divider />
-        <div className='filter__props'>
-          <div className='prop__column'>
-            <div className='prop__pair'>
+        <Box className='filter__props'>
+          <Box className='prop__column'>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.bleed}
@@ -160,8 +162,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>+ Bleed</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.strength}
@@ -170,8 +172,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>+ Strength</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.stealth}
@@ -180,8 +182,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>+ Stealth</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.intercept}
@@ -190,8 +192,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>+ Intercept</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.aggravated}
@@ -200,9 +202,9 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Aggravated</InputLabel>
-            </div>
+            </Box>
 
-            <div className='prop__pair'>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.enter_combat}
@@ -211,8 +213,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Enter combat</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.titled}
@@ -221,8 +223,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Titled</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.nonTitled}
@@ -231,8 +233,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Non-titled</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.banned}
@@ -241,8 +243,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Banned</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.disciplineless}
@@ -251,10 +253,10 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Discipliness</InputLabel>
-            </div>
-          </div>
-          <div className='prop__column'>
-            <div className='prop__pair'>
+            </Box>
+          </Box>
+          <Box className='prop__column'>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.clanless}
@@ -263,8 +265,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Clanless</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.flight}
@@ -273,8 +275,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Flight</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.burnable}
@@ -283,8 +285,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Burn option</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.black_hand}
@@ -293,8 +295,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Black Hand</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.red_list}
@@ -303,8 +305,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Red List</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.infernal}
@@ -313,8 +315,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Infernal</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.slave}
@@ -323,8 +325,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Slave</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.combo}
@@ -333,8 +335,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Combo</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.blood_cost}
@@ -343,8 +345,8 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Blood Cost</InputLabel>
-            </div>
-            <div className='prop__pair'>
+            </Box>
+            <Box className='prop__pair'>
               <Checkbox
                 size='small'
                 checked={checked.pool_cost}
@@ -353,16 +355,16 @@ const LibraryNavbarModal = (props: Props) => {
                 }
               />
               <InputLabel>Pool Cost</InputLabel>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
         <Divider />
-        <div className='clear__button'>
+        <Box className='clear__button'>
           <Button
             style={{
               textTransform: 'capitalize',
 
-              border: '1px solid black',
+              border: '1px solid',
               borderRadius: '2px',
               marginTop: '1rem',
               marginBottom: '1rem',
@@ -372,8 +374,8 @@ const LibraryNavbarModal = (props: Props) => {
           >
             Reset Filters
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Paper>
     </Modal>
   );
 };

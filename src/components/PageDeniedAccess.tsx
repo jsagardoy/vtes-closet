@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import './PageDeniedAccess.css';
 
@@ -7,7 +8,7 @@ function PageDeniedAccess() {
   const homeURL = 'http://localhost:3000';
   
   return (
-    <div className='page__denied__access'>
+    <Box className='page__denied__access'>
       <h1 className='denied__access__title'>Access Denied </h1>
       <span className='denied__access__span'>
               You do not have enough privileges to enter this site.<br />
@@ -20,7 +21,7 @@ function PageDeniedAccess() {
         src= {imgURL}
         alt='schrecknet'
       />
-    </div>
+    </Box>
   );
 }
 

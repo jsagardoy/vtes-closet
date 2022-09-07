@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchDecks } from '../../../service/fetchDecks';
@@ -144,7 +144,6 @@ const DecksContainer = () => {
       crypt: [],
       library: [],
     };
-    //TODO: insertar en BBDD
     createNewDeck(newDeck);
     setDeckList((prev) => [...prev, newDeck]);
     const userId = getUserId();
@@ -157,7 +156,7 @@ const DecksContainer = () => {
   };
 
   const response = (
-    <div className='decks__container'>
+    <Box className='decks__container'>
       <Box sx={titleStyle}>
         <Typography sx={{ fontWeight: 'bold' }} variant='h5'>
           Decks List
@@ -173,7 +172,7 @@ const DecksContainer = () => {
           No result
         </Typography>
       )}
-    </div>
+    </Box>
   );
 
   return response;

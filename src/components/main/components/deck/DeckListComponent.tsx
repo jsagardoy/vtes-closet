@@ -230,10 +230,10 @@ const DeckListComponent = (props: Props) => {
           sx={{
             width: '100',
 
-            borderBottom: '3px solid black',
+            borderBottom: '3px solid',
             paddingLeft: '1rem',
             paddingRight: '1rem',
-            borderTop: '1px solid black',
+            borderTop: '1px solid',
             display: 'flex',
             justifyContent: 'space-between',
           }}

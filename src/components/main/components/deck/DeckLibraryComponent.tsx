@@ -55,19 +55,25 @@ const DeckLibraryComponent = (props: Props) => {
   };
 
   const getDisciplines = (discList: string[]) => (
-    <div className='list__left'>
+    <Box className='list__left'>
       {getDiscIcon(discList).map((disc) => (
         <ListItemAvatar className='list__avatar__icons' key={disc}>
-          <Avatar src={disc} alt={disc} />
+          <Avatar
+            sx={{ backgroundColor: 'white' }}
+            variant='rounded'
+            src={disc}
+            alt={disc}
+          />
         </ListItemAvatar>
       ))}
-    </div>
+    </Box>
   );
 
   const getClan = (library: LibraryType) => {
     if (library && library.clans) {
       return getClanIcon(library.clans).map((clan) => (
         <Avatar
+          variant='rounded'
           className='clan__avatar__icon'
           key={clan}
           src={clan}
@@ -80,16 +86,26 @@ const DeckLibraryComponent = (props: Props) => {
   const getBurn = (card: LibraryType) => {
     if (card.burn_option) {
       return card.burn_option ? (
-        <Avatar src={getBurnOption()} alt='Burn option' />
+        <Avatar sx={{backgroundColor:'white'}} variant='rounded' src={getBurnOption()} alt='Burn option' />
       ) : null;
     }
   };
 
   const getLibraryCost = (library: LibraryType) =>
     library.blood_cost ? (
-      <Avatar src={getCardCost(library.blood_cost, 'blood')} alt='Blood cost' />
+      <Avatar
+        sx={{ backgroundColor: 'white' }}
+        variant='rounded'
+        src={getCardCost(library.blood_cost, 'blood')}
+        alt='Blood cost'
+      />
     ) : library.pool_cost ? (
-      <Avatar src={getCardCost(library.pool_cost, 'pool')} alt='Pool cost' />
+      <Avatar
+        sx={{ backgroundColor: 'white' }}
+        variant='rounded'
+        src={getCardCost(library.pool_cost, 'pool')}
+        alt='Pool cost'
+      />
     ) : null;
 
   const cardTypesList = (): string[] => {
@@ -136,7 +152,6 @@ const DeckLibraryComponent = (props: Props) => {
             {/* quantity */}
             <TableCell
               sx={{
-                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -158,7 +173,6 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Card Name */}
             <TableCell
               sx={{
-                
                 minWidth: '32%',
                 maxWidth: '32%',
               }}
@@ -169,7 +183,6 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Burn option */}
             <TableCell
               sx={{
-                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -179,22 +192,20 @@ const DeckLibraryComponent = (props: Props) => {
             {/* disciplines */}
             <TableCell
               sx={{
-                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
               onClick={() => handleOpenModal(elem, index)}
             >
-              <div className='list__left'>
+              <Box className='list__left'>
                 {elem.data.disciplines
                   ? getDisciplines(elem.data.disciplines)
                   : null}
-              </div>
+              </Box>
             </TableCell>
             {/* Clan */}
             <TableCell
               sx={{
-                
                 minWidth: '16%',
               }}
               onClick={() => handleOpenModal(elem, index)}
@@ -204,7 +215,6 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Cost */}
             <TableCell
               sx={{
-                
                 minWidth: '16%',
                 maxWidth: '16%',
               }}
@@ -221,18 +231,22 @@ const DeckLibraryComponent = (props: Props) => {
     if (!type.includes(',')) {
       const url = getCardTypesIcon([type]);
       return (
-        <Avatar src={url.at(0)} alt={type} />
+        <Avatar
+          sx={{ backgroundColor: 'white' }}
+          variant='rounded'
+          src={url.at(0)}
+          alt={type}
+        />
       );
     }
     if (type.includes(',')) {
       const newTypes = type.split(',');
       return getCardTypesIcon(newTypes).map((type: string, index: number) => (
-        <ListItemAvatar
-                    className='list__avatar__icons'
-          key={uuidv4()}
-        >
+        <ListItemAvatar className='list__avatar__icons' key={uuidv4()}>
           <Avatar
-                        key={uuidv4()}
+            sx={{ backgroundColor: 'white' }}
+            key={uuidv4()}
+            variant='rounded'
             src={type}
             alt={type}
           />
@@ -307,10 +321,9 @@ const DeckLibraryComponent = (props: Props) => {
       <Box
         key={uuidv4()}
         sx={{
-         
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid black',
+          borderBottom: '1px solid',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}

@@ -1,5 +1,5 @@
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import React from 'react';
 import { CryptType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
@@ -14,7 +14,7 @@ const CardButtons: React.FC<Props> = (props: Props) => {
   const { list, index, handleNext, handlePrevious } = props;
 
   return (
-    <div className='button__container'>
+    <Box className='button__container'>
       <IconButton
         disabled={index === 0}
         size='small'
@@ -35,7 +35,7 @@ const CardButtons: React.FC<Props> = (props: Props) => {
       >
         <NavigateNext className='icon__button' />
       </IconButton>
-    </div>
+    </Box>
   );
 };
 

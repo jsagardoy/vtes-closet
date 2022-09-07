@@ -87,12 +87,11 @@ const DeckInfoComponent = (props: Props) => {
             />
             <Box>
               <FormControl fullWidth>
-                <InputLabel id='select-label'>Archetype</InputLabel>
+                <InputLabel sx={{marginTop:'1rem'}} id='select-label'>Archetype</InputLabel>
                 <Select
                   sx={{
-                    m: 1,
+                    marginTop: '1rem',
                     width: 'maxContent',
-                    border: '1px solid black',
                     justifyContent: 'flex-end',
                     textTransform: 'capitalize',
                   }}
