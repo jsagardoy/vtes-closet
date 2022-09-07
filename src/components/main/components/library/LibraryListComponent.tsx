@@ -7,7 +7,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LibraryType } from '../../../../types/library_type';
 import {
@@ -21,7 +21,6 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { Spinner } from '../global/Spinner';
 import { CryptType } from '../../../../types/crypt_type';
 import { CardType } from '../../../../types/deck_type';
-import { uuidv4 } from '@firebase/util';
 
 interface Props {
   handleItemToOpen: (library: LibraryType) => void;
@@ -43,28 +42,32 @@ const LibraryListComponent = (props: Props) => {
     handleAddCardToDeck,
   } = props;
 
-  const [items, setItems] = React.useState<LibraryType[]>([]);
+  const [items, setItems] = React.useState<LibraryType[]>(initialValue);
 
-  const isElement = (elem: LibraryType, index: number): number => {
-    return elem && items.length > 0 && elem.id === items[items.length - 1].id
-      ? index
-      : -1;
-  };
+  const isElement = useMemo(() => {
+    return (elem: LibraryType, index: number): number => {
+      return elem && items.length > 0 && elem.id === items[items.length - 1].id
+        ? index
+        : -1;
+    };
+  }, [items]);
 
-  const fetchMoreData = () => {
-    if (list) {
-      const initItem: number | undefined = list
-        .map((elem, index) => isElement(elem, index))
-        .find((elem) => elem !== -1);
-      if (initItem) {
-        setItems(
-          items.concat([
-            ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
-          ])
-        );
+  const fetchMoreData = useMemo(() => {
+    return () => {
+      if (list) {
+        const initItem: number | undefined = list
+          .map((elem, index) => isElement(elem, index))
+          .find((elem) => elem !== -1);
+        if (initItem) {
+          setItems(
+            items.concat([
+              ...list.slice(initItem + 1, initItem ? initItem + 41 : 0 + 40),
+            ])
+          );
+        }
       }
-    }
-  };
+    };
+  }, [isElement, items, list]);
 
   React.useEffect(() => {
     setItems(initialValue);
@@ -118,7 +121,7 @@ const LibraryListComponent = (props: Props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              key={uuidv4()}
+              key={library.id && library.name && Math.random()}
             >
               {deckMode ? (
                 <ListItemButton
