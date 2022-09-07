@@ -18,7 +18,14 @@ import DeckContainer from './components/main/containers/DeckContainer';
 import { CryptType } from './types/crypt_type';
 import { CardType } from './types/deck_type';
 import { LibraryType } from './types/library_type';
-import { Container, createTheme, CssBaseline, PaletteMode, ThemeProvider } from '@mui/material';
+import {
+  Container,
+  createTheme,
+  CssBaseline,
+  PaletteMode,
+  ThemeOptions,
+  ThemeProvider,
+} from '@mui/material';
 import { Box } from '@mui/system';
 
 function App() {
@@ -43,11 +50,18 @@ function App() {
     cardType: CardType
   ) => {};
 
-  
-  const initialMode:PaletteMode = window.localStorage.getItem('mode') as PaletteMode;
-  const [mode, setMode] = React.useState<PaletteMode>(initialMode??'light');
+  const initialMode: PaletteMode = window.localStorage.getItem(
+    'mode'
+  ) as PaletteMode;
+  const [mode, setMode] = React.useState<PaletteMode>(initialMode ?? 'light');
   useEffect(() => {}, []);
-  const getDesignTokens = (mode: PaletteMode) => ({
+  const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
+    typography: {
+      fontFamily: '"Gill Sans", "Gill Sans MT", Calibri, sans-serif',
+      button: {
+        textTransform: 'none',
+      },
+    },
     palette: {
       mode,
       ...(mode === 'light'
@@ -70,7 +84,7 @@ function App() {
             text: {
               primary: '#383838',
               secondary: '#06699b',
-          },
+            },
           }
         : {
             // palette values for dark mode
@@ -96,22 +110,17 @@ function App() {
     },
   });
 
-  const colorMode = React.useMemo(
-    () => {
-      window.localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
-      return ({
-        // The dark mode switch would invoke this method
-        toggleColorMode: () => {
-          setMode((prevMode: PaletteMode) =>
-            prevMode === 'light' ? 'dark' : 'light'
-          );
-        }
-      
-      });
-    },
-    [mode]
-  );
-  
+  const colorMode = React.useMemo(() => {
+    window.localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
+    return {
+      // The dark mode switch would invoke this method
+      toggleColorMode: () => {
+        setMode((prevMode: PaletteMode) =>
+          prevMode === 'light' ? 'dark' : 'light'
+        );
+      },
+    };
+  }, [mode]);
 
   // Update the theme only if the mode changes
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);

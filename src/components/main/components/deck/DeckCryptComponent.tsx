@@ -135,7 +135,7 @@ const DeckCryptComponent = (props: Props) => {
         sx={{
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid',
+
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}

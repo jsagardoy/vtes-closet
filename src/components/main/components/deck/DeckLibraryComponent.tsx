@@ -323,13 +323,12 @@ const DeckLibraryComponent = (props: Props) => {
         sx={{
           p: '1rem',
           display: 'flex',
-          borderBottom: '1px solid',
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}
       >
         <Typography>Pool cost: {getTotalPoolCost()}</Typography>
-        <Typography>Blood cost:{getTotalBloodCost()} </Typography>
+        <Typography>Blood cost: {getTotalBloodCost()} </Typography>
       </Box>
 
       {cardTypesList().map((cardType, index) => {

@@ -1,5 +1,5 @@
 import { HighlightOff, MoreVert, Search, Sort} from '@mui/icons-material';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
 import { SelectChangeEvent } from '@mui/material/Select/Select';
@@ -9,7 +9,8 @@ import { LibraryPropType } from '../../../../types/library_type';
 import { getDiscInf, getDiscList } from '../../../../util';
 import './LibraryNavbarList.css';
 import LibraryNavbarModal from './LibraryNavbarModal';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useHistory } from 'react-router-dom';
 interface NavbarLibraryProps {
   searchList: (
     name: string,
@@ -26,7 +27,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   const values: number[] = getDiscInf().map(() => 0);
   let aux: discType = { name: getDiscInf(), value: values };
   const initialDiscValues = { ...aux };
-
+  const history = useHistory();
   const initialCheckedValues = {
     bleed: false,
     strength: false,
@@ -197,69 +198,77 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   };
   /* React.useEffect(() => {}, []); */
 
+  const handleGoBack = (): void => {
+    history.push('/');
+  }
+
   return (
-      <Box className='navbarList'>
-        <Box className='navbarList__left'>
-          <h3>Library</h3>
-        </Box>
-        <Box className='navbarList__right'>
-          {showInput ? (
-            <TextField
-              autoFocus
-              variant='standard'
-              value={inputSearch}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e)
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton size='small' onClick={(e) => handleChange('')}>
-                      <HighlightOff />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          ) : null}
-          <IconButton
-            size='small'
-            onClick={() => handleSearch()}
-            className='searchIcon'
-            disabled={inputSearch.length > 0}
-          >
-            <Search />
-          </IconButton>
-          <IconButton
-            className={rotate ? 'button__rotation' : ''}
-            size='small'
-            onClick={() => {
-              handleRotate();
-              handleSort();
-            }}
-          >
-            <Sort />
-          </IconButton>
-          <IconButton size='small' onClick={() => handleMore()}>
-            <MoreVert />
-          </IconButton>
-        </Box>
-        <LibraryNavbarModal
-          open={showMore}
-          selectedSect={selectedSect}
-          selectedClan={selectedClan}
-          checked={checked}
-          selectedLibraryCardType={selectedLibraryCardType}
-          selected_discList={selected_discList}
-          handleClan={handleClan}
-          handleMore={handleMore}
-          handleSect={handleSect}
-          handleSelectDisc={handleSelectDisc}
-          handleChangeLibraryCardType={handleChangeLibraryCardType}
-          handleCheck={handleCheck}
-          handleResetButton={handleResetButton}
-        />
+    <Box className='navbarList'>
+      <IconButton onClick={()=>handleGoBack() }>
+        <ArrowBackIcon />
+      </IconButton>
+      
+      <Box className='navbarList__left'>
+        <Typography variant='h5'>Library</Typography>
       </Box>
+      <Box className='navbarList__right'>
+        {showInput ? (
+          <TextField
+            autoFocus
+            variant='standard'
+            value={inputSearch}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChange(e)
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton size='small' onClick={(e) => handleChange('')}>
+                    <HighlightOff />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        ) : null}
+        <IconButton
+          size='small'
+          onClick={() => handleSearch()}
+          className='searchIcon'
+          disabled={inputSearch.length > 0}
+        >
+          <Search />
+        </IconButton>
+        <IconButton
+          className={rotate ? 'button__rotation' : ''}
+          size='small'
+          onClick={() => {
+            handleRotate();
+            handleSort();
+          }}
+        >
+          <Sort />
+        </IconButton>
+        <IconButton size='small' onClick={() => handleMore()}>
+          <MoreVert />
+        </IconButton>
+      </Box>
+      <LibraryNavbarModal
+        open={showMore}
+        selectedSect={selectedSect}
+        selectedClan={selectedClan}
+        checked={checked}
+        selectedLibraryCardType={selectedLibraryCardType}
+        selected_discList={selected_discList}
+        handleClan={handleClan}
+        handleMore={handleMore}
+        handleSect={handleSect}
+        handleSelectDisc={handleSelectDisc}
+        handleChangeLibraryCardType={handleChangeLibraryCardType}
+        handleCheck={handleCheck}
+        handleResetButton={handleResetButton}
+      />
+    </Box>
   );
 };
 

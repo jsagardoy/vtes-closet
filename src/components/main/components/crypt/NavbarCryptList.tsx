@@ -27,6 +27,7 @@ import {
   MenuItem,
   Box,
   Paper,
+  Typography,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SlidersComponent } from './SlidersComponent';
@@ -38,7 +39,8 @@ import {
   Sort,
   SortByAlpha,
 } from '@mui/icons-material';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useHistory } from 'react-router-dom';
 interface NavbarListProps {
   searchList: (
     name: string,
@@ -107,6 +109,8 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     Regent: false,
     Titled: false,
   });
+
+  const history = useHistory();
 
   const disc_inf: string[] = getDiscInf();
   const disc_sup: string[] = disc_inf.map((dis) => dis.toUpperCase());
@@ -398,6 +402,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     }
     return selectedTitle[title as keyof TitleType];
   };
+
+  const handleGoBack = (): void => {
+    history.push('/');
+  }
+
   React.useEffect(() => {}, []);
 
   const { searchList } = navbarListProps;
@@ -405,8 +414,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     <>
       <Divider />
       <Box className='navbarList'>
+        <IconButton onClick={()=>handleGoBack()}>
+        <ArrowBackIcon />
+        </IconButton>
         <Box className='navbarList__left'>
-          <h3>Crypt</h3>
+          <Typography variant='h5'>Crypt</Typography>
         </Box>
         <Box className='navbarList__right'>
           {showInput ? (

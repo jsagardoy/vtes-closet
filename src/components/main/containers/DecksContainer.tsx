@@ -1,4 +1,5 @@
 import {
+  Button,
   IconButton,
   Paper,
   Table,
@@ -22,7 +23,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { uuidv4 } from '@firebase/util';
 import { createNewDeck } from '../../../service/createNewDeck';
 import { deleteDeck } from '../../../service/deleteDeck';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [deckList, setDeckList] = React.useState<DeckType[]>([]);
@@ -85,7 +86,6 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{}}
               >
                 {index + 1}
               </TableCell>
@@ -93,7 +93,6 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{}}
               >
                 {deck.name}
               </TableCell>
@@ -101,7 +100,6 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{}}
               >
                 {deck.deckType}
               </TableCell>
@@ -109,11 +107,10 @@ const DecksContainer = () => {
                 onClick={() => {
                   handleSelectedDeck(deck.id);
                 }}
-                sx={{}}
               >
                 {deck.description}
               </TableCell>
-              <TableCell sx={{}}>
+              <TableCell>
                 <IconButton onClick={() => handleRemoveDeck(deck.id)}>
                   <DeleteIcon />
                 </IconButton>
@@ -124,6 +121,10 @@ const DecksContainer = () => {
       </Table>
     </TableContainer>
   );
+
+  const handleGoBack = (): void => {
+    history.push('/');
+  };
 
   const handleSelectedDeck = (id: string) => {
     const selectedDeck = deckList.find((elem: DeckType) => elem.id === id);
@@ -150,21 +151,28 @@ const DecksContainer = () => {
     history.push(`/private/${userId}/decks/${newDeck.id}`);
   };
 
-  const titleStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-  };
-
   const response = (
     <Box className='decks__container'>
-      <Box sx={titleStyle}>
-        <Typography sx={{ fontWeight: 'bold' }} variant='h5'>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent:'space-between',
+          alignItems:'center',
+        }}
+      >
+        <IconButton onClick={() => handleGoBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+        
+        <Typography variant='h5'>
           Decks List
         </Typography>
+        <Box/>
       </Box>
-      <IconButton sx={{}} onClick={() => handleCreateDeck()}>
-        Create new deck <AddCircleIcon />
-      </IconButton>
+      <Button onClick={() => handleCreateDeck()}>
+        <Typography variant='subtitle2'>Create new deck</Typography><AddCircleIcon sx={{marginLeft:'1rem'}} />
+          
+      </Button>
       {loader && <Spinner />}
       {deckList && deckList.length > 0 && tableOfContent}
       {(!deckList || deckList.length === 0) && !loader && (
