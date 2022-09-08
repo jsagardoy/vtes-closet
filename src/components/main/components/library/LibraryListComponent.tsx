@@ -137,7 +137,7 @@ const LibraryListComponent = (props: Props) => {
                 dense
                 onClick={() => handleItemToOpen(library)}
               >
-                <ListItemText className='list__item' primary={library.name} secondary={JSON.stringify(library.types).replaceAll('[\"','').replaceAll('\"]','')} />
+                <ListItemText className='list__item' primary={library.name} secondary={JSON.stringify(library.types).replaceAll('["','').replaceAll('"]','')} />
                 <Box className='list__left'>
                   {library.burn_option ? (
                     <Avatar

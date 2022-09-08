@@ -1,6 +1,7 @@
 import {
   Button,
   IconButton,
+  InputAdornment,
   Paper,
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -24,9 +26,13 @@ import { uuidv4 } from '@firebase/util';
 import { createNewDeck } from '../../../service/createNewDeck';
 import { deleteDeck } from '../../../service/deleteDeck';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { HighlightOff } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
 const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [deckList, setDeckList] = React.useState<DeckType[]>([]);
+  const [inputSearch, setInputSearch] = React.useState<string>('');
+  const initialDeckList = React.useRef<DeckType[]>([]);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -37,6 +43,7 @@ const DecksContainer = () => {
         .then((data: DeckType[]) => {
           if (data) {
             setDeckList(data);
+            initialDeckList.current = data;
             setLoader(false);
           } else {
             setLoader(false);
@@ -50,11 +57,12 @@ const DecksContainer = () => {
   }, []);
 
   const handleRemoveDeck = (id: string) => {
-    const newDekList: DeckType[] = deckList.filter(
+    const newDeckList: DeckType[] = deckList.filter(
       (elem: DeckType) => elem.id !== id
     );
     deleteDeck(id);
-    setDeckList(newDekList);
+    setDeckList(newDeckList);
+    initialDeckList.current = newDeckList;
   };
 
   const tableOfContent = (
@@ -145,10 +153,26 @@ const DecksContainer = () => {
       crypt: [],
       library: [],
     };
+
     createNewDeck(newDeck);
     setDeckList((prev) => [...prev, newDeck]);
+    initialDeckList.current = [...initialDeckList.current, newDeck];
     const userId = getUserId();
     history.push(`/private/${userId}/decks/${newDeck.id}`);
+  };
+
+  const handleSearch = (): void => {
+    const newList = initialDeckList.current.filter(
+      (elem) =>
+        elem.name.toLowerCase().includes(inputSearch.toLowerCase()) ||
+        elem.description.toLowerCase().includes(inputSearch.toLowerCase()) ||
+        elem.deckType.toLowerCase().includes(inputSearch.toLowerCase())
+    );
+    setDeckList(newList);
+  };
+  const handleChange = (search: string): void => {
+    setInputSearch(search);
+    handleSearch();
   };
 
   const response = (
@@ -156,23 +180,51 @@ const DecksContainer = () => {
       <Box
         sx={{
           display: 'flex',
-          justifyContent:'space-between',
-          alignItems:'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <IconButton onClick={() => handleGoBack()}>
-            <ArrowBackIcon />
-          </IconButton>
-        
-        <Typography variant='h5'>
-          Decks List
-        </Typography>
-        <Box/>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant='h5'>Decks List</Typography>
+        <Box />
       </Box>
-      <Button onClick={() => handleCreateDeck()}>
-        <Typography variant='subtitle2'>Create new deck</Typography><AddCircleIcon sx={{marginLeft:'1rem'}} />
-          
-      </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Button onClick={() => handleCreateDeck()}>
+          <Typography variant='subtitle2'>Create new deck</Typography>
+          <AddCircleIcon sx={{ marginLeft: '1rem' }} />
+        </Button>
+
+        <TextField
+          autoFocus
+          variant='standard'
+          value={inputSearch}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChange(e.target.value)
+          }
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton size='small' onClick={(e) => handleChange('')}>
+                  <HighlightOff />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       {loader && <Spinner />}
       {deckList && deckList.length > 0 && tableOfContent}
       {(!deckList || deckList.length === 0) && !loader && (
