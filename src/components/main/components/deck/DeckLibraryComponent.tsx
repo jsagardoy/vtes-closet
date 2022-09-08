@@ -8,6 +8,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -191,12 +192,12 @@ const DeckLibraryComponent = (props: Props) => {
     <TableHead key={uuidv4()}>
       {showLabel ? (
         <TableRow>
-          <TableCell>Quantity</TableCell>
-          <TableCell>Card name</TableCell>
-          <TableCell>Burn Option</TableCell>
-          <TableCell>Disciplines</TableCell>
-          <TableCell>Clan</TableCell>
-          <TableCell>Cost</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Quantity</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Card name</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Burn Option</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Disciplines</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Clan</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>Cost</TableCell>
         </TableRow>
       ) : (
         <TableRow>
@@ -219,14 +220,9 @@ const DeckLibraryComponent = (props: Props) => {
     list ? (
       <TableBody key={uuidv4()}>
         {list?.map((elem: ExtendedDeckType, index: number) => (
-          <TableRow key={elem.data.id} sx={{ alignItems: 'start' }}>
+          <TableRow key={elem.data.id} sx={{ justifyContent: 'center' }}>
             {/* quantity */}
-            <TableCell
-              sx={{
-                minWidth: '16%',
-                maxWidth: '16%',
-              }}
-            >
+            <TableCell >
               <QuantityButtonComponent
                 handleRemoveCard={(id: number, cardType: CardType) =>
                   handleRemoveCard(id, cardType)
@@ -244,8 +240,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Card Name */}
             <TableCell
               sx={{
-                minWidth: '32%',
-                maxWidth: '32%',
+                textAlign: 'center',
               }}
               onClick={() => handleOpenModal(elem, index)}
             >
@@ -254,8 +249,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Burn option */}
             <TableCell
               sx={{
-                minWidth: '16%',
-                maxWidth: '16%',
+                justifyContent: 'center',
               }}
             >
               {getBurn(elem.data as LibraryType)}
@@ -263,8 +257,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* disciplines */}
             <TableCell
               sx={{
-                minWidth: '16%',
-                maxWidth: '16%',
+                justifyContent: 'center',
               }}
               onClick={() => handleOpenModal(elem, index)}
             >
@@ -277,7 +270,7 @@ const DeckLibraryComponent = (props: Props) => {
             {/* Clan */}
             <TableCell
               sx={{
-                minWidth: '16%',
+                justifyContent: 'center',
               }}
               onClick={() => handleOpenModal(elem, index)}
             >
@@ -285,10 +278,7 @@ const DeckLibraryComponent = (props: Props) => {
             </TableCell>
             {/* Cost */}
             <TableCell
-              sx={{
-                minWidth: '16%',
-                maxWidth: '16%',
-              }}
+              align='right'
               onClick={() => handleOpenModal(elem, index)}
             >
               {getLibraryCost(elem.data as LibraryType)}
@@ -382,9 +372,10 @@ const DeckLibraryComponent = (props: Props) => {
         ? elem.quantity
         : 0
     );
-    const result:number = quantity?.reduce((a: number, b: number) => a + b)??0;
+    const result: number =
+      quantity?.reduce((a: number, b: number) => a + b) ?? 0;
     return result;
-    };
+  };
 
   return (
     <>
@@ -440,6 +431,9 @@ const DeckLibraryComponent = (props: Props) => {
             </Box>
 
             {showCardType[cardType.toLowerCase() as cardTypeValues] ? (
+            <TableContainer>
+                
+            
               <Table key={uuidv4()}>
                 {tableHeadContent(true)}
                 {tableBodyContent(
@@ -452,7 +446,8 @@ const DeckLibraryComponent = (props: Props) => {
                       a.data.name.localeCompare(b.data.name)
                     )
                 )}
-              </Table>
+                </Table>
+              </TableContainer>
             ) : null}
           </Box>
         );
