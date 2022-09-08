@@ -2,6 +2,7 @@ import { uuidv4 } from '@firebase/util';
 import {
   Avatar,
   Box,
+  IconButton,
   ListItemAvatar,
   Modal,
   Table,
@@ -13,7 +14,8 @@ import {
 } from '@mui/material';
 
 import React from 'react';
-
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CardType, ExtendedDeckType } from '../../../../types/deck_type';
 import { LibraryType } from '../../../../types/library_type';
 import {
@@ -34,10 +36,70 @@ interface Props {
   handleRemoveCard: (id: number, cardType: CardType) => void;
 }
 
+type cardTypeValues =
+  | 'master'
+  | 'conviction'
+  | 'power'
+  | 'action'
+  | 'ally'
+  | 'equipment'
+  | 'political action'
+  | 'action modifier'
+  | 'combat'
+  | 'reaction'
+  | 'action modifier,reaction'
+  | 'action modifier,combat'
+  | 'action,reaction'
+  | 'action,combat'
+  | 'combat,reaction'
+  | 'event'
+  | 'any'
+  | 'token';
+interface ShowCardType {
+  master: boolean;
+  conviction: boolean;
+  power: boolean;
+  action: boolean;
+  ally: boolean;
+  equipment: boolean;
+  'political action': boolean;
+  'action modifier': boolean;
+  combat: boolean;
+  reaction: boolean;
+  'action modifier,reaction': boolean;
+  'action modifier,combat': boolean;
+  'action,reaction': boolean;
+  'action,combat': boolean;
+  'combat,reaction': boolean;
+  event: boolean;
+  any: boolean;
+  token: boolean;
+}
+
 const DeckLibraryComponent = (props: Props) => {
   const { data, updateQuantity, handleRemoveCard } = props;
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [selectedCard, setSelectedCard] = React.useState<any>({});
+  const [showCardType, setShowCardType] = React.useState<ShowCardType>({
+    master: true,
+    conviction: true,
+    power: true,
+    action: true,
+    ally: true,
+    equipment: true,
+    'political action': true,
+    'action modifier': true,
+    combat: true,
+    reaction: true,
+    'action modifier,reaction': true,
+    'action modifier,combat': true,
+    'action,reaction': true,
+    'action,combat': true,
+    'combat,reaction': true,
+    event: true,
+    any: true,
+    token: true,
+  });
 
   const handleOpenModal = (card: ExtendedDeckType, index: number) => {
     setSelectedCard(card.data);
@@ -86,7 +148,12 @@ const DeckLibraryComponent = (props: Props) => {
   const getBurn = (card: LibraryType) => {
     if (card.burn_option) {
       return card.burn_option ? (
-        <Avatar sx={{backgroundColor:'white'}} variant='rounded' src={getBurnOption()} alt='Burn option' />
+        <Avatar
+          sx={{ backgroundColor: 'white' }}
+          variant='rounded'
+          src={getBurnOption()}
+          alt='Burn option'
+        />
       ) : null;
     }
   };
@@ -144,6 +211,10 @@ const DeckLibraryComponent = (props: Props) => {
     </TableHead>
   );
 
+  const handleShowCardtype = (key: cardTypeValues): void => {
+    const newValue: boolean = !showCardType[key];
+    setShowCardType((prev) => ({ ...prev, [key]: newValue }));
+  };
   const tableBodyContent = (list: ExtendedDeckType[] | undefined) =>
     list ? (
       <TableBody key={uuidv4()}>
@@ -305,6 +376,16 @@ const DeckLibraryComponent = (props: Props) => {
     }
   };
 
+  const getTypeCardNumber = (cardType: string): number => {
+    const quantity: number[] | undefined = data?.map((elem) =>
+      elem.data.types.toString().toLowerCase() === cardType.toLowerCase()
+        ? elem.quantity
+        : 0
+    );
+    const result:number = quantity?.reduce((a: number, b: number) => a + b)??0;
+    return result;
+    };
+
   return (
     <>
       {openModal ? (
@@ -327,8 +408,8 @@ const DeckLibraryComponent = (props: Props) => {
           justifyContent: 'space-evenly',
         }}
       >
-        <Typography>Pool cost: {getTotalPoolCost()}</Typography>
-        <Typography>Blood cost: {getTotalBloodCost()} </Typography>
+        <Typography>Total Pool cost: {getTotalPoolCost()}</Typography>
+        <Typography>Total Blood cost: {getTotalBloodCost()} </Typography>
       </Box>
 
       {cardTypesList().map((cardType, index) => {
@@ -341,16 +422,38 @@ const DeckLibraryComponent = (props: Props) => {
               }}
             >
               {getTypeIconAvatar(cardType)}
-              <Typography>{cardType}</Typography>
-            </Box>
-            <Table key={uuidv4()}>
-              {tableHeadContent(true)}
-              {tableBodyContent(
-                data?.filter(
-                  (elem) => elem.data.types.toString() === cardType?.toString()
+              <Typography sx={{ marginLeft: '1rem' }}>
+                {cardType.replaceAll(',', ' / ')} ({getTypeCardNumber(cardType)}
                 )
-              )}
-            </Table>
+              </Typography>
+              <IconButton
+                onClick={() =>
+                  handleShowCardtype(cardType.toLowerCase() as cardTypeValues)
+                }
+              >
+                {showCardType[cardType.toLowerCase() as cardTypeValues] ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </IconButton>
+            </Box>
+
+            {showCardType[cardType.toLowerCase() as cardTypeValues] ? (
+              <Table key={uuidv4()}>
+                {tableHeadContent(true)}
+                {tableBodyContent(
+                  data
+                    ?.filter(
+                      (elem) =>
+                        elem.data.types.toString() === cardType?.toString()
+                    )
+                    .sort((a: ExtendedDeckType, b: ExtendedDeckType) =>
+                      a.data.name.localeCompare(b.data.name)
+                    )
+                )}
+              </Table>
+            ) : null}
           </Box>
         );
       })}

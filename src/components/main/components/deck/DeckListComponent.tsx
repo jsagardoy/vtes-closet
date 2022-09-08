@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React from 'react';
 import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
 import { CryptType } from '../../../../types/crypt_type';
@@ -216,7 +216,7 @@ const DeckListComponent = (props: Props) => {
   }, [extendedCrypt]);
 
   return (
-    <Box className='deck'>
+    <Container className='deck'>
       <Box
         sx={{
           display: 'flex',
@@ -330,7 +330,6 @@ const DeckListComponent = (props: Props) => {
           </Typography>
         ) : null}
       </Box>
-
       <DeckLibraryComponent
         data={extendedLibrary}
         updateQuantity={(newQuantity: number, id: number, cardType: CardType) =>
@@ -340,7 +339,7 @@ const DeckListComponent = (props: Props) => {
           handleRemoveCard(id, cardType)
         }
       />
-    </Box>
+    </Container>
   );
 };
 export default DeckListComponent;
