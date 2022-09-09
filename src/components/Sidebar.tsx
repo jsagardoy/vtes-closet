@@ -53,7 +53,10 @@ const Sidebar = (props: Props) => {
         break;
     }
   };
-
+  React.useEffect(() => {
+    return () => {};
+  }, []);
+  
   return toogle ? (
     <aside className={toogle ? 'sidebar' : 'hidden'}>
       <Box className='list__container'>

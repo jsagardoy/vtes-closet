@@ -35,6 +35,7 @@ const Login = () => {
     window.localStorage.removeItem('auth');
     history.push('/');
   };
+  React.useEffect(() => { return (() => { }) }, []);
   return (
     <Box className='login'>
       <Button
