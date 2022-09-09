@@ -85,11 +85,13 @@ const LibraryContainer = (props:Props) => {
  }, []);
   return (
     <Container>
+      {deckMode ?
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <IconButton onClick={() => handleCloseModal('library')}>
           <CloseRoundedIcon />
         </IconButton>
-      </Box>
+      </Box>:null
+      }
       <Box className='library__container'>
         <LibraryNavbarList
           searchList={(
@@ -101,7 +103,7 @@ const LibraryContainer = (props:Props) => {
             props: LibraryPropType
           ) => handleSearch(name, discList, libraryCardType, clan, sect, props)}
           handleSort={() => handleSort()}
-          deckMode={true}
+          deckMode={deckMode}
         />
         {loader && <Spinner />}
         <LibraryList

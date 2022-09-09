@@ -1,14 +1,17 @@
 import {
   Avatar,
-  Box,
-  List,
-  ListItem,
+  IconButton,
   ListItemAvatar,
-  ListItemButton,
-  ListItemText,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from '@mui/material';
-import React, { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useMemo } from 'react';
 import { LibraryType } from '../../../../types/library_type';
 import {
   getBurnOption,
@@ -18,13 +21,13 @@ import {
   getCardCost,
 } from '../../../../util';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { Spinner } from '../global/Spinner';
 import { CryptType } from '../../../../types/crypt_type';
 import { CardType } from '../../../../types/deck_type';
+import { Spinner } from '../global/Spinner';
+import React from 'react';
 
 interface Props {
   handleItemToOpen: (library: LibraryType) => void;
-  initialValue: LibraryType[];
   list: LibraryType[];
   deckMode: boolean;
   handleAddCardToDeck: (
@@ -37,192 +40,193 @@ const LibraryListComponent = (props: Props) => {
   const {
     list,
     handleItemToOpen,
-    initialValue,
     deckMode,
     handleAddCardToDeck,
   } = props;
 
-  const [items, setItems] = React.useState<LibraryType[]>(initialValue);
-
+  const [items, setItems] = React.useState<LibraryType[]>(list.slice(0, 20));
   const isElement = useMemo(() => {
-    return (elem: LibraryType, index: number): number => {
-      return elem && items.length > 0 && elem.id === items[items.length - 1].id
-        ? index
-        : -1;
-    };
-  }, [items]);
+  return (elem: LibraryType, index: number): number => {
+    return elem && items.length > 0 && elem.id === items[items.length - 1].id
+      ? index
+      : -1;
+  };
+}, [items]);
 
-  const fetchMoreData = useMemo(() => {
-    return () => {
-      if (list) {
-        const initItem: number | undefined = list
-          .map((elem, index) => isElement(elem, index))
-          .find((elem) => elem !== -1);
-        if (initItem) {
-          setItems(
-            items.concat([
-              ...list.slice(initItem + 1, initItem ? initItem + 41 : 0 + 40),
-            ])
-          );
-        }
+const fetchMoreData = useMemo(() => {
+  return () => {
+    if (list) {
+      const initItem: number | undefined = list
+        .map((elem, index) => isElement(elem, index))
+        .find((elem) => elem !== -1);
+      if (initItem) {
+        setItems(
+          items.concat([
+            ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
+          ])
+        );
       }
-    };
-  }, [isElement, items, list]);
+    }
+  };
+}, [isElement, items, list]);
+  const getTableHeader = () => (
+    <TableHead>
+      <TableRow>
+        {deckMode ? <TableCell align='center'>Action</TableCell> : null}
+        <TableCell align='center'>Name</TableCell>
+        <TableCell align='center'>Card Type</TableCell>
+        <TableCell align='center'>Burn Option</TableCell>
+        <TableCell align='center'>Disciplines</TableCell>
+        <TableCell align='center'>Clan</TableCell>
+        <TableCell align='center'>Cost</TableCell>
+      </TableRow>
+    </TableHead>
+  );
 
-  React.useEffect(() => {
-    setItems(initialValue);
-  }, [initialValue, list]);
-
-  if (list.length === 0) {
-    return <></>;
-  }
-  if (items.length === 0) {
-    return (
-      <p
-        style={{
-          textAlign: 'center',
-
-          marginBottom: '1em',
-        }}
-      >
-        No results
-      </p>
-    );
-  }
-  return (
-    <InfiniteScroll
-      dataLength={items.length}
-      next={fetchMoreData}
-      hasMore={items.length !== list.length}
-      loader={<Spinner />}
-      style={{ overflow: 'hidden' }}
-      endMessage={
-        <p
-          style={{
-            textAlign: 'center',
-
-            marginBottom: '1em',
-          }}
-        >
-          No more content
-        </p>
-      }
-    >
-      <List className='crypt__list'>
-        {items.length === 0 ? (
-          <Box className='span__no__result'>
-            <span>No results</span>
-          </Box>
-        ) : (
-          items.map((library: LibraryType) => (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              key={library.id && library.name && Math.random()}
-            >
+  const getTableBody = useMemo(
+    () => () =>
+      (
+        <TableBody>
+          {items.map((library) => (
+            <TableRow key={library.id}>
+              
               {deckMode ? (
-                <ListItemButton
+                <TableCell align='center'>
+                  <IconButton
                   onClick={(e) => handleAddCardToDeck(library, 'library')}
-                >
+                  >
                   <AddCircleRoundedIcon />
-                </ListItemButton>
+                </IconButton>
+                  </TableCell>
               ) : null}
-              <ListItem
-                key={library.id}
-                button
-                divider
-                dense
-                onClick={() => handleItemToOpen(library)}
-              >
-                <ListItemText className='list__item' primary={library.name} secondary={JSON.stringify(library.types).replaceAll('["','').replaceAll('"]','').replaceAll('","',', ')} />
-                <Box className='list__left'>
-                  {library.burn_option ? (
+              <TableCell align='center' onClick={()=>handleItemToOpen(library)}>
+                <Typography color='secondary'>{library.name}</Typography>
+              </TableCell>
+              <TableCell align='center'>
+                {getCardTypesIcon(library.types).map(
+                  (type: string, index: number) => (
+                    <ListItemAvatar
+                      className='list__avatar__icons'
+                      key={library.id && type}
+                    >
+                      <Avatar
+                        sx={{ backgroundColor: 'white' }}
+                        variant='rounded'
+                        key={type && library.id && index}
+                        src={type}
+                        alt={type}
+                      />
+                    </ListItemAvatar>
+                  )
+                )}
+              </TableCell>
+
+              <TableCell align='center'>
+                {library.burn_option ? (
+                  <Avatar
+                    sx={{ backgroundColor: 'white' }}
+                    variant='rounded'
+                    src={getBurnOption()}
+                    alt='Burn option'
+                  />
+                ) : null}
+              </TableCell>
+              <TableCell sx={{ flexDirection: 'row' }}>
+                {library.disciplines
+                  ? getDiscIcon(library.disciplines).map(
+                      (disc: string, index: number) => (
+                        <ListItemAvatar
+                          className='list__avatar__icons'
+                          key={library.id && disc}
+                        >
+                          <Avatar
+                            sx={{ backgroundColor: 'white' }}
+                            variant='rounded'
+                            src={disc}
+                            alt={disc}
+                          />
+                        </ListItemAvatar>
+                      )
+                    )
+                  : null}
+              </TableCell>
+              <TableCell align='center'>
+                {library.clans
+                  ? getClanIcon(library.clans).map(
+                      (clan: string, index: number) => (
+                        <ListItemAvatar
+                          className='list__avatar__icons'
+                          key={library.id && clan}
+                        >
+                          <Avatar
+                            sx={{ backgroundColor: 'white' }}
+                            variant='rounded'
+                            key={clan && library.id && index}
+                            src={clan}
+                            alt={clan}
+                          />
+                        </ListItemAvatar>
+                      )
+                    )
+                  : null}
+              </TableCell>
+              <TableCell align='center'>
+                {library.blood_cost || library.pool_cost ? (
+                  library.blood_cost ? (
                     <Avatar
                       sx={{ backgroundColor: 'white' }}
                       variant='rounded'
-                      src={getBurnOption()}
-                      alt='Burn option'
+                      src={getCardCost(library.blood_cost, 'blood')}
+                      alt='Blood cost'
                     />
-                  ) : null}
-                  {library.clans
-                    ? getClanIcon(library.clans).map(
-                        (clan: string, index: number) => (
-                          <ListItemAvatar
-                            className='list__avatar__icons'
-                            key={library.id && clan}
-                          >
-                            <Avatar
-                              sx={{ backgroundColor: 'white' }}
-                              variant='rounded'
-                              key={clan && library.id && index}
-                              src={clan}
-                              alt={clan}
-                            />
-                          </ListItemAvatar>
-                        )
-                      )
-                    : null}
-                  {library.disciplines
-                    ? getDiscIcon(library.disciplines).map(
-                        (disc: string, index: number) => (
-                          <ListItemAvatar
-                            className='list__avatar__icons'
-                            key={library.id && disc}
-                          >
-                            <Avatar
-                              sx={{ backgroundColor: 'white' }}
-                              variant='rounded'
-                              src={disc}
-                              alt={disc}
-                            />
-                          </ListItemAvatar>
-                        )
-                      )
-                    : null}
+                  ) : library.pool_cost ? (
+                    <Avatar
+                      sx={{ backgroundColor: 'white' }}
+                      variant='rounded'
+                      src={getCardCost(library.pool_cost, 'pool')}
+                      alt='Pool cost'
+                    />
+                  ) : null
+                ) : null}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      ),
+    [deckMode, handleAddCardToDeck, handleItemToOpen, items]
+  );
 
-                  {getCardTypesIcon(library.types).map(
-                    (type: string, index: number) => (
-                      <ListItemAvatar
-                        className='list__avatar__icons'
-                        key={library.id && type}
-                      >
-                        <Avatar
-                          sx={{ backgroundColor: 'white' }}
-                          variant='rounded'
-                          key={type && library.id && index}
-                          src={type}
-                          alt={type}
-                        />
-                      </ListItemAvatar>
-                    )
-                  )}
-                  {library.blood_cost || library.pool_cost ? (
-                    library.blood_cost ? (
-                      <Avatar
-                        sx={{ backgroundColor: 'white' }}
-                        variant='rounded'
-                        src={getCardCost(library.blood_cost, 'blood')}
-                        alt='Blood cost'
-                      />
-                    ) : library.pool_cost ? (
-                      <Avatar
-                        sx={{ backgroundColor: 'white' }}
-                        variant='rounded'
-                        src={getCardCost(library.pool_cost, 'pool')}
-                        alt='Pool cost'
-                      />
-                    ) : null
-                  ) : null}
-                </Box>
-              </ListItem>
-            </Box>
-          ))
-        )}
-      </List>
-    </InfiniteScroll>
+  React.useEffect(() => {
+   setItems(list.slice(0, 20));
+   return (() => {});
+}, [list])
+
+  return (
+    <TableContainer>
+      <InfiniteScroll
+        dataLength={items.length}
+        next={fetchMoreData}
+        hasMore={items.length !== list.length}
+        loader={<Spinner />}
+        style={{ overflow: 'hidden' }}
+        endMessage={
+          <p
+            style={{
+              textAlign: 'center',
+
+              marginBottom: '1em',
+            }}
+          >
+            No more content
+          </p>
+        }
+      >
+        <Table>
+        {getTableHeader()}
+          {getTableBody()}
+        </Table>
+      </InfiniteScroll>
+    </TableContainer>
   );
 };
 

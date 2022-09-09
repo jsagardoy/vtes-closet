@@ -62,7 +62,6 @@ const LibraryList = (props: LibraryListProps) => {
       {list && list.length > 0 && (
         <LibraryListComponent
           list={list}
-          initialValue={list.slice(0, 20)}
           handleItemToOpen={(library: LibraryType) =>
             handleItemToOpen(library, index)
           }
