@@ -204,7 +204,7 @@ const DeckCryptComponent = (props: Props) => {
             }
             return group;
           })}
-          ]{' '}
+          ]
         </Typography>
       </Box>
       <TableContainer>

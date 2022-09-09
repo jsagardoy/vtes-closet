@@ -1,4 +1,4 @@
-import { Alert, Box, Snackbar } from '@mui/material';
+import { Alert, Box, Modal, Paper, Snackbar } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
@@ -31,7 +31,9 @@ const DeckContainer = () => {
   );
   const [openSnackBar, setOpenSnackBar] = React.useState<boolean>(false);
   const [errorSnackBar, setErrorSnackBar] = React.useState<boolean>(false);
-
+  const [showModalCrypt, setShowModalCrypt] = React.useState<boolean>(false);
+  const [showModalLibrary, setShowModalLibrary] = React.useState<boolean>(false);
+  
   /*   const handleChange = (field: string, value: string | Archetype) => {
     const newDeck:DeckType = { ...deckData, [field]: value };
     setDeckData(newDeck);
@@ -161,6 +163,23 @@ const DeckContainer = () => {
     }
   };
 
+  const showModal = (cardType: CardType) => {
+    if (cardType === 'crypt') {
+      setShowModalCrypt(prev => !prev);
+    }
+     if (cardType === 'library') {
+       setShowModalLibrary((prev) => !prev);
+     }
+  }
+  const handleCloseModal = (cardType: CardType) => {
+    if (cardType==='crypt') {
+      setShowModalCrypt(false);
+    }
+    if (cardType==='library') {
+      setShowModalLibrary(false);
+    }
+  }
+
   React.useEffect(() => {
     const fetchDecks = async () => {
       const result = await fetchSelectedDeck(userId, deckId);
@@ -170,7 +189,14 @@ const DeckContainer = () => {
   }, [deckId, userId]);
 
   return (
-    <Box className='container'>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+      className='container'
+    >
       <DeckInfoComponent
         deck={deckData}
         handleSaveDataInfo={handleSaveDataInfo}
@@ -185,15 +211,45 @@ const DeckContainer = () => {
           handleRemoveCard={(id: number, cardType: CardType) =>
             handleRemoveCard(id, cardType)
           }
+          showModal={(cardType: CardType) => showModal(cardType)}
         />
-        <Box className='search__container'>
-          <SearchDeckContainer
-            handleAddCardToDeck={(
-              card: LibraryType | CryptType,
-              cardType: CardType
-            ) => handleAddCardToDeck(card, cardType)}
-          />
-        </Box>
+        {/* SearchDeck container */}
+        <Modal
+          sx={{ overflow: 'scroll' }}
+          open={showModalCrypt}
+          onClose={() => handleCloseModal('crypt')}
+        >
+          <Paper className='search__container'>
+            <SearchDeckContainer
+              handleAddCardToDeck={(
+                card: LibraryType | CryptType,
+                cardType: CardType
+              ) => handleAddCardToDeck(card, cardType)}
+              cardType='crypt'
+              handleCloseModal={(cardType: CardType) =>
+                handleCloseModal(cardType)
+              }
+            />
+          </Paper>
+        </Modal>
+        <Modal
+          sx={{ overflow: 'scroll' }}
+          open={showModalLibrary}
+          onClose={() => handleCloseModal('library')}
+        >
+          <Paper className='search__container'>
+            <SearchDeckContainer
+              handleAddCardToDeck={(
+                card: LibraryType | CryptType,
+                cardType: CardType
+              ) => handleAddCardToDeck(card, cardType)}
+              cardType='library'
+              handleCloseModal={(cardType: CardType) =>
+                handleCloseModal(cardType)
+              }
+            />
+          </Paper>
+        </Modal>
       </Box>
       <Box>
         <Snackbar

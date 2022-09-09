@@ -1,5 +1,6 @@
 import {
   Box,
+  Container,
   FormControl,
   IconButton,
   InputLabel,
@@ -45,7 +46,7 @@ const DeckInfoComponent = (props: Props) => {
   };
 
   return (
-    <Box>
+    <Container>
       <FormControl className='info' fullWidth>
         <Box
           sx={{
@@ -121,7 +122,7 @@ const DeckInfoComponent = (props: Props) => {
           </Box>
 :null}
       </FormControl>
-    </Box>
+    </Container>
           
   );
 };

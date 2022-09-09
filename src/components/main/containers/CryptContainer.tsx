@@ -19,8 +19,8 @@ import { fetchCrypt } from '../../../service/fetchCrypt';
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { LibraryType } from '../../../types/library_type';
 import { CardType } from '../../../types/deck_type';
-import { Box } from '@mui/material';
-
+import { Box, Container, IconButton } from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 interface Props {
   toogle: boolean;
   deckMode: boolean;
@@ -28,10 +28,11 @@ interface Props {
     card: CryptType | LibraryType,
     cardType: CardType
   ) => void;
+  handleCloseModal: (cardType: CardType) => void;
 }
 
 const CryptContainer = (props: Props) => {
-  const { toogle, deckMode, handleAddCardToDeck } = props;
+  const { toogle, deckMode, handleAddCardToDeck,handleCloseModal } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
@@ -112,7 +113,7 @@ const CryptContainer = (props: Props) => {
   const handleReset = async () => setList(sessionStorage);
 
   React.useEffect(() => {
-    if (sessionStorage && sessionStorage !== [] && sessionStorage.length > 0) {
+    if (sessionStorage && sessionStorage.toString() !== [].toString() && sessionStorage.length > 0) {
       setList(sessionStorage);
     } else {
       setLoader(true);
@@ -131,45 +132,53 @@ const CryptContainer = (props: Props) => {
   }, []);
 
   return (
-    <Box className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
-      <NavbarCryptList
-        searchList={(
-          name: string,
-          discList: string[],
-          clan: string,
-          sect: string,
-          title: TitleType,
-          props: PropType,
-          group: GroupType,
-          maxCap: capacityType,
-          minCap: capacityType
-        ) =>
-          handleSearch(
-            name,
-            discList,
-            clan,
-            sect,
-            title,
-            props,
-            group,
-            maxCap,
-            minCap
-          )
-        }
-        handleSort={() => handleSort()}
-        handleSortAZ={() => handleSortAZ()}
-        handleReset={() => handleReset()}
-      />
-      {loader && <Spinner />}
-      <CryptList
-        list={list}
-        deckMode={deckMode}
-        handleAddCardToDeck={(
-          card: CryptType | LibraryType,
-          cardType: CardType
-        ) => handleAddCardToDeck(card, cardType)}
-      />
-    </Box>
+    <Container>
+      <Box sx={{display:'flex',justifyContent:'flex-end'}}>
+        <IconButton onClick={()=>handleCloseModal('crypt')}>
+        <CloseRoundedIcon />
+        </IconButton>
+        </Box>
+      <Box className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
+        <NavbarCryptList
+          searchList={(
+            name: string,
+            discList: string[],
+            clan: string,
+            sect: string,
+            title: TitleType,
+            props: PropType,
+            group: GroupType,
+            maxCap: capacityType,
+            minCap: capacityType
+          ) =>
+            handleSearch(
+              name,
+              discList,
+              clan,
+              sect,
+              title,
+              props,
+              group,
+              maxCap,
+              minCap
+            )
+          }
+          handleSort={() => handleSort()}
+          handleSortAZ={() => handleSortAZ()}
+          handleReset={() => handleReset()}
+          deckMode={deckMode}
+        />
+        {loader && <Spinner />}
+        <CryptList
+          list={list}
+          deckMode={deckMode}
+          handleAddCardToDeck={(
+            card: CryptType | LibraryType,
+            cardType: CardType
+          ) => handleAddCardToDeck(card, cardType)}
+        />
+      </Box>
+    </Container>
   );
 };
 

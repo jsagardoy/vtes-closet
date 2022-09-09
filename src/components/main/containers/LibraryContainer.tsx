@@ -1,4 +1,5 @@
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
+import { Container } from '@mui/system';
 import React from 'react';
 import { useSessionStorage } from '../../../hooks/useSessionStorage';
 import { fetchLibrary } from '../../../service/fetchLibrary';
@@ -15,6 +16,7 @@ import { Spinner } from '../components/global/Spinner';
 import LibraryList from '../components/library/LibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
 import './LibraryContainer.css';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 interface Props {
   deckMode: boolean;
@@ -22,10 +24,11 @@ interface Props {
     card: CryptType | LibraryType,
     cardType: CardType
   ) => void;
+  handleCloseModal: (cardType: CardType) => void;
 }
 
 const LibraryContainer = (props:Props) => {
-    const { deckMode, handleAddCardToDeck } = props;
+    const { deckMode, handleAddCardToDeck, handleCloseModal } = props;
   const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
@@ -63,7 +66,7 @@ const LibraryContainer = (props:Props) => {
   };
 
  React.useEffect(() => {
-   if (sessionStorage && sessionStorage !== [] && sessionStorage.length > 0) {
+   if (sessionStorage && sessionStorage.toString() !== [].toString() && sessionStorage.length > 0) {
      setList(sessionStorage);
    } else {
      setLoader(true);
@@ -81,28 +84,36 @@ const LibraryContainer = (props:Props) => {
    // eslint-disable-next-line react-hooks/exhaustive-deps
  }, []);
   return (
-    <Box className='library__container'>
-      <LibraryNavbarList
-        searchList={(
-          name: string,
-          discList: string[],
-          libraryCardType: string,
-          clan: string,
-          sect: string,
-          props: LibraryPropType
-        ) => handleSearch(name, discList, libraryCardType, clan, sect, props)}
-        handleSort={() => handleSort()}
-      />
-      {loader && <Spinner />}
-      <LibraryList
-        list={list}
-        deckMode={deckMode}
-        handleAddCardToDeck={(
-          card: CryptType | LibraryType,
-          cardType: CardType
-        ) => handleAddCardToDeck(card, cardType)}
-      />
-    </Box>
+    <Container>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <IconButton onClick={() => handleCloseModal('library')}>
+          <CloseRoundedIcon />
+        </IconButton>
+      </Box>
+      <Box className='library__container'>
+        <LibraryNavbarList
+          searchList={(
+            name: string,
+            discList: string[],
+            libraryCardType: string,
+            clan: string,
+            sect: string,
+            props: LibraryPropType
+          ) => handleSearch(name, discList, libraryCardType, clan, sect, props)}
+          handleSort={() => handleSort()}
+          deckMode={true}
+        />
+        {loader && <Spinner />}
+        <LibraryList
+          list={list}
+          deckMode={deckMode}
+          handleAddCardToDeck={(
+            card: CryptType | LibraryType,
+            cardType: CardType
+          ) => handleAddCardToDeck(card, cardType)}
+        />
+      </Box>
+    </Container>
   );
 };
 

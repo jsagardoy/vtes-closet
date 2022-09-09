@@ -222,7 +222,7 @@ const DeckLibraryComponent = (props: Props) => {
         {list?.map((elem: ExtendedDeckType, index: number) => (
           <TableRow key={elem.data.id} sx={{ justifyContent: 'center' }}>
             {/* quantity */}
-            <TableCell >
+            <TableCell>
               <QuantityButtonComponent
                 handleRemoveCard={(id: number, cardType: CardType) =>
                   handleRemoveCard(id, cardType)
@@ -431,21 +431,19 @@ const DeckLibraryComponent = (props: Props) => {
             </Box>
 
             {showCardType[cardType.toLowerCase() as cardTypeValues] ? (
-            <TableContainer>
-                
-            
-              <Table key={uuidv4()}>
-                {tableHeadContent(true)}
-                {tableBodyContent(
-                  data
-                    ?.filter(
-                      (elem) =>
-                        elem.data.types.toString() === cardType?.toString()
-                    )
-                    .sort((a: ExtendedDeckType, b: ExtendedDeckType) =>
-                      a.data.name.localeCompare(b.data.name)
-                    )
-                )}
+              <TableContainer>
+                <Table key={uuidv4()}>
+                  {tableHeadContent(true)}
+                  {tableBodyContent(
+                    data
+                      ?.filter(
+                        (elem) =>
+                          elem.data.types.toString() === cardType?.toString()
+                      )
+                      .sort((a: ExtendedDeckType, b: ExtendedDeckType) =>
+                        a.data.name.localeCompare(b.data.name)
+                      )
+                  )}
                 </Table>
               </TableContainer>
             ) : null}

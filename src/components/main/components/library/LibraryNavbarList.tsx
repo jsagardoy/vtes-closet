@@ -21,6 +21,7 @@ interface NavbarLibraryProps {
     props: LibraryPropType
   ) => void;
   handleSort: () => void;
+  deckMode?: boolean;
 }
 
 const NavbarLibrary = (props: NavbarLibraryProps): any => {
@@ -53,7 +54,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   };
   const initialCardTypeValue = 'Any';
 
-  const { searchList, handleSort } = props;
+  const { searchList, handleSort,deckMode } = props;
 
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [inputSearch, setInputSearch] = React.useState<string>('');
@@ -203,11 +204,13 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   }
 
   return (
+
     <Box className='navbarList'>
-      <IconButton onClick={()=>handleGoBack() }>
-        <ArrowBackIcon />
-      </IconButton>
-      
+      {!deckMode ?
+        <IconButton onClick={() => handleGoBack()}>
+          <ArrowBackIcon />
+        </IconButton>
+        : null}      
       <Box className='navbarList__left'>
         <Typography variant='h5'>Library</Typography>
       </Box>

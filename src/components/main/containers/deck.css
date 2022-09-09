@@ -31,7 +31,8 @@
 .search__container{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    min-width: 100%;
     border: 1px solid;
+    overflow-y:scroll;
 }
 

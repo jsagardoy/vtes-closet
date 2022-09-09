@@ -48,7 +48,9 @@ function App() {
   const handleAddCardToDeck = (
     card: LibraryType | CryptType,
     cardType: CardType
-  ) => {};
+  ) => { };
+  
+  const handleCloseModal = (cardType: CardType) => { };
 
   const initialMode: PaletteMode = window.localStorage.getItem(
     'mode'
@@ -160,6 +162,7 @@ function App() {
                   ) => {
                     handleAddCardToDeck(card, cardType);
                   }}
+                  handleCloseModal={(cardType:CardType)=>handleCloseModal(cardType)}
                 />
               </Route>
               <Route exact path={'/library'} component={LibraryContainer} />

@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
 import { CryptType } from '../../../../types/crypt_type';
@@ -11,6 +11,7 @@ import {
 import { LibraryType } from '../../../../types/library_type';
 import DeckCryptComponent from './DeckCryptComponent';
 import DeckLibraryComponent from './DeckLibraryComponent';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 interface Props {
   deck: DeckType;
@@ -19,10 +20,11 @@ interface Props {
     extendedCrypt: ExtendedDeckType[]
   ) => void;
   handleRemoveCard: (id: number, cardType: CardType) => void;
+  showModal: (cardType: CardType) => void;
 }
 
 const DeckListComponent = (props: Props) => {
-  const { deck, updateDeck, handleRemoveCard } = props;
+  const { deck, updateDeck, handleRemoveCard, showModal } = props;
   const [extendedLibrary, setExtendedLibrary] = React.useState<
     ExtendedDeckType[]
   >([]);
@@ -225,7 +227,7 @@ const DeckListComponent = (props: Props) => {
       >
         <Typography variant='h6'>Deck</Typography>
       </Box>
-      <Box className='deck__crypt'>
+      <Box sx={{marginBottom:'1rem'}} className='deck__crypt'>
         <Box
           sx={{
             width: '100',
@@ -236,8 +238,13 @@ const DeckListComponent = (props: Props) => {
             justifyContent: 'space-between',
           }}
         >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '0.5rem' }}>
           <Typography variant='subtitle1'>Crypt</Typography>
-          <Typography variant='subtitle1'>{calculateCrypt()}</Typography>
+          <Typography variant='subtitle1'>({calculateCrypt()})</Typography>
+          </Box>
+          <IconButton onClick={() => showModal('crypt')}>
+            <AddCircleRoundedIcon />
+          </IconButton>
         </Box>
         <Box>
           {cryptSizeError ? (
@@ -283,7 +290,7 @@ const DeckListComponent = (props: Props) => {
           }
         />
       </Box>
-      <Box
+      <Container
         sx={{
           width: '100',
 
@@ -295,9 +302,14 @@ const DeckListComponent = (props: Props) => {
           justifyContent: 'space-between',
         }}
       >
+        <Box sx={{display:'flex',justifyContent:'flex-start', gap:'0.5rem'}}>
         <Typography variant='subtitle1'>Library</Typography>
-        <Typography variant='subtitle1'>{calculateLibrary()}</Typography>
-      </Box>
+        <Typography variant='subtitle1'>({calculateLibrary()})</Typography>
+        </Box>
+        <IconButton onClick={() => showModal('library')}>
+          <AddCircleRoundedIcon />
+        </IconButton>
+      </Container>
       <Box>
         {librarySizeError ? (
           <Typography
@@ -330,15 +342,19 @@ const DeckListComponent = (props: Props) => {
           </Typography>
         ) : null}
       </Box>
-      <DeckLibraryComponent
-        data={extendedLibrary}
-        updateQuantity={(newQuantity: number, id: number, cardType: CardType) =>
-          updateQuantity(newQuantity, id, cardType)
-        }
-        handleRemoveCard={(id: number, cardType: CardType) =>
-          handleRemoveCard(id, cardType)
-        }
-      />
+      <Container>
+        <DeckLibraryComponent
+          data={extendedLibrary}
+          updateQuantity={(
+            newQuantity: number,
+            id: number,
+            cardType: CardType
+          ) => updateQuantity(newQuantity, id, cardType)}
+          handleRemoveCard={(id: number, cardType: CardType) =>
+            handleRemoveCard(id, cardType)
+          }
+        />
+      </Container>
     </Container>
   );
 };

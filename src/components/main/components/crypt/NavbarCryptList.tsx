@@ -56,10 +56,11 @@ interface NavbarListProps {
   handleSort: () => void;
   handleSortAZ: () => void;
   handleReset: () => void;
+  deckMode?: boolean;
 }
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
-  const { handleSort, handleSortAZ, handleReset } = navbarListProps;
+  const { handleSort, handleSortAZ, handleReset, deckMode } = navbarListProps;
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
@@ -414,9 +415,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     <>
       <Divider />
       <Box className='navbarList'>
+        {!deckMode ?
         <IconButton onClick={()=>handleGoBack()}>
         <ArrowBackIcon />
-        </IconButton>
+        </IconButton>:null
+        }
         <Box className='navbarList__left'>
           <Typography variant='h5'>Crypt</Typography>
         </Box>
