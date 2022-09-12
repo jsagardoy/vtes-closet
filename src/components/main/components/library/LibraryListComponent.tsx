@@ -26,14 +26,6 @@ const LibraryListComponent = (props: Props) => {
   const [sortBy, setSortBy] = React.useState<string>('');
   const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
 
-  const isElement = useMemo(() => {
-    return (elem: LibraryType, index: number): number => {
-      return elem && items.length > 0 && elem.id === items[items.length - 1].id
-        ? index
-        : -1;
-    };
-  }, [items]);
-
   const createSortHandler = (key: string): void => {
     if (key === sortBy) {
       setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -46,8 +38,8 @@ const LibraryListComponent = (props: Props) => {
       setItems((prev) => {
         if (prev) {
           return sortOrder === 'desc'
-            ? prev.sort((a, b) => a.name.localeCompare(b.name))
-            : prev.sort((a, b) => b.name.localeCompare(a.name));
+            ? list.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())).slice(0,40)
+            : list.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase())).slice(0,40);
         } else {
           return prev;
         }
@@ -55,29 +47,40 @@ const LibraryListComponent = (props: Props) => {
     }
   };
 
-const fetchMoreData = useMemo(() => {
-  return () => {
-    if (list) {
-      const initItem: number | undefined = list
-        .map((elem, index) => isElement(elem, index))
-        .find((elem) => elem !== -1);
-      if (initItem!==undefined) {
-        setItems(
-          items.concat([
-            ...list.slice(initItem + 1, initItem ? initItem + 41 : 0 + 40),
-          ])
-        );
-      }
-    }
-  };
-}, [isElement, items, list]);
+  const isElement = useMemo(() => {
+    return (elem: LibraryType, index: number): number => {
+      return elem && items.length > 0 && elem.id === items[items.length - 1].id
+        ? index
+        : -1;
+    };
+  }, [items]);
 
-   React.useEffect(() => {
-     setItems(list.slice(0, 40));
-  }, [list]); 
+  const fetchMoreData = useMemo(() => {
+    return () => {
+      if (list) {
+        const initItem: number | undefined = list
+          .map((elem, index) => isElement(elem, index))
+          .find((elem) => elem !== -1);
+        if (initItem !== undefined) {
+          setItems(
+            items.concat([
+              ...list.slice(initItem + 1, initItem ? initItem + 41 : 0 + 40),
+            ])
+          );
+        }
+      }
+    };
+  }, [isElement, items, list]);
+
+  React.useEffect(() => {
+    setItems(list.slice(0, 40));
+  }, [list]);
 
   return (
-    <TableContainer id='DeckLibraryModal' sx={{ overflow: 'auto', height: '80vh' }}>
+    <TableContainer
+      id='DeckLibraryModal'
+      sx={{ overflow: 'auto', height: '80vh' }}
+    >
       <InfiniteScroll
         dataLength={items.length}
         next={fetchMoreData}
@@ -96,8 +99,13 @@ const fetchMoreData = useMemo(() => {
           </p>
         }
       >
-        <Table >
-          <TableHeader deckMode={deckMode} />
+        <Table>
+          <TableHeader
+            deckMode={deckMode}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            createSortHandler={createSortHandler}
+          />
           <TableBodyContent
             deckMode={deckMode}
             items={items}

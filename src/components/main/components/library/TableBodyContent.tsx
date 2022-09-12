@@ -31,7 +31,8 @@ interface Props {
 }
 
 const TableBodyContent = (props: Props) => {
-    const { handleAddCardToDeck, handleItemToOpen, items, deckMode } = props;
+  const { handleAddCardToDeck, handleItemToOpen, items, deckMode } = props;
+  
   return (
     <TableBody >
       {items.map((library) => (
