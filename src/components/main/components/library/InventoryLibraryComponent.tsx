@@ -47,7 +47,7 @@ const InventoryLibraryComponent = (props: Props) => {
         const initItem: number | undefined = list
           .map((elem, index) => isElement(elem, index))
           .find((elem) => elem !== -1);
-        if (initItem) {
+        if (initItem !== undefined) {
           setItems(
             items.concat([
               ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),

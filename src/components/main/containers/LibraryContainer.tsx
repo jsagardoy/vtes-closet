@@ -27,12 +27,15 @@ interface Props {
   handleCloseModal: (cardType: CardType) => void;
 }
 
-const LibraryContainer = (props:Props) => {
-    const { deckMode, handleAddCardToDeck, handleCloseModal } = props;
+const LibraryContainer = (props: Props) => {
+  const { deckMode, handleAddCardToDeck, handleCloseModal } = props;
   const [list, setList] = React.useState<LibraryType[]>([]);
   const [sort, setSort] = React.useState<boolean>(false); //true = asc / false= desc
   const [loader, setLoader] = React.useState<boolean>(false);
-  const [sessionStorage, setSessionStorage] = useSessionStorage<LibraryType[]>('libraryList', []);
+  const [sessionStorage, setSessionStorage] = useSessionStorage<LibraryType[]>(
+    'libraryList',
+    []
+  );
 
   const handleSearch = (
     name: string,
@@ -43,7 +46,7 @@ const LibraryContainer = (props:Props) => {
     props: LibraryPropType
   ) => {
     const resp = sessionStorage
-      .filter((item: LibraryType) =>findInText(item,name))
+      .filter((item: LibraryType) => findInText(item, name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
         libraryCardType === 'Any' ? item : item.types.includes(libraryCardType)
@@ -59,39 +62,54 @@ const LibraryContainer = (props:Props) => {
   };
 
   const handleSort = (): void => {
+    console.log(list.sort((a, b) => b.name.localeCompare(a.name)));
     sort
-      ? list.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
-      : list.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
-    setSort(!sort);
+      ? setList((prev) => prev.sort((a, b) => a.name.localeCompare(b.name)))
+      : setList((prev) => prev.sort((a, b) => b.name.localeCompare(a.name)));
+    setSort((prev) => !prev);
   };
+  React.useEffect(() => {
+    setSessionStorage(list);
+  }, [list, setSessionStorage]);
 
- React.useEffect(() => {
-   if (sessionStorage && sessionStorage.toString() !== [].toString() && sessionStorage.length > 0) {
-     setList(sessionStorage);
-   } else {
-     setLoader(true);
-     fetchLibrary()
-       .then((data: LibraryType[]) => {
-         setList(data);
-         setSessionStorage(data);
-         setLoader(false);
-       })
-       .catch((error) => {
-         setLoader(false);
-         console.log(error);
-       });
-   }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
- }, []);
+  React.useEffect(() => {
+    if (
+      sessionStorage &&
+      sessionStorage.toString() !== [].toString() &&
+      sessionStorage.length > 0
+    ) {
+      setList(sessionStorage);
+    } else {
+      setLoader(true);
+      const fetch = async () => {
+        try {
+          const data: LibraryType[] = await fetchLibrary();
+          if (data) {
+            setList(data);
+            setSessionStorage(data);
+          }
+          setLoader(false);
+        } catch (error) {
+          setLoader(false);
+          console.log(error);
+        }
+      };
+      fetch();
+    }
+    return () => {
+      setLoader(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Container>
-      {deckMode ?
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton onClick={() => handleCloseModal('library')}>
-          <CloseRoundedIcon />
-        </IconButton>
-      </Box>:null
-      }
+      {deckMode ? (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton onClick={() => handleCloseModal('library')}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </Box>
+      ) : null}
       <Box className='library__container'>
         <LibraryNavbarList
           searchList={(

@@ -122,7 +122,6 @@ const DeckCryptComponent = (props: Props) => {
   };
 
   const createSortHandler = (key:string):void=> { 
-    
       if (key === sortBy) {
         setSortOrder(prev=>prev === 'asc' ? 'desc' : 'asc');
       }
