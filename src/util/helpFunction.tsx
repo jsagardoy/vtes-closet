@@ -26,8 +26,6 @@ const ADDED_STRENGTH = [
   '+x strength',
 ];
 
-export const HEADER_COLOR:string = '#ECDBBA';
-
 export const getLogo = () => defaultAvatarURL;
 export const getDiscIcon = (discs: string[]): string[] => {
   let resp: string[] = [];

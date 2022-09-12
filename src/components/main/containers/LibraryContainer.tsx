@@ -36,6 +36,7 @@ const LibraryContainer = (props: Props) => {
     'libraryList',
     []
   );
+  const fullList = React.useRef<LibraryType[]>(sessionStorage);
 
   const handleSearch = (
     name: string,
@@ -45,7 +46,7 @@ const LibraryContainer = (props: Props) => {
     sect: string,
     props: LibraryPropType
   ) => {
-    const resp = sessionStorage
+    const resp = fullList.current
       .filter((item: LibraryType) => findInText(item, name))
       .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
       .filter((item: LibraryType) =>
@@ -68,9 +69,6 @@ const LibraryContainer = (props: Props) => {
       : setList((prev) => prev.sort((a, b) => b.name.localeCompare(a.name)));
     setSort((prev) => !prev);
   };
-  React.useEffect(() => {
-    setSessionStorage(list);
-  }, [list, setSessionStorage]);
 
   React.useEffect(() => {
     if (
@@ -87,6 +85,7 @@ const LibraryContainer = (props: Props) => {
           if (data) {
             setList(data);
             setSessionStorage(data);
+            fullList.current = data;
           }
           setLoader(false);
         } catch (error) {

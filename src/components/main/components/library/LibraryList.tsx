@@ -45,7 +45,7 @@ const LibraryList = (props: LibraryListProps) => {
       handleItemToOpen(library, newIndex);
     }
   };
-  React.useEffect(() => {}, [list]);
+  /* React.useEffect(() => {}, [list]); */
   return (
     <>
       {selectedItem && openModal ? (
