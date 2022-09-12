@@ -241,6 +241,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           <MoreVert />
         </IconButton>
       </Box>
+
       <LibraryNavbarModal
         open={showMore}
         selectedSect={selectedSect}
@@ -255,7 +256,7 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
         handleChangeLibraryCardType={handleChangeLibraryCardType}
         handleCheck={handleCheck}
         handleResetButton={handleResetButton}
-      />
+        />
     </Box>
   );
 };
