@@ -18,6 +18,7 @@ const CardButtons: React.FC<Props> = (props: Props) => {
       <IconButton
         disabled={index === 0}
         size='small'
+        color='secondary'
         onClick={() => handlePrevious()}
         onKeyDown={(e) => {
           if (e.key === 'ArrowLeft') {
@@ -32,6 +33,7 @@ const CardButtons: React.FC<Props> = (props: Props) => {
         disabled={index === list.length - 1}
         size='small'
         onClick={() => handleNext()}
+        color='secondary'
       >
         <NavigateNext className='icon__button' />
       </IconButton>

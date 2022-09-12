@@ -20,10 +20,13 @@ const LibraryList = (props: LibraryListProps) => {
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [index, setIndex] = React.useState<number>(0);
 
-  const handleItemToOpen = (library: LibraryType, i: number) => {
+  const handleItemToOpen = (library: LibraryType) => {
+    const newIndex = list.findIndex((elem) => elem.id === library.id);
     setSelectedItem(library);
     setOpenModal(true);
-    setIndex(i);
+    if (newIndex !== -1) {
+      setIndex(newIndex);
+    }
   };
 
   const handleCloseModal = () => {
@@ -35,17 +38,16 @@ const LibraryList = (props: LibraryListProps) => {
     if (index < list.length - 1) {
       const newIndex: number = index + 1;
       const library: LibraryType = list[newIndex];
-      handleItemToOpen(library, newIndex);
+      handleItemToOpen(library);
     }
   };
   const handlePrevious = () => {
     if (index > 0) {
       const newIndex: number = index - 1;
       const library: LibraryType = list[newIndex];
-      handleItemToOpen(library, newIndex);
+      handleItemToOpen(library);
     }
   };
-  /* React.useEffect(() => {}, [list]); */
   return (
     <>
       {selectedItem && openModal ? (
@@ -63,7 +65,7 @@ const LibraryList = (props: LibraryListProps) => {
         <LibraryListComponent
           list={list}
           handleItemToOpen={(library: LibraryType) =>
-            handleItemToOpen(library, index)
+            handleItemToOpen(library)
           }
           deckMode={deckMode}
           handleAddCardToDeck={(
