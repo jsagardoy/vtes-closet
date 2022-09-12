@@ -1,4 +1,4 @@
-import { HighlightOff, MoreVert, Search, Sort} from '@mui/icons-material';
+import { HighlightOff, MoreVert, Search} from '@mui/icons-material';
 import { Box, TextField, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton/IconButton';
 import InputAdornment from '@mui/material/InputAdornment/InputAdornment';
@@ -54,13 +54,11 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
   };
   const initialCardTypeValue = 'Any';
 
-  const { searchList, handleSort,deckMode } = props;
+  const { searchList, deckMode } = props;
 
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showMore, setShowMore] = React.useState<boolean>(false);
-  const [rotate, setRotate] = React.useState<boolean>(false);
-
   const [selectedLibraryCardType, setSelectedLibraryCardType] =
     React.useState<string>(initialCardTypeValue);
   const [selected_discList, setSelected_discList] =
@@ -177,9 +175,6 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
     );
   };
 
-  const handleRotate = () => {
-    setRotate(!rotate);
-  };
 
   const handleResetButton = () => {
     setSelected_discList(initialDiscValues);
@@ -241,16 +236,6 @@ const NavbarLibrary = (props: NavbarLibraryProps): any => {
           disabled={inputSearch.length > 0}
         >
           <Search />
-        </IconButton>
-        <IconButton
-          className={rotate ? 'button__rotation' : ''}
-          size='small'
-          onClick={() => {
-            handleRotate();
-            handleSort();
-          }}
-        >
-          <Sort />
         </IconButton>
         <IconButton size='small' onClick={() => handleMore()}>
           <MoreVert />
