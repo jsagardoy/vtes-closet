@@ -57,9 +57,16 @@ const LibraryModal = (props: LibraryModalProps) => {
         maxHeight: '50vh',
         display: 'flex',
         height: '50vh',
-        overflow: 'auto',
+
       }}
-      PaperProps={{sx:{position:'fixed',top:'10rem',left:'20rem',minWidth:'50rem'}}}
+      PaperProps={{
+        sx: {
+          position: 'fixed',
+          top: '10rem',
+          left: '20rem',
+          minWidth: '50rem',
+        },
+      }}
       open={open}
       onClose={handleCloseModal}
       onKeyDown={(e) => {
@@ -76,7 +83,6 @@ const LibraryModal = (props: LibraryModalProps) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          maxHeight: '41vh',
         }}
       >
         <Box
@@ -105,9 +111,6 @@ const LibraryModal = (props: LibraryModalProps) => {
               display: 'flex',
               alignItems: 'space-between',
               flexDirection: 'column',
-              height: '41vh',
-              maxHeight: '41vh',
-              overflow: 'auto',
             }}
           >
             <Box
@@ -122,7 +125,10 @@ const LibraryModal = (props: LibraryModalProps) => {
               </Button>
             </Box>
             <Divider />
-            <Box id='data_content'>
+            <Box
+              id='data_content'
+              sx={{ height: '41vh', maxHeight: '30vh', overflow: 'auto' }}
+            >
               <Box sx={{ marginLeft: '1rem', marginBottom: '1rem' }}>
                 {library.types ? (
                   <Box
