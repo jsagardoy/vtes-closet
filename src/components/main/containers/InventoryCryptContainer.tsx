@@ -30,8 +30,6 @@ const InventoryCryptContainer = (props: Props) => {
   const { toogle } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [list, setList] = React.useState<cryptInventoryType[]>([]);
-  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<string>('');
   const [saving, setSaving] = React.useState<boolean>(false);
   const [showSnackbar, setShowSnackbar] = React.useState<boolean>(false);
@@ -81,23 +79,6 @@ const InventoryCryptContainer = (props: Props) => {
     }
   };
 
-  const handleSortAZ = (): void => {
-    sortAZ
-      ? list.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
-      : list.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
-    setSortAZ(!sortAZ);
-  };
-
-  const handleSort = (): void => {
-    sort
-      ? list.sort((a, b) =>
-          a.capacity < b.capacity ? -1 : a.capacity > b.capacity ? 1 : 0
-        )
-      : list.sort((a, b) =>
-          a.capacity < b.capacity ? 1 : a.capacity > b.capacity ? -1 : 0
-        );
-    setSort(!sort);
-  };
 
   const handleReset = async () => {setList(initialData.current)}; 
 
@@ -225,8 +206,6 @@ const InventoryCryptContainer = (props: Props) => {
             minCap
           )
         }
-        handleSort={() => handleSort()}
-        handleSortAZ={() => handleSortAZ()}
         handleReset={() => handleReset()}
       />
       {loader && <Spinner />}

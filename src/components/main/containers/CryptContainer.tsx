@@ -35,8 +35,6 @@ const CryptContainer = (props: Props) => {
   const { toogle, deckMode, handleAddCardToDeck, handleCloseModal } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
   const [list, setList] = React.useState<CryptType[]>([]);
-  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
     []
@@ -94,24 +92,6 @@ const CryptContainer = (props: Props) => {
         : item.group === Math.floor(group.value).toString() ||
             item.group === Math.ceil(group.value).toString();
     }
-  };
-
-  const handleSortAZ = (): void => {
-    sortAZ
-      ? list.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
-      : list.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
-    setSortAZ(!sortAZ);
-  };
-
-  const handleSort = (): void => {
-    sort
-      ? list.sort((a, b) =>
-          a.capacity < b.capacity ? -1 : a.capacity > b.capacity ? 1 : 0
-        )
-      : list.sort((a, b) =>
-          a.capacity < b.capacity ? 1 : a.capacity > b.capacity ? -1 : 0
-        );
-    setSort(!sort);
   };
 
   const handleReset = async () => setList(fullList.current);
@@ -182,8 +162,6 @@ const CryptContainer = (props: Props) => {
               minCap
             )
           }
-          handleSort={() => handleSort()}
-          handleSortAZ={() => handleSortAZ()}
           handleReset={() => handleReset()}
           deckMode={deckMode}
         />

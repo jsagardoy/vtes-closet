@@ -58,27 +58,67 @@ const fetchMoreData = useMemo(() => {
       setSortBy(key);
       setSortOrder('asc');
     }
-    //ahora ordenar
+    //By name
     if (key === 'name') {
       setItems((prev) => {
         if (prev) {
           return sortOrder === 'desc'
             ? list
-                .sort((a, b) =>
-                  a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-                )
-                .slice(0, 40)
+              .sort((a, b) =>
+                a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+              )
+              .slice(0, 40)
             : list
-                .sort((a, b) =>
-                  b.name.toLowerCase().localeCompare(a.name.toLowerCase())
-                )
-                .slice(0, 40);
+              .sort((a, b) =>
+                b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+              )
+              .slice(0, 40);
+        } else {
+          return prev;
+        }
+      })
+
+    }
+    //by capacity
+    if (key === 'capacity') {
+      setItems((prev) => {
+        if (prev) {
+          return sortOrder === 'desc'
+            ? list
+              .sort((a, b) =>
+                a.capacity - b.capacity
+              ).slice(0, 40)
+            : list
+              .sort((a, b) =>
+                b.capacity - a.capacity
+              )
+              .slice(0, 40);
         } else {
           return prev;
         }
       });
     }
-  };
+
+    //by clan
+    if (key === 'clan') {
+      setItems((prev) => {
+        if (prev) {
+          return sortOrder === 'desc'
+            ? list
+              .sort((a, b) =>
+                a.clans.toString().toLowerCase().localeCompare(b.clans.toString().toLowerCase())
+              ).slice(0, 40)
+            : list
+              .sort((a, b) =>
+                b.clans.toString().toLowerCase().localeCompare(a.clans.toString().toLowerCase())
+              )
+              .slice(0, 40);
+        } else {
+          return prev;
+        }
+      });
+    }
+  }
 
   return (
     <TableContainer
@@ -119,77 +159,6 @@ const fetchMoreData = useMemo(() => {
         </Table>
       </InfiniteScroll>
     </TableContainer>
-
-    /* 
-    <InfiniteScroll
-      dataLength={items.length}
-      next={fetchMoreData}
-      hasMore={items.length !== list.length}
-      loader={<Spinner />}
-      style={{ overflow: 'hidden' }}
-      endMessage={
-        <p
-          style={{
-            textAlign: 'center',
-            marginBottom: '1em',
-          }}
-        >
-          No more content
-        </p>
-      }
-    >
-      <List className='crypt__list'>
-        {items.length === 0 ? (
-          <Box className='span__no__result'>
-            <span>No results</span>
-          </Box>
-        ) : (
-          items.map((crypt: CryptType, index: number) => (
-            <Box sx={{ display: 'flex', alignItems: 'center' }} key={crypt.id && crypt.name && Math.random()}>
-              {deckMode ?
-              <ListItemButton onClick={(e)=>handleAddCardToDeck(crypt,'crypt')}><AddCircleRoundedIcon /></ListItemButton>
-              :null
-            }
-              <ListItem
-                key={crypt.id && crypt.name && Math.random()}
-                button
-                divider
-                dense
-                alignItems='flex-start'
-                onClick={() => handleOpen(crypt, index)}
-              >
-                
-                <ListItemText
-                  className='list__item'
-                  primary={getCleanedName(crypt.name)}
-                  secondary={`${crypt.clans.map((clan) => clan)}: ${
-                    crypt.group
-                  }`}
-                />
-                <Box className='list__left'>
-                  {getDiscIcon(crypt.disciplines).map((dis) => {
-                    return (
-                      <ListItemAvatar
-                        className='list__avatar__icons'
-                        key={crypt.id && dis}
-                      >
-                        <Avatar sx={{backgroundColor:'white'}} variant='rounded' src={dis} alt={dis} />
-                      </ListItemAvatar>
-                    );
-                  })}
-                  <ListItemText
-                    sx={{ marginLeft:'1rem'}}
-                    className='list__item__icons'
-                    primary={crypt.capacity}
-                    //secondary={getDiscIcon(crypt.discipline)}
-                  />
-                </Box>
-              </ListItem>
-            </Box>
-          ))
-        )}
-      </List>
-    </InfiniteScroll> */
   );
 };
 

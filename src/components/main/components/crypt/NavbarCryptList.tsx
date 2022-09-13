@@ -36,8 +36,6 @@ import {
   HighlightOff,
   MoreVert,
   Search,
-  Sort,
-  SortByAlpha,
 } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useHistory } from 'react-router-dom';
@@ -53,21 +51,17 @@ interface NavbarListProps {
     maxCap: capacityType,
     minCap: capacityType
   ) => void;
-  handleSort: () => void;
-  handleSortAZ: () => void;
   handleReset: () => void;
   deckMode?: boolean;
 }
 
 const NavbarCryptList = (navbarListProps: NavbarListProps) => {
-  const { handleSort, handleSortAZ, handleReset, deckMode } = navbarListProps;
+  const { handleReset, deckMode } = navbarListProps;
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const [showInput, setShowInput] = React.useState<boolean>(false);
   const [showMore, setShowMore] = React.useState<boolean>(false);
   const [selectedClan, setSelectedClan] = React.useState<string>('');
   const [selectedSect, setSelectedSect] = React.useState<string>('');
-  const [rotate, setRotate] = React.useState<boolean>(false);
-  const [rotateAZ, setRotateAZ] = React.useState<boolean>(false);
   const [selectedGroup, setSelectedGroup] = React.useState<groupType>({
     value: 0.5,
     label: 'Any',
@@ -347,12 +341,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
       minCap
     );
   };
-  const handleRotate = () => {
-    setRotate(!rotate);
-  };
-  const handleRotateAZ = () => {
-    setRotateAZ(!rotateAZ);
-  };
   const handleSliderGroup = (
     event: Event,
     group: number | number[],
@@ -406,7 +394,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
 
   const handleGoBack = (): void => {
     history.push('/');
-  }
+  };
 
   React.useEffect(() => {}, []);
 
@@ -415,11 +403,11 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
     <>
       <Divider />
       <Box className='navbarList'>
-        {!deckMode ?
-        <IconButton onClick={()=>handleGoBack()}>
-        <ArrowBackIcon />
-        </IconButton>:null
-        }
+        {!deckMode ? (
+          <IconButton onClick={() => handleGoBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+        ) : null}
         <Box className='navbarList__left'>
           <Typography variant='h5'>Crypt</Typography>
         </Box>
@@ -450,25 +438,6 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             disabled={inputSearch.length > 0}
           >
             <Search />
-          </IconButton>
-          <IconButton
-            size='small'
-            onClick={() => {
-              handleRotateAZ();
-              handleSortAZ();
-            }}
-          >
-            <SortByAlpha className={rotateAZ ? 'button__activated__AZ' : ''} />
-          </IconButton>
-          <IconButton
-            className={rotate ? 'button__rotation' : ''}
-            size='small'
-            onClick={() => {
-              handleRotate();
-              handleSort();
-            }}
-          >
-            <Sort />
           </IconButton>
           <IconButton size='small' onClick={() => handleMore()}>
             <MoreVert />

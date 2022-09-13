@@ -23,9 +23,25 @@ const TableHeaderCrypt = (props: Props) => {
             Card name
           </TableSortLabel>
         </TableCell>
-        <TableCell align='center'>Clan</TableCell>
+        <TableCell align='center'>
+          <TableSortLabel
+            active={sortBy === 'clan'}
+            direction={sortOrder}
+            onClick={() => createSortHandler('clan')}
+          >
+            Clan
+          </TableSortLabel>
+        </TableCell>
         <TableCell align='center'>Disciplines</TableCell>
-        <TableCell align='center'>Capacity</TableCell>
+        <TableCell align='center'>
+          <TableSortLabel
+            active={sortBy === 'capacity'}
+            direction={sortOrder}
+            onClick={() => createSortHandler('capacity')}
+          >
+            Capacity
+          </TableSortLabel>
+        </TableCell>
       </TableRow>
     </TableHead>
   );

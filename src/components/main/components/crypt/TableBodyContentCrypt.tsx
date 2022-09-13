@@ -6,11 +6,12 @@ import {
   Typography,
   Avatar,
   Box,
+  Tooltip,
 } from '@mui/material';
 import { CryptType } from '../../../../types/crypt_type';
 import { CardType } from '../../../../types/deck_type';
 import { uuidv4 } from '@firebase/util';
-import { getDiscIcon, getClanIcon } from '../../../../util';
+import { getDiscIcon, getClanIcon, getCleanedName } from '../../../../util';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 interface Props {
@@ -40,21 +41,25 @@ const TableBodyContentCrypt = (props: Props) => {
           ) : null}
 
           <TableCell align='center' onClick={() => handleItemToOpen(crypt)}>
-            <Typography color='secondary'>{crypt.name}</Typography>
+            <Typography color='primary'>{getCleanedName(crypt.name)}</Typography>
+            <Typography color='secondary'>Group {crypt.group}</Typography>
           </TableCell>
 
           <TableCell id='clan' onClick={() => handleItemToOpen(crypt)}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               {crypt.clans
                 ? getClanIcon(crypt.clans).map(
-                    (clan: string, index: number) => (
+                
+                  (clan: string, index: number) => (
+                     <Tooltip title={crypt.clans[index]}>
                       <Avatar
                         key={uuidv4()}
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
                         src={clan}
                         alt={clan}
-                      />
+                        />
+                        </Tooltip>
                     )
                   )
                 : null}
@@ -62,10 +67,13 @@ const TableBodyContentCrypt = (props: Props) => {
           </TableCell>
 
           <TableCell id='disciplines' onClick={() => handleItemToOpen(crypt)}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap:'0.2rem' }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'center', gap: '0.2rem' }}
+            >
               {crypt.disciplines
                 ? getDiscIcon(crypt.disciplines).map(
-                    (disc: string, index: number) => (
+                  (disc: string, index: number) => (
+                   
                       <Avatar
                         key={uuidv4()}
                         sx={{ backgroundColor: 'white' }}
@@ -92,7 +100,7 @@ const TableBodyContentCrypt = (props: Props) => {
                   justifyContent: 'center',
                   textAlign: 'center',
                   alignItems: 'center',
-                  color:'white',
+                  color: 'white',
                   p: 0,
                 }}
               >
