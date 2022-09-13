@@ -3,42 +3,25 @@ import './NavbarCryptList.css';
 import { discType, PropType, TitleType } from '../../../../types/crypt_type';
 import TextField from '@mui/material/TextField/TextField';
 import {
-  getClans,
-  getClanIcon,
-  getDiscIcon,
   getDiscList,
-  getSects,
-  getTitle,
   capacityType,
   getDiscInf,
   getGroups,
   getCapacities,
 } from '../../../../util';
-import Modal from '@mui/material/Modal/Modal';
 import InputAdornment from '@mui/material/InputAdornment';
 import {
-  Avatar,
-  Button,
-  Checkbox,
   Divider,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
   Box,
-  Paper,
   Typography,
 } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { SlidersComponent } from './SlidersComponent';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { groupType } from '../../../../util';
-import {
-  HighlightOff,
-  MoreVert,
-  Search,
-} from '@mui/icons-material';
+import { HighlightOff, MoreVert, Search } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useHistory } from 'react-router-dom';
+import MoreFilterModal from './MoreFilterModal';
 interface NavbarListProps {
   searchList: (
     name: string,
@@ -445,7 +428,31 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
         </Box>
       </Box>
       <Divider />
-      <Modal
+      <MoreFilterModal
+        showMore={showMore}
+        handleMore={handleMore}
+        selected_discList={selected_discList}
+        handleSelectDisc={handleSelectDisc}
+        disc_sup={disc_sup}
+        selectedClan={selectedClan}
+        handleClan={handleClan}
+        selectedSect={selectedSect}
+        handleSect={handleSect}
+        checkboxTitle={checkboxTitle}
+        handleTitle={handleTitle}
+        handleSliders={handleSliders}
+        selectedGroup={selectedGroup}
+        selectedMaxCap={selectedMaxCap}
+        selectedMinCap={selectedMinCap}
+        groups={groups}
+        handleSliderGroup={handleSliderGroup}
+        handleSliderMaxCap={handleSliderMaxCap}
+        handleSliderMinCap={handleSliderMinCap}
+        handleCheck={handleCheck}
+        checked={checked}
+        handleResetButton={handleResetButton}
+      />
+      {/*       <Modal
         open={showMore}
         onClose={() => handleMore()}
         className='navbar__bottom'
@@ -688,7 +695,7 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
             </Button>
           </Box>
         </Paper>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
