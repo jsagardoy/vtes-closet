@@ -65,30 +65,6 @@ const LibraryContainer = (props: Props) => {
   }
   ,[])
 
-  /* const handleSearch = (
-    name: string,
-    discList: string[],
-    libraryCardType: string,
-    clan: string,
-    sect: string,
-    props: LibraryPropType
-  ) => {
-    const resp = fullList.current
-      .filter((item: LibraryType) => findInText(item, name))
-      .filter((item: LibraryType) => compareArrays(item.disciplines, discList))
-      .filter((item: LibraryType) =>
-        libraryCardType === 'Any' ? item : item.types.includes(libraryCardType)
-      )
-      .filter((item: LibraryType) =>
-        clan.length === 0
-          ? item
-          : item.clans && item.clans.find((elem) => elem === clan)
-      )
-      .filter((item) => findInText(item, sect))
-      .filter((item) => filterProps(item, props));
-    setList(resp);
-  }; */
-
   const handleSort = (): void => {
     console.log(list.sort((a, b) => b.name.localeCompare(a.name)));
     sort
@@ -117,7 +93,7 @@ const LibraryContainer = (props: Props) => {
           setLoader(false);
         } catch (error) {
           setLoader(false);
-          console.log(error);
+          console.error(error);
         }
       };
       fetch();

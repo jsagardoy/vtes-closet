@@ -32,48 +32,52 @@ interface Props {
 }
 
 const CryptContainer = (props: Props) => {
-  const { toogle, deckMode, handleAddCardToDeck,handleCloseModal } = props;
+  const { toogle, deckMode, handleAddCardToDeck, handleCloseModal } = props;
   const [loader, setLoader] = React.useState<boolean>(false);
+  const [list, setList] = React.useState<CryptType[]>([]);
+  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
+  const [sort, setSort] = React.useState<boolean>(false);
   const [sessionStorage, setSessionStorage] = useSessionStorage<CryptType[]>(
     'cryptList',
     []
   );
+  const fullList = React.useRef<CryptType[]>(sessionStorage);
 
-  const [list, setList] = React.useState<CryptType[]>([]);
-  const [sortAZ, setSortAZ] = React.useState<boolean>(false);
-  const [sort, setSort] = React.useState<boolean>(false);
-
-  const handleSearch = (
-    name: string,
-    discList: string[],
-    clan: string,
-    sect: string,
-    title: TitleType,
-    props: PropType,
-    group: GroupType,
-    maxCap: capacityType,
-    minCap: capacityType
-  ) => {
-    const resp = sessionStorage
-      .filter(
-        (item) =>
-          item.name.toLowerCase().includes(name.toLowerCase()) ||
-          item.card_text.toLowerCase().includes(name.toLowerCase())
-      )
-      .filter((item) => compareArrays(item.disciplines, discList))
-      .filter((item) =>
-        clan !== ''
-          ? item.clans.filter((clanItem) => clanItem === clan).length > 0
-          : item.clans.map((clanItem) => clanItem)
-      )
-      .filter((item) => findInText(item, sect))
-      .filter((item) => filterTitle(item, title))
-      .filter((item) => filterProps(item, props))
-      .filter((item) => filterGroup(item, group))
-      .filter((item) => filterMaxCapacity(item, maxCap))
-      .filter((item) => filterMinCapacity(item, minCap));
-    setList(resp);
-  };
+  const handleSearch = React.useMemo(
+    () =>
+      (
+        name: string,
+        discList: string[],
+        clan: string,
+        sect: string,
+        title: TitleType,
+        props: PropType,
+        group: GroupType,
+        maxCap: capacityType,
+        minCap: capacityType
+      ) => {
+        const resp = fullList.current
+          .filter(
+            (item) =>
+              item.name.toLowerCase().includes(name.toLowerCase()) ||
+              item.card_text.toLowerCase().includes(name.toLowerCase())
+          )
+          .filter((item) => compareArrays(item.disciplines, discList))
+          .filter((item) =>
+            clan !== ''
+              ? item.clans.filter((clanItem) => clanItem === clan).length > 0
+              : item.clans.map((clanItem) => clanItem)
+          )
+          .filter((item) => findInText(item, sect))
+          .filter((item) => filterTitle(item, title))
+          .filter((item) => filterProps(item, props))
+          .filter((item) => filterGroup(item, group))
+          .filter((item) => filterMaxCapacity(item, maxCap))
+          .filter((item) => filterMinCapacity(item, minCap));
+        setList(resp);
+      },
+    []
+  );
 
   const filterMaxCapacity = (item: CryptType, maxCap: capacityType) =>
     maxCap.value === 0 ? item : item.capacity <= maxCap.value;
@@ -110,34 +114,49 @@ const CryptContainer = (props: Props) => {
     setSort(!sort);
   };
 
-  const handleReset = async () => setList(sessionStorage);
+  const handleReset = async () => setList(fullList.current);
 
   React.useEffect(() => {
-    if (sessionStorage && sessionStorage.toString() !== [].toString() && sessionStorage.length > 0) {
+    if (
+      sessionStorage &&
+      sessionStorage.toString() !== [].toString() &&
+      sessionStorage.length > 0
+    ) {
       setList(sessionStorage);
     } else {
       setLoader(true);
-      fetchCrypt()
-        .then((data: CryptType[]) => {
-          setList(data);
-          setSessionStorage(data);
+      const fetch = async () => {
+        try {
+          const data: CryptType[] = await fetchCrypt();
+          if (data) {
+            setList(data);
+            setSessionStorage(data);
+            fullList.current = data;
+          }
           setLoader(false);
-        })
-        .catch((error) => {
+        } catch (error) {
           setLoader(false);
-          console.log(error);
-        });
+          console.error(error);
+        }
+      };
+
+      fetch();
     }
+    return () => {
+      setLoader(false);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container>
-      <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-        <IconButton onClick={()=>handleCloseModal('crypt')}>
-        <CloseRoundedIcon />
-        </IconButton>
+      {deckMode ? (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <IconButton onClick={() => handleCloseModal('crypt')}>
+            <CloseRoundedIcon />
+          </IconButton>
         </Box>
+      ) : null}
       <Box className={toogle ? 'menu__crypt__container' : 'crypt__container'}>
         <NavbarCryptList
           searchList={(
