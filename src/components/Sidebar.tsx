@@ -54,7 +54,7 @@ const Sidebar = (props: Props) => {
     }
   };
   React.useEffect(() => {
-    return () => {};
+    return () => {setUser('')};
   }, []);
   
   return toogle ? (

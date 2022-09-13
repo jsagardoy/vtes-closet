@@ -37,6 +37,7 @@ const Login = () => {
   };
   React.useEffect(() => {
     return (() => {
+      setShowLogout(true);
      })
   }, [auth]);
 
