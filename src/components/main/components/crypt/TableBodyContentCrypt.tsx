@@ -62,7 +62,7 @@ const TableBodyContentCrypt = (props: Props) => {
           </TableCell>
 
           <TableCell id='disciplines' onClick={() => handleItemToOpen(crypt)}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap:'0.2rem' }}>
               {crypt.disciplines
                 ? getDiscIcon(crypt.disciplines).map(
                     (disc: string, index: number) => (
