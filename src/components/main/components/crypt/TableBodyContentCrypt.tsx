@@ -92,6 +92,7 @@ const TableBodyContentCrypt = (props: Props) => {
                   justifyContent: 'center',
                   textAlign: 'center',
                   alignItems: 'center',
+                  color:'white',
                   p: 0,
                 }}
               >
