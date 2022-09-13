@@ -34,9 +34,12 @@ const TableBodyContent = (props: Props) => {
   const { handleAddCardToDeck, handleItemToOpen, items, deckMode } = props;
   
   return (
-    <TableBody >
+    <TableBody>
       {items.map((library) => (
-        <TableRow key={uuidv4()}>
+        <TableRow
+          key={uuidv4()}
+          hover
+        >
           {deckMode ? (
             <TableCell align='center'>
               <IconButton
@@ -49,7 +52,7 @@ const TableBodyContent = (props: Props) => {
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             <Typography color='secondary'>{library.name}</Typography>
           </TableCell>
-          <TableCell align='center'>
+          <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             {getCardTypesIcon(library.types).map(
               (type: string, index: number) => (
                 <ListItemAvatar
@@ -68,7 +71,7 @@ const TableBodyContent = (props: Props) => {
             )}
           </TableCell>
 
-          <TableCell align='center'>
+          <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             {library.burn_option ? (
               <Avatar
                 sx={{ backgroundColor: 'white' }}
@@ -78,7 +81,10 @@ const TableBodyContent = (props: Props) => {
               />
             ) : null}
           </TableCell>
-          <TableCell sx={{ flexDirection: 'row' }}>
+          <TableCell
+            sx={{ flexDirection: 'row' }}
+            onClick={() => handleItemToOpen(library)}
+          >
             {library.disciplines
               ? getDiscIcon(library.disciplines).map(
                   (disc: string, index: number) => (
@@ -97,7 +103,7 @@ const TableBodyContent = (props: Props) => {
                 )
               : null}
           </TableCell>
-          <TableCell align='center'>
+          <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             {library.clans
               ? getClanIcon(library.clans).map(
                   (clan: string, index: number) => (
@@ -117,7 +123,7 @@ const TableBodyContent = (props: Props) => {
                 )
               : null}
           </TableCell>
-          <TableCell align='center'>
+          <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             {library.blood_cost || library.pool_cost ? (
               library.blood_cost ? (
                 <Avatar
