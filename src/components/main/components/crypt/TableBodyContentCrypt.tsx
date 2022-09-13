@@ -51,9 +51,8 @@ const TableBodyContentCrypt = (props: Props) => {
                 ? getClanIcon(crypt.clans).map(
                 
                   (clan: string, index: number) => (
-                     <Tooltip title={crypt.clans[index]}>
+                     <Tooltip key={uuidv4()} title={crypt.clans[index]}>
                       <Avatar
-                        key={uuidv4()}
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
                         src={clan}

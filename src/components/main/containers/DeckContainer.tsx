@@ -215,7 +215,6 @@ const DeckContainer = () => {
         />
         {/* SearchDeck container */}
         <Modal
-          id='DeckCryptModal'
           sx={{ overflow: 'scroll' }}
           open={showModalCrypt}
           onClose={() => handleCloseModal('crypt')}
