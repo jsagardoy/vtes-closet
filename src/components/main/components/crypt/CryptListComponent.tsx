@@ -1,76 +1,125 @@
 import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-  Typography,
+  Table,
+  TableContainer,
 } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CryptType } from '../../../../types/crypt_type';
-import { getCleanedName, getDiscIcon } from '../../../../util/helpFunction';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '../global/Spinner';
-import { Box } from '@mui/system';
 import { LibraryType } from '../../../../types/library_type';
 import { CardType } from '../../../../types/deck_type';
+import TableHeaderCrypt from './TableHeaderCrypt';
+import TableBodyContentCrypt from './TableBodyContentCrypt';
 interface Props {
   list: CryptType[];
-  initialValue: CryptType[];
-  handleOpen: (crypt: CryptType, index: number) => void;
   deckMode: boolean;
-  handleAddCardToDeck: (card: CryptType|LibraryType, cardType:CardType) => void;
+  handleItemToOpen: (crypt: CryptType) => void;
+  handleAddCardToDeck: (
+    card: CryptType | LibraryType,
+    cardType: CardType
+  ) => void;
 }
 
 const CryptListComponent = (props: Props) => {
-  const { list, handleOpen, initialValue, deckMode, handleAddCardToDeck } =
+  const { list, deckMode, handleAddCardToDeck, handleItemToOpen } =
     props;
   //const initialValue = list.slice(0, 20);
-  const [items, setItems] = React.useState<CryptType[]>([]);
+  const [items, setItems] = React.useState<CryptType[]>(list.slice(0, 40));
+  const [sortBy, setSortBy] = React.useState<string>('');
+  const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
 
-  const isElement = (elem: CryptType, index: number): number => {
-    return elem && items.length > 0 && elem.id === items[items.length - 1].id
-      ? index
-      : -1;
-  };
-  const fetchMoreData = () => {
-    if (list) {
-      const initItem: number | undefined = list
-        .map((elem, index) => isElement(elem, index))
-        .find((elem) => elem !== -1);
-      if (initItem !== undefined) {
-        setItems(
-          items.concat([
-            ...list.slice(initItem + 1, initItem ? initItem + 21 : 0 + 20),
-          ])
-        );
+  const isElement = useMemo(() => {
+    return (elem: CryptType, index: number): number => {
+      return elem && items.length > 0 && elem.id === items[items.length - 1].id
+        ? index
+        : -1;
+    };
+  }, [items]);
+  const fetchMoreData = useMemo(() => {
+    return () => {
+      if (list) {
+        const initItem: number | undefined = list
+          .map((elem, index) => isElement(elem, index))
+          .find((elem) => elem !== -1);
+        if (initItem !== undefined) {
+          setItems(
+            items.concat([
+              ...list.slice(initItem + 1, initItem ? initItem + 41 : 0 + 40),
+            ])
+          );
+        }
       }
-    }
-  };
+    };
+  }, [isElement, items, list]);
 
    React.useEffect(() => {
-    setItems(initialValue);
-  }, [ initialValue, list ]); 
+    setItems(list.slice(0,40));
+  }, [ list ]); 
 
-  if (list.length === 0) {
-    return <></>;
-  }
-
-  if (items.length === 0 && list.length!==0) {
-    return (
-      <Typography variant='subtitle2'
-        sx={{
-          textAlign: 'center',
-          marginBottom: '1em',
-        }}
-      >
-        No results
-      </Typography>
-    );
-  }
+  const createSortHandler = (key: string): void => {
+    if (key === sortBy) {
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(key);
+      setSortOrder('asc');
+    }
+    //ahora ordenar
+    if (key === 'name') {
+      setItems((prev) => {
+        if (prev) {
+          return sortOrder === 'desc'
+            ? list
+                .sort((a, b) =>
+                  a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                )
+                .slice(0, 40)
+            : list
+                .sort((a, b) =>
+                  b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                )
+                .slice(0, 40);
+        } else {
+          return prev;
+        }
+      });
+    }
+  };
+ 
   return (
+<TableContainer id='cryptModal'  sx={{ overflow: 'auto', height: '80vh' }}>
+      <InfiniteScroll
+      dataLength={items.length}
+      next={fetchMoreData}
+      hasMore={items.length !== list.length}
+      loader={<Spinner />}
+      style={{ overflow: 'hidden' }}
+      endMessage={
+        <p
+          style={{
+            textAlign: 'center',
+            marginBottom: '1em',
+          }}
+        >
+          No more content
+        </p>
+      }
+    >
+        <Table>
+          <TableHeaderCrypt deckMode={deckMode}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            createSortHandler={createSortHandler}/>
+        <TableBodyContentCrypt deckMode={deckMode}
+            items={items}
+            handleAddCardToDeck={handleAddCardToDeck}
+            handleItemToOpen={handleItemToOpen}/>
+        </Table>
+
+    </InfiniteScroll>
+
+</TableContainer>
+
+/* 
     <InfiniteScroll
       dataLength={items.length}
       next={fetchMoreData}
@@ -128,6 +177,7 @@ const CryptListComponent = (props: Props) => {
                     );
                   })}
                   <ListItemText
+                    sx={{ marginLeft:'1rem'}}
                     className='list__item__icons'
                     primary={crypt.capacity}
                     //secondary={getDiscIcon(crypt.discipline)}
@@ -138,7 +188,7 @@ const CryptListComponent = (props: Props) => {
           ))
         )}
       </List>
-    </InfiniteScroll>
+    </InfiniteScroll> */
   );
 };
 

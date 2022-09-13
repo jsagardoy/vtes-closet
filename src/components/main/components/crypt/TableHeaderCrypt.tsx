@@ -1,15 +1,15 @@
 import { TableHead, TableRow, TableCell, TableSortLabel } from '@mui/material';
 import React from 'react'
 
-interface Props{
+interface Props {
   deckMode: boolean;
   sortBy: string;
   sortOrder: 'desc' | 'asc';
   createSortHandler: (key: string) => void;
 }
 
-const TableHeader = (props: Props) => {
-    const { deckMode,sortBy,sortOrder,createSortHandler } = props;
+const TableHeaderCrypt = (props: Props) => {
+    const { deckMode, sortBy, sortOrder, createSortHandler } = props;
   return (
     <TableHead>
       <TableRow>
@@ -19,18 +19,16 @@ const TableHeader = (props: Props) => {
             active={sortBy === 'name'}
             direction={sortOrder}
             onClick={() => createSortHandler('name')}
-          > 
+          >
             Card name
           </TableSortLabel>
         </TableCell>
-        <TableCell align='center'>Card Type</TableCell>
-        <TableCell align='center'>Burn Option</TableCell>
-        <TableCell align='center'>Disciplines</TableCell>
         <TableCell align='center'>Clan</TableCell>
-        <TableCell align='center'>Cost</TableCell>
+        <TableCell align='center'>Disciplines</TableCell>
+        <TableCell align='center'>Capacity</TableCell>
       </TableRow>
     </TableHead>
   );
 }
 
-export default TableHeader
+export default TableHeaderCrypt

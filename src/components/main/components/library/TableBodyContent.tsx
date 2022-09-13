@@ -4,8 +4,8 @@ import {
   TableCell,
   IconButton,
   Typography,
-  ListItemAvatar,
   Avatar,
+  Box,
 } from '@mui/material';
 import React from 'react';
 import {
@@ -32,33 +32,29 @@ interface Props {
 
 const TableBodyContent = (props: Props) => {
   const { handleAddCardToDeck, handleItemToOpen, items, deckMode } = props;
-  
+
   return (
     <TableBody>
       {items.map((library) => (
-        <TableRow
-          key={uuidv4()}
-          hover
-        >
+        <TableRow key={uuidv4()} hover>
           {deckMode ? (
             <TableCell align='center'>
-              <IconButton
-                onClick={(e) => handleAddCardToDeck(library, 'library')}
-              >
-                <AddCircleRoundedIcon />
-              </IconButton>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <IconButton
+                  onClick={(e) => handleAddCardToDeck(library, 'library')}
+                >
+                  <AddCircleRoundedIcon />
+                </IconButton>
+              </Box>
             </TableCell>
           ) : null}
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
             <Typography color='secondary'>{library.name}</Typography>
           </TableCell>
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
-            {getCardTypesIcon(library.types).map(
-              (type: string, index: number) => (
-                <ListItemAvatar
-                  className='list__avatar__icons'
-                  key={library.id && type}
-                >
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {getCardTypesIcon(library.types).map(
+                (type: string, index: number) => (
                   <Avatar
                     sx={{ backgroundColor: 'white' }}
                     variant='rounded'
@@ -66,51 +62,47 @@ const TableBodyContent = (props: Props) => {
                     src={type}
                     alt={type}
                   />
-                </ListItemAvatar>
-              )
-            )}
+                )
+              )}
+            </Box>
           </TableCell>
 
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
-            {library.burn_option ? (
-              <Avatar
-                sx={{ backgroundColor: 'white' }}
-                variant='rounded'
-                src={getBurnOption()}
-                alt='Burn option'
-              />
-            ) : null}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {library.burn_option ? (
+                <Avatar
+                  sx={{ backgroundColor: 'white' }}
+                  variant='rounded'
+                  src={getBurnOption()}
+                  alt='Burn option'
+                />
+              ) : null}
+            </Box>
           </TableCell>
           <TableCell
             sx={{ flexDirection: 'row' }}
             onClick={() => handleItemToOpen(library)}
           >
-            {library.disciplines
-              ? getDiscIcon(library.disciplines).map(
-                  (disc: string, index: number) => (
-                    <ListItemAvatar
-                      className='list__avatar__icons'
-                      key={library.id && disc}
-                    >
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {library.disciplines
+                ? getDiscIcon(library.disciplines).map(
+                    (disc: string, index: number) => (
                       <Avatar
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
                         src={disc}
                         alt={disc}
                       />
-                    </ListItemAvatar>
+                    )
                   )
-                )
-              : null}
+                : null}
+            </Box>
           </TableCell>
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
-            {library.clans
-              ? getClanIcon(library.clans).map(
-                  (clan: string, index: number) => (
-                    <ListItemAvatar
-                      className='list__avatar__icons'
-                      key={library.id && clan}
-                    >
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {library.clans
+                ? getClanIcon(library.clans).map(
+                    (clan: string, index: number) => (
                       <Avatar
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
@@ -118,29 +110,31 @@ const TableBodyContent = (props: Props) => {
                         src={clan}
                         alt={clan}
                       />
-                    </ListItemAvatar>
+                    )
                   )
-                )
-              : null}
+                : null}
+            </Box>
           </TableCell>
           <TableCell align='center' onClick={() => handleItemToOpen(library)}>
-            {library.blood_cost || library.pool_cost ? (
-              library.blood_cost ? (
-                <Avatar
-                  sx={{ backgroundColor: 'white' }}
-                  variant='rounded'
-                  src={getCardCost(library.blood_cost, 'blood')}
-                  alt='Blood cost'
-                />
-              ) : library.pool_cost ? (
-                <Avatar
-                  sx={{ backgroundColor: 'white' }}
-                  variant='rounded'
-                  src={getCardCost(library.pool_cost, 'pool')}
-                  alt='Pool cost'
-                />
-              ) : null
-            ) : null}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              {library.blood_cost || library.pool_cost ? (
+                library.blood_cost ? (
+                  <Avatar
+                    sx={{ backgroundColor: 'white' }}
+                    variant='rounded'
+                    src={getCardCost(library.blood_cost, 'blood')}
+                    alt='Blood cost'
+                  />
+                ) : library.pool_cost ? (
+                  <Avatar
+                    sx={{ backgroundColor: 'white' }}
+                    variant='rounded'
+                    src={getCardCost(library.pool_cost, 'pool')}
+                    alt='Pool cost'
+                  />
+                ) : null
+              ) : null}
+            </Box>
           </TableCell>
         </TableRow>
       ))}

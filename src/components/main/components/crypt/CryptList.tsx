@@ -16,43 +16,44 @@ interface listProps {
 }
 
 const CryptList = (props: listProps) => {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
-  const [cryptIndex, setCryptIndex] = React.useState<number>(0);
-
   const { list, deckMode, handleAddCardToDeck } = props;
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = React.useState<CryptType>();
+  const [index, setIndex] = React.useState<number>(0);
 
-  const handleOpen = (crypt: CryptType, index: number) => {
-    setOpenedCrypt(crypt);
+  const handleItemToOpen = (crypt: CryptType) => {
+    const newIndex = list.findIndex((elem) => elem.id === crypt.id);
+    setSelectedItem(crypt);
     setOpen(true);
-    setCryptIndex(index);
+    if (newIndex !== -1) {
+      setIndex(newIndex);
+    }
   };
   const handleClose = () => {
     setOpen(false);
-    setOpenedCrypt(undefined);
   };
 
   const handleNext = () => {
-    const newIndex: number = cryptIndex + 1;
+    const newIndex: number = index + 1;
     const crypt: CryptType = list[newIndex];
-    handleOpen(crypt, newIndex);
+    handleItemToOpen(crypt);
   };
   const handlePrevious = () => {
-    const newIndex: number = cryptIndex - 1;
+    const newIndex: number = index - 1;
     const crypt: CryptType = list[newIndex];
-    handleOpen(crypt, newIndex);
+    handleItemToOpen(crypt);
   };
 
   React.useEffect(() => {}, []);
 
   return (
     <>
-      {open && openedCrypt ? (
+      {open && selectedItem ? (
         <ModalCrypt
           open={open}
           list={list}
-          openedCrypt={openedCrypt}
-          cryptIndex={cryptIndex}
+          openedCrypt={selectedItem}
+          cryptIndex={index}
           handleClose={handleClose}
           handleNext={handleNext}
           handlePrevious={handlePrevious}
@@ -66,10 +67,7 @@ const CryptList = (props: listProps) => {
           ) => handleAddCardToDeck(card, cardType)}
           deckMode={deckMode}
           list={list}
-          initialValue={list.slice(0, 20)}
-          handleOpen={(crypt: CryptType, index: number) =>
-            handleOpen(crypt, index)
-          }
+          handleItemToOpen={(crypt: CryptType) => handleItemToOpen(crypt)}
         />
       )}
     </>
