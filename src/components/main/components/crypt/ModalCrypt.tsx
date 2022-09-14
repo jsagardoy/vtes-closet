@@ -1,12 +1,12 @@
-import { Box, Button, Paper } from '@mui/material';
+import { Box, Button, Dialog, Paper } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
-import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { CryptType } from '../../../../types/crypt_type';
 import {
   composeText,
   getClanIcon,
+  getCleanedName,
   getDiscIcon,
 } from '../../../../util/helpFunction';
 import CardButtons from '../global/CardButtons';
@@ -36,11 +36,22 @@ const ModalCrypt = (props: CryptProp) => {
   } = props;
 
   return (
-    <Modal
-      className='modal'
+    <Dialog
+      sx={{
+        maxHeight: '50vh',
+        display: 'flex',
+        height: '50vh',
+      }}
+      PaperProps={{
+        sx: {
+          position: 'fixed',
+          top: '10rem',
+          left: '10rem',
+          minWidth: '50rem',
+        },
+      }}
       open={open}
       onClose={handleClose}
-      tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'ArrowLeft') {
           return handlePrevious();
@@ -50,69 +61,102 @@ const ModalCrypt = (props: CryptProp) => {
         }
       }}
     >
-      <Box className='modal__content'>
-        <img
-          className='modal__main__img'
-          src={openedCrypt.url}
-          alt={openedCrypt.name}
-        />
-        <Paper className='modal__right'>
-          <Box
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              width: '100%',
-            }}
-          >
-            <Button onClick={() => handleClose()}>
-              <CloseIcon style={{}} />
+      <Paper
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}
+        >
+          <img src={openedCrypt.url} alt={openedCrypt.name} />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography color='secondary' sx={{ m: '1rem' }} variant='h6'>
+              {getCleanedName(openedCrypt.name)}
+            </Typography>
+            <Button color='secondary' onClick={() => handleClose()}>
+              <CloseIcon />
             </Button>
           </Box>
-          <Box className='modal__right__text'>
-            <Box className='modal__right__top'>
-              <Typography variant='h6' className='title'>
-                {openedCrypt.name} {openedCrypt.aka}
-              </Typography>
-              <Box className='clan'>
+          <Divider />
+          <Box sx={{ height: '41vh', maxHeight: '30vh', overflow: 'auto' }}>
+            <Box sx={{ marginLeft: '1rem', marginBottom: '1rem' }}>
+              {openedCrypt.aka ? (
+                <Typography variant='h6'>{openedCrypt.aka}</Typography>
+              ) : null}
+              <Box sx={{ display: 'flex' }}>
                 <Typography variant='subtitle1'>
-                  {openedCrypt.clans.map((clan) => clan)}
+                  Clan: {openedCrypt.clans.map((clan) => clan)}
                 </Typography>
                 {getClanIcon(openedCrypt.clans).map((clan) => (
                   <Avatar
-                    className='clan__avatar__icon'
+                    sx={{ marginLeft: '.5rem' }}
                     key={clan && openedCrypt.id}
                     src={clan}
                     alt={clan}
                   />
                 ))}
               </Box>
-              <Typography variant='subtitle2'>
-                Group: {openedCrypt.group}
-              </Typography>
-              <Typography variant='subtitle2'>
-                Capacity: {openedCrypt.capacity}
-              </Typography>
-              <Divider />
-              <Typography variant='subtitle2'>Disciplines:</Typography>
-              <Box className='disc__content'>
-                {getDiscIcon(openedCrypt.disciplines).map((disc) => (
-                  <Avatar
-                    key={openedCrypt.id && disc}
-                    className='avatar__disciplines__icons'
-                    src={disc}
-                    alt={disc}
-                  />
-                ))}
+              <Box
+                sx={{
+                  display: 'flex',
+                  marginTop: '.5rem',
+                  marginBottom: '.5rem',
+                }}
+              >
+                <Typography variant='body1'>
+                  Group: {openedCrypt.group}
+                </Typography>
+                <Typography sx={{ marginLeft: '.5rem' }} variant='body1'>
+                  Capacity: {openedCrypt.capacity}
+                </Typography>
               </Box>
               <Divider />
-              <Box className='card__text'>
-                <Typography variant='subtitle2'>
+              <Box
+                sx={{
+                  display: 'flex',
+                  textAlign: 'center',
+                  alignItems: 'center',
+                  marginTop: '.5rem',
+                  marginBottom: '.5rem',
+                }}
+              >
+                <Typography sx={{ marginRight: '1rem' }} variant='subtitle2'>
+                  Disciplines:
+                </Typography>
+                <Box sx={{ display: 'flex' }}>
+                  {getDiscIcon(openedCrypt.disciplines).map((disc) => (
+                    <Avatar
+                      key={openedCrypt.id && disc}
+                      src={disc}
+                      alt={disc}
+                    />
+                  ))}
+                </Box>
+              </Box>
+              <Divider />
+              <Box sx={{marginTop:'.5rem',marginBottom:'.5rem', marginRight:'.5rem'}}>
+                <Typography variant='body1'>
                   {parse(composeText(openedCrypt.card_text))}
                 </Typography>
               </Box>
             </Box>
-            <Box className='modal__right__bottom'>
-              <Divider />
+            <Divider />
+            <Box sx={{m:'1rem', display:'flex',flexDirection:'column'}}>
               <Typography variant='caption'>
                 Sets:
                 {Object.keys(openedCrypt.sets).map((set, index) =>
@@ -121,7 +165,6 @@ const ModalCrypt = (props: CryptProp) => {
                     : `${set}.`
                 )}
               </Typography>
-              <Divider />
               <Typography variant='caption'>
                 Artists: {openedCrypt.artists}
               </Typography>
@@ -133,9 +176,9 @@ const ModalCrypt = (props: CryptProp) => {
             list={list}
             index={cryptIndex}
           />
-        </Paper>
-      </Box>
-    </Modal>
+        </Box>
+      </Paper>
+    </Dialog>
   );
 };
 
