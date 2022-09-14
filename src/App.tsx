@@ -55,7 +55,7 @@ function App() {
   const initialMode: PaletteMode = window.localStorage.getItem(
     'mode'
   ) as PaletteMode;
-  const [mode, setMode] = React.useState<PaletteMode>(initialMode ?? 'light');
+  const [mode, setMode] = React.useState<PaletteMode>(initialMode==='light' ? 'light':'dark');
   useEffect(() => {}, []);
   const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
     typography: {
@@ -113,7 +113,7 @@ function App() {
   });
 
   const colorMode = React.useMemo(() => {
-    window.localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
+    window.localStorage.setItem('mode', mode);
     return {
       // The dark mode switch would invoke this method
       toggleColorMode: () => {

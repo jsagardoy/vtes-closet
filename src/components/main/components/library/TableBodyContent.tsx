@@ -58,7 +58,7 @@ const TableBodyContent = (props: Props) => {
                   <Avatar
                     sx={{ backgroundColor: 'white' }}
                     variant='rounded'
-                    key={type && library.id && index}
+                    key={uuidv4()}
                     src={type}
                     alt={type}
                   />
@@ -83,11 +83,14 @@ const TableBodyContent = (props: Props) => {
             sx={{ flexDirection: 'row' }}
             onClick={() => handleItemToOpen(library)}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap:'0.2rem' }}>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'center', gap: '0.2rem' }}
+            >
               {library.disciplines
                 ? getDiscIcon(library.disciplines).map(
                     (disc: string, index: number) => (
                       <Avatar
+                        key={uuidv4()}
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
                         src={disc}
@@ -106,7 +109,7 @@ const TableBodyContent = (props: Props) => {
                       <Avatar
                         sx={{ backgroundColor: 'white' }}
                         variant='rounded'
-                        key={clan && library.id && index}
+                        key={uuidv4()}
                         src={clan}
                         alt={clan}
                       />
