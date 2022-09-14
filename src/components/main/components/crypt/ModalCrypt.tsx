@@ -40,16 +40,15 @@ const ModalCrypt = (props: CryptProp) => {
       sx={{
         maxHeight: '50vh',
         display: 'flex',
+        justifyContent: 'center',
         height: '50vh',
       }}
       PaperProps={{
         sx: {
-          position: 'fixed',
-          top: '10rem',
-          left: '10rem',
+
           minWidth: '50rem',
         },
-      }}
+      }} 
       open={open}
       onClose={handleClose}
       onKeyDown={(e) => {
@@ -149,14 +148,20 @@ const ModalCrypt = (props: CryptProp) => {
                 </Box>
               </Box>
               <Divider />
-              <Box sx={{marginTop:'.5rem',marginBottom:'.5rem', marginRight:'.5rem'}}>
+              <Box
+                sx={{
+                  marginTop: '.5rem',
+                  marginBottom: '.5rem',
+                  marginRight: '.5rem',
+                }}
+              >
                 <Typography variant='body1'>
                   {parse(composeText(openedCrypt.card_text))}
                 </Typography>
               </Box>
             </Box>
             <Divider />
-            <Box sx={{m:'1rem', display:'flex',flexDirection:'column'}}>
+            <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column' }}>
               <Typography variant='caption'>
                 Sets:
                 {Object.keys(openedCrypt.sets).map((set, index) =>

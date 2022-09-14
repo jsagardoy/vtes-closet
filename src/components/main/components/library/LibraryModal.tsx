@@ -56,14 +56,11 @@ const LibraryModal = (props: LibraryModalProps) => {
       sx={{
         maxHeight: '50vh',
         display: 'flex',
+        justifyContent: 'center',
         height: '50vh',
-
       }}
       PaperProps={{
         sx: {
-          position: 'fixed',
-          top: '10rem',
-          left: '20rem',
           minWidth: '50rem',
         },
       }}
