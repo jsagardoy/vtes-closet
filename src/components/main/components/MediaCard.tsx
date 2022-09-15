@@ -1,7 +1,8 @@
 import { Button, Card, CardActions, CardMedia } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+
 import { CardType } from '../../../types/deck_type';
 import { getUserId } from '../../../util';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   title: string;
@@ -25,13 +26,13 @@ const MediaCard = (props: Props) => {
   };
 
   const handleGoToCollectionCrypt = () => {
-    history.push(`/private/:${userId}/inventory/crypt`);
+    history.push(`/private/${userId}/inventory/crypt`);
   };
   const handleGoToCollectionLibrary = () => {
-    history.push(`/private/:${userId}/inventory/library`);
+    history.push(`/private/${userId}/inventory/library`);
   };
   const handleGoToDecks = () => {
-    history.push(`/private/:${userId}/decks`);
+    history.push(`/private/${userId}/decks`);
   };
 
   return (

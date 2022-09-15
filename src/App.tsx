@@ -1,32 +1,33 @@
-import React, { useEffect } from 'react';
 import './App.css';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
 
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import PrivateRoute from './components/PrivateRoute';
-import CryptContainer from './components/main/containers/CryptContainer';
-import LibraryContainer from './components/main/containers/LibraryContainer';
-import PublicMain from './components/main/components/main/PublicMain';
-import PrivateMain from './components/main/components/main/PrivateMain';
-import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
-import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
-import DecksContainer from './components/main/containers/DecksContainer';
-import DeckContainer from './components/main/containers/DeckContainer';
-import { CryptType } from './types/crypt_type';
-import { CardType } from './types/deck_type';
-import { LibraryType } from './types/library_type';
 import {
   Container,
-  createTheme,
   CssBaseline,
   PaletteMode,
   ThemeOptions,
   ThemeProvider,
+  createTheme,
 } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import { Box } from '@mui/system';
+import { CardType } from './types/deck_type';
+import CryptContainer from './components/main/containers/CryptContainer';
+import { CryptType } from './types/crypt_type';
+import DeckContainer from './components/main/containers/DeckContainer';
+import DecksContainer from './components/main/containers/DecksContainer';
+import Header from './components/Header';
+import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
+import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
+import LibraryContainer from './components/main/containers/LibraryContainer';
+import { LibraryType } from './types/library_type';
+import PageDeniedAccess from './components/PageDeniedAccess';
+import PrivateMain from './components/main/components/main/PrivateMain';
+import PrivateRoute from './components/PrivateRoute';
+import PublicMain from './components/main/components/main/PublicMain';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const auth = getAuth();
@@ -152,6 +153,9 @@ function App() {
                   <PublicMain toogle={toogleSidebar} />
                 )}
               </Route>
+              <Route exact path={'/accessDenied'}>
+                <PageDeniedAccess/>
+              </Route> 
               <Route exact path={'/crypt'}>
                 <CryptContainer
                   deckMode={false}
@@ -162,7 +166,9 @@ function App() {
                   ) => {
                     handleAddCardToDeck(card, cardType);
                   }}
-                  handleCloseModal={(cardType:CardType)=>handleCloseModal(cardType)}
+                  handleCloseModal={(cardType: CardType) =>
+                    handleCloseModal(cardType)
+                  }
                 />
               </Route>
               <Route exact path={'/library'} component={LibraryContainer} />

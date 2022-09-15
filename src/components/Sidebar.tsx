@@ -1,9 +1,11 @@
+import './Sidebar.css';
+
 import { Box, List, ListItemButton, ListItemText } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import './Sidebar.css';
 import { getUserId } from '../util';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   toogle: boolean;
@@ -37,15 +39,15 @@ const Sidebar = (props: Props) => {
         break;
       case 'Decks':
         handleToogle();
-        history.push(`/private/:${userId}/decks`);
+        history.push(`/private/${userId}/decks`);
         break;
       case 'InventoryLibrary':
         handleToogle();
-        history.push(`/private/:${userId}/inventory/library`);
+        history.push(`/private/${userId}/inventory/library`);
         break;
       case 'InventoryCrypt':
         handleToogle();
-        history.push(`/private/:${userId}/inventory/crypt`);
+        history.push(`/private/${userId}/inventory/crypt`);
         break;
       default:
         handleToogle();
