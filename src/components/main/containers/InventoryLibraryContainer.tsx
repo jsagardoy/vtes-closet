@@ -186,6 +186,7 @@ const InventoryLibraryContainer = () => {
         updateInventory={(card: libraryInventoryType) => updateInventory(card)}
       />
       <Fab
+        color='secondary'
         sx={{
           position: 'fixed',
           right: '20%',
@@ -198,7 +199,7 @@ const InventoryLibraryContainer = () => {
         aria-label='Save'
         onClick={() => handleSave()}
       >
-        <SaveIcon />
+        <SaveIcon color='primary'/>
       </Fab>
       <Snackbar
         open={showSnackbar}
