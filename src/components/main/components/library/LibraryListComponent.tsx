@@ -1,13 +1,14 @@
 import { Table, TableContainer } from '@mui/material';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useMemo } from 'react';
-import { LibraryType } from '../../../../types/library_type';
-import { CryptType } from '../../../../types/crypt_type';
+
 import { CardType } from '../../../../types/deck_type';
-import { Spinner } from '../global/Spinner';
+import { CryptType } from '../../../../types/crypt_type';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { LibraryType } from '../../../../types/library_type';
 import React from 'react';
-import TableHeader from './TableHeader';
+import { Spinner } from '../global/Spinner';
 import TableBodyContent from './TableBodyContent';
+import TableHeader from './TableHeader';
+import { useMemo } from 'react';
 
 interface Props {
   handleItemToOpen: (library: LibraryType) => void;

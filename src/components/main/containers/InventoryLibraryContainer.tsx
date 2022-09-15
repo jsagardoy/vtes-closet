@@ -1,19 +1,21 @@
+import './LibraryContainer.css';
+
 import { Alert, Box, Fab, Snackbar } from '@mui/material';
-import React, { useMemo, useRef } from 'react';
-import { fetchLibrary } from '../../../service/fetchLibrary';
-import { fetchLibraryInventory } from '../../../service/fetchLibraryInventory';
-import { libraryInventoryType } from '../../../types/inventory_type';
 import { LibraryPropType, LibraryType } from '../../../types/library_type';
+import React, { useMemo, useRef } from 'react';
 import {
   compareArrays,
   filterProps,
   findInText,
 } from '../../../util/helpFunction';
-import { Spinner } from '../components/global/Spinner';
+
 import InventoryLibraryList from '../components/library/InventoryLibraryList';
 import LibraryNavbarList from '../components/library/LibraryNavbarList';
-import './LibraryContainer.css';
 import SaveIcon from '@mui/icons-material/Save';
+import { Spinner } from '../components/global/Spinner';
+import { fetchLibrary } from '../../../service/fetchLibrary';
+import { fetchLibraryInventory } from '../../../service/fetchLibraryInventory';
+import { libraryInventoryType } from '../../../types/inventory_type';
 import { setLibraryInventory } from '../../../service/setLibraryInventory';
 
 const InventoryLibraryContainer = () => {
@@ -56,109 +58,115 @@ const InventoryLibraryContainer = () => {
     setSort(!sort);
   };
 
-    const handleSave = (): void => {
-      setLoader(true);
-      setSaving(true);
-      setLibraryInventory(list)
-        .then((msg) => {
-          setShowSnackbar(true);
-          setMessage(JSON.stringify(msg));
-          setSaving(false);
-          setLoader(false);
-        })
-        .catch((msg) => {
-          setShowSnackbar(true);
-          setMessage(msg);
-          setSaving(false);
-          setLoader(false);
-        });
-    };
-
- const handleUpdateList = useMemo(
-   () => (newList: libraryInventoryType[]) => {
-     setList(newList);
-   },
-   []
- );
+  const handleSave = (): void => {
+    setLoader(true);
+    setSaving(true);
+    setLibraryInventory(list)
+      .then((msg) => {
+        setShowSnackbar(true);
+        setMessage(JSON.stringify(msg));
+        setSaving(false);
+        setLoader(false);
+      })
+      .catch((msg) => {
+        setShowSnackbar(true);
+        setMessage(msg);
+        setSaving(false);
+        setLoader(false);
+      });
+  };
+  const handleUpdateList = useMemo(
+    () => (newList: libraryInventoryType[]) => {
+      setList(newList);
+    },
+    []
+  );
+  const updateInventory = useMemo(
+    () => (newInventory: libraryInventoryType) => {
+      const index = list.findIndex((elem) => elem.id === newInventory.id);
+      if (index !== -1) {
+        const newList = [...list];
+        newList[index] = newInventory;
+        handleUpdateList(newList);
+      }
+    },
+    [handleUpdateList, list]
+  );
 
   const handleCloseSnackbar = () => setShowSnackbar(false);
-  
-  React.useEffect(() => {
-     try {
-       const fetchData = async () => {
-         const data = await fetchLibraryInventory();
-         if (!data) {
-           //si no hay inventario creado
-           const value = window.localStorage.getItem('libraryList');
-           let noInventory;
-           if (value) {
-             noInventory = JSON.parse(value);
-           }
-           if (noInventory) {
-             noInventory = JSON.parse(noInventory);
-             window.localStorage.setItem(
-               'libraryInventory',
-               JSON.stringify(noInventory)
-             );
-           } else {
-             noInventory = await fetchLibrary();
-           }
-           if (noInventory) {
-             const newData: LibraryType[] = noInventory;
-             const resultData: libraryInventoryType[] = newData.map(
-               (elem: LibraryType) => ({
-                 ...elem,
-                 want: 0,
-                 have: 0,
-                 used: 0,
-                 trade: 0,
-               })
-             );
-             setList(resultData);
-             initialData.current = [...resultData];
-             setLoader(false);
-           } else {
-             setList(data);
-             initialData.current = [...data];
-             setLoader(false);
-           }
-         } else {
-           //hay datos para el inventario
-           const noInventory =
-             window.localStorage.getItem('libraryList') ?? (await fetchLibrary());
-           const newData: libraryInventoryType[] = data.map(
-             (elem: libraryInventoryType) => {
-               const invent = noInventory.find(
-                 (inventory: LibraryType) => inventory.id === elem.id
-               );
-               if (invent) {
-                 const newInventory: libraryInventoryType = {
-                   ...invent,
-                   have: elem.have,
-                   want: elem.want,
-                   trade: elem.trade,
-                   used: elem.used,
-                 };
-                 return newInventory;
-               }
-               return null;
-             }
-           );
-           const newValue = newData.filter((elem) => elem !== null);
-           setList(newValue);
-           initialData.current = newValue;
-           setLoader(false);
-         }
-       };
 
-       setLoader(true);
-       fetchData();
-     } catch (error) {
-       console.log(error);
-     }
+  React.useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const data = await fetchLibraryInventory();
+        if (!data) {
+          //si no hay inventario creado
+          const value = window.localStorage.getItem('libraryList');
+          let noInventory;
+          if (value) {
+            noInventory = JSON.parse(value);
+          }else {
+            noInventory = await fetchLibrary();
+          }
+          
+          if (noInventory) {
+            const newData: LibraryType[] = noInventory;
+            const resultData: libraryInventoryType[] = newData.map(
+              (elem: LibraryType) => ({
+                ...elem,
+                want: 0,
+                have: 0,
+                used: 0,
+                trade: 0,
+              })
+            );
+            setList(resultData);
+            initialData.current = [...resultData];
+            setLoader(false);
+          } /* else {
+            setList(data);
+            initialData.current = [...data];
+            setLoader(false);
+          } */
+        } else {
+          //hay datos para el inventario
+          const noInventory =
+            window.localStorage.getItem('libraryList') ??
+            (await fetchLibrary());
+          
+          const newData: libraryInventoryType[] = data.map(
+            (elem: libraryInventoryType) => {
+              const invent = noInventory.find(
+                (inventory: LibraryType) => inventory.id === elem.id
+              );
+              if (invent) {
+                const newInventory: libraryInventoryType = {
+                  ...invent,
+                  have: elem.have,
+                  want: elem.want,
+                  trade: elem.trade,
+                  used: elem.used,
+                };
+                return newInventory;
+              }
+              return null;
+            }
+          );
+          const newValue = newData.filter((elem) => elem !== null);
+          setList(newValue);
+          initialData.current = newValue;
+          setLoader(false);
+        }
+      };
+
+      setLoader(true);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
+
   return (
     <Box className='library__container'>
       <LibraryNavbarList
@@ -173,7 +181,10 @@ const InventoryLibraryContainer = () => {
         handleSort={() => handleSort()}
       />
       {loader && <Spinner />}
-      <InventoryLibraryList list={list} updateList={handleUpdateList} />
+      <InventoryLibraryList
+        list={list}
+        updateInventory={(card: libraryInventoryType) => updateInventory(card)}
+      />
       <Fab
         sx={{
           position: 'fixed',

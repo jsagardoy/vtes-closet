@@ -1,37 +1,56 @@
-import {
-  Avatar,
-  Box,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from '@mui/material';
 import React, { useMemo } from 'react';
-import { LibraryType } from '../../../../types/library_type';
-import {
-  getBurnOption,
-  getCardCost,
-  getCardTypesIcon,
-  getClanIcon,
-  getDiscIcon,
-} from '../../../../util/helpFunction';
+import { Table, TableContainer } from '@mui/material';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { LibraryType } from '../../../../types/library_type';
 import { Spinner } from '../global/Spinner';
-import InventoryLibrary from './InventoryLibrary';
+import TableBodyContentIventory from './TableBodyContentInventory';
+import TableHeaderInventory from './TableHeaderInventory';
 import { libraryInventoryType } from '../../../../types/inventory_type';
 
 interface Props {
   list: libraryInventoryType[];
-  initialValue: libraryInventoryType[];
-  handleOpen: (library: LibraryType, index: number) => void;
-  updateInventory: (inventory: libraryInventoryType) => void;
+  handleItemToOpen: (library: libraryInventoryType) => void;
+  updateInventory: (library: libraryInventoryType) => void;
 }
 
 const InventoryLibraryComponent = (props: Props) => {
-  const { list, handleOpen, initialValue, updateInventory } = props;
+  const { list, handleItemToOpen, updateInventory } = props;
+  const [sortBy, setSortBy] = React.useState<string>('');
 
-  const [items, setItems] =
-    React.useState<libraryInventoryType[]>(initialValue);
+  const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
+  const [items, setItems] = React.useState<libraryInventoryType[]>(
+    list.slice(0, 20)
+  );
+
+  const createSortHandler = (key: string): void => {
+    if (key === sortBy) {
+      setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(key);
+      setSortOrder('asc');
+    }
+    //ahora ordenar
+    if (key === 'name') {
+      setItems((prev) => {
+        if (prev) {
+          return sortOrder === 'desc'
+            ? list
+                .sort((a, b) =>
+                  a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                )
+                .slice(0, 40)
+            : list
+                .sort((a, b) =>
+                  b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                )
+                .slice(0, 40);
+        } else {
+          return prev;
+        }
+      });
+    }
+  };
 
   const isElement = useMemo(() => {
     return (elem: LibraryType, index: number): number => {
@@ -59,8 +78,8 @@ const InventoryLibraryComponent = (props: Props) => {
   }, [isElement, items, list]);
 
   React.useEffect(() => {
-    setItems(initialValue);
-  }, [list, initialValue]);
+    setItems(list.slice(0, 20));
+  }, [list]);
 
   if (list.length === 0) {
     return <></>;
@@ -81,120 +100,47 @@ const InventoryLibraryComponent = (props: Props) => {
   }
 
   return (
-    <InfiniteScroll
-      dataLength={items.length}
-      next={fetchMoreData}
-      hasMore={items.length !== list.length}
-      loader={<Spinner />}
-      style={{ overflow: 'hidden' }}
-      endMessage={
-        <p
-          style={{
-            textAlign: 'center',
-
-            marginBottom: '1em',
-          }}
-        >
-          No more content
-        </p>
-      }
+    <TableContainer
+      id='InventoryLibraryModal'
+      sx={{ overflow: 'auto', height: '80vh' }}
     >
-      <List className='library__list'>
-        {items.length === 0 ? (
-          <Box className='span__no__result'>
-            <span>No results</span>
-          </Box>
-        ) : (
-          items.map((library: libraryInventoryType, index: number) => (
-            <Box
-              className='library__row'
-              key={library.id && library.name && Math.random()}
-            >
-              <ListItem
-                key={library.id}
-                button
-                divider
-                dense
-                alignItems='flex-start'
-              >
-                <InventoryLibrary
-                  card={library}
-                  updateInventory={(inventory) => {
-                    updateInventory(inventory);
-                  }}
-                />
-                <ListItemText
-                  className='list__item'
-                  primary={library.name}
-                  onClick={() => handleOpen(library, index)}
-                />
-                <Box className='list__left'>
-                  {library.burn_option ? (
-                    <Avatar src={getBurnOption()} alt='Burn option' />
-                  ) : null}
-                  {library.clans
-                    ? getClanIcon(library.clans).map(
-                        (clan: string, index: number) => (
-                          <ListItemAvatar
-                            className='list__avatar__icons'
-                            key={library.id && clan}
-                          >
-                            <Avatar
-                              key={clan && library.id && index}
-                              src={clan}
-                              alt={clan}
-                            />
-                          </ListItemAvatar>
-                        )
-                      )
-                    : null}
-                  {library.disciplines
-                    ? getDiscIcon(library.disciplines).map(
-                        (disc: string, index: number) => (
-                          <ListItemAvatar
-                            className='list__avatar__icons'
-                            key={library.id && disc}
-                          >
-                            <Avatar src={disc} alt={disc} />
-                          </ListItemAvatar>
-                        )
-                      )
-                    : null}
+      <InfiniteScroll
+        dataLength={items.length}
+        next={fetchMoreData}
+        hasMore={items.length !== list.length}
+        loader={<Spinner />}
+        style={{ overflow: 'hidden' }}
+        scrollableTarget='InventoryLibraryModal'
+        endMessage={
+          <p
+            style={{
+              textAlign: 'center',
 
-                  {getCardTypesIcon(library.types).map(
-                    (type: string, index: number) => (
-                      <ListItemAvatar
-                        className='list__avatar__icons'
-                        key={library.id && type}
-                      >
-                        <Avatar
-                          key={type && library.id && index}
-                          src={type}
-                          alt={type}
-                        />
-                      </ListItemAvatar>
-                    )
-                  )}
-                  {library.blood_cost || library.pool_cost ? (
-                    library.blood_cost ? (
-                      <Avatar
-                        src={getCardCost(library.blood_cost, 'blood')}
-                        alt='Blood cost'
-                      />
-                    ) : library.pool_cost ? (
-                        <Avatar
-                        src={getCardCost(library.pool_cost, 'pool')}
-                        alt='Pool cost'
-                      />
-                    ) : null
-                  ) : null}
-                </Box>
-              </ListItem>
-            </Box>
-          ))
-        )}
-      </List>
-    </InfiniteScroll>
+              marginBottom: '1em',
+            }}
+          >
+            No more content
+          </p>
+        }
+      >
+        <Table>
+          <TableHeaderInventory
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            createSortHandler={(key: string) => createSortHandler(key)}
+          />
+          <TableBodyContentIventory
+            items={items}
+            handleItemToOpen={(library: libraryInventoryType) =>
+              handleItemToOpen(library)
+            }
+            updateInventory={(library: libraryInventoryType) =>
+              updateInventory(library)
+            }
+          />
+        </Table>
+      </InfiniteScroll>
+    </TableContainer>
   );
 };
 

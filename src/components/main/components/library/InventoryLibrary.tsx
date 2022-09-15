@@ -1,14 +1,12 @@
 import { Box } from '@mui/material';
 import React from 'react';
 
-import {
-  libraryInventoryType
-} from '../../../../types/inventory_type';
+import { libraryInventoryType } from '../../../../types/inventory_type';
 import InventoryData from '../global/InventoryData';
 
 interface Props {
   card: libraryInventoryType;
-  updateInventory: (inventory: libraryInventoryType) => void;
+  updateInventory: (card: libraryInventoryType) => void;
 }
 
 const InventoryLibrary = (props: Props) => {
@@ -20,19 +18,25 @@ const InventoryLibrary = (props: Props) => {
         label='Have'
         card={card}
         initialValue={card.have}
-        updateInventory={(card) => updateInventory(card as libraryInventoryType)}
+        updateInventory={(card) =>
+          updateInventory(card as libraryInventoryType)
+        }
       />
       <InventoryData
         label='Want'
         card={card}
         initialValue={card.want}
-        updateInventory={(card) => updateInventory(card as libraryInventoryType)}
+        updateInventory={(card) =>
+          updateInventory(card as libraryInventoryType)
+        }
       />
       <InventoryData
         label='Trade'
         card={card}
         initialValue={card.trade}
-        updateInventory={(card) => updateInventory(card as libraryInventoryType)}
+        updateInventory={(card) =>
+          updateInventory(card as libraryInventoryType)
+        }
       />
       {/* <InventoryData
         label='Used'
