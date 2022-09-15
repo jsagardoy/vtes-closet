@@ -1,25 +1,20 @@
 import {
   Avatar,
+  Box,
   Button,
   Checkbox,
+  Dialog,
   Divider,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
-  Box,
-  Paper,
-  FormGroup,
-  FormControlLabel,
-  Dialog,
 } from '@mui/material';
-import { Container } from '@mui/system';
-import React from 'react';
-import { discType } from '../../../../types/crypt_type';
-import { LibraryPropType } from '../../../../types/library_type';
-
 import {
   getClanIcon,
   getClans,
@@ -27,6 +22,12 @@ import {
   getLibraryCardTypes,
   getSects,
 } from '../../../../util/helpFunction';
+
+import { Container } from '@mui/system';
+import { LibraryPropType } from '../../../../types/library_type';
+import React from 'react';
+import { discType } from '../../../../types/crypt_type';
+
 interface Props {
   open: boolean;
   selected_discList: discType;
@@ -482,20 +483,22 @@ const LibraryNavbarModal = (props: Props) => {
           </Box>
         </Container>
         <Divider />
-        <Box className='clear__button'>
+        <Box
+          sx={{ display: 'flex', justifyContent: 'space-around', m: '1rem' }}
+        >
           <Button
-            style={{
-              textTransform: 'capitalize',
-              border: '1px solid',
-              borderRadius: '2px',
-              marginTop: '1rem',
-              marginBottom: '1rem',
-            }}
+            sx={{ border: '1px solid' }}
             color='secondary'
-            size='small'
             onClick={() => handleResetButton()}
           >
             Reset Filters
+          </Button>
+          <Button
+            sx={{ border: '1px solid' }}
+            color='secondary'
+            onClick={() => handleMore()}
+          >
+            Done
           </Button>
         </Box>
       </Paper>
