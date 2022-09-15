@@ -1,18 +1,20 @@
+import '../global/CardDetail.css';
+
 import { Box, Button, Dialog, Paper } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import { CryptType } from '../../../../types/crypt_type';
 import {
   composeText,
   getClanIcon,
   getCleanedName,
   getDiscIcon,
 } from '../../../../util/helpFunction';
+
+import Avatar from '@mui/material/Avatar';
 import CardButtons from '../global/CardButtons';
 import CloseIcon from '@mui/icons-material/Close';
+import { CryptType } from '../../../../types/crypt_type';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import parse from 'html-react-parser';
-import '../global/CardDetail.css';
 
 interface CryptProp {
   openedCrypt: CryptType;
@@ -21,7 +23,7 @@ interface CryptProp {
   cryptIndex: number;
   handleNext: () => void;
   handlePrevious: () => void;
-  handleClose: () => void;
+  handleCloseModal: () => void;
 }
 
 const ModalCrypt = (props: CryptProp) => {
@@ -32,7 +34,7 @@ const ModalCrypt = (props: CryptProp) => {
     cryptIndex,
     handleNext,
     handlePrevious,
-    handleClose,
+    handleCloseModal,
   } = props;
 
   return (
@@ -45,12 +47,11 @@ const ModalCrypt = (props: CryptProp) => {
       }}
       PaperProps={{
         sx: {
-
           minWidth: '50rem',
         },
-      }} 
+      }}
       open={open}
-      onClose={handleClose}
+      onClose={handleCloseModal}
       onKeyDown={(e) => {
         if (e.key === 'ArrowLeft') {
           return handlePrevious();
@@ -87,7 +88,7 @@ const ModalCrypt = (props: CryptProp) => {
             <Typography color='secondary' sx={{ m: '1rem' }} variant='h6'>
               {getCleanedName(openedCrypt.name)}
             </Typography>
-            <Button color='secondary' onClick={() => handleClose()}>
+            <Button color='secondary' onClick={() => handleCloseModal()}>
               <CloseIcon />
             </Button>
           </Box>

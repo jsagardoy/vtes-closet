@@ -17,7 +17,6 @@ interface Props {
 const InventoryLibraryComponent = (props: Props) => {
   const { list, handleItemToOpen, updateInventory } = props;
   const [sortBy, setSortBy] = React.useState<string>('');
-
   const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
   const [items, setItems] = React.useState<libraryInventoryType[]>(
     list.slice(0, 20)
@@ -81,23 +80,7 @@ const InventoryLibraryComponent = (props: Props) => {
     setItems(list.slice(0, 20));
   }, [list]);
 
-  if (list.length === 0) {
-    return <></>;
-  }
 
-  if (items.length === 0 && list.length !== 0) {
-    return (
-      <p
-        style={{
-          textAlign: 'center',
-
-          marginBottom: '1em',
-        }}
-      >
-        No results
-      </p>
-    );
-  }
 
   return (
     <TableContainer

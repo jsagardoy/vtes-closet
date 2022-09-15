@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
 import '../global/CardDetail.css';
+
+import React, { useMemo } from 'react';
+
 import { CryptType } from '../../../../types/crypt_type';
-import ModalCrypt from './ModalCrypt';
 import InventoryCryptComponent from './InventoryCryptComponent';
+import ModalCrypt from './ModalCrypt';
 import { cryptInventoryType } from '../../../../types/inventory_type';
 
 interface listProps {
@@ -12,30 +14,38 @@ interface listProps {
 
 const InventoryCryptList = (props: listProps) => {
   const { list, updateList } = props;
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [openedCrypt, setOpenedCrypt] = React.useState<CryptType>();
-  const [cryptIndex, setCryptIndex] = React.useState<number>(0);
 
-  const handleOpen = (crypt: CryptType, index: number) => {
-    setOpenedCrypt(crypt);
-    setOpen(true);
-    setCryptIndex(index);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setOpenedCrypt(undefined);
-  };
+ const [selectedItem, setSelectedItem] = React.useState<CryptType>();
+ const [openModal, setOpenModal] = React.useState<boolean>(false);
+ const [index, setIndex] = React.useState<number>(0);
 
-  const handleNext = () => {
-    const newIndex: number = cryptIndex + 1;
-    const crypt: CryptType = list[newIndex];
-    handleOpen(crypt, newIndex);
-  };
-  const handlePrevious = () => {
-    const newIndex: number = cryptIndex - 1;
-    const crypt: CryptType = list[newIndex];
-    handleOpen(crypt, newIndex);
-  };
+ const handleItemToOpen = (crypt: cryptInventoryType) => {
+   const newIndex = list.findIndex((elem) => elem.id === crypt.id);
+   setSelectedItem(crypt);
+   setOpenModal(true);
+   if (newIndex !== -1) {
+     setIndex(newIndex);
+   }
+ };
+ const handleCloseModal = () => {
+   setOpenModal(false);
+   setSelectedItem(undefined);
+ };
+
+ const handleNext = () => {
+   if (index < list.length - 1) {
+     const newIndex: number = index + 1;
+     const crypt: cryptInventoryType = list[newIndex];
+     handleItemToOpen(crypt);
+   }
+ };
+ const handlePrevious = () => {
+   if (index > 0) {
+     const newIndex: number = index - 1;
+     const crypt: cryptInventoryType = list[newIndex];
+     handleItemToOpen(crypt);
+   }
+ };
 
   const updateInventory = useMemo(
     () => (newInventory: cryptInventoryType) => {
@@ -51,24 +61,23 @@ const InventoryCryptList = (props: listProps) => {
 
   return (
     <>
-      {open && openedCrypt ? (
+      {selectedItem && openModal ? (
         <ModalCrypt
-          open={open}
+          open={openModal}
           list={list}
-          openedCrypt={openedCrypt}
-          cryptIndex={cryptIndex}
-          handleClose={handleClose}
-          handleNext={handleNext}
-          handlePrevious={handlePrevious}
+          openedCrypt={selectedItem}
+          cryptIndex={index}
+          handleCloseModal={() => handleCloseModal()}
+          handleNext={() => handleNext()}
+          handlePrevious={() => handlePrevious()}
         />
       ) : null}
 
       {list && list.length > 0 ? (
         <InventoryCryptComponent
           list={list}
-          initialValue={list.slice(0, 20)}
-          handleOpen={(crypt: CryptType, index: number) =>
-            handleOpen(crypt, index)
+          handleItemToOpen={(crypt: cryptInventoryType) =>
+            handleItemToOpen(crypt)
           }
           updateInventory={updateInventory}
         />

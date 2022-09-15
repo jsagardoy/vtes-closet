@@ -1,10 +1,11 @@
-import React from 'react';
 import '../global/CardDetail.css';
-import { CryptType } from '../../../../types/crypt_type';
-import ModalCrypt from './ModalCrypt';
-import CryptListComponent from './CryptListComponent';
+
 import { CardType } from '../../../../types/deck_type';
+import CryptListComponent from './CryptListComponent';
+import { CryptType } from '../../../../types/crypt_type';
 import { LibraryType } from '../../../../types/library_type';
+import ModalCrypt from './ModalCrypt';
+import React from 'react';
 
 interface listProps {
   list: CryptType[];
@@ -57,7 +58,7 @@ const CryptList = (props: listProps) => {
           openedCrypt={selectedItem}
           list={list}
           cryptIndex={index}
-          handleClose={() => handleCloseModal()}
+          handleCloseModal={() => handleCloseModal()}
           handleNext={() => handleNext()}
           handlePrevious={() => handlePrevious()}
         />
@@ -67,7 +68,7 @@ const CryptList = (props: listProps) => {
           handleAddCardToDeck={(
             card: CryptType | LibraryType,
             cardType: CardType
-          ) => handleAddCardToDeck( card as CryptType, cardType)}
+          ) => handleAddCardToDeck(card as CryptType, cardType)}
           deckMode={deckMode}
           list={list}
           handleItemToOpen={(crypt: CryptType) => handleItemToOpen(crypt)}

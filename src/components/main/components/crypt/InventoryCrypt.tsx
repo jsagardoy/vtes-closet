@@ -1,12 +1,11 @@
 import { Box } from '@mui/material';
-import React from 'react';
-
-import { cryptInventoryType } from '../../../../types/inventory_type';
 import InventoryData from '../global/InventoryData';
+import React from 'react';
+import { cryptInventoryType } from '../../../../types/inventory_type';
 
 interface Props {
   card: cryptInventoryType;
-  updateInventory: (inventory: cryptInventoryType) => void;
+  updateInventory: (card:cryptInventoryType) => void;
 }
 
 const InventoryCrypt = (props: Props) => {
