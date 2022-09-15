@@ -43,7 +43,6 @@ const TableHeaderCryptInventory = (props: Props) => {
           </TableSortLabel>
         </TableCell>
       </TableRow>
-      Inventory{' '}
     </TableHead>
   );
 }

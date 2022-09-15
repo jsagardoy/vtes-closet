@@ -17,17 +17,18 @@ import {
   SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import React from 'react';
-import { discType, PropType } from '../../../../types/crypt_type';
+import { PropType, discType } from '../../../../types/crypt_type';
 import {
-  getDiscIcon,
-  getClans,
+  capacityType,
   getClanIcon,
+  getClans,
+  getDiscIcon,
   getSects,
   getTitle,
   groupType,
-  capacityType,
 } from '../../../../util';
+
+import React from 'react';
 import { SlidersComponent } from './SlidersComponent';
 
 interface Props {
@@ -104,15 +105,22 @@ const MoreFilterModal = (props: Props) => {
   } = props;
   return (
     <Dialog
-      sx={{ display: 'flex', justifyContent: 'center' }}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
       open={showMore}
       onClose={() => handleMore()}
+      PaperProps={{
+        sx: {
+          maxWidth: '50rem',
+        },
+      }}
     >
-      <DialogContent>
+      <DialogContent sx={{ maxWidth: 'fit-content' }}>
         <Paper
           sx={{
             display: 'flex',
-            justifyContent: 'center',
             flexDirection: 'column',
           }}
         >
