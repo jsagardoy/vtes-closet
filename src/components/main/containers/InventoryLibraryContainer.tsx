@@ -199,7 +199,7 @@ const InventoryLibraryContainer = () => {
         aria-label='Save'
         onClick={() => handleSave()}
       >
-        <SaveIcon color='primary'/>
+        <SaveIcon sx={{fill:'white'}} />
       </Fab>
       <Snackbar
         open={showSnackbar}

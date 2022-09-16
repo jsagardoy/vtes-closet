@@ -1,9 +1,15 @@
+import {
+  SavedInventoryType,
+  libraryInventoryType,
+} from '../types/inventory_type';
 import { doc, setDoc } from 'firebase/firestore';
+
 import { db } from '../database/config';
-import { libraryInventoryType, SavedInventoryType } from '../types/inventory_type';
 import { getUserId } from '../util';
 
-export const setLibraryInventory = async (libraryList: libraryInventoryType[]) => {
+export const setLibraryInventory = async (
+  libraryList: libraryInventoryType[]
+) => {
   const uid = getUserId();
 
   const taskDocRef = doc(db, `/libraryInventory/${uid}/`);
@@ -19,7 +25,11 @@ export const setLibraryInventory = async (libraryList: libraryInventoryType[]) =
   });
   if (taskDocRef) {
     try {
-      await setDoc(taskDocRef,{inventoryData:[...inventory]});
+      await setDoc(taskDocRef, { inventoryData: [...inventory] });
+      window.localStorage.setItem(
+        'libraryInventory',
+        JSON.stringify(inventory)
+      );
       console.log('%cData successfully added. ', 'color:green');
       return 'Data successfully added.';
     } catch (err) {

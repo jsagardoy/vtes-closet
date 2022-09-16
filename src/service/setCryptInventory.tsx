@@ -1,9 +1,10 @@
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../database/config';
 import {
-  cryptInventoryType,
   SavedInventoryType,
+  cryptInventoryType,
 } from '../types/inventory_type';
+import { doc, setDoc } from 'firebase/firestore';
+
+import { db } from '../database/config';
 import { getUserId } from '../util';
 
 /* function to add new crypt to firestore */
@@ -21,9 +22,11 @@ export const setCryptInventory = async (cryptList: cryptInventoryType[]) => {
     };
     return newSavedInventoryType;
   });
+  
   if (taskDocRef) {
     try {
-      await setDoc(taskDocRef,{inventoryData:[...inventory]});
+      await setDoc(taskDocRef, { inventoryData: [...inventory] });
+      window.localStorage.setItem('cryptInventory', JSON.stringify(inventory));
       console.log('%cData successfully added. ', 'color:green');
       return 'Data successfully added.';
     } catch (err) {

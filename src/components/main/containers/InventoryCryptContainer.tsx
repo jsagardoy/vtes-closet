@@ -1,26 +1,28 @@
-import React, { useMemo, useRef } from 'react';
 import './CryptContainer.css';
-import NavbarCryptList from '../components/crypt/NavbarCryptList';
+
 import { CryptType, PropType, TitleType } from '../../../types/crypt_type';
 import {
+  groupType as GroupType,
   capacityType,
   compareArrays,
   filterProps,
   filterTitle,
   findInText,
-  groupType as GroupType,
 } from '../../../util';
-import { Spinner } from '../components/global/Spinner';
-import { fetchCrypt } from '../../../service/fetchCrypt';
-import InventoryCryptList from '../components/crypt/InventoryCryptList';
-import { cryptInventoryType } from '../../../types/inventory_type';
-import { fetchCryptInventory } from '../../../service/fetchCryptInventory';
+import React, { useMemo, useRef } from 'react';
+
 import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import { setCryptInventory } from '../../../service/setCryptInventory';
-import Fab from '@mui/material/Fab';
-import SaveIcon from '@mui/icons-material/Save';
 import { Box } from '@mui/material';
+import Fab from '@mui/material/Fab';
+import InventoryCryptList from '../components/crypt/InventoryCryptList';
+import NavbarCryptList from '../components/crypt/NavbarCryptList';
+import SaveIcon from '@mui/icons-material/Save';
+import Snackbar from '@mui/material/Snackbar';
+import { Spinner } from '../components/global/Spinner';
+import { cryptInventoryType } from '../../../types/inventory_type';
+import { fetchCrypt } from '../../../service/fetchCrypt';
+import { fetchCryptInventory } from '../../../service/fetchCryptInventory';
+import { setCryptInventory } from '../../../service/setCryptInventory';
 
 interface Props {
   toogle: boolean;
@@ -211,7 +213,6 @@ const InventoryCryptContainer = (props: Props) => {
       {loader && <Spinner />}
       <InventoryCryptList list={list} updateList={handleUpdateList} />
       <Fab
-        
         color='secondary'
         sx={{
           position: 'fixed',
@@ -225,7 +226,7 @@ const InventoryCryptContainer = (props: Props) => {
         aria-label='Save'
         onClick={() => handleSave()}
       >
-        <SaveIcon />
+        <SaveIcon sx={{ fill: 'white' }} />
       </Fab>
       <Snackbar
         open={showSnackbar}
