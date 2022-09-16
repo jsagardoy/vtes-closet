@@ -8,7 +8,7 @@ export const fetchLibraryInventory = async (): Promise<
   libraryInventoryType[] | any
 > => {
   try {
-    const result = window.localStorage.getItem('libraryInventory');
+    const result = window.sessionStorage.getItem('libraryInventory');
     if (result !== null) {
       return JSON.parse(result);
     }
@@ -18,14 +18,16 @@ export const fetchLibraryInventory = async (): Promise<
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const result = docSnap.data();
-        window.localStorage.setItem('libraryInventory',JSON.stringify(result.inventoryData));
+        window.sessionStorage.setItem(
+          'libraryInventory',
+          JSON.stringify(result.inventoryData)
+        );
         return result.inventoryData;
       } else {
         console.log('Error in DB');
       }
     }
   } catch (error) {
-    console.error(error);
     throw error;
   }
 };

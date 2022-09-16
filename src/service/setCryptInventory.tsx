@@ -22,17 +22,18 @@ export const setCryptInventory = async (cryptList: cryptInventoryType[]) => {
     };
     return newSavedInventoryType;
   });
-  
+
   if (taskDocRef) {
     try {
       await setDoc(taskDocRef, { inventoryData: [...inventory] });
-      window.localStorage.setItem('cryptInventory', JSON.stringify(inventory));
+      window.sessionStorage.setItem(
+        'cryptInventory',
+        JSON.stringify(inventory)
+      );
       console.log('%cData successfully added. ', 'color:green');
       return 'Data successfully added.';
-    } catch (err) {
-      console.log('%cError while saving data', 'color:red');
-      console.log(err);
-      return err;
+    } catch (error) {
+      throw error;
     }
   }
 };

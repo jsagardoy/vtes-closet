@@ -1,12 +1,12 @@
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
-import { getDocs, query, collection, where } from 'firebase/firestore';
-import { db } from '../database/config';
 import { CardType } from '../types/deck_type';
+import { db } from '../database/config';
 
 export const fetchSelectedCard = async (
   cardId: string,
-  cardType:CardType
-): Promise<any|undefined> => {
+  cardType: CardType
+): Promise<any | undefined> => {
   try {
     const q = query(
       collection(db, `${cardType}/`),
@@ -16,6 +16,6 @@ export const fetchSelectedCard = async (
     const result = querySnapshot.docs;
     return result[0].data();
   } catch (error) {
-    console.log('Error in db: ' + error);
+    throw error;
   }
 };

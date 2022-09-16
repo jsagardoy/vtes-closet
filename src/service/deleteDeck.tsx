@@ -1,4 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
+
 import { db } from '../database/config';
 import { getUserId } from '../util';
 
@@ -10,9 +11,8 @@ export const deleteDeck = async (id: string) => {
     try {
       await deleteDoc(taskDocRef);
       console.log('%cData successfully deleted. ', 'color:green');
-    } catch (err) {
-      console.log('%cError while saving data', 'color:red');
-      console.log(err);
+    } catch (error) {
+      throw (error);
     }
   }
 };

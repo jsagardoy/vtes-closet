@@ -1,6 +1,7 @@
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../database/config';
+
 import { LibraryType } from '../types/library_type';
+import { db } from '../database/config';
 
 export const fetchLibrary = async (): Promise<LibraryType[] | any> => {
   try {
@@ -10,6 +11,6 @@ export const fetchLibrary = async (): Promise<LibraryType[] | any> => {
     );
     return result;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };

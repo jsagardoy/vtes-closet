@@ -5,7 +5,7 @@ import { getUserId } from '../util/helpFunction';
 
 export const fetchCryptInventory = async (): Promise<[] | any> => {
   try {
-    const result = window.localStorage.getItem('cryptInventory');
+    const result = window.sessionStorage.getItem('cryptInventory');
     if (result !== null) {
       return JSON.parse(result);
     }
@@ -15,7 +15,10 @@ export const fetchCryptInventory = async (): Promise<[] | any> => {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const result = docSnap.data();
-        window.localStorage.setItem('cryptInventory', JSON.stringify(result.inventoryData));
+        window.sessionStorage.setItem(
+          'cryptInventory',
+          JSON.stringify(result.inventoryData)
+        );
         return result.inventoryData;
       } else {
         console.log('No data for this user');
@@ -23,7 +26,6 @@ export const fetchCryptInventory = async (): Promise<[] | any> => {
       }
     }
   } catch (error) {
-    console.log(`%c Error: ${error}`, 'color:red');
-    throw (error);
+    throw error;
   }
 };

@@ -1,4 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
+
 import { db } from '../database/config';
 
 export const fetchSelectedDeck = async (
@@ -15,6 +16,6 @@ export const fetchSelectedDeck = async (
     return result[0].data();
     //return (querySnapshot.forEach((doc) => { return doc.data() }));
   } catch (error) {
-    console.log('Error in db: ' + error);
+     throw error;
   }
 };

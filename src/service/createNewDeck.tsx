@@ -2,8 +2,9 @@ import {
   doc,
   setDoc,
 } from 'firebase/firestore';
-import { db } from '../database/config';
+
 import { DeckType } from '../types/deck_type';
+import { db } from '../database/config';
 import { getUserId } from '../util';
 
 /* function to update new task to firestore */
@@ -23,8 +24,7 @@ export const createNewDeck = async (data: DeckType) => {
       await setDoc(taskDocRef, elem);
       console.log('%cData successfully added. ', 'color:green');
     } catch (err) {
-      console.log('%cError while saving data', 'color:red');
-      console.log(err);
+      throw (err);
     }
   }
 };

@@ -32,10 +32,8 @@ export const setLibraryInventory = async (
       );
       console.log('%cData successfully added. ', 'color:green');
       return 'Data successfully added.';
-    } catch (err) {
-      console.log('%cError while saving data', 'color:red');
-      console.log(err);
-      return err;
+    } catch (error) {
+       throw error;
     }
   }
 };

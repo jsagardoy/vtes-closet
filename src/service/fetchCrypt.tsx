@@ -1,15 +1,17 @@
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../database/config';
-import { CryptType } from '../types/crypt_type';
 
+import { CryptType } from '../types/crypt_type';
+import { db } from '../database/config';
 
 export const fetchCrypt = async ():Promise<CryptType[]|any> => {
   try {
     const data = await getDocs(collection(db, 'crypt'));
-    const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);   
-      return result;
-  } catch (error:any) {
-    //TODO:TEMPORRAL: en caso de que haya sobrepasadp las peticiones BBDD carga el mock de datos.
+    const result: CryptType[] = data.docs.map((doc) => doc.data() as CryptType);
+    return result;
+  } catch (error: any) {
+    throw (error);
+  }
+    /* //TODO:TEMPORRAL: en caso de que haya sobrepasadp las peticiones BBDD carga el mock de datos.
     const data: CryptType[] = [
       {
         capacity: 4,
@@ -66,5 +68,5 @@ export const fetchCrypt = async ():Promise<CryptType[]|any> => {
       },
     ];
     return data;
-  }
+  } */
 };
