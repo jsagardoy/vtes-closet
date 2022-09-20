@@ -228,7 +228,7 @@ const DeckListComponent = (props: Props) => {
       >
         <Typography variant='h6'>Deck</Typography>
       </Box>
-      <Box sx={{marginBottom:'1rem'}} className='deck__crypt'>
+      <Box sx={{ marginBottom: '1rem' }} className='deck__crypt'>
         <Box
           sx={{
             width: '100',
@@ -239,9 +239,17 @@ const DeckListComponent = (props: Props) => {
             justifyContent: 'space-between',
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '0.5rem' }}>
-          <Typography variant='subtitle1'>Crypt</Typography>
-          <Typography variant='subtitle1'>({calculateCrypt()})</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <Typography variant='subtitle1'>
+              Crypt ({calculateCrypt()})
+            </Typography>
           </Box>
           <IconButton onClick={() => showModal('crypt')}>
             <AddCircleRoundedIcon />
@@ -300,10 +308,17 @@ const DeckListComponent = (props: Props) => {
           justifyContent: 'space-between',
         }}
       >
-        <Box sx={{display:'flex',justifyContent:'flex-start', gap:'0.5rem'}}>
-        <Typography variant='subtitle1'>Library</Typography>
-        <Typography variant='subtitle1'>({calculateLibrary()})</Typography>
-        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant='subtitle1'>
+            Library ({calculateLibrary()}){' '}
+          </Typography>
+        </Box>{' '}
         <IconButton onClick={() => showModal('library')}>
           <AddCircleRoundedIcon />
         </IconButton>

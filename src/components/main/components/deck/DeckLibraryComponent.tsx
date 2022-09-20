@@ -1,35 +1,27 @@
-import { uuidv4 } from '@firebase/util';
 import {
   Avatar,
   Box,
   IconButton,
   ListItemAvatar,
   Modal,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
-
-import React from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { CardType, ExtendedDeckType } from '../../../../types/deck_type';
-import { LibraryType } from '../../../../types/library_type';
 import {
-  getBurnOption,
-  getCardCost,
   getCardTypesIcon,
-  getClanIcon,
-  getCleanedName,
-  getDiscIcon,
   getLibraryCardTypesSorted,
 } from '../../../../util';
 
-import QuantityButtonComponent from './QuantityButtonComponent';
+import DeckLibraryTable from './DeckLibraryTable';
+import DeckLibraryTableSmall from './DeckLibraryTableSmall';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { LibraryType } from '../../../../types/library_type';
+import React from 'react';
+import { uuidv4 } from '@firebase/util';
 
 interface Props {
   data: ExtendedDeckType[] | null;
@@ -102,6 +94,9 @@ const DeckLibraryComponent = (props: Props) => {
     token: true,
   });
 
+  const theme: Theme = useTheme();
+  const isMobile: boolean = useMediaQuery(theme.breakpoints.down('sm'));
+  
   const handleOpenModal = (card: ExtendedDeckType, index: number) => {
     setSelectedCard(card.data);
     setOpenModal((prev) => !prev);
@@ -117,65 +112,6 @@ const DeckLibraryComponent = (props: Props) => {
     padding: 0,
   };
 
-  const getDisciplines = (discList: string[]) => (
-    <Box className='list__left'>
-      {getDiscIcon(discList).map((disc) => (
-        <ListItemAvatar className='list__avatar__icons' key={disc}>
-          <Avatar
-            sx={{ backgroundColor: 'white' }}
-            variant='rounded'
-            src={disc}
-            alt={disc}
-          />
-        </ListItemAvatar>
-      ))}
-    </Box>
-  );
-
-  const getClan = (library: LibraryType) => {
-    if (library && library.clans) {
-      return getClanIcon(library.clans).map((clan) => (
-        <Avatar
-          variant='rounded'
-          className='clan__avatar__icon'
-          key={clan}
-          src={clan}
-          alt={clan}
-        />
-      ));
-    }
-  };
-
-  const getBurn = (card: LibraryType) => {
-    if (card.burn_option) {
-      return card.burn_option ? (
-        <Avatar
-          sx={{ backgroundColor: 'white' }}
-          variant='rounded'
-          src={getBurnOption()}
-          alt='Burn option'
-        />
-      ) : null;
-    }
-  };
-
-  const getLibraryCost = (library: LibraryType) =>
-    library.blood_cost ? (
-      <Avatar
-        sx={{ backgroundColor: 'white' }}
-        variant='rounded'
-        src={getCardCost(library.blood_cost, 'blood')}
-        alt='Blood cost'
-      />
-    ) : library.pool_cost ? (
-      <Avatar
-        sx={{ backgroundColor: 'white' }}
-        variant='rounded'
-        src={getCardCost(library.pool_cost, 'pool')}
-        alt='Pool cost'
-      />
-    ) : null;
-
   const cardTypesList = (): string[] => {
     const arrayOfTypes = data?.map((elem) => elem.data.types);
     const flattedArrayOfTypes = arrayOfTypes?.map((elem) =>
@@ -188,105 +124,12 @@ const DeckLibraryComponent = (props: Props) => {
     return total;
   };
 
-  const tableHeadContent = (showLabel: boolean) => (
-    <TableHead key={uuidv4()}>
-      {showLabel ? (
-        <TableRow>
-          <TableCell sx={{ textAlign: 'center' }}>Quantity</TableCell>
-          <TableCell sx={{ textAlign: 'center' }}>Card name</TableCell>
-          <TableCell sx={{ textAlign: 'center' }}>Burn Option</TableCell>
-          <TableCell sx={{ textAlign: 'center' }}>Disciplines</TableCell>
-          <TableCell sx={{ textAlign: 'center' }}>Clan</TableCell>
-          <TableCell sx={{ textAlign: 'center' }}>Cost</TableCell>
-        </TableRow>
-      ) : (
-        <TableRow>
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-        </TableRow>
-      )}
-    </TableHead>
-  );
+  
 
   const handleShowCardtype = (key: cardTypeValues): void => {
     const newValue: boolean = !showCardType[key];
     setShowCardType((prev) => ({ ...prev, [key]: newValue }));
   };
-  const tableBodyContent = (list: ExtendedDeckType[] | undefined) =>
-    list ? (
-      <TableBody key={uuidv4()}>
-        {list?.map((elem: ExtendedDeckType, index: number) => (
-          <TableRow key={elem.data.id} sx={{ justifyContent: 'center' }}>
-            {/* quantity */}
-            <TableCell>
-              <QuantityButtonComponent
-                handleRemoveCard={(id: number, cardType: CardType) =>
-                  handleRemoveCard(id, cardType)
-                }
-                initialQuantity={elem.quantity}
-                id={elem.data.id}
-                updateQuantity={(
-                  newQuantity: number,
-                  id: number,
-                  cardType: CardType
-                ) => updateQuantity(newQuantity, id, cardType)}
-                cardType={elem.cardType}
-              />
-            </TableCell>
-            {/* Card Name */}
-            <TableCell
-              sx={{
-                textAlign: 'center',
-              }}
-              onClick={() => handleOpenModal(elem, index)}
-            >
-              {getCleanedName(elem.data.name)}
-            </TableCell>
-            {/* Burn option */}
-            <TableCell
-              sx={{
-                justifyContent: 'center',
-              }}
-            >
-              {getBurn(elem.data as LibraryType)}
-            </TableCell>
-            {/* disciplines */}
-            <TableCell
-              sx={{
-                justifyContent: 'center',
-              }}
-              onClick={() => handleOpenModal(elem, index)}
-            >
-              <Box className='list__left'>
-                {elem.data.disciplines
-                  ? getDisciplines(elem.data.disciplines)
-                  : null}
-              </Box>
-            </TableCell>
-            {/* Clan */}
-            <TableCell
-              sx={{
-                justifyContent: 'center',
-              }}
-              onClick={() => handleOpenModal(elem, index)}
-            >
-              {getClan(elem.data as LibraryType)}
-            </TableCell>
-            {/* Cost */}
-            <TableCell
-              align='right'
-              onClick={() => handleOpenModal(elem, index)}
-            >
-              {getLibraryCost(elem.data as LibraryType)}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    ) : null;
 
   const getTypeIconAvatar = (type: string) => {
     if (!type.includes(',')) {
@@ -390,18 +233,21 @@ const DeckLibraryComponent = (props: Props) => {
           </Box>
         </Modal>
       ) : null}
+      {isMobile ?
+      null:
       <Box
-        key={uuidv4()}
-        sx={{
-          p: '1rem',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}
+      key={uuidv4()}
+      sx={{
+        p: '1rem',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+      }}
       >
         <Typography>Total Pool cost: {getTotalPoolCost()}</Typography>
         <Typography>Total Blood cost: {getTotalBloodCost()} </Typography>
       </Box>
+      }
 
       {cardTypesList().map((cardType, index) => {
         return (
@@ -429,23 +275,40 @@ const DeckLibraryComponent = (props: Props) => {
                 )}
               </IconButton>
             </Box>
-
-            {showCardType[cardType.toLowerCase() as cardTypeValues] ? (
-              <TableContainer>
-                <Table key={uuidv4()}>
-                  {tableHeadContent(true)}
-                  {tableBodyContent(
-                    data
-                      ?.filter(
-                        (elem) =>
-                          elem.data.types.toString() === cardType?.toString()
-                      )
-                      .sort((a: ExtendedDeckType, b: ExtendedDeckType) =>
-                        a.data.name.localeCompare(b.data.name)
-                      )
-                  )}
-                </Table>
-              </TableContainer>
+            {isMobile ? (
+              showCardType[cardType.toLowerCase() as cardTypeValues] ? (
+                <DeckLibraryTableSmall
+                  data={data}
+                  cardType={cardType}
+                  handleRemoveCard={(id: number, cardType: CardType) =>
+                    handleRemoveCard(id, cardType)
+                  }
+                  updateQuantity={(
+                    newQuantity: number,
+                    id: number,
+                    cardType: CardType
+                  ) => updateQuantity(newQuantity, id, cardType)}
+                  handleOpenModal={(elem: ExtendedDeckType, index: number) =>
+                    handleOpenModal(elem, index)
+                  }
+                />
+              ) : null
+            ) : showCardType[cardType.toLowerCase() as cardTypeValues] ? (
+              <DeckLibraryTable
+                data={data}
+                cardType={cardType}
+                handleRemoveCard={(id: number, cardType: CardType) =>
+                  handleRemoveCard(id, cardType)
+                }
+                updateQuantity={(
+                  newQuantity: number,
+                  id: number,
+                  cardType: CardType
+                ) => updateQuantity(newQuantity, id, cardType)}
+                handleOpenModal={(elem: ExtendedDeckType, index: number) =>
+                  handleOpenModal(elem, index)
+                }
+              />
             ) : null}
           </Box>
         );
