@@ -1,12 +1,16 @@
-import { Table, TableContainer } from '@mui/material';
 import React, { useMemo } from 'react';
+import { Table, TableContainer, Theme, useMediaQuery, useTheme } from '@mui/material';
+
+import { CardType } from '../../../../types/deck_type';
 import { CryptType } from '../../../../types/crypt_type';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Spinner } from '../global/Spinner';
 import { LibraryType } from '../../../../types/library_type';
-import { CardType } from '../../../../types/deck_type';
-import TableHeaderCrypt from './TableHeaderCrypt';
+import { Spinner } from '../global/Spinner';
 import TableBodyContentCrypt from './TableBodyContentCrypt';
+import TableBodyContentCryptSmall from './TableBodyContentCryptSmall';
+import TableHeaderCrypt from './TableHeaderCrypt';
+import TableHeaderCryptSmall from './TableHeaderCryptSmall';
+
 interface Props {
   list: CryptType[];
   deckMode: boolean;
@@ -23,6 +27,9 @@ const CryptListComponent = (props: Props) => {
   const [sortBy, setSortBy] = React.useState<string>('');
   const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
 
+  const theme: Theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const isElement = useMemo(() => {
     return (elem: CryptType, index: number): number => {
       return elem && items.length > 0 && elem.id === items[items.length - 1].id
@@ -30,6 +37,7 @@ const CryptListComponent = (props: Props) => {
         : -1;
     };
   }, [items]);
+  
 const fetchMoreData = useMemo(() => {
   return () => {
     if (list) {
@@ -144,18 +152,37 @@ const fetchMoreData = useMemo(() => {
         }
       >
         <Table>
-          <TableHeaderCrypt
-            deckMode={deckMode}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-            createSortHandler={createSortHandler}
-          />
-          <TableBodyContentCrypt
-            deckMode={deckMode}
-            items={items}
-            handleAddCardToDeck={handleAddCardToDeck}
-            handleItemToOpen={handleItemToOpen}
-          />
+          {isMobile ? (
+            <>
+              <TableHeaderCryptSmall
+                deckMode={deckMode}
+                sortBy={sortBy}
+                sortOrder={sortOrder}
+                createSortHandler={createSortHandler}
+              />
+              <TableBodyContentCryptSmall
+                deckMode={deckMode}
+                items={items}
+                handleAddCardToDeck={handleAddCardToDeck}
+                handleItemToOpen={handleItemToOpen}
+              />
+            </>
+          ) : (
+            <>
+              <TableHeaderCrypt
+                deckMode={deckMode}
+                sortBy={sortBy}
+                sortOrder={sortOrder}
+                createSortHandler={createSortHandler}
+              />
+              <TableBodyContentCrypt
+                deckMode={deckMode}
+                items={items}
+                handleAddCardToDeck={handleAddCardToDeck}
+                handleItemToOpen={handleItemToOpen}
+              />
+            </>
+          )}
         </Table>
       </InfiniteScroll>
     </TableContainer>

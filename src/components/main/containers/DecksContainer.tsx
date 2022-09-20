@@ -1,3 +1,5 @@
+import './DecksContainer.css';
+
 import {
   Button,
   IconButton,
@@ -10,30 +12,37 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Box } from '@mui/material';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { fetchDecks } from '../../../service/fetchDecks';
-import { DeckType } from '../../../types/deck_type';
-import { getUserId } from '../../../util/helpFunction';
-import { Spinner } from '../components/global/Spinner';
-import './DecksContainer.css';
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { uuidv4 } from '@firebase/util';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box } from '@mui/material';
+import { DeckType } from '../../../types/deck_type';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { HighlightOff } from '@mui/icons-material';
+import React from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import { Spinner } from '../components/global/Spinner';
 import { createNewDeck } from '../../../service/createNewDeck';
 import { deleteDeck } from '../../../service/deleteDeck';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { HighlightOff } from '@mui/icons-material';
-import SearchIcon from '@mui/icons-material/Search';
+import { fetchDecks } from '../../../service/fetchDecks';
+import { getUserId } from '../../../util/helpFunction';
+import { useHistory } from 'react-router-dom';
+import { uuidv4 } from '@firebase/util';
+
 const DecksContainer = () => {
   const [loader, setLoader] = React.useState<boolean>(false);
   const [deckList, setDeckList] = React.useState<DeckType[]>([]);
   const [inputSearch, setInputSearch] = React.useState<string>('');
   const initialDeckList = React.useRef<DeckType[]>([]);
   const history = useHistory();
+
+  const theme: Theme = useTheme();
+  const isMobile: boolean = useMediaQuery(theme.breakpoints.down('sm'));
 
   React.useEffect(() => {
     setLoader(true);
@@ -70,18 +79,28 @@ const DecksContainer = () => {
       <Table size='small' aria-label='Decks list'>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold' }} align='left'>
-              #
-            </TableCell>
+            {!isMobile ? (
+              <TableCell sx={{ fontWeight: 'bold' }} align='left'>
+                #
+              </TableCell>
+            ) : null}
             <TableCell sx={{ fontWeight: 'bold' }} align='left'>
               Deck name
             </TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align='left'>
-              Type
-            </TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} variant='head' align='left'>
-              Description
-            </TableCell>
+            {!isMobile ? (
+              <>
+                <TableCell sx={{ fontWeight: 'bold' }} align='left'>
+                  Type
+                </TableCell>
+                <TableCell
+                  sx={{ fontWeight: 'bold' }}
+                  variant='head'
+                  align='left'
+                >
+                  Description
+                </TableCell>
+              </>
+            ) : null}
             <TableCell sx={{ fontWeight: 'bold' }} variant='head' align='left'>
               Action
             </TableCell>
@@ -90,13 +109,15 @@ const DecksContainer = () => {
         <TableBody>
           {deckList.map((deck: DeckType, index: number) => (
             <TableRow key={index}>
-              <TableCell
-                onClick={() => {
-                  handleSelectedDeck(deck.id);
-                }}
-              >
-                {index + 1}
-              </TableCell>
+              {!isMobile ? (
+                <TableCell
+                  onClick={() => {
+                    handleSelectedDeck(deck.id);
+                  }}
+                >
+                  {index + 1}
+                </TableCell>
+              ) : null}
               <TableCell
                 onClick={() => {
                   handleSelectedDeck(deck.id);
@@ -104,20 +125,24 @@ const DecksContainer = () => {
               >
                 {deck.name}
               </TableCell>
-              <TableCell
-                onClick={() => {
-                  handleSelectedDeck(deck.id);
-                }}
-              >
-                {deck.deckType}
-              </TableCell>
-              <TableCell
-                onClick={() => {
-                  handleSelectedDeck(deck.id);
-                }}
-              >
-                {deck.description}
-              </TableCell>
+              {!isMobile ? (
+                <>
+                  <TableCell
+                    onClick={() => {
+                      handleSelectedDeck(deck.id);
+                    }}
+                  >
+                    {deck.deckType}
+                  </TableCell>
+                  <TableCell
+                    onClick={() => {
+                      handleSelectedDeck(deck.id);
+                    }}
+                  >
+                    {deck.description}
+                  </TableCell>
+                </>
+              ) : null}
               <TableCell>
                 <IconButton onClick={() => handleRemoveDeck(deck.id)}>
                   <DeleteIcon />
@@ -195,10 +220,13 @@ const DecksContainer = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          marginBottom:'1rem',
         }}
       >
         <Button onClick={() => handleCreateDeck()}>
-          <Typography variant='subtitle2'>Create new deck</Typography>
+          {!isMobile ? (
+            <Typography variant='subtitle2'>Create new deck</Typography>
+          ) : null}
           <AddCircleIcon sx={{ marginLeft: '1rem' }} />
         </Button>
 

@@ -16,7 +16,11 @@ interface listProps {
   ) => void;
 }
 
+
+
 const CryptList = (props: listProps) => {
+
+ 
   const { list, deckMode, handleAddCardToDeck } = props;
   const [selectedItem, setSelectedItem] = React.useState<CryptType>();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
@@ -64,7 +68,7 @@ const CryptList = (props: listProps) => {
         />
       ) : null}
       {list && list.length > 0 && (
-        <CryptListComponent
+        <CryptListComponent 
           handleAddCardToDeck={(
             card: CryptType | LibraryType,
             cardType: CardType

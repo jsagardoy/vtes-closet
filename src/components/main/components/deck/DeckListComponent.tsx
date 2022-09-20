@@ -1,17 +1,18 @@
 import { Box, Container, IconButton, Typography } from '@mui/material';
-import React from 'react';
-import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
-import { CryptType } from '../../../../types/crypt_type';
 import {
   CardType,
   DeckType,
   ExtendedDeckType,
   ListType,
 } from '../../../../types/deck_type';
-import { LibraryType } from '../../../../types/library_type';
+
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { CryptType } from '../../../../types/crypt_type';
 import DeckCryptComponent from './DeckCryptComponent';
 import DeckLibraryComponent from './DeckLibraryComponent';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { LibraryType } from '../../../../types/library_type';
+import React from 'react';
+import { fetchSelectedCard } from '../../../../service/fetchSelectedCard';
 
 interface Props {
   deck: DeckType;
@@ -251,7 +252,6 @@ const DeckListComponent = (props: Props) => {
             <Typography
               sx={{
                 color: 'red',
-                fontSize: 'smaller',
               }}
             >
               The crypt must contain at least 12 crypt cards
@@ -261,7 +261,6 @@ const DeckListComponent = (props: Props) => {
             <Typography
               sx={{
                 color: 'red',
-                fontSize: 'smaller',
               }}
             >
               Invalid groups. Groups must be consecutives.
@@ -271,7 +270,6 @@ const DeckListComponent = (props: Props) => {
             <Typography
               sx={{
                 color: 'red',
-                fontSize: 'smaller',
               }}
             >
               Your crypt contains a banned card.
@@ -315,30 +313,27 @@ const DeckListComponent = (props: Props) => {
           <Typography
             sx={{
               color: 'red',
-              fontSize: 'smaller',
             }}
           >
-            The library must contain at least 60 library cards.
+            The Library must contain at least 60 library cards.
           </Typography>
         ) : null}
         {libraryExceededSizeError ? (
           <Typography
             sx={{
               color: 'red',
-              fontSize: 'smaller',
             }}
           >
-            The library exceeded the 90 library cards limitation.
+            The Library exceeded the 90 library cards limitation.
           </Typography>
         ) : null}
         {libraryBannedError ? (
           <Typography
             sx={{
               color: 'red',
-              fontSize: 'smaller',
             }}
           >
-            Your library contains at least one banned card.
+            Your Library contains at least one banned card.
           </Typography>
         ) : null}
       </Box>

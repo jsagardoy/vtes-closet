@@ -9,14 +9,34 @@ interface Props {
   createSortHandler: (key: string) => void;
 }
 
-const TableHeaderCrypt = (props: Props) => {
+const TableHeaderCryptSmall = (props: Props) => {
   const { deckMode, sortBy, sortOrder, createSortHandler } = props;
 
+
   return (
-    <TableHead sx={{color:'red'}}>
-      <TableRow>
-        {deckMode ? <TableCell align='center'>Action</TableCell> : null}
-        <TableCell align='center'>
+    <TableHead
+      sx={{
+        display: 'block',
+        position: 'absolute',
+        top: '-9999px',
+        left: '-9999px',
+      }}
+    >
+      <TableRow
+        sx={{
+          display: 'block',
+          position: 'absolute',
+          top: '-9999px',
+          left: '-9999px',
+          border: '1px solid',
+        }}
+      >
+        {deckMode ? (
+          <TableCell align='center' sx={{ display: 'block' }}>
+            Action
+          </TableCell>
+        ) : null}
+        <TableCell align='center' sx={{ display: 'block' }}>
           <TableSortLabel
             active={sortBy === 'name'}
             direction={sortOrder}
@@ -25,7 +45,7 @@ const TableHeaderCrypt = (props: Props) => {
             Card name
           </TableSortLabel>
         </TableCell>
-        <TableCell align='center'>
+        <TableCell align='center' sx={{ display: 'block' }}>
           <TableSortLabel
             active={sortBy === 'clan'}
             direction={sortOrder}
@@ -34,8 +54,10 @@ const TableHeaderCrypt = (props: Props) => {
             Clan
           </TableSortLabel>
         </TableCell>
-        <TableCell align='center'>Disciplines</TableCell>
-        <TableCell align='center'>
+        <TableCell align='center' sx={{ display: 'block' }}>
+          Disciplines
+        </TableCell>
+        <TableCell align='center' sx={{ display: 'block' }}>
           <TableSortLabel
             active={sortBy === 'capacity'}
             direction={sortOrder}
@@ -49,4 +71,4 @@ const TableHeaderCrypt = (props: Props) => {
   );
 };
 
-export default TableHeaderCrypt;
+export default TableHeaderCryptSmall;

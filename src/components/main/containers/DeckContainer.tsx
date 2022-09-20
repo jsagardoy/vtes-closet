@@ -1,20 +1,23 @@
+import './deck.css';
+
 import { Alert, Box, Modal, Paper, Snackbar } from '@mui/material';
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
-import { updateDeckService } from '../../../service/updateDeckService';
-import { CryptType } from '../../../types/crypt_type';
 import {
   CardType,
   DeckType,
   ExtendedDeckType,
   ListType,
 } from '../../../types/deck_type';
-import { LibraryType } from '../../../types/library_type';
+
+import { CryptType } from '../../../types/crypt_type';
 import DeckInfoComponent from '../components/deck/DeckInfoComponent';
 import DeckListComponent from '../components/deck/DeckListComponent';
+import { LibraryType } from '../../../types/library_type';
+import React from 'react';
 import SearchDeckContainer from '../components/deck/searchDeckCards/SearchDeckContainer';
-import './deck.css';
+import { fetchSelectedDeck } from '../../../service/fetchSelectedDeck';
+import { updateDeckService } from '../../../service/updateDeckService';
+import { useParams } from 'react-router-dom';
+
 const DeckContainer = () => {
   const initialDeck: DeckType = {
     id: '',
@@ -34,10 +37,7 @@ const DeckContainer = () => {
   const [showModalCrypt, setShowModalCrypt] = React.useState<boolean>(false);
   const [showModalLibrary, setShowModalLibrary] = React.useState<boolean>(false);
   
-  /*   const handleChange = (field: string, value: string | Archetype) => {
-    const newDeck:DeckType = { ...deckData, [field]: value };
-    setDeckData(newDeck);
-  }; */
+
 
   const handleSaveDataInfo = async (deck: DeckType) => {
     try {
@@ -48,13 +48,7 @@ const DeckContainer = () => {
       setErrorSnackBar(true);
     }
   };
-  /*  const getExtendedCard = (
-    card: CryptType | LibraryType,
-    cardType: CardType,
-    quantity: number
-  ): ExtendedDeckType => {
-    return { data: card, quantity: quantity, cardType: cardType };
-  }; */
+
   const handleCloseSnackBar = (): void => setOpenSnackBar((prev) => !prev);
   const handleCloseErrorSnackBar = (): void =>
     setErrorSnackBar((prev) => !prev);
