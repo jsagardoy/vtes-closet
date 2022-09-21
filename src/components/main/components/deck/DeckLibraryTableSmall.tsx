@@ -1,4 +1,4 @@
-import { Avatar, Box, ListItemAvatar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Avatar, Box, ListItemAvatar, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { CardType, ExtendedDeckType } from '../../../../types/deck_type';
 import { getBurnOption, getCardCost, getClanIcon, getCleanedName, getDiscIcon } from '../../../../util';
 
@@ -76,31 +76,6 @@ const DeckLibraryTable = (props: Props) => {
           alt='Pool cost'
         />
       ) : null;
-
-
-    const tableHeadContent = (showLabel: boolean) => (
-      <TableHead key={uuidv4()}>
-        {showLabel ? (
-          <TableRow>
-            <TableCell sx={{ textAlign: 'center' }}>Quantity</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}>Card name</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}>Burn Option</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}>Disciplines</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}>Clan</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}>Cost</TableCell>
-          </TableRow>
-        ) : (
-          <TableRow>
-            <TableCell />
-            <TableCell />
-            <TableCell />
-            <TableCell />
-            <TableCell />
-            <TableCell />
-          </TableRow>
-        )}
-      </TableHead>
-    );
 
 const tableBodyContent = (list: ExtendedDeckType[] | undefined) =>
   list ? (

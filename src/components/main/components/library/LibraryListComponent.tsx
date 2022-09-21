@@ -1,4 +1,10 @@
-import { Table, TableContainer } from '@mui/material';
+import {
+  Table,
+  TableContainer,
+  Theme,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { CardType } from '../../../../types/deck_type';
 import { CryptType } from '../../../../types/crypt_type';
@@ -7,6 +13,7 @@ import { LibraryType } from '../../../../types/library_type';
 import React from 'react';
 import { Spinner } from '../global/Spinner';
 import TableBodyContent from './TableBodyContent';
+import TableBodyContentSmall from './TableBodyContentSmall';
 import TableHeader from './TableHeader';
 import { useMemo } from 'react';
 
@@ -27,6 +34,9 @@ const LibraryListComponent = (props: Props) => {
   const [sortBy, setSortBy] = React.useState<string>('');
   const [sortOrder, setSortOrder] = React.useState<'desc' | 'asc'>('desc');
 
+  const theme: Theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const createSortHandler = (key: string): void => {
     if (key === sortBy) {
       setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -39,8 +49,16 @@ const LibraryListComponent = (props: Props) => {
       setItems((prev) => {
         if (prev) {
           return sortOrder === 'desc'
-            ? list.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())).slice(0,40)
-            : list.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase())).slice(0,40);
+            ? list
+                .sort((a, b) =>
+                  a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                )
+                .slice(0, 40)
+            : list
+                .sort((a, b) =>
+                  b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+                )
+                .slice(0, 40);
         } else {
           return prev;
         }
@@ -101,18 +119,29 @@ const LibraryListComponent = (props: Props) => {
         }
       >
         <Table>
-          <TableHeader
-            deckMode={deckMode}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-            createSortHandler={createSortHandler}
-          />
-          <TableBodyContent
-            deckMode={deckMode}
-            items={items}
-            handleAddCardToDeck={handleAddCardToDeck}
-            handleItemToOpen={handleItemToOpen}
-          />
+          {isMobile ? null : (
+            <TableHeader
+              deckMode={deckMode}
+              sortBy={sortBy}
+              sortOrder={sortOrder}
+              createSortHandler={createSortHandler}
+            />
+          )}
+          {isMobile ? (
+            <TableBodyContentSmall
+              deckMode={deckMode}
+              items={items}
+              handleAddCardToDeck={handleAddCardToDeck}
+              handleItemToOpen={handleItemToOpen}
+            />
+          ) : (
+            <TableBodyContent
+              deckMode={deckMode}
+              items={items}
+              handleAddCardToDeck={handleAddCardToDeck}
+              handleItemToOpen={handleItemToOpen}
+            />
+          )}
         </Table>
       </InfiniteScroll>
     </TableContainer>
