@@ -78,7 +78,7 @@ interface Props {
   handleResetButton: () => void;
 }
 
-const MoreFilterModal = (props: Props) => {
+const MoreFilterModalSmall = (props: Props) => {
   const {
     showMore,
     handleMore,
@@ -109,6 +109,7 @@ const MoreFilterModal = (props: Props) => {
         display: 'flex',
         justifyContent: 'center',
       }}
+      fullScreen
       open={showMore}
       onClose={() => handleMore()}
       PaperProps={{
@@ -117,14 +118,14 @@ const MoreFilterModal = (props: Props) => {
         },
       }}
     >
-      <DialogContent sx={{ maxWidth: 'fit-content' }}>
+      <DialogContent sx={{ widht: '100%' }}>
         <Paper
           sx={{
             display: 'flex',
             flexDirection: 'column',
           }}
         >
-          <Box id='disciplines' sx={{ m: '1rem' }}>
+          <Box id='disciplines' sx={{ m: '1rem', maxWidth: '100%' }}>
             {getDiscIcon(selected_discList.name).map((dis, index) => {
               return (
                 <IconButton
@@ -151,11 +152,11 @@ const MoreFilterModal = (props: Props) => {
             id='selectors'
             sx={{
               display: 'flex',
-              flexDirection: 'row',
+              flexDirection: 'column',
+              alignContent: 'center',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              m: '1rem',
               width: '100%',
+              m: '1rem',
             }}
           >
             <Box
@@ -163,6 +164,10 @@ const MoreFilterModal = (props: Props) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                maxHeight: '5vh',
+                height: '5vh',
               }}
             >
               <FormControl fullWidth variant='standard'>
@@ -195,9 +200,21 @@ const MoreFilterModal = (props: Props) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                maxHeight: '5vh',
+                height: '5vh',
               }}
             >
-              <FormControl fullWidth sx={{}} variant='standard'>
+              <FormControl
+                fullWidth
+                sx={{
+                  maxHeight: '5vh',
+                  height: '5vh',
+                }}
+                variant='standard'
+              >
+                {' '}
                 <InputLabel id='select__sect__standard__label'>Sect</InputLabel>
                 <Select
                   sx={{ minWidth: '10rem', m: '2rem' }}
@@ -231,8 +248,8 @@ const MoreFilterModal = (props: Props) => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                gap: '.5rem',
-                maxHeight: '30vh',
+                gap: '.1rem',
+                maxHeight: '28vh',
               }}
             >
               {getTitle().map((title: string) => (
@@ -240,6 +257,7 @@ const MoreFilterModal = (props: Props) => {
                   key={title}
                   control={
                     <Checkbox
+                      sx={{ p: '0.5rem' }}
                       size='small'
                       checked={checkboxTitle(title)}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -253,7 +271,7 @@ const MoreFilterModal = (props: Props) => {
             </FormGroup>
           </Box>
           <Divider />
-          <Box id='sliders'>
+          <Box id='sliders' sx={{ marginRight: '1rem', marginLeft: '1rem' }}>
             <SlidersComponent
               filterSliders={handleSliders}
               group={selectedGroup}
@@ -266,13 +284,12 @@ const MoreFilterModal = (props: Props) => {
             />
           </Box>
           <Divider />
-          <Box sx={{ display: 'flex', m: '1rem' }}>
+          <Box sx={{ display: 'flex', m: '1rem'}}>
             <FormGroup
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                gap: '.5rem',
                 maxHeight: '28vh',
               }}
             >
@@ -315,6 +332,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.intercept}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -327,6 +345,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.aggravated}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -340,6 +359,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.enter_combat}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -353,6 +373,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.flight}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -365,6 +386,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.black_hand}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -377,6 +399,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.red_list}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -389,6 +412,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.infernal}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -401,6 +425,7 @@ const MoreFilterModal = (props: Props) => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    sx={{ p: '0.5rem' }}
                     size='small'
                     checked={checked.slave}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -437,4 +462,4 @@ const MoreFilterModal = (props: Props) => {
   );
 };
 
-export default MoreFilterModal;
+export default MoreFilterModalSmall;

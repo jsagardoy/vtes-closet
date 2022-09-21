@@ -4,7 +4,10 @@ import {
   Box,
   Divider,
   IconButton,
+  Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { HighlightOff, MoreVert, Search } from '@mui/icons-material';
 import { PropType, TitleType, discType } from '../../../../types/crypt_type';
@@ -24,6 +27,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField/TextField';
 import { groupType } from '../../../../util';
 import { useHistory } from 'react-router-dom';
+import MoreFilterModalSmall from './MoreFilterModalSmall';
 
 interface NavbarListProps {
   searchList: (
@@ -101,6 +105,9 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
 
   const groups: groupType[] = getGroups();
   const cap: capacityType[] = getCapacities();
+
+  const theme: Theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [selected_discList, setSelected_discList] =
     React.useState<discType>(aux);
@@ -431,30 +438,57 @@ const NavbarCryptList = (navbarListProps: NavbarListProps) => {
         </Box>
       </Box>
       <Divider />
-      <MoreFilterModal
-        showMore={showMore}
-        handleMore={handleMore}
-        selected_discList={selected_discList}
-        handleSelectDisc={handleSelectDisc}
-        disc_sup={disc_sup}
-        selectedClan={selectedClan}
-        handleClan={handleClan}
-        selectedSect={selectedSect}
-        handleSect={handleSect}
-        checkboxTitle={checkboxTitle}
-        handleTitle={handleTitle}
-        handleSliders={handleSliders}
-        selectedGroup={selectedGroup}
-        selectedMaxCap={selectedMaxCap}
-        selectedMinCap={selectedMinCap}
-        groups={groups}
-        handleSliderGroup={handleSliderGroup}
-        handleSliderMaxCap={handleSliderMaxCap}
-        handleSliderMinCap={handleSliderMinCap}
-        handleCheck={handleCheck}
-        checked={checked}
-        handleResetButton={handleResetButton}
-      />  
+      {isMobile ? (
+        <MoreFilterModalSmall
+          showMore={showMore}
+          handleMore={handleMore}
+          selected_discList={selected_discList}
+          handleSelectDisc={handleSelectDisc}
+          disc_sup={disc_sup}
+          selectedClan={selectedClan}
+          handleClan={handleClan}
+          selectedSect={selectedSect}
+          handleSect={handleSect}
+          checkboxTitle={checkboxTitle}
+          handleTitle={handleTitle}
+          handleSliders={handleSliders}
+          selectedGroup={selectedGroup}
+          selectedMaxCap={selectedMaxCap}
+          selectedMinCap={selectedMinCap}
+          groups={groups}
+          handleSliderGroup={handleSliderGroup}
+          handleSliderMaxCap={handleSliderMaxCap}
+          handleSliderMinCap={handleSliderMinCap}
+          handleCheck={handleCheck}
+          checked={checked}
+          handleResetButton={handleResetButton}
+        />
+      ) : (
+        <MoreFilterModal
+          showMore={showMore}
+          handleMore={handleMore}
+          selected_discList={selected_discList}
+          handleSelectDisc={handleSelectDisc}
+          disc_sup={disc_sup}
+          selectedClan={selectedClan}
+          handleClan={handleClan}
+          selectedSect={selectedSect}
+          handleSect={handleSect}
+          checkboxTitle={checkboxTitle}
+          handleTitle={handleTitle}
+          handleSliders={handleSliders}
+          selectedGroup={selectedGroup}
+          selectedMaxCap={selectedMaxCap}
+          selectedMinCap={selectedMinCap}
+          groups={groups}
+          handleSliderGroup={handleSliderGroup}
+          handleSliderMaxCap={handleSliderMaxCap}
+          handleSliderMinCap={handleSliderMinCap}
+          handleCheck={handleCheck}
+          checked={checked}
+          handleResetButton={handleResetButton}
+        />
+      )}
     </>
   );
 };
