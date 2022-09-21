@@ -145,7 +145,6 @@ const DeckTableSmall = (props: Props) => {
                 {elem.data.clans ? getClan(elem.data as CryptType) : null}
                 <Typography
                   color='secondary'
-                  onClick={() => handleOpenModal(elem, index)}
                   variant='body1'
                 >
                   {elem.data.name}
