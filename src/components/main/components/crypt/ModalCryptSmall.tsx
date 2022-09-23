@@ -39,16 +39,15 @@ const ModalCryptSmall = (props: CryptProp) => {
 
   return (
     <Dialog
+      id='dialog'
       fullScreen
       sx={{
         display: 'flex',
-        flexDirection:'column',
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems:'center',
-      }}
-      PaperProps={{
-        sx: {
-        },
+        alignItems: 'center',
+        '& .MuiDialog-container': { width: '100%' },
+        '& .MuiDialog-paperFullScreen': { minHeight: '103%' },
       }}
       open={open}
       onClose={handleCloseModal}
@@ -62,13 +61,15 @@ const ModalCryptSmall = (props: CryptProp) => {
       }}
     >
       <Paper
+        id='paper'
         sx={{
-          display: 'flex',
+          display: 'inline-block',
           flexDirection: 'column',
         }}
       >
         <Box
           sx={{
+            minWidth: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignContent: 'center',
@@ -81,7 +82,6 @@ const ModalCryptSmall = (props: CryptProp) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            width: '100%',
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

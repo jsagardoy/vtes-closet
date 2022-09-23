@@ -60,7 +60,8 @@ const LibraryModalSmall = (props: LibraryModalProps) => {
         display: 'flex',
         displayDirection:'column',
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center',
+        '& .MuiDialog-paperFullScreen': { minHeight: '103%' },
       }}
       PaperProps={{
         sx: {
