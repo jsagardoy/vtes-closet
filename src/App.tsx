@@ -28,6 +28,7 @@ import PrivateMain from './components/main/components/main/PrivateMain';
 import PrivateRoute from './components/PrivateRoute';
 import PublicMain from './components/main/components/main/PublicMain';
 import Sidebar from './components/Sidebar';
+import ProfileContainer from './components/main/components/user/ProfileContainer';
 
 function App() {
   const auth = getAuth();
@@ -154,8 +155,8 @@ function App() {
                 )}
               </Route>
               <Route exact path={'/accessDenied'}>
-                <PageDeniedAccess/>
-              </Route> 
+                <PageDeniedAccess />
+              </Route>
               <Route exact path={'/crypt'}>
                 <CryptContainer
                   deckMode={false}
@@ -205,6 +206,13 @@ function App() {
                 component={InventoryLibraryContainer}
                 exact
                 path='/private/:userId/inventory/library'
+              />
+              {/* Decks */}
+              <PrivateRoute
+                isLogged={isLogged}
+                component={ProfileContainer}
+                exact
+                path='/profile/:userId'
               />
             </Switch>
           </Box>

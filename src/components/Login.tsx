@@ -1,65 +1,42 @@
-import React from 'react';
-import socialMediaAuth from '../service/auth';
-import { /* facebookProvider ,*/ googleProvider } from '../config/authMethods';
-import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
-import { useHistory } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
-const Login = () => {
+import { useEffect } from 'react';
+import { getAuth } from '@firebase/auth';
+import { googleProvider } from '../config/authMethods';
+import socialMediaAuth from '../service/auth';
+import { useHistory } from 'react-router-dom';
+
+interface Props {
+  showLogin: boolean;
+  handleLogin: (value: boolean) => void;
+}
+
+const Login = (props: Props) => {
+  const { showLogin, handleLogin } = props;
   let history = useHistory();
   const auth = getAuth();
-  const [showLogout, setShowLogout] = React.useState<boolean>(
-    auth.currentUser !== null
-  );
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setShowLogout(true);
-    } else {
-      setShowLogout(false);
-    }
-  });
+  
 
   const handleProvider = async (provider: string) => {
-    const res = await socialMediaAuth(googleProvider);
-    res !== null ? setShowLogout(true) : setShowLogout(false);
-    if (res && auth) {
-      window.localStorage.setItem('auth', JSON.stringify(res));
-      history.push('/private');
+    try {
+      const res = await socialMediaAuth(googleProvider);
+      res !== null ? handleLogin(false) : handleLogin(true);
+      if (res && auth) {
+        window.localStorage.setItem('auth', JSON.stringify(res));
+        history.push('/private');
+      }
+    } catch (error) {
+      throw error;
     }
   };
+  useEffect(() => {
+  }, []);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    setShowLogout(false);
-    window.localStorage.removeItem('auth');
-    history.push('/');
-  };
-  React.useEffect(() => {
-    return (() => {
-      setShowLogout(true);
-     })
-  }, [auth]);
-
-  return (
-    <Box className='login'>
-      <Button
-        id='loginId'
-        style={{ display: showLogout ? 'none' : 'inline' }}
-        onClick={() => handleProvider('google')}
-      >
-        Login
-      </Button>
-      <Button
-        id='logoutId'
-        disabled={!showLogout}
-        style={{ display: !showLogout ? 'none' : 'inline' }}
-        onClick={() => handleLogout()} //handle logout
-      >
-        Logout
-      </Button>
-    </Box>
-  );
+  return showLogin ? (
+    <Button sx ={{display:'flex'}} id='loginId' onClick={() => handleProvider('google')}>
+      Login
+    </Button>
+  ) : null;
 };
 
 export default Login;
