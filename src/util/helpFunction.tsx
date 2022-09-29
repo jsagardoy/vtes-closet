@@ -10,7 +10,7 @@ const discBaseURL = 'https://static.krcg.org/png_wb/disc';
 const clanBaseURL = 'https://static.krcg.org/png_wb/clan/';
 const clanBaseURLDeprecated = 'https://static.krcg.org/png_wb/clan/deprecated/';
 const URLBase = 'https://static.krcg.org/png/icon/';
-const defaultAvatarURL ='';
+const defaultAvatarURL = '';
 export const ADDED_BLEED = ['+1 bleed', '+2 bleed', '+3 bleed', '+x bleed'];
 const ADDED_STEALTH = ['+1 stealth', '+2 stealth', '+3 stealth', '+x strealth'];
 const ADDED_INTERCEPT = [
@@ -300,7 +300,7 @@ export const getLibraryCardTypes = () => [
   'Power',
   'Token',
 ];
-export const getLibraryCardTypesSorted = ():string[] => [
+export const getLibraryCardTypesSorted = (): string[] => [
   'Master',
   'Conviction',
   'Power',
@@ -348,9 +348,9 @@ export const findInText = (card: CryptType | LibraryType, text: string) => {
     if (card.card_text.toLowerCase().includes(textFixed.toLowerCase())) {
       aux = card;
     }
-     if (card.name.toLowerCase().includes(textFixed.toLowerCase())) {
-       aux = card;
-     }
+    if (card.name.toLowerCase().includes(textFixed.toLowerCase())) {
+      aux = card;
+    }
     if (
       getSects()
         .map((elem) => elem.toLowerCase())
@@ -626,6 +626,39 @@ export const getUserId = (): string | null => {
 export const getCleanedName = (name: string) => {
   const regExp = /\s\(.*?\)/g;
   return name.replaceAll(regExp, '');
+};
+
+export const compareDates = (date1: Date, date2: Date) => {
+  const year1 = date1.getFullYear();
+  const year2 = date2.getFullYear();
+  const month1 = date1.getMonth();
+  const month2 = date2.getMonth();
+  const day1 = date1.getDate();
+  const day2 = date2.getDate();
+
+  if (year1 > year2) {
+    return true;
+  } else {
+    if (year2 > year1) {
+      return false;
+    }
+    if (year1 === year2) {
+      if (month1 > month2) {
+        return true;
+      } else {
+        if (month2 > month1) {
+          return false;
+        }
+        if (month1 === month2) {
+          if (day1 > day2) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+  }
 };
 
 export const getUser = () => {

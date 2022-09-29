@@ -23,12 +23,14 @@ import InventoryCryptContainer from './components/main/containers/InventoryCrypt
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import { LibraryType } from './types/library_type';
+import NewTournament from './components/main/containers/NewTournament';
 import PageDeniedAccess from './components/PageDeniedAccess';
 import PrivateMain from './components/main/components/main/PrivateMain';
 import PrivateRoute from './components/PrivateRoute';
+import ProfileContainer from './components/main/components/user/ProfileContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import Sidebar from './components/Sidebar';
-import ProfileContainer from './components/main/components/user/ProfileContainer';
+import TournamentsContainer from './components/main/containers/TournamentsContainer';
 
 function App() {
   const auth = getAuth();
@@ -207,12 +209,26 @@ function App() {
                 exact
                 path='/private/:userId/inventory/library'
               />
-              {/* Decks */}
+              {/* Profile */}
               <PrivateRoute
                 isLogged={isLogged}
                 component={ProfileContainer}
                 exact
                 path='/profile/:userId'
+              />
+              {/* Tournaments */}
+              <PrivateRoute
+                isLogged={isLogged}
+                component={TournamentsContainer}
+                exact
+                path='/tournaments/'
+              />
+              {/* Tournament */}
+              <PrivateRoute
+                isLogged={isLogged}
+                component={NewTournament}
+                exact
+                path='/tournament/:tournamentId'
               />
             </Switch>
           </Box>

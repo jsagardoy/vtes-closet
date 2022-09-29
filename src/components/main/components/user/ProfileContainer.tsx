@@ -9,15 +9,16 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { User } from 'firebase/auth';
-import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { getUser } from '../../../../util';
-import SaveIcon from '@mui/icons-material/Save';
-import { fetchSelectedVken } from '../../../../service/fetchVken';
-import { ProfileType } from '../../../../types/profile_type';
-import { updateProfileService } from '../../../../service/updateProfile';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ProfileType } from '../../../../types/profile_type';
+import React from 'react';
+import SaveIcon from '@mui/icons-material/Save';
+import { User } from 'firebase/auth';
+import { fetchSelectedVken } from '../../../../service/fetchVken';
+import { getUser } from '../../../../util';
+import { updateProfileService } from '../../../../service/updateProfile';
 const ProfileContainer = () => {
   const user: User = getUser();
   const { userId } = useParams<{ userId: string }>();
