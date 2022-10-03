@@ -1,16 +1,18 @@
 import {
+  Button,
   Table,
+  TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Button,
 } from '@mui/material';
-import React from 'react';
+
 import { ProfileType } from '../../../../types/profile_type';
+import React from 'react';
 import { TournamentType } from '../../../../types/tournament_type';
 import { compareDates } from '../../../../util';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   data: TournamentType[];
@@ -18,6 +20,11 @@ interface Props {
 }
 
 const TournamentTable = (props: Props) => {
+  const history = useHistory();
+  const handleEdit = (id: string):void => {
+    history.push(`/tournament/${id}`);
+  }
+  
   const { data, userData } = props;
   return (
     <TableContainer>
@@ -44,15 +51,17 @@ const TournamentTable = (props: Props) => {
               location,
               maxNumberOfPlayers,
               numberOfPlayers,
+              active,
             }: TournamentType) => (
               <TableRow key={id}>
                 <TableCell>
-                  {compareDates(new Date(), eventDate) === false
+                  {compareDates(new Date(), eventDate) === false && active
                     ? 'Active'
                     : 'Finished'}
                 </TableCell>
                 <TableCell>
-                  {eventDate.getDate()}/{eventDate.getMonth()}/
+                  {eventDate.getDate()}/
+                  {('0' + (eventDate.getMonth() + 1)).slice(-2)}/
                   {eventDate.getFullYear()}
                 </TableCell>
                 <TableCell>{name}</TableCell>
@@ -62,18 +71,21 @@ const TournamentTable = (props: Props) => {
                   {numberOfPlayers}/{maxNumberOfPlayers}
                 </TableCell>
                 <TableCell>
-                  {compareDates(new Date(), eventDate) === false ? (
+                  {userData.rol === 'prince' &&
+                  userData.uid === owner &&
+                  active &&
+                  compareDates(new Date(), eventDate) === false ? (
+                    <Button color='secondary' onClick={() => handleEdit(id)}>
+                      Edit
+                    </Button>
+                  ) : null}
+                  {active && compareDates(new Date(), eventDate) === false ? (
                     <Button
                       color='secondary'
                       disabled={numberOfPlayers >= maxNumberOfPlayers}
                     >
                       Suscribe
                     </Button>
-                  ) : null}
-                  {userData.rol === 'prince' &&
-                  userData.uid === owner &&
-                  compareDates(new Date(), eventDate) === false ? (
-                    <Button color='secondary'>Edit</Button>
                   ) : null}
                 </TableCell>
               </TableRow>

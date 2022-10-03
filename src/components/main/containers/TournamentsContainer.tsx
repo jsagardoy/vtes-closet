@@ -25,9 +25,14 @@ const TournamentsContainer = () => {
   });
 
   React.useEffect(() => {
-    const fetchData = () => {
-      const newData = fetchTournaments();
-      setData(newData);
+    const fetchData = async () => {
+      try {
+        const newData: TournamentType[] = await fetchTournaments();
+        
+        setData(newData);
+      } catch (error) {
+        throw error;
+      }
     };
     const fetchProfileData = async () => {
       const profile: ProfileType = await fetchSelectedVken();
@@ -56,13 +61,15 @@ const TournamentsContainer = () => {
       <Typography variant='h5'>Active Tournaments</Typography>
       <TournamentTable
         data={data.filter(
-          (elem) => compareDates(new Date(), elem.eventDate) === false
+          (elem) => compareDates(new Date(), elem.eventDate) === false && elem.active
         )}
         userData={userData}
       />
       <Typography variant='h5'>Finished Tournaments</Typography>
       <TournamentTable
-        data={data.filter((elem) => compareDates(new Date(), elem.eventDate))}
+        data={data.filter(
+          (elem) => compareDates(new Date(), elem.eventDate) || !elem.active
+        )}
         userData={userData}
       />
     </Container>

@@ -19,4 +19,5 @@ export interface TournamentType {
   location: string;
   cost: string;
   details: string;
+  active: boolean;
 }

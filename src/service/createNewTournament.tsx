@@ -32,6 +32,7 @@ export const createNewTournament = async (data: TournamentType): Promise<boolean
         cost: data.cost,
         location: data.location,
         details: data.details,
+        active: data.active,
       };
       const profile: ProfileType = await fetchSelectedVken();
       if (

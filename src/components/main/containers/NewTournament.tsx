@@ -5,11 +5,13 @@ import {
   Button,
   Container,
   FormControl,
+  IconButton,
   InputLabel,
   List,
   ListItem,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Snackbar,
   TextField,
   Typography,
@@ -19,13 +21,18 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SaveIcon from '@mui/icons-material/Save';
 import { TournamentType } from '../../../types/tournament_type';
 import { createNewTournament } from '../../../service/createNewTournament';
+import { deleteTournament } from '../../../service/deleteTournament';
+import fetchTournaments from '../../../service/fetchTournaments';
 import { getUserId } from '../../../util';
 import { uuidv4 } from '@firebase/util';
 
@@ -41,7 +48,7 @@ const NewTournament = () => {
   const level = useRef<HTMLInputElement | null>(null);
   const maxNumberOfPlayers = useRef<HTMLInputElement | null>(null);
   const numberOfRounds = useRef<HTMLInputElement | null>(null);
-  const multiJudge = useRef<HTMLInputElement | null>(null);
+  //const multiJudge = useRef<HTMLInputElement | null>(null);
   const headJudge = useRef<HTMLInputElement | null>(null);
   const cost = useRef<HTMLInputElement | null>(null);
   const location = useRef<HTMLInputElement | null>(null);
@@ -51,6 +58,10 @@ const NewTournament = () => {
   const history = useHistory();
   const [eventDate, setEventDate] = React.useState<Date>(new Date());
   const [assistantJudges, setAssistanJudges] = React.useState<string[]>([]);
+  const [owner, setOwner] = React.useState<string>('');
+  const [multiJudge, setMultiJudge] = React.useState<string | undefined>(
+    undefined
+  );
   const [openSB, setOpenSB] = React.useState<{
     value: boolean;
     message: string;
@@ -59,7 +70,7 @@ const NewTournament = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    const active: boolean = e.currentTarget.id === 'cancel' ? true:false;
     const newTournament: TournamentType = {
       id: tournamentId,
       name: name.current?.value ?? '',
@@ -73,23 +84,34 @@ const NewTournament = () => {
       numberOfPlayers: 0,
       maxNumberOfPlayers: Number(maxNumberOfPlayers.current?.value) ?? 0,
       numberOfRounds: Number(numberOfRounds.current?.value) ?? 4,
-      multiJudge: multiJudge.current?.value === 'true' ? true : false ?? true,
+      multiJudge: multiJudge === 'true' ? true : false,
       headJudge: headJudge.current?.value ?? '',
       assistantJudges: assistantJudges,
       cost: cost.current?.value ?? '',
       location: location.current?.value ?? '',
       details: details.current?.value ?? '',
+      active: active,
     };
+
     try {
       const result = await createNewTournament(newTournament);
-      setOpenSB({
-        value: result,
-        message: result
+      if (active) {
+        setOpenSB({
+          value: result,
+          message: result
           ? 'Tournament created'
           : 'Failed to create tournament. Please try again.',
-        severity: result ? 'success' : 'error',
-      });
-      history.push('/tournaments');
+          severity: result ? 'success' : 'error',
+        });
+      }else{  setOpenSB({
+        value: result,
+        message: result
+          ? 'Tournament canceled'
+          : 'Failed to cancel tournament. Please try again.',
+        severity: result ? 'info' : 'error',
+      });}
+      
+      /*      history.push('/tournaments'); */
     } catch (error) {
       throw error;
     }
@@ -118,7 +140,66 @@ const NewTournament = () => {
   const handleCancel = () => {
     history.push('/tournaments');
   };
+
+  const handleGoBack = () => {
+    history.push('/tournaments');
+  };
+
+  const handleMultiJudge = (event: SelectChangeEvent<string | undefined>) => {
+    setMultiJudge(event.target.value as string | undefined);
+  };
   
+  const handleRemoveTournament = async () => {
+    try {
+      if (owner !== '') {
+        const response = await deleteTournament(tournamentId, owner);
+        setOpenSB({
+          value: response,
+          message: 'Tournament canceled',
+          severity: 'success',
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tournaments: TournamentType[] = await fetchTournaments();
+        const tournamentInfo = tournaments.find(
+          (tournament: TournamentType) =>
+            tournament.id === tournamentId && tournament.owner === userId
+        );
+        if (tournamentInfo) {
+          name.current!.value = tournamentInfo.name;
+          setEventDate(tournamentInfo.eventDate);
+          startingTime.current!.value = tournamentInfo.startingTime;
+          organizer.current!.value = tournamentInfo.organizer;
+          city.current!.value = tournamentInfo.city;
+          format.current!.value = tournamentInfo.format;
+          level.current!.value = tournamentInfo.level;
+          maxNumberOfPlayers.current!.value =
+            tournamentInfo.maxNumberOfPlayers.toString();
+          numberOfRounds.current!.value =
+            tournamentInfo.numberOfRounds.toString();
+          setMultiJudge(() =>
+            tournamentInfo.multiJudge === true ? 'true' : 'false'
+          );
+          headJudge.current!.value = tournamentInfo.headJudge;
+          cost.current!.value = tournamentInfo.cost;
+          location.current!.value = tournamentInfo.location;
+          details.current!.value = tournamentInfo.details;
+          setAssistanJudges(tournamentInfo.assistantJudges);
+          setOwner(tournamentInfo.owner);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchData();
+  }, [tournamentId, userId]);
+
   return (
     <Container
       sx={{
@@ -130,7 +211,12 @@ const NewTournament = () => {
         width: '100%',
       }}
     >
-      <Typography variant='h4'>Tournament Information</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <IconButton onClick={() => handleGoBack()}>
+          <ArrowBackIcon />{' '}
+        </IconButton>
+        <Typography variant='h4'>Tournament Information</Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -141,12 +227,19 @@ const NewTournament = () => {
         component='form'
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
       >
-        <TextField inputRef={name} label='Name' fullWidth required />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={name}
+          label='Name'
+          fullWidth
+          required
+        />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             value={eventDate}
             label='Event Date'
             renderInput={(params: any) => <TextField {...params} />}
+            minDate={new Date()}
             onChange={(value) => {
               setEventDate(value ?? new Date());
             }}
@@ -154,14 +247,32 @@ const NewTournament = () => {
           />
         </LocalizationProvider>
         <TextField
-          ref={startingTime}
+          InputLabelProps={{ shrink: true }}
+          inputRef={startingTime}
           required
           label='Starting time'
           fullWidth
         />
-        <TextField inputRef={organizer} required label='Organizer' fullWidth />
-        <TextField inputRef={city} required label='City' fullWidth />
-        <TextField inputRef={location} label='Location' fullWidth />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={organizer}
+          required
+          label='Organizer'
+          fullWidth
+        />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={city}
+          required
+          label='City'
+          fullWidth
+        />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={location}
+          label='Location'
+          fullWidth
+        />
         <FormControl>
           <InputLabel id='format-id'>Format</InputLabel>
           <Select
@@ -190,11 +301,15 @@ const NewTournament = () => {
           </Select>
         </FormControl>
         <TextField
+          inputProps={{ min: 0 }}
+          InputLabelProps={{ shrink: true }}
           inputRef={maxNumberOfPlayers}
           label='Maximum number of Players'
           type='number'
         />
         <TextField
+          inputProps={{ min: 0 }}
+          InputLabelProps={{ shrink: true }}
           inputRef={numberOfRounds}
           label='Number of Rounds (including Final)'
           type='number'
@@ -203,73 +318,111 @@ const NewTournament = () => {
         <FormControl>
           <InputLabel id='multijudge-id'>Multi Judge</InputLabel>
           <Select
-            defaultValue={'true'}
-            inputRef={multiJudge}
+            defaultValue={''}
             labelId='multijudge-id'
             label='Multi judge'
+            onChange={(event: SelectChangeEvent<string | undefined>) =>
+              handleMultiJudge(event)
+            }
           >
             <MenuItem value={'true'}>Yes</MenuItem>
             <MenuItem value={'false'}>No</MenuItem>
           </Select>
         </FormControl>
-        <TextField inputRef={headJudge} label='Head judge' />
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-          }}
-        >
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={headJudge}
+          label='Head judge'
+        />
+        {multiJudge === 'true' ? (
           <Box
             sx={{
               display: 'flex',
-              width: '100%',
-              m: 0,
-              p: 0,
-              justifyContent: 'flex-start',
+              alignItems: 'center',
+              flexDirection: 'column',
             }}
           >
-            <TextField inputRef={aJudge} label='Assistant judges' fullWidth />
-            <Button
-              sx={{ border: '1px solid' }}
-              onClick={() => addJudge(aJudge.current?.value ?? '')}
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                m: 0,
+                p: 0,
+                justifyContent: 'flex-start',
+              }}
             >
-              <AddIcon />
-            </Button>
-          </Box>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                inputRef={aJudge}
+                label='Assistant judges'
+                fullWidth
+              />
+              <Button
+                sx={{ border: '1px solid' }}
+                onClick={() => addJudge(aJudge.current?.value ?? '')}
+              >
+                <AddIcon />
+              </Button>
+            </Box>
 
-          <List
-            sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}
-          >
-            {assistantJudges.map((judge) => (
-              <ListItem alignItems='flex-start' key={uuidv4()}>
-                <Typography variant='body1'>{judge}</Typography>{' '}
-                <Button onClick={() => removeJudge(judge)}>
-                  <RemoveIcon />
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-        <TextField inputRef={cost} label='Inscription cost' />
-        <TextField inputRef={details} label='Details' multiline rows={5} />
-        <Box id='buttons' sx={{display:'flex',justifyContent:'space-between'}}>
+            <List
+              sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}
+            >
+              {assistantJudges.map((judge) => (
+                <ListItem
+                  divider
+                  sx={{
+                    gap: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                  key={uuidv4()}
+                >
+                  <Typography variant='body1'>{judge}</Typography>{' '}
+                  <Button
+                    onClick={() => removeJudge(judge)}
+                    sx={{ border: '1px solid' }}
+                  >
+                    <RemoveIcon />
+                  </Button>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        ) : null}
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={cost}
+          label='Inscription cost'
+        />
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          inputRef={details}
+          label='Details'
+          multiline
+          rows={5}
+        />
+        <Box
+          id='buttons'
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+        >
           <Button
             onClick={handleCancel}
             color='primary'
             sx={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-start',
-              gap: '0.5rem',
+              justifyContent: 'space-evenly',
               marginBottom: '1rem',
             }}
           >
             <CancelIcon color='secondary' />
-            Cancel
+            Cancel changes
           </Button>
           <Button
             type='submit'
+            id='save'
             color='primary'
             sx={{
               display: 'flex',
@@ -282,7 +435,35 @@ const NewTournament = () => {
             <SaveIcon color='secondary' />
             Save
           </Button>
-          
+          <Button
+            type='submit'
+            id='cancel'
+            color='primary'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              gap: '0.5rem',
+              marginBottom: '1rem',
+            }}
+          >
+            <DoNotDisturbIcon sx={{fill:'red'}} />
+            Cancel tournament
+          </Button>
+          <Button
+            onClick={() => handleRemoveTournament()}
+            color='primary'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              gap: '0.5rem',
+              marginBottom: '1rem',
+            }}
+          >
+            <DeleteIcon color='secondary' />
+            Remove tournament
+          </Button>
         </Box>
       </Box>
       <Snackbar
