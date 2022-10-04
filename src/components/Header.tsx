@@ -2,17 +2,17 @@ import './Header.css';
 
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { getUser, getUserId } from '../util';
 
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Login from './Login';
 import MenuIcon from '@mui/icons-material/Menu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React from 'react';
 import UserInfoMenu from './main/components/user/UserInfoMenu';
-import { getUser, getUserId } from '../util';
 import { signOut } from 'firebase/auth';
 import { useHistory } from 'react-router-dom';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface Props {
   paletteMode: string;
@@ -72,6 +72,10 @@ const Header = (props: Props) => {
     history.push(`/profile/${getUserId()}`);
     setOpenUserMenu(false);
   };
+
+  const handleMyTournaments = () => {
+    history.push(`/myTournamets/${getUserId()}`);
+  }
 
   React.useEffect(() => {
     const user = getUser();
@@ -160,6 +164,7 @@ const Header = (props: Props) => {
           anchorEl={anchorEl}
           handleClose={handleClose}
           handleGoProfile={handleGoProfile}
+          handleMyTournaments={handleMyTournaments}
           handleLogout={() => handleLogout()}
         />
       </Box>

@@ -1,4 +1,7 @@
-
+export type ParticipantType = {
+  name: string;
+  vken: string;
+}
 
 export interface TournamentType {
   id: string;
@@ -10,7 +13,6 @@ export interface TournamentType {
   city: string;
   format: string;
   level: string;
-  numberOfPlayers: number;
   maxNumberOfPlayers: number;
   numberOfRounds: number;
   multiJudge: boolean;
@@ -20,4 +22,5 @@ export interface TournamentType {
   cost: string;
   details: string;
   active: boolean;
+  participants:ParticipantType[]|null
 }

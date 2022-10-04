@@ -23,6 +23,7 @@ import InventoryCryptContainer from './components/main/containers/InventoryCrypt
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
 import LibraryContainer from './components/main/containers/LibraryContainer';
 import { LibraryType } from './types/library_type';
+import MyTournamentsContainer from './components/main/containers/MyTournamentsContainer';
 import NewTournament from './components/main/containers/NewTournament';
 import PageDeniedAccess from './components/PageDeniedAccess';
 import PrivateMain from './components/main/components/main/PrivateMain';
@@ -30,6 +31,7 @@ import PrivateRoute from './components/PrivateRoute';
 import ProfileContainer from './components/main/components/user/ProfileContainer';
 import PublicMain from './components/main/components/main/PublicMain';
 import Sidebar from './components/Sidebar';
+import TournamentInfo from './components/main/components/tournaments/TournamentInfo';
 import TournamentsContainer from './components/main/containers/TournamentsContainer';
 
 function App() {
@@ -229,6 +231,19 @@ function App() {
                 component={NewTournament}
                 exact
                 path='/tournament/:tournamentId'
+              />
+              {/* Tournament info*/}
+              <PrivateRoute
+                isLogged={isLogged}
+                component={TournamentInfo}
+                exact
+                path='/tournament/info/:tournamentId'
+              />
+              <PrivateRoute
+                isLogged={isLogged}
+                component={MyTournamentsContainer}
+                exact
+                path='/myTournamets/:tournamentId'
               />
             </Switch>
           </Box>

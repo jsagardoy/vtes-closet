@@ -23,7 +23,6 @@ export const createNewTournament = async (data: TournamentType): Promise<boolean
         city: data.city,
         format: data.format,
         level: data.level,
-        numberOfPlayers: data.numberOfPlayers,
         maxNumberOfPlayers: data.maxNumberOfPlayers,
         numberOfRounds: data.numberOfRounds,
         multiJudge: data.multiJudge,
@@ -33,6 +32,7 @@ export const createNewTournament = async (data: TournamentType): Promise<boolean
         location: data.location,
         details: data.details,
         active: data.active,
+        participants:data.participants,
       };
       const profile: ProfileType = await fetchSelectedVken();
       if (

@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -68,9 +68,8 @@ const NewTournament = () => {
     severity: AlertColor | undefined;
   }>({ value: false, message: '', severity: undefined });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const active: boolean = e.currentTarget.id === 'cancel' ? true:false;
     const newTournament: TournamentType = {
       id: tournamentId,
       name: name.current?.value ?? '',
@@ -81,7 +80,6 @@ const NewTournament = () => {
       city: city.current?.value ?? '',
       format: format.current?.value ?? 'constructed',
       level: level.current?.value ?? 'normal',
-      numberOfPlayers: 0,
       maxNumberOfPlayers: Number(maxNumberOfPlayers.current?.value) ?? 0,
       numberOfRounds: Number(numberOfRounds.current?.value) ?? 4,
       multiJudge: multiJudge === 'true' ? true : false,
@@ -90,27 +88,56 @@ const NewTournament = () => {
       cost: cost.current?.value ?? '',
       location: location.current?.value ?? '',
       details: details.current?.value ?? '',
-      active: active,
+      active: true,
+      participants: [],
     };
 
     try {
       const result = await createNewTournament(newTournament);
-      if (active) {
-        setOpenSB({
-          value: result,
-          message: result
+      setOpenSB({
+        value: result,
+        message: result
           ? 'Tournament created'
           : 'Failed to create tournament. Please try again.',
-          severity: result ? 'success' : 'error',
-        });
-      }else{  setOpenSB({
+        severity: result ? 'success' : 'error',
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleCancelTournament = async () => {
+    const newTournament: TournamentType = {
+      id: tournamentId,
+      name: name.current?.value ?? '',
+      eventDate: eventDate,
+      startingTime: startingTime.current?.value ?? '',
+      owner: userId ?? '',
+      organizer: organizer.current?.value ?? '',
+      city: city.current?.value ?? '',
+      format: format.current?.value ?? 'constructed',
+      level: level.current?.value ?? 'normal',
+      maxNumberOfPlayers: Number(maxNumberOfPlayers.current?.value) ?? 0,
+      numberOfRounds: Number(numberOfRounds.current?.value) ?? 4,
+      multiJudge: multiJudge === 'true' ? true : false,
+      headJudge: headJudge.current?.value ?? '',
+      assistantJudges: assistantJudges,
+      cost: cost.current?.value ?? '',
+      location: location.current?.value ?? '',
+      details: details.current?.value ?? '',
+      active: false,
+      participants: [],
+    };
+
+    try {
+      const result = await createNewTournament(newTournament);
+      setOpenSB({
         value: result,
         message: result
           ? 'Tournament canceled'
           : 'Failed to cancel tournament. Please try again.',
         severity: result ? 'info' : 'error',
-      });}
-      
+      });
       /*      history.push('/tournaments'); */
     } catch (error) {
       throw error;
@@ -148,7 +175,7 @@ const NewTournament = () => {
   const handleMultiJudge = (event: SelectChangeEvent<string | undefined>) => {
     setMultiJudge(event.target.value as string | undefined);
   };
-  
+
   const handleRemoveTournament = async () => {
     try {
       if (owner !== '') {
@@ -225,7 +252,7 @@ const NewTournament = () => {
           width: '50%',
         }}
         component='form'
-        onSubmit={(e: React.FormEvent) => handleSubmit(e)}
+        onSubmit={(e) => handleSubmit(e)}
       >
         <TextField
           InputLabelProps={{ shrink: true }}
@@ -422,7 +449,6 @@ const NewTournament = () => {
           </Button>
           <Button
             type='submit'
-            id='save'
             color='primary'
             sx={{
               display: 'flex',
@@ -436,8 +462,7 @@ const NewTournament = () => {
             Save
           </Button>
           <Button
-            type='submit'
-            id='cancel'
+            onClick={() => handleCancelTournament()}
             color='primary'
             sx={{
               display: 'flex',
@@ -447,7 +472,7 @@ const NewTournament = () => {
               marginBottom: '1rem',
             }}
           >
-            <DoNotDisturbIcon sx={{fill:'red'}} />
+            <DoNotDisturbIcon sx={{ fill: 'red' }} />
             Cancel tournament
           </Button>
           <Button
