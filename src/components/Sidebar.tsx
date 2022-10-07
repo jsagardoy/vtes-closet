@@ -49,6 +49,10 @@ const Sidebar = (props: Props) => {
         handleToogle();
         history.push(`/private/${userId}/inventory/crypt`);
         break;
+      case 'Tournaments':
+        handleToogle();
+        history.push(`/tournaments`);
+        break;
       default:
         handleToogle();
         alert('Wrong error');
@@ -144,6 +148,24 @@ const Sidebar = (props: Props) => {
                 <ListItemText
                   className={'listItemText'}
                   primary='Library Collection'
+                  secondaryTypographyProps={{}}
+                />
+              </ListItemButton>
+              <ListItemButton
+                alignItems='flex-start'
+                dense
+                divider
+                disableGutters
+                sx={{
+                  borderBottom: '1px solid',
+                  width: '100%',
+                  textAlign: 'center',
+                }}
+                onClick={() => handleClick('Tournaments')}
+              >
+                <ListItemText
+                  className={'listItemText'}
+                  primary='Tournaments'
                   secondaryTypographyProps={{}}
                 />
               </ListItemButton>

@@ -1,6 +1,7 @@
 export type ParticipantType = {
   name: string;
   vken: string;
+  drop: boolean;
 }
 
 export interface TournamentType {

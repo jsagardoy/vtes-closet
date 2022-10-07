@@ -1,4 +1,11 @@
-import { Button, Container, Typography } from '@mui/material';
+import {
+  Alert,
+  AlertColor,
+  Button,
+  Container,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 import { compareDates, getUser } from '../../../util';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -14,6 +21,11 @@ import { uuidv4 } from '@firebase/util';
 
 const TournamentsContainer = () => {
   const [data, setData] = React.useState<TournamentType[]>([]);
+  const [showSB, setShowSB] = React.useState<{
+    value: boolean;
+    message: string;
+    severity: AlertColor | undefined;
+  }>({ value: false, message: '', severity: undefined });
   const history = useHistory();
   const user: User = getUser();
   const [userData, setUserData] = React.useState<ProfileType>({
@@ -25,28 +37,48 @@ const TournamentsContainer = () => {
   });
 
   React.useEffect(() => {
+    try {
     const fetchData = async () => {
       try {
         const newData: TournamentType[] = await fetchTournaments();
-        
         setData(newData);
       } catch (error) {
         throw error;
       }
     };
     const fetchProfileData = async () => {
-      const profile: ProfileType = await fetchSelectedVken();
-      setUserData(profile);
+      try {
+        const profile: ProfileType = await fetchSelectedVken();
+
+        if (profile) {
+          setUserData(profile);
+        } else {
+          setShowSB({
+            value: true,
+            message: 'Vken needed, please chech your profile to add it',
+            severity: 'info',
+          });
+        }
+      } catch (error) {
+        throw error;
+      }
     };
-    fetchData();
-    fetchProfileData();
+    
+      fetchData();
+      fetchProfileData();
+    } catch (error) {
+      throw error;
+    }
+    return () => {};
   }, []);
 
   const handleCreateNewTournament = () => {
     const id = uuidv4();
     history.push(`/tournament/${id}`);
   };
-
+  const handleCloseSnackbar = () => {
+    setShowSB((prev) => ({ ...prev, value: false }));
+  };
   return (
     <Container sx={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
       {userData.rol === 'prince' ? (
@@ -61,7 +93,8 @@ const TournamentsContainer = () => {
       <Typography variant='h5'>Active Tournaments</Typography>
       <TournamentTable
         data={data.filter(
-          (elem) => compareDates(new Date(), elem.eventDate) === false && elem.active
+          (elem) =>
+            compareDates(new Date(), elem.eventDate) === false && elem.active
         )}
         userData={userData}
       />
@@ -72,6 +105,15 @@ const TournamentsContainer = () => {
         )}
         userData={userData}
       />
+      <Snackbar
+        open={showSB.value}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert severity={showSB.severity} onClose={handleCloseSnackbar}>
+          {showSB.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

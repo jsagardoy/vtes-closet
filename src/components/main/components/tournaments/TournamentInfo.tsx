@@ -4,8 +4,10 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ParticipantTable from './ParticipantTable';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import React from 'react';
 import { TournamentType } from '../../../../types/tournament_type';
+import { createNewTournament } from '../../../../service/createNewTournament';
 import fetchTournaments from '../../../../service/fetchTournaments';
 import { getUserId } from '../../../../util';
 
@@ -32,7 +34,25 @@ const TournamentInfo = () => {
 
   const handleGoBack = () => {
     history.push('/tournaments');
-  }
+  };
+
+  const handleTournament = async () => {
+    try {
+      if (data) {
+        const newData: TournamentType = { ...data, active: false };
+        setData(newData);
+        const response = await createNewTournament(newData);
+        if (response) {
+          history.push(`/archon/${data.id}`);
+        }
+        if (!response) {
+          console.error ('Error creating archon');
+        }
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <Container sx={{ minWidth: '100%' }}>
@@ -93,7 +113,7 @@ const TournamentInfo = () => {
               Event Date (dd/mm/yyyy):
             </Typography>
             <Typography color='primary' variant='body1'>
-              {data?.eventDate.getDate()}/
+              {('0' + ((data?.eventDate.getDate() ?? 0) + 1)).slice(-2)}/
               {('0' + ((data?.eventDate.getMonth() ?? 0) + 1)).slice(-2)}/
               {data?.eventDate.getFullYear()}
             </Typography>
@@ -334,16 +354,21 @@ const TournamentInfo = () => {
           </Box>
         </Box>
         {data?.owner === getUserId() && data.participants ? (
-          <Box id='participants' sx={{ m: '1rem' }}>
-            <Typography
-              sx={{ m: '1rem', textDecoration: 'underline' }}
-              color='secondary'
-              variant='h5'
-            >
-              Participants
-            </Typography>
-            <ParticipantTable data={data.participants} />
-          </Box>
+          <Container>
+            <Box id='participants' sx={{ m: '1rem' }}>
+              <Typography
+                sx={{ m: '1rem', textDecoration: 'underline' }}
+                color='secondary'
+                variant='h5'
+              >
+                Participants
+              </Typography>
+              <ParticipantTable data={data.participants} />
+            </Box>
+            <IconButton onClick={() => handleTournament()}>
+              <PlayCircleOutlineIcon color='secondary' /> Start tournament
+            </IconButton>
+          </Container>
         ) : null}
       </Box>
     </Container>

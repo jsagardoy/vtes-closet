@@ -240,7 +240,7 @@ const NewTournament = () => {
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <IconButton onClick={() => handleGoBack()}>
-          <ArrowBackIcon />{' '}
+          <ArrowBackIcon />
         </IconButton>
         <Typography variant='h4'>Tournament Information</Typography>
       </Box>

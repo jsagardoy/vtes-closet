@@ -12,6 +12,7 @@ import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+import ArchonContainer from './components/main/containers/ArchonContainer';
 import { Box } from '@mui/system';
 import { CardType } from './types/deck_type';
 import CryptContainer from './components/main/containers/CryptContainer';
@@ -30,6 +31,7 @@ import PrivateMain from './components/main/components/main/PrivateMain';
 import PrivateRoute from './components/PrivateRoute';
 import ProfileContainer from './components/main/components/user/ProfileContainer';
 import PublicMain from './components/main/components/main/PublicMain';
+import RoundsContainer from './components/main/containers/RoundsContainer';
 import Sidebar from './components/Sidebar';
 import TournamentInfo from './components/main/components/tournaments/TournamentInfo';
 import TournamentsContainer from './components/main/containers/TournamentsContainer';
@@ -244,6 +246,18 @@ function App() {
                 component={MyTournamentsContainer}
                 exact
                 path='/myTournamets/:tournamentId'
+              />
+              <PrivateRoute
+                isLogged={isLogged}
+                component={ArchonContainer}
+                exact
+                path='/archon/:tournamentId'
+              />
+              <PrivateRoute
+                isLogged={isLogged}
+                component={RoundsContainer}
+                exact
+                path='/archon/:tournamentId/round/:round'
               />
             </Switch>
           </Box>

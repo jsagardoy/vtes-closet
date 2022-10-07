@@ -19,6 +19,7 @@ import { User } from 'firebase/auth';
 import { fetchSelectedVken } from '../../../../service/fetchVken';
 import { getUser } from '../../../../util';
 import { updateProfileService } from '../../../../service/updateProfile';
+
 const ProfileContainer = () => {
   const user: User = getUser();
   const { userId } = useParams<{ userId: string }>();
@@ -59,7 +60,8 @@ const ProfileContainer = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfile((prev: ProfileType) => ({ ...prev, vken: e.target.value }));
   };
-  const handleSave = async () => {
+  const handleSave = async (e:React.MouseEvent<Element,MouseEvent>) => {
+    e.preventDefault();
     const newProfile = {
       ...profile,
     };
@@ -145,7 +147,7 @@ const ProfileContainer = () => {
             />
             <Button
               sx={{ display: 'flex', gap: '1rem' }}
-              onClick={() => handleSave()}
+              onClick={(e:React.MouseEvent<Element,MouseEvent>) => handleSave(e)}
             >
               <SaveIcon />
               <Typography variant='body2'>Save</Typography>
