@@ -16,7 +16,7 @@ export const fetchSelectedTournament = async (
     try {
       if (uid === owner) {
         const response = await getDoc(taskDocRef);
-        console.log('%cData successfully deleted. ', 'color:green');
+        console.log('%cData successfully fetched. ', 'color:green');
         return response.data() as TournamentType;
       } else {
         const error = new Error('Not access allowed');

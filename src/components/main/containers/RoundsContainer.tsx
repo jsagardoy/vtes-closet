@@ -5,39 +5,61 @@ import {
   Button,
   Container,
   Snackbar,
-  Typography
+  Typography,
 } from '@mui/material';
-import React, { FormEvent, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ConfirmationDialog from '../components/archon/ConfirmationDialog';
 import DoneIcon from '@mui/icons-material/Done';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ParticipantType } from '../../../types/tournament_type';
+import { PlayerResultsType } from '../../../types/archon_type';
 import PlayesPerRound from '../components/archon/PlayesPerRound';
 import TablesPerRound from '../components/archon/TablesPerRound';
 import TablesPerRoundResult from '../components/archon/TablesPerRoundResult';
+import { fetchSelectedTournament } from '../../../service/fetchSelectedTournament';
+import { getUserId } from '../../../util';
 import { useParams } from 'react-router-dom';
 import useRounds from '../../../hooks/useRounds';
 
 const RoundsContainer = () => {
-  const [players, setPlayers] = useState<ParticipantType[]>([]);
-  const { round } = useParams<{ round: string }>();
+  const [players, setPlayers] = useState<PlayerResultsType[]>([]);
+  const { round, tournamentId } = useParams<{
+    round: string;
+    tournamentId: string;
+  }>();
+  const uid: string | null = getUserId();
   const [open, setOpen] = useState<boolean>(false);
   const [openSB, setOpenSB] = React.useState<{
     value: boolean;
     message: string;
     severity: AlertColor | undefined;
   }>({ value: false, message: '', severity: undefined });
-
   const handleUpdateList = (list: ParticipantType[]) => {
-    setPlayers(list);
-    //
+      const newPlayers: PlayerResultsType[] = [...list].map(
+        (elem: ParticipantType) => ({
+          ...elem,
+          round: 0,
+          WP: 0,
+          GW: 0,
+          minipoints: 0,
+          coinFlip: 0,
+        })
+      );
+    setPlayers(newPlayers);
   };
 
   const handleAddNewPlayer = (newPlayer: ParticipantType) => {
-    setPlayers((prev) => [...prev, newPlayer]);
-    //incluir en BBDD
+    const player = {
+      ...newPlayer,
+      round: 0,
+      WP: 0,
+      GW: 0,
+      minipoints: 0,
+      coinFlip: 0,
+    };
+    setPlayers((prev) => [...prev, player]);
   };
   const handleCloseConfirmationDialog = () => {
     setOpen(false);
@@ -57,7 +79,9 @@ const RoundsContainer = () => {
       handleUpdateList={handleUpdateList}
       handleAddNewPlayer={handleAddNewPlayer}
     />,
-    <TablesPerRound />,
+    <TablesPerRound
+      participants={players.filter((elem: ParticipantType) => !elem.drop)}
+    /> /* only players that havn´t droped */,
     <TablesPerRoundResult />,
   ]);
 
@@ -77,26 +101,52 @@ const RoundsContainer = () => {
     //TODO:insert to firebase
     //handleCloseDialog();
   };
+
+  useEffect(() => {
+    try {
+      const getData = async () => {
+        const result =
+          uid && (await fetchSelectedTournament(tournamentId, uid));
+        if (round === '1' && result && result.participants) {
+          const newPlayers: PlayerResultsType[] = [...result.participants].map((elem: ParticipantType) => (
+            {
+              ...elem,
+              round: 0,
+              WP: 0,
+              GW: 0,
+              minipoints: 0,
+              coinFlip: 0,
+            }
+          )
+          );
+          setPlayers(newPlayers);
+        }
+      };
+
+      getData();
+    } catch (error) {
+      throw error;
+    }
+  }, [round, tournamentId, uid]);
+
   return (
     <Container>
       <Box>
-   
         <Typography variant='h4'>Round {round}</Typography>
-       <Box>
-          {currentStepIndex + 1}/{steps.length}
-        </Box>
-        <>
-        {currentStep}
-        </>
         <Box>
-          
-          <Button type='button' disabled={isFirstStep()} onClick={()=>back()}>
-                <ChevronLeftIcon />
-                Back
-            </Button>
-     
+          <Typography variant='body1'>
+            {currentStepIndex + 1}/{steps.length}
+          </Typography>
+        </Box>
+        <>{currentStep}</>
+        <Box>
+          <Button type='button' disabled={isFirstStep()} onClick={() => back()}>
+            <ChevronLeftIcon />
+            Back
+          </Button>
+
           {isLastStep && (
-            <Button onClick={()=>onNext()}>
+            <Button onClick={() => onNext()}>
               {isLastStep() ? (
                 <>
                   <DoneIcon />
@@ -124,7 +174,7 @@ const RoundsContainer = () => {
           open={open}
           handleClose={() => handleCloseConfirmationDialog()}
           handleGoNext={() => handleGoNextRound()}
-        /> 
+        />
       </Box>
     </Container>
   );

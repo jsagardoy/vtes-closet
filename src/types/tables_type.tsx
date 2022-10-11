@@ -1,0 +1,1 @@
+export interface Tables_Type{table5:number, table4:number}

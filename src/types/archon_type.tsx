@@ -1,6 +1,6 @@
 import { ParticipantType } from './tournament_type';
 
-interface PlayerResultsType extends ParticipantType {
+export interface PlayerResultsType extends ParticipantType {
     round: number;
     WP: number;
     GW: number;
