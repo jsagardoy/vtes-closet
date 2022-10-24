@@ -11,10 +11,11 @@ import { Tables_Type } from '../../../../types/tables_type';
 /* import { useParams } from 'react-router-dom'; */
 
 interface Props {
+  round: number;
   participants: PlayerResultsType[];
 }
 const TablesPerRound = (props: Props) => {
-  const { participants } = props;
+  const { participants,round } = props;
   const tableNumber = useRef<{ table4: number; table5: number }>();
 
   const sortedList: PlayerResultsType[] = participants.sort(
@@ -94,13 +95,12 @@ const TablesPerRound = (props: Props) => {
     };
     const calculatePlayers = (index: number): PlayerResultsType[] => {
       const { table5 }: Tables_Type = calculateTables();
-      const tableCount = table5 >= index ? 5 : 4;
+      const tableCount = (table5 >= index&&table5!==0) ? 5 : 4;
+      
       const data: PlayerResultsType[] = sortedList.slice(
-        tableCount === 5
-          ? (index - 1) * tableCount
-          : (index - 1) * tableCount + 1,
-        tableCount === 5 ? index * tableCount : index * tableCount + 1
-      );
+        index * tableCount, (index * tableCount)+tableCount
+          
+      );console.table(data);
       return data;
     };
     const generateTables = () => {
@@ -108,15 +108,15 @@ const TablesPerRound = (props: Props) => {
 
       const newTable: TournamentTable[] = Array(table5 + table4);
 
-      newTable.fill({ id: String(0), players: [] });
+      newTable.fill({ id: String(0), round:round, players: [] });
 
       const tour: TournamentTable[] = newTable.map(
         (elem: TournamentTable, index: number) => ({
+          ...elem,
           id: (index + 1).toString(),
-          players: calculatePlayers(index + 1),
+          players: calculatePlayers(index),
         })
       );
-      //await addRoundToTournament(tournamentId,round,tour)
       window.localStorage.setItem('round', JSON.stringify(tour));
       setTables(tour);
     };
@@ -127,7 +127,7 @@ const TablesPerRound = (props: Props) => {
       setTables(data);
     }
     
-  }, [participants.length, sortedList]);
+  }, [participants.length, round, sortedList]);
 
   return (
     <>

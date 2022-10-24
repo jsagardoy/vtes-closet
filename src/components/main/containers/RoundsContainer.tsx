@@ -7,20 +7,21 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material';
+import { PlayerResultsType, TournamentTable } from '../../../types/archon_type';
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ConfirmationDialog from '../components/archon/ConfirmationDialog';
 import DoneIcon from '@mui/icons-material/Done';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { ParticipantType } from '../../../types/tournament_type';
-import { PlayerResultsType } from '../../../types/archon_type';
 import PlayesPerRound from '../components/archon/PlayesPerRound';
 import TablesPerRound from '../components/archon/TablesPerRound';
 import TablesPerRoundResult from '../components/archon/TablesPerRoundResult';
+import { addRoundToTournament } from '../../../service/addRoundToTournament';
 import { fetchSelectedTournament } from '../../../service/fetchSelectedTournament';
 import { getUserId } from '../../../util';
-import { useParams } from 'react-router-dom';
 import useRounds from '../../../hooks/useRounds';
 
 const RoundsContainer = () => {
@@ -31,30 +32,30 @@ const RoundsContainer = () => {
   }>();
   const uid: string | null = getUserId();
   const [open, setOpen] = useState<boolean>(false);
+  const history = useHistory();
   const [openSB, setOpenSB] = React.useState<{
     value: boolean;
     message: string;
     severity: AlertColor | undefined;
   }>({ value: false, message: '', severity: undefined });
   const handleUpdateList = (list: ParticipantType[]) => {
-      const newPlayers: PlayerResultsType[] = [...list].map(
-        (elem: ParticipantType) => ({
-          ...elem,
-          round: 0,
-          WP: 0,
-          GW: 0,
-          minipoints: 0,
-          coinFlip: 0,
-        })
-      );
+    const newPlayers: PlayerResultsType[] = [...list].map(
+      (elem: ParticipantType) => ({
+        ...elem,
+        round: 0,
+        VP: 0,
+        GW: 0,
+        minipoints: 0,
+        coinFlip: 0,
+      })
+    );
     setPlayers(newPlayers);
   };
-
   const handleAddNewPlayer = (newPlayer: ParticipantType) => {
     const player = {
       ...newPlayer,
       round: 0,
-      WP: 0,
+      VP: 0,
       GW: 0,
       minipoints: 0,
       coinFlip: 0,
@@ -64,6 +65,7 @@ const RoundsContainer = () => {
   const handleCloseConfirmationDialog = () => {
     setOpen(false);
   };
+
   const {
     currentStepIndex,
     currentStep,
@@ -80,8 +82,9 @@ const RoundsContainer = () => {
       handleAddNewPlayer={handleAddNewPlayer}
     />,
     <TablesPerRound
+      round={Number(round)}
       participants={players.filter((elem: ParticipantType) => !elem.drop)}
-    /> /* only players that havn´t droped */,
+    /> /* only players that haven´t droped */,
     <TablesPerRoundResult />,
   ]);
 
@@ -97,9 +100,22 @@ const RoundsContainer = () => {
       setOpen(true);
     }
   };
-  const handleGoNextRound = () => {
-    //TODO:insert to firebase
-    //handleCloseDialog();
+  const handleGoNextRound = async () => {
+    try {
+      const data: string | null = window.localStorage.getItem('round');
+      const parsed = data && (JSON.parse(data) as TournamentTable[]);
+      if (parsed) {
+        const result = await addRoundToTournament(tournamentId, parsed, round);
+        if (result) {
+          //se ha añadido a BBDD
+          window.localStorage.removeItem('round');
+          history.push(`/archon/${tournamentId}`);
+        }
+      }
+      //handleCloseDialog();
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {
@@ -107,17 +123,16 @@ const RoundsContainer = () => {
       const getData = async () => {
         const result =
           uid && (await fetchSelectedTournament(tournamentId, uid));
-        if (round === '1' && result && result.participants) {
-          const newPlayers: PlayerResultsType[] = [...result.participants].map((elem: ParticipantType) => (
-            {
+        if (result && result.participants) {
+          const newPlayers: PlayerResultsType[] = [...result.participants].map(
+            (elem: ParticipantType) => ({
               ...elem,
               round: 0,
-              WP: 0,
+              VP: 0,
               GW: 0,
               minipoints: 0,
               coinFlip: 0,
-            }
-          )
+            })
           );
           setPlayers(newPlayers);
         }

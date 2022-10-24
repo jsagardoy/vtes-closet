@@ -56,7 +56,7 @@ const ArchonContainer = () => {
   const isLast = (currentIndex: number) =>
     currentIndex + 1 === tournament?.numberOfRounds;
 
-  const handleFinal = () => {};
+  const handleFinal = () => {history.push(`/archon/${tournamentId}/final`);};
 
   const handleRound = (round: number) => {history.push(`/archon/${tournamentId}/round/${round}`)};
 

@@ -90,6 +90,7 @@ const NewTournament = () => {
       details: details.current?.value ?? '',
       active: true,
       participants: [],
+      round:[{id:'0',tables:[]}],
     };
 
     try {
@@ -127,6 +128,7 @@ const NewTournament = () => {
       details: details.current?.value ?? '',
       active: false,
       participants: [],
+      round: [{ id: '0', tables: [] }],
     };
 
     try {

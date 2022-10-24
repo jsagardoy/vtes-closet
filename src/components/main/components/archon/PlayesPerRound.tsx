@@ -15,7 +15,7 @@ const PlayesPerRound = (props: Props) => {
           handleAddNewPlayer(newPlayer)
         }
       />
-      <PlayersList
+    <PlayersList
         players={players}
         updatePlayersList={(newList: ParticipantType[]) =>
           handleUpdateList(newList)

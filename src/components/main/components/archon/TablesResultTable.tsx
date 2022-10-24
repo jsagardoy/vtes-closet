@@ -15,7 +15,6 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { PlayerResultsType } from '../../../../types/archon_type';
-import { array } from 'joi';
 import { useParams } from 'react-router-dom';
 
 interface Props {
@@ -31,121 +30,117 @@ const TablesResultTable = (props: Props) => {
 
   const [playerList, setPlayerList] = useState<PlayerResultsType[]>(data);
 
-  const isTie = (list: PlayerResultsType[]) =>
-    new Set(list).size === array.length;
+  const hasRepeatedVP = (list: PlayerResultsType[]) => {
+    const vp = list.map((elem) => elem.VP);
+    return !(new Set(vp).size === vp.length);
+  };
 
-  const getTotalMinipoints = (VP: number) =>
-    playerList
+  const getTotalMinipoints = (list: PlayerResultsType[], VP: number) => {
+    return list
       .filter((elem) => elem.VP === VP)
       .map((elem) => elem.minipoints)
       .reduce((acum, a) => acum + a);
+  };
+
+  const minipoints4 = [
+    {
+      rank: 1,
+      value: 60,
+    },
+    {
+      rank: 2,
+      value: 48,
+    },
+    {
+      rank: 3,
+      value: 24,
+    },
+    {
+      rank: 4,
+      value: 12,
+    },
+  ];
+
+  const getMinipoints4 = (list: PlayerResultsType[]): PlayerResultsType[] =>
+    list.map((player: PlayerResultsType) => {
+      const minipoints = minipoints4.find(
+        (elem) => elem.rank === player.roundRank
+      );
+      return {
+        ...player,
+        minipoints: minipoints?.value ?? 0,
+      };
+    });
+
+  const minipoints5 = [
+    {
+      rank: 1,
+      value: 60,
+    },
+    {
+      rank: 2,
+      value: 48,
+    },
+    {
+      rank: 3,
+      value: 36,
+    },
+    {
+      rank: 4,
+      value: 24,
+    },
+    {
+      rank: 5,
+      value: 12,
+    },
+  ];
+  const getMinipoints5 = (list: PlayerResultsType[]): PlayerResultsType[] =>
+    list.map((player: PlayerResultsType) => {
+      const minipoints = minipoints5.find(
+        (elem) => elem.rank === player.roundRank
+      );
+      return {
+        ...player,
+        minipoints: minipoints?.value ?? 0,
+      };
+    });
 
   const calculateMinipoints = (list: PlayerResultsType[]) => {
-    /*     5 PLAYER TABLES			4 PLAYER TABLES	
-    Table Rank	TPs		Table Rank	TPs
-    1	60		1	60
-    2	48		2	48
-    3	36		3	24
-    4	24		4	12
-    5	12	 
-*/
-    const minipoints5 = [
-      {
-        rank: 1,
-        value: 60,
-      },
-      {
-        rank: 2,
-        value: 48,
-      },
-      {
-        rank: 3,
-        value: 36,
-      },
-      {
-        rank: 4,
-        value: 24,
-      },
-      {
-        rank: 5,
-        value: 12,
-      },
-    ];
-
-    const minipoints4 = [
-      {
-        rank: 1,
-        value: 60,
-      },
-      {
-        rank: 2,
-        value: 48,
-      },
-      {
-        rank: 3,
-        value: 24,
-      },
-      {
-        rank: 4,
-        value: 12,
-      },
-    ];
     //no repeated VP
-    if (!isTie(list)) {
+    if (!hasRepeatedVP(list)) {
       if (list.length === 4) {
-        const newPlayerList: PlayerResultsType[] = list.map(
-          (player: PlayerResultsType) => {
-            const minipoints = minipoints4.find(
-              (elem) => elem.rank === player.roundRank
-            );
-            return {
-              ...player,
-              minipoints: minipoints?.value ?? 0,
-            };
-          }
-        );
-        setPlayerList(newPlayerList);
-        updateTable(tableId, newPlayerList);
+        setPlayerList(getMinipoints4(list));
+        updateTable(tableId, getMinipoints4(list));
       }
 
       if (list.length === 5) {
-        const newPlayerList: PlayerResultsType[] = list.map(
-          (player: PlayerResultsType) => {
-            const minipoints = minipoints5.find(
-              (elem) => elem.rank === player.roundRank
-            );
-            return {
-              ...player,
-              minipoints: minipoints?.value ?? 0,
-            };
-          }
-        );
-        setPlayerList(newPlayerList);
-        updateTable(tableId, newPlayerList);
+        setPlayerList(getMinipoints5(list));
+        updateTable(tableId, getMinipoints5(list));
       }
     }
 
     //repeated VP
-    const VPData = list.map((data) => data.VP ?? 0);
+    else {
+      const data =
+        list.length === 5 ? getMinipoints5(list) : getMinipoints4(list);
 
-    const count = VPData.reduce((accumulator: any, value: number) => {
-      return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
-    }, {});
+      const VPData = data.map((data) => data.VP ?? 0);
+
+      const count = VPData.reduce((accumulator: any, value: number) => {
+        return { ...accumulator, [value]: (accumulator[value] || 0) + 1 };
+      }, {});
+
+      const result = data.map((elem) => {
+        return {
+          ...elem,
+          minipoints: getTotalMinipoints(data, elem.VP) / count[elem.VP],
+        };
+      });
 
 
-    const result = list.map((elem) => {
-      for (const [key, value] of Object.entries(count)) {
-        if (elem.VP === Number(key)) {
-          return {
-            ...elem,
-            minipoints: getTotalMinipoints(elem.VP) / Number(value),
-          };
-        }
-      }
-      return { ...elem };
-    });
-    setPlayerList(result);
-    updateTable(tableId, result);
+      setPlayerList(result);
+      updateTable(tableId, result);
+    }
   };
 
   const onChange = (event: SelectChangeEvent) => {

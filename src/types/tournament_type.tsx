@@ -1,7 +1,13 @@
+import { TournamentTable } from './archon_type';
+
 export type ParticipantType = {
   name: string;
   vken: string;
   drop: boolean;
+}
+export interface TablesRoundType {
+  id: string;
+  tables: TournamentTable[]
 }
 
 export interface TournamentType {
@@ -23,5 +29,6 @@ export interface TournamentType {
   cost: string;
   details: string;
   active: boolean;
-  participants:ParticipantType[]|null
+  participants: ParticipantType[] | null
+  round: TablesRoundType[];
 }

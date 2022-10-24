@@ -19,6 +19,7 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import { CryptType } from './types/crypt_type';
 import DeckContainer from './components/main/containers/DeckContainer';
 import DecksContainer from './components/main/containers/DecksContainer';
+import FinalContainer from './components/main/components/archon/FinalContainer';
 import Header from './components/Header';
 import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
@@ -258,6 +259,12 @@ function App() {
                 component={RoundsContainer}
                 exact
                 path='/archon/:tournamentId/round/:round'
+              />
+              <PrivateRoute
+                isLogged={isLogged}
+                component={FinalContainer}
+                exact
+                path='/archon/:tournamentId/final'
               />
             </Switch>
           </Box>

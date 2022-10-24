@@ -20,7 +20,7 @@ interface Props {
   updatePlayersList: (playerList: ParticipantType[]) => void;
 }
 const PlayersList = (props: Props) => {
-  const { players, updatePlayersList } = props;
+  const { players,updatePlayersList } = props;
 
   const handleDrop = (vken: string) => {
     const newPlayersList: ParticipantType[] = players.map((elem) =>
