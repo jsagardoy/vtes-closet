@@ -19,7 +19,7 @@ import CryptContainer from './components/main/containers/CryptContainer';
 import { CryptType } from './types/crypt_type';
 import DeckContainer from './components/main/containers/DeckContainer';
 import DecksContainer from './components/main/containers/DecksContainer';
-import FinalContainer from './components/main/components/archon/FinalContainer';
+import FinalContainer from './components/main/containers/FinalContainer';
 import Header from './components/Header';
 import InventoryCryptContainer from './components/main/containers/InventoryCryptContainer';
 import InventoryLibraryContainer from './components/main/containers/InventoryLibraryContainer';
@@ -57,14 +57,16 @@ function App() {
   const handleAddCardToDeck = (
     card: LibraryType | CryptType,
     cardType: CardType
-  ) => { };
-  
-  const handleCloseModal = (cardType: CardType) => { };
+  ) => {};
+
+  const handleCloseModal = (cardType: CardType) => {};
 
   const initialMode: PaletteMode = window.localStorage.getItem(
     'mode'
   ) as PaletteMode;
-  const [mode, setMode] = React.useState<PaletteMode>(initialMode==='light' ? 'light':'dark');
+  const [mode, setMode] = React.useState<PaletteMode>(
+    initialMode === 'light' ? 'light' : 'dark'
+  );
   useEffect(() => {}, []);
   const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
     typography: {

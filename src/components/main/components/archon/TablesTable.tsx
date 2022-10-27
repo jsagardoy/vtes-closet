@@ -19,7 +19,7 @@ const TablesTable = (props: Props) => {
       <TableHead>
         <TableRow>
           <TableCell>#</TableCell>
-          <TableCell>name</TableCell>
+          <TableCell>Name</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

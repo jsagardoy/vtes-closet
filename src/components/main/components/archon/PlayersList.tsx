@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  Typography,
 } from '@mui/material';
 
 import BackspaceIcon from '@mui/icons-material/Backspace';
@@ -18,9 +19,10 @@ import React from 'react';
 interface Props {
   players: ParticipantType[];
   updatePlayersList: (playerList: ParticipantType[]) => void;
+  isFinal: boolean;
 }
 const PlayersList = (props: Props) => {
-  const { players,updatePlayersList } = props;
+  const { players, updatePlayersList, isFinal } = props;
 
   const handleDrop = (vken: string) => {
     const newPlayersList: ParticipantType[] = players.map((elem) =>
@@ -45,7 +47,14 @@ const PlayersList = (props: Props) => {
               <TableCell>
                 {player.drop ? <BlockIcon /> : <CheckIcon />}
               </TableCell>
-              <TableCell>{player.name}</TableCell>
+              <TableCell>
+                <Typography
+                  variant='body1'
+                  color={isFinal && index < 5 ? 'secondary' : 'primary'}
+                >
+                  {player.name}
+                </Typography>
+              </TableCell>
               <TableCell>
                 <Tooltip arrow title='Drop this player'>
                   <IconButton onClick={() => handleDrop(player.vken)}>

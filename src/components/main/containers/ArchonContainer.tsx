@@ -70,6 +70,7 @@ const ArchonContainer = () => {
           }
         />
         <PlayersList
+          isFinal={false}
           players={players}
           updatePlayersList={(newList: ParticipantType[]) =>
             handleUpdateList(newList)
